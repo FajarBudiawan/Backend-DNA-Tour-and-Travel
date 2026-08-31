@@ -45,4 +45,14 @@ class Kloter extends Model
     {
         return $this->hasMany(Registration::class);
     }
+
+    public function tourLeaders()
+    {
+        return $this->belongsToMany(TourLeader::class, 'kloter_leader_assignments')->withPivot(['id', 'assigned_at']);
+    }
+
+    public function muthawwifs()
+    {
+        return $this->belongsToMany(Muthawwif::class, 'kloter_muthawwif_assignments')->withPivot(['id', 'assigned_at']);
+    }
 }

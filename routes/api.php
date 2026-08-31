@@ -9,6 +9,9 @@ use App\Http\Controllers\Api\PackageController;
 use App\Http\Controllers\Api\RegistrationController;
 use App\Http\Controllers\Api\RegistrationPaymentController;
 use App\Http\Controllers\Api\RoomController;
+use App\Http\Controllers\Api\MuthawwifController;
+use App\Http\Controllers\Api\StockItemController;
+use App\Http\Controllers\Api\TourLeaderController;
 use Illuminate\Support\Facades\Route;
 
 // ====================
@@ -130,4 +133,21 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/jamaah/{jamaah}', [JamaahController::class, 'show']);
     Route::put('/jamaah/{jamaah}', [JamaahController::class, 'update']);
     Route::delete('/jamaah/{jamaah}', [JamaahController::class, 'destroy']);
+
+    // ====================
+    // STAF: TOUR LEADER & MUTHAWWIF
+    // ====================
+    Route::apiResource('tour-leaders', TourLeaderController::class)->parameters(['tour-leaders' => 'tourLeader']);
+    Route::post('/kloters/{kloter}/assign-leader', [TourLeaderController::class, 'assign']);
+    Route::delete('/kloters/{kloter}/unassign-leader', [TourLeaderController::class, 'unassign']);
+
+    Route::apiResource('muthawwifs', MuthawwifController::class)->parameters(['muthawwifs' => 'muthawwif']);
+    Route::post('/kloters/{kloter}/assign-muthawwif', [MuthawwifController::class, 'assign']);
+    Route::delete('/kloters/{kloter}/unassign-muthawwif', [MuthawwifController::class, 'unassign']);
+
+    // ====================
+    // STAF: MONITORING STOK
+    // ====================
+    Route::apiResource('stock-items', StockItemController::class)->parameters(['stock-items' => 'stockItem']);
+    Route::patch('/stock-items/{stockItem}/adjust', [StockItemController::class, 'adjust']);
 });
