@@ -12,14 +12,15 @@ class Kloter extends Model
     protected $table = 'kloters';
 
     protected $fillable = [
+        'name',
         'package_id',
         'code',
+        'flight_code',
         'departure_date',
         'return_date',
         'hotel_makkah_id',
         'hotel_madinah_id',
         'status',
-        'cancellation_reason',
     ];
 
     protected $casts = [

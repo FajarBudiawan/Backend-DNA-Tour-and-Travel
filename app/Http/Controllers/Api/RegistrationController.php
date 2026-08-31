@@ -302,20 +302,15 @@ class RegistrationController extends Controller
 
             // 4. Buat data Jamaah
             $jamaah = Jamaah::create([
-                'login_id' => $loginId,
-                'nik' => $registration->nik,
-                'full_name' => $registration->full_name,
-                'birth_place' => $request->birth_place ?? null,
-                'birth_date' => $registration->birth_date,
-                'gender' => $registration->gender,
-                'address' => $request->address ?? null,
-                'phone' => $registration->phone,
-                'email' => $request->email ?? null,
-                'emergency_contact_name' => $request->emergency_contact_name ?? null,
-                'emergency_contact_phone' => $request->emergency_contact_phone ?? null,
-                'passport_expiry_date' => $request->passport_expiry_date ?? null,
-                'status' => 'active',
-                'created_by' => auth()->id(),
+                'login_id'          => $loginId,
+                'nik'               => $registration->nik,
+                'full_name'         => $registration->full_name,
+                'birth_date'        => $registration->birth_date,
+                'gender'            => $registration->gender,
+                'phone'             => $registration->phone,
+                'emergency_contact' => $request->emergency_contact ?? null,
+                'status'            => 'active',
+                'created_by'        => auth()->id(),
             ]);
 
             // 5. Update status pendaftaran menjadi converted

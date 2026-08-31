@@ -16,14 +16,15 @@ class UpdateKloterRequest extends FormRequest
         $kloterId = $this->route('kloter')?->id;
 
         return [
+            'name' => ['sometimes', 'string', 'max:150'],
             'package_id' => ['sometimes', 'uuid', 'exists:packages,id'],
             'code' => ['sometimes', 'string', 'max:30', 'unique:kloters,code,' . $kloterId],
+            'flight_code' => ['nullable', 'string', 'max:50'],
             'departure_date' => ['sometimes', 'date'],
             'return_date' => ['sometimes', 'date', 'after_or_equal:departure_date'],
             'hotel_makkah_id' => ['nullable', 'uuid', 'exists:hotels,id'],
             'hotel_madinah_id' => ['nullable', 'uuid', 'exists:hotels,id'],
-            'status' => ['sometimes', 'in:draft,ready,active,completed,cancelled'],
-            'cancellation_reason' => ['nullable', 'string', 'max:255'],
+            'status' => ['sometimes', 'in:draft,active,archived'],
         ];
     }
 }

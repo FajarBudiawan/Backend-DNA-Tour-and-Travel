@@ -20,18 +20,20 @@ class KloterController extends Controller
         $query = Kloter::with('package')
             ->withCount('registrations');
 
-        // Filter pencarian kode kloter atau nama paket
+        // Filter pencarian kode kloter, nama kloter, kode penerbangan, atau nama paket
         if ($request->filled('q')) {
             $search = $request->q;
             $query->where(function ($q) use ($search) {
-                $q->where('code', 'ilike', "%{$search}%")
+                $q->where('name', 'ilike', "%{$search}%")
+                  ->orWhere('code', 'ilike', "%{$search}%")
+                  ->orWhere('flight_code', 'ilike', "%{$search}%")
                   ->orWhereHas('package', function ($pkg) use ($search) {
                       $pkg->where('name', 'ilike', "%{$search}%");
                   });
             });
         }
 
-        // Filter status kloter (draft, ready, active, completed, cancelled)
+        // Filter status kloter (draft, active, archived)
         if ($request->filled('status')) {
             $query->where('status', $request->status);
         }
@@ -60,14 +62,15 @@ class KloterController extends Controller
         }
 
         $kloter = Kloter::create([
+            'name' => $request->name,
             'package_id' => $request->package_id,
             'code' => $code,
+            'flight_code' => $request->flight_code,
             'departure_date' => $request->departure_date,
             'return_date' => $request->return_date,
             'hotel_makkah_id' => $request->hotel_makkah_id,
             'hotel_madinah_id' => $request->hotel_madinah_id,
             'status' => $request->status ?? 'draft',
-            'cancellation_reason' => $request->cancellation_reason,
         ]);
 
         return response()->json([
@@ -92,13 +95,6 @@ class KloterController extends Controller
      */
     public function update(UpdateKloterRequest $request, Kloter $kloter): JsonResponse
     {
-        // Kloter dengan status 'completed' dikunci permanen
-        if ($kloter->status === 'completed') {
-            return response()->json([
-                'message' => 'Kloter dengan status completed tidak dapat diubah.',
-            ], 422);
-        }
-
         $kloter->update($request->validated());
 
         return response()->json([

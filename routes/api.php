@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\ExpenseController;
+use App\Http\Controllers\Api\FinanceSummaryController;
 use App\Http\Controllers\Api\JamaahController;
 use App\Http\Controllers\Api\KloterController;
 use App\Http\Controllers\Api\PackageController;
@@ -91,7 +93,7 @@ Route::middleware('auth:sanctum')->group(function () {
     );
 
     // ====================
-    // KEUANGAN / PEMBAYARAN
+    // KEUANGAN / PEMBAYARAN & PENGELUARAN
     // ====================
 
     // Laporan seluruh transaksi pembayaran (Admin Keuangan)
@@ -108,6 +110,16 @@ Route::middleware('auth:sanctum')->group(function () {
         '/registrations/{registration}/payments',
         [RegistrationPaymentController::class, 'store']
     );
+
+    // Module Expenses (Pengeluaran Kas)
+    Route::get('/expenses', [ExpenseController::class, 'index']);
+    Route::post('/expenses', [ExpenseController::class, 'store']);
+    Route::get('/expenses/{expense}', [ExpenseController::class, 'show']);
+    Route::put('/expenses/{expense}', [ExpenseController::class, 'update']);
+    Route::delete('/expenses/{expense}', [ExpenseController::class, 'destroy']);
+
+    // Summary Keuangan Global
+    Route::get('/finance/summary', [FinanceSummaryController::class, 'summary']);
 
     // ====================
     // MANAJEMEN JAMAAH (CRUD)

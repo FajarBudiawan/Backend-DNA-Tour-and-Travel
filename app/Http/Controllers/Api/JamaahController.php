@@ -60,20 +60,15 @@ class JamaahController extends Controller
             $loginId = 'JAMAAH' . str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
 
             return Jamaah::create([
-                'login_id' => $loginId,
-                'nik' => $request->nik,
-                'full_name' => $request->full_name,
-                'birth_place' => $request->birth_place,
-                'birth_date' => $request->birth_date,
-                'gender' => $request->gender,
-                'address' => $request->address,
-                'phone' => $request->phone,
-                'email' => $request->email,
-                'emergency_contact_name' => $request->emergency_contact_name,
-                'emergency_contact_phone' => $request->emergency_contact_phone,
-                'passport_expiry_date' => $request->passport_expiry_date,
-                'status' => $request->status ?? 'active',
-                'created_by' => auth()->id(),
+                'login_id'          => $loginId,
+                'nik'               => $request->nik,
+                'full_name'         => $request->full_name,
+                'birth_date'        => $request->birth_date,
+                'gender'            => $request->gender,
+                'phone'             => $request->phone,
+                'emergency_contact' => $request->emergency_contact,
+                'status'            => $request->status ?? 'active',
+                'created_by'        => auth()->id(),
             ]);
         });
 
