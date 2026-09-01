@@ -62,7 +62,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Manajemen Roommate Manual (Tambah/Keluarkan Jamaah dari Kamar)
     Route::post('/rooms/{room}/members', [RoomController::class, 'addMember']);
-    Route::delete('/rooms/{room}/members/{registration}', [RoomController::class, 'removeMember']);
+    Route::delete('/rooms/{room}/members/{roomMember}', [RoomController::class, 'removeMember']);
+
 
     // ====================
     // PENDAFTARAN

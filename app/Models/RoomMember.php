@@ -14,6 +14,9 @@ class RoomMember extends Model
     protected $fillable = [
         'room_id',
         'registration_id',
+        'title',
+        'occupant_name',
+        'age',
     ];
 
     public function room()
