@@ -61,9 +61,15 @@ class Registration extends Model
 
     /**
      * Hitung dan perbarui status keuangan pendaftaran secara otomatis.
+     *
+     * Catatan revisi [2026-09-02]: Guard 'converted' sengaja DIPERTAHANKAN untuk
+     * kompatibilitas backward \u2014 data pendaftaran lama yang memiliki status 'converted'
+     * di database tidak boleh di-overwrite oleh kalkulasi keuangan otomatis.
+     * Alur convert-to-jamaah sudah tidak aktif, tapi enum 'converted' tetap di DB.
      */
     public function updateFinancialStatus(): void
     {
+        // 'cancelled' dan 'converted' (data lama) tidak boleh di-overwrite otomatis.
         if (in_array($this->status, ['converted', 'cancelled'])) {
             return;
         }

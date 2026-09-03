@@ -37,6 +37,7 @@ class UpdateRegistrationRequest extends FormRequest
             'status' => ['sometimes', 'in:unpaid,dp,dp_paid,paid,fully_paid,cancelled,converted'],
             'equipments' => ['nullable', 'array'],
             'equipments.*.equipment_name' => ['required_with:equipments', 'string', 'max:100'],
+            'equipments.*.size' => ['nullable', 'string', 'max:20'],
             'equipments.*.is_received' => ['required_with:equipments', 'boolean'],
         ];
     }

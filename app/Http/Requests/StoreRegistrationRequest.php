@@ -173,6 +173,12 @@ class StoreRegistrationRequest extends FormRequest
                 'max:100',
             ],
 
+            'equipments.*.size' => [
+                'nullable',
+                'string',
+                'max:20',
+            ],
+
             'equipments.*.is_received' => [
                 'required_with:equipments',
                 'boolean',

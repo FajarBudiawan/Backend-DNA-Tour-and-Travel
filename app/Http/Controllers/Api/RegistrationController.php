@@ -129,21 +129,27 @@ class RegistrationController extends Controller
             if (empty($equipments) || !is_array($equipments)) {
                 if ($request->gender === 'L') {
                     $equipments = [
-                        ['equipment_name' => 'Kain Ihram & Sabuk', 'is_received' => false],
-                        ['equipment_name' => 'Batik Seragam Umrah', 'is_received' => false],
-                        ['equipment_name' => 'Tas Koper Utama', 'is_received' => false],
-                        ['equipment_name' => 'Tas Paspor / Handbag', 'is_received' => false],
-                        ['equipment_name' => 'Buku Doa & Manasik', 'is_received' => false],
-                        ['equipment_name' => 'Syal Travel', 'is_received' => false],
+                        ['equipment_name' => 'Koper Besar', 'is_received' => false, 'size' => null],
+                        ['equipment_name' => 'Koper Kabin', 'is_received' => false, 'size' => null],
+                        ['equipment_name' => 'Seragam Batik', 'is_received' => false, 'size' => null],
+                        ['equipment_name' => 'Buku Panduan', 'is_received' => false, 'size' => null],
+                        ['equipment_name' => 'Kain Ihram', 'is_received' => false, 'size' => null],
+                        ['equipment_name' => 'Tas Selempang', 'is_received' => false, 'size' => null],
+                        ['equipment_name' => 'Tas Sandal', 'is_received' => false, 'size' => null],
+                        ['equipment_name' => 'Syall', 'is_received' => false, 'size' => null],
+                        ['equipment_name' => 'Sabuk', 'is_received' => false, 'size' => null],
                     ];
                 } else {
                     $equipments = [
-                        ['equipment_name' => 'Mukena & Bergo Seragam', 'is_received' => false],
-                        ['equipment_name' => 'Batik Seragam Umrah', 'is_received' => false],
-                        ['equipment_name' => 'Tas Koper Utama', 'is_received' => false],
-                        ['equipment_name' => 'Tas Paspor / Handbag', 'is_received' => false],
-                        ['equipment_name' => 'Buku Doa & Manasik', 'is_received' => false],
-                        ['equipment_name' => 'Syal Travel', 'is_received' => false],
+                        ['equipment_name' => 'Koper Besar', 'is_received' => false, 'size' => null],
+                        ['equipment_name' => 'Koper Kabin', 'is_received' => false, 'size' => null],
+                        ['equipment_name' => 'Seragam Batik', 'is_received' => false, 'size' => null],
+                        ['equipment_name' => 'Buku Panduan', 'is_received' => false, 'size' => null],
+                        ['equipment_name' => 'Kerudung Merah', 'is_received' => false, 'size' => null],
+                        ['equipment_name' => 'Kerudung Putih', 'is_received' => false, 'size' => null],
+                        ['equipment_name' => 'Tas Selempang', 'is_received' => false, 'size' => null],
+                        ['equipment_name' => 'Tas Sandal', 'is_received' => false, 'size' => null],
+                        ['equipment_name' => 'Syall', 'is_received' => false, 'size' => null],
                     ];
                 }
             }
@@ -152,6 +158,7 @@ class RegistrationController extends Controller
                 $isReceived = $equipment['is_received'] ?? false;
                 $registration->equipments()->create([
                     'equipment_name' => $equipment['equipment_name'],
+                    'size' => $equipment['size'] ?? null,
                     'is_received' => $isReceived,
                     'received_at' => $isReceived ? now() : null,
                 ]);
@@ -231,6 +238,7 @@ class RegistrationController extends Controller
                     $isReceived = $equipment['is_received'] ?? false;
                     $registration->equipments()->create([
                         'equipment_name' => $equipment['equipment_name'],
+                        'size' => $equipment['size'] ?? null,
                         'is_received' => $isReceived,
                         'received_at' => $isReceived ? now() : null,
                     ]);
@@ -266,76 +274,75 @@ class RegistrationController extends Controller
     }
 
     /**
-     * Mengonversi data pendaftaran menjadi Jamaah resmi.
+     * TODO-DEPRECATED: Method convertToJamaah() dinonaktifkan per revisi [2026-09-02].
+     * Jamaah kini diinput manual terpisah oleh Admin lewat endpoint POST /api/jamaah.
+     * Data Pendaftaran dan data Jamaah adalah dua entitas independen — tidak ada auto-convert.
+     *
+     * Method ini sengaja TIDAK dihapus untuk menjaga histori kode.
+     * Route-nya sudah di-comment di routes/api.php.
+     *
+     * @deprecated
      */
-    public function convertToJamaah(
-        Request $request,
-        Registration $registration
-    ): JsonResponse {
-        // 1. Pastikan pendaftaran sudah memiliki pembayaran.
-        if ($registration->payments()->count() === 0) {
-            return response()->json([
-                'message' => 'Pendaftaran belum memiliki pembayaran dan belum dapat dikonversi menjadi Jamaah.',
-            ], 422);
-        }
-
-        // 2. Pastikan NIK belum terdaftar sebagai Jamaah.
-        $existingJamaah = Jamaah::where('nik', $registration->nik)->first();
-
-        if ($existingJamaah) {
-            return response()->json([
-                'message' => 'Jamaah dengan NIK ini sudah terdaftar.',
-                'data' => $existingJamaah,
-            ], 409);
-        }
-
-        $jamaah = DB::transaction(function () use ($request, $registration) {
-            // 3. Generate login_id otomatis.
-            $lastJamaah = Jamaah::orderBy('created_at', 'desc')->first();
-
-            $nextNumber = 1;
-            if ($lastJamaah && preg_match('/(\d+)$/', $lastJamaah->login_id, $matches)) {
-                $nextNumber = (int) $matches[1] + 1;
-            }
-
-            $loginId = 'JAMAAH' . str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
-
-            // 4. Buat data Jamaah
-            $jamaah = Jamaah::create([
-                'login_id'          => $loginId,
-                'nik'               => $registration->nik,
-                'full_name'         => $registration->full_name,
-                'birth_date'        => $registration->birth_date,
-                'gender'            => $registration->gender,
-                'phone'             => $registration->phone,
-                'emergency_contact' => $request->emergency_contact ?? null,
-                'status'            => 'active',
-                'created_by'        => auth()->id(),
-            ]);
-
-            // 5. Update status pendaftaran menjadi converted
-            $registration->update(['status' => 'converted']);
-
-            return $jamaah;
-        });
-
-        return response()->json([
-            'message' => 'Pendaftaran berhasil dikonversi menjadi Jamaah resmi.',
-            'data' => $jamaah->load('createdBy'),
-        ], 201);
-    }
+    // public function convertToJamaah(
+    //     Request $request,
+    //     Registration $registration
+    // ): JsonResponse {
+    //     // 1. Pastikan pendaftaran sudah memiliki pembayaran.
+    //     if ($registration->payments()->count() === 0) {
+    //         return response()->json([
+    //             'message' => 'Pendaftaran belum memiliki pembayaran dan belum dapat dikonversi menjadi Jamaah.',
+    //         ], 422);
+    //     }
+    //
+    //     // 2. Pastikan NIK belum terdaftar sebagai Jamaah.
+    //     $existingJamaah = Jamaah::where('nik', $registration->nik)->first();
+    //
+    //     if ($existingJamaah) {
+    //         return response()->json([
+    //             'message' => 'Jamaah dengan NIK ini sudah terdaftar.',
+    //             'data' => $existingJamaah,
+    //         ], 409);
+    //     }
+    //
+    //     $jamaah = DB::transaction(function () use ($request, $registration) {
+    //         $lastJamaah = Jamaah::orderBy('created_at', 'desc')->first();
+    //         $nextNumber = 1;
+    //         if ($lastJamaah && preg_match('/(\d+)$/', $lastJamaah->login_id, $matches)) {
+    //             $nextNumber = (int) $matches[1] + 1;
+    //         }
+    //         $loginId = 'JAMAAH' . str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
+    //         $jamaah = Jamaah::create([
+    //             'login_id'          => $loginId,
+    //             'nik'               => $registration->nik,
+    //             'full_name'         => $registration->full_name,
+    //             'birth_date'        => $registration->birth_date,
+    //             'gender'            => $registration->gender,
+    //             'phone'             => $registration->phone,
+    //             'emergency_contact' => $request->emergency_contact ?? null,
+    //             'status'            => 'active',
+    //             'created_by'        => auth()->id(),
+    //         ]);
+    //         $registration->update(['status' => 'converted']);
+    //         return $jamaah;
+    //     });
+    //
+    //     return response()->json([
+    //         'message' => 'Pendaftaran berhasil dikonversi menjadi Jamaah resmi.',
+    //         'data' => $jamaah->load('createdBy'),
+    //     ], 201);
+    // }
 
     /**
      * Hapus data pendaftaran.
+     *
+     * Catatan revisi [2026-09-02]: Guard 'converted' dihapus karena alur Jamaah
+     * kini terpisah — tidak ada lagi status 'converted' yang mengunci Pendaftaran.
+     * Data lama berstatus 'converted' di database tetap bisa dihapus oleh admin.
      */
     public function destroy(Registration $registration): JsonResponse
     {
-        // Jika sudah dikonversi ke Jamaah resmi, lindungi dari penghapusan
-        if ($registration->status === 'converted') {
-            return response()->json([
-                'message' => 'Pendaftaran yang telah dikonversi menjadi Jamaah resmi tidak dapat dihapus.',
-            ], 422);
-        }
+        // Guard status 'cancelled' — data yang sudah dibatalkan tidak perlu dihapus paksa
+        // (biarkan admin tetap bisa hapus jika perlu; tidak ada guard di sini)
 
         DB::transaction(function () use ($registration) {
             $registration->equipments()->delete();

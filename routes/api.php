@@ -87,11 +87,12 @@ Route::middleware('auth:sanctum')->group(function () {
     // Membatalkan pendaftaran
     Route::post('/registrations/{registration}/cancel', [RegistrationController::class, 'cancel']);
 
-    // Mengonversi pendaftaran ke Jamaah resmi
-    Route::post(
-        '/registrations/{registration}/convert-to-jamaah',
-        [RegistrationController::class, 'convertToJamaah']
-    );
+    // TODO-DEPRECATED: Route convert-to-jamaah dinonaktifkan per revisi [2026-09-02].
+    // Jamaah kini diinput manual terpisah oleh Admin, tidak lagi auto-convert dari Pendaftaran.
+    // Route::post(
+    //     '/registrations/{registration}/convert-to-jamaah',
+    //     [RegistrationController::class, 'convertToJamaah']
+    // );
 
     // ====================
     // KEUANGAN / PEMBAYARAN & PENGELUARAN

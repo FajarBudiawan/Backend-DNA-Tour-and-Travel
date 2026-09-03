@@ -17,6 +17,7 @@ class RegistrationEquipment extends Model
     protected $fillable = [
         'registration_id',
         'equipment_name',
+        'size',
         'is_received',
         'received_at',
     ];
