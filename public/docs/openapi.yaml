@@ -1,0 +1,2104 @@
+openapi: 3.0.3
+info:
+  title: 'DNA Tour & Travel API Documentation'
+  description: 'Dokumentasi resmi API Backend DNA Tour & Travel Umrah Management System.'
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localhost:8000'
+tags:
+  -
+    name: Endpoints
+    description: ''
+components:
+  securitySchemes:
+    default:
+      type: http
+      scheme: bearer
+      description: 'Setiap request membutuhkan header `Authorization: Bearer {token}` yang didapatkan setelah berhasil login melalui endpoint `POST /api/login`.'
+security:
+  -
+    default: []
+paths:
+  /api/login:
+    post:
+      summary: ''
+      operationId: postApiLogin
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 'Must be a valid email address.'
+                  example: gbailey@example.net
+                password:
+                  type: string
+                  description: ''
+                  example: architecto
+              required:
+                - email
+                - password
+  /api/logout:
+    post:
+      summary: ''
+      operationId: postApiLogout
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+  /api/me:
+    get:
+      summary: ''
+      operationId: getApiMe
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+      tags:
+        - Endpoints
+  /api/hotels:
+    get:
+      summary: 'Menampilkan daftar hotel (dengan opsional filter per kota).'
+      operationId: menampilkanDaftarHoteldenganOpsionalFilterPerKota
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+      tags:
+        - Endpoints
+  /api/hotels/find-or-create:
+    post:
+      summary: 'Cari hotel berdasarkan nama & kota (case-insensitive exact match).'
+      operationId: cariHotelBerdasarkanNamaKotacaseInsensitiveExactMatch
+      description: "Jika ditemukan: kembalikan hotel yang ada.\nJika tidak ditemukan: buat hotel baru dan kembalikan data hotel baru."
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Must not be greater than 150 characters.'
+                  example: b
+                city:
+                  type: string
+                  description: ''
+                  example: Makkah
+                  enum:
+                    - Makkah
+                    - Madinah
+              required:
+                - name
+                - city
+  /api/packages:
+    get:
+      summary: 'Menampilkan semua data paket Umrah (dengan pencarian & filter).'
+      operationId: menampilkanSemuaDataPaketUmrahdenganPencarianFilter
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+      tags:
+        - Endpoints
+    post:
+      summary: 'Membuat paket Umrah baru.'
+      operationId: membuatPaketUmrahBaru
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Must not be greater than 150 characters.'
+                  example: b
+                category:
+                  type: string
+                  description: 'Must not be greater than 50 characters.'
+                  example: 'n'
+                  nullable: true
+                status:
+                  type: string
+                  description: ''
+                  example: published
+                  enum:
+                    - draft
+                    - published
+                    - inactive
+                  nullable: true
+                is_featured:
+                  type: boolean
+                  description: ''
+                  example: true
+                  nullable: true
+              required:
+                - name
+  '/api/packages/{package_id}':
+    get:
+      summary: 'Menampilkan detail satu paket Umrah.'
+      operationId: menampilkanDetailSatuPaketUmrah
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+      tags:
+        - Endpoints
+    put:
+      summary: 'Perbarui data paket Umrah.'
+      operationId: perbaruiDataPaketUmrah
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Must not be greater than 150 characters.'
+                  example: b
+                category:
+                  type: string
+                  description: 'Must not be greater than 50 characters.'
+                  example: 'n'
+                  nullable: true
+                status:
+                  type: string
+                  description: ''
+                  example: inactive
+                  enum:
+                    - draft
+                    - published
+                    - inactive
+                is_featured:
+                  type: boolean
+                  description: ''
+                  example: true
+    delete:
+      summary: 'Hapus data paket Umrah.'
+      operationId: hapusDataPaketUmrah
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+    parameters:
+      -
+        in: path
+        name: package_id
+        description: 'The ID of the package.'
+        example: 019fff58-a57b-7024-9105-8669a2b8faeb
+        required: true
+        schema:
+          type: string
+  '/api/packages/{package_id}/itineraries':
+    get:
+      summary: 'Display a listing of itineraries for a package.'
+      operationId: displayAListingOfItinerariesForAPackage
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+      tags:
+        - Endpoints
+    post:
+      summary: 'Store a newly created itinerary for a package.'
+      operationId: storeANewlyCreatedItineraryForAPackage
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                day_number:
+                  type: integer
+                  description: 'Must be at least 1.'
+                  example: 16
+                title:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: 'n'
+                activity_time:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: true
+                location:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: 'n'
+                  nullable: true
+                category:
+                  type: string
+                  description: 'Must not be greater than 100 characters.'
+                  example: g
+                  nullable: true
+                description:
+                  type: string
+                  description: ''
+                  example: 'Eius et animi quos velit et.'
+                  nullable: true
+              required:
+                - day_number
+                - title
+    parameters:
+      -
+        in: path
+        name: package_id
+        description: 'The ID of the package.'
+        example: 019fff58-a57b-7024-9105-8669a2b8faeb
+        required: true
+        schema:
+          type: string
+  '/api/packages/{package_id}/itineraries/{itinerary_id}':
+    put:
+      summary: 'Update the specified itinerary template and sync to un-customized kloter schedules.'
+      operationId: updateTheSpecifiedItineraryTemplateAndSyncToUnCustomizedKloterSchedules
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                day_number:
+                  type: integer
+                  description: 'Must be at least 1.'
+                  example: 16
+                title:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: 'n'
+                activity_time:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: true
+                location:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: 'n'
+                  nullable: true
+                category:
+                  type: string
+                  description: 'Must not be greater than 100 characters.'
+                  example: g
+                  nullable: true
+                description:
+                  type: string
+                  description: ''
+                  example: 'Eius et animi quos velit et.'
+                  nullable: true
+    delete:
+      summary: 'Remove the specified itinerary template.'
+      operationId: removeTheSpecifiedItineraryTemplate
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+    parameters:
+      -
+        in: path
+        name: package_id
+        description: 'The ID of the package.'
+        example: 019fff58-a57b-7024-9105-8669a2b8faeb
+        required: true
+        schema:
+          type: string
+      -
+        in: path
+        name: itinerary_id
+        description: 'The ID of the itinerary.'
+        example: 01a06c85-f2ba-713e-8952-deab62b1c219
+        required: true
+        schema:
+          type: string
+  /api/kloters:
+    get:
+      summary: 'Menampilkan semua data kloter keberangkatan (dengan pencarian & filter).'
+      operationId: menampilkanSemuaDataKloterKeberangkatandenganPencarianFilter
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+      tags:
+        - Endpoints
+    post:
+      summary: 'Membuat kloter keberangkatan baru.'
+      operationId: membuatKloterKeberangkatanBaru
+      description: 'package_id, departure_date, return_date sekarang NULLABLE (keputusan klien).'
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Must not be greater than 150 characters.'
+                  example: b
+                package_id:
+                  type: string
+                  description: 'Must be a valid UUID. Must match an existing stored value.'
+                  example: a4855dc5-0acb-33c3-b921-f4291f719ca0
+                  nullable: true
+                code:
+                  type: string
+                  description: 'Must not be greater than 30 characters.'
+                  example: z
+                  nullable: true
+                flight_code:
+                  type: string
+                  description: 'Must not be greater than 50 characters.'
+                  example: m
+                  nullable: true
+                departure_date:
+                  type: string
+                  description: 'Must be a valid date.'
+                  example: '2026-09-04T17:01:13'
+                  nullable: true
+                return_date:
+                  type: string
+                  description: 'Must be a valid date. Must be a date after or equal to <code>departure_date</code>.'
+                  example: '2052-09-27'
+                  nullable: true
+                hotel_makkah_id:
+                  type: string
+                  description: 'Must be a valid UUID. Must match an existing stored value.'
+                  example: a4855dc5-0acb-33c3-b921-f4291f719ca0
+                  nullable: true
+                hotel_madinah_id:
+                  type: string
+                  description: 'Must be a valid UUID. Must match an existing stored value.'
+                  example: c90237e9-ced5-3af6-88ea-84aeaa148878
+                  nullable: true
+                status:
+                  type: string
+                  description: ''
+                  example: draft
+                  enum:
+                    - draft
+                    - active
+                    - ready
+                    - completed
+                    - cancelled
+                  nullable: true
+                tour_leader:
+                  type: string
+                  description: 'Must not be greater than 200 characters.'
+                  example: i
+                  nullable: true
+                mutawif_local:
+                  type: string
+                  description: 'Must not be greater than 200 characters.'
+                  example: 'y'
+                  nullable: true
+              required:
+                - name
+  '/api/kloters/{kloter_id}':
+    get:
+      summary: 'Menampilkan detail satu kloter keberangkatan beserta daftar jamaah.'
+      operationId: menampilkanDetailSatuKloterKeberangkatanBesertaDaftarJamaah
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+      tags:
+        - Endpoints
+    put:
+      summary: 'Perbarui data kloter keberangkatan.'
+      operationId: perbaruiDataKloterKeberangkatan
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Must not be greater than 150 characters.'
+                  example: b
+                package_id:
+                  type: string
+                  description: 'Must be a valid UUID. Must match an existing stored value.'
+                  example: a4855dc5-0acb-33c3-b921-f4291f719ca0
+                  nullable: true
+                code:
+                  type: string
+                  description: 'Must not be greater than 30 characters.'
+                  example: z
+                  nullable: true
+                flight_code:
+                  type: string
+                  description: 'Must not be greater than 50 characters.'
+                  example: m
+                  nullable: true
+                departure_date:
+                  type: string
+                  description: 'Must be a valid date.'
+                  example: '2026-09-04T17:01:13'
+                  nullable: true
+                return_date:
+                  type: string
+                  description: 'Must be a valid date. Must be a date after or equal to <code>departure_date</code>.'
+                  example: '2052-09-27'
+                  nullable: true
+                hotel_makkah_id:
+                  type: string
+                  description: 'Must be a valid UUID. Must match an existing stored value.'
+                  example: a4855dc5-0acb-33c3-b921-f4291f719ca0
+                  nullable: true
+                hotel_madinah_id:
+                  type: string
+                  description: 'Must be a valid UUID. Must match an existing stored value.'
+                  example: c90237e9-ced5-3af6-88ea-84aeaa148878
+                  nullable: true
+                status:
+                  type: string
+                  description: ''
+                  example: cancelled
+                  enum:
+                    - draft
+                    - active
+                    - ready
+                    - completed
+                    - cancelled
+                tour_leader:
+                  type: string
+                  description: 'Must not be greater than 200 characters.'
+                  example: i
+                  nullable: true
+                mutawif_local:
+                  type: string
+                  description: 'Must not be greater than 200 characters.'
+                  example: 'y'
+                  nullable: true
+    delete:
+      summary: 'Hapus data kloter keberangkatan.'
+      operationId: hapusDataKloterKeberangkatan
+      description: "Guard: tidak boleh dihapus jika masih ada jamaah ter-assign via jamaah.kloter_id\n(single source of truth — menggantikan pengecekan via registrations() lama)."
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+    parameters:
+      -
+        in: path
+        name: kloter_id
+        description: 'The ID of the kloter.'
+        example: 019fff5a-e6a2-72d5-8f7d-8814ad6f0c89
+        required: true
+        schema:
+          type: string
+  '/api/kloters/{kloter_id}/schedules':
+    get:
+      summary: 'Display a listing of schedules for a kloter.'
+      operationId: displayAListingOfSchedulesForAKloter
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+      tags:
+        - Endpoints
+    post:
+      summary: 'Store a manually created schedule for a kloter.'
+      operationId: storeAManuallyCreatedScheduleForAKloter
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                day_number:
+                  type: integer
+                  description: 'Must be at least 1.'
+                  example: 16
+                  nullable: true
+                activity_date:
+                  type: string
+                  description: 'Must be a valid date.'
+                  example: '2026-09-04T17:01:13'
+                activity_time:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: true
+                hijri_date_ref:
+                  type: string
+                  description: 'Must not be greater than 30 characters.'
+                  example: 'n'
+                  nullable: true
+                title:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: g
+                location:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: z
+                  nullable: true
+                category:
+                  type: string
+                  description: 'Must not be greater than 100 characters.'
+                  example: m
+                  nullable: true
+                pic:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: i
+                  nullable: true
+                status:
+                  type: string
+                  description: 'Must not be greater than 50 characters.'
+                  example: 'y'
+                  nullable: true
+                description:
+                  type: string
+                  description: ''
+                  example: 'Eius et animi quos velit et.'
+                  nullable: true
+                is_published:
+                  type: boolean
+                  description: ''
+                  example: false
+                  nullable: true
+              required:
+                - activity_date
+                - title
+    parameters:
+      -
+        in: path
+        name: kloter_id
+        description: 'The ID of the kloter.'
+        example: 019fff5a-e6a2-72d5-8f7d-8814ad6f0c89
+        required: true
+        schema:
+          type: string
+  '/api/kloters/{kloter_id}/schedules/{schedule_id}':
+    put:
+      summary: 'Update the specified schedule for a kloter.'
+      operationId: updateTheSpecifiedScheduleForAKloter
+      description: 'Note: Manual update automatically sets is_customized = true.'
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                day_number:
+                  type: integer
+                  description: 'Must be at least 1.'
+                  example: 16
+                activity_date:
+                  type: string
+                  description: 'Must be a valid date.'
+                  example: '2026-09-04T17:01:13'
+                activity_time:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: true
+                hijri_date_ref:
+                  type: string
+                  description: 'Must not be greater than 30 characters.'
+                  example: 'n'
+                  nullable: true
+                title:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: g
+                location:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: z
+                  nullable: true
+                category:
+                  type: string
+                  description: 'Must not be greater than 100 characters.'
+                  example: m
+                  nullable: true
+                pic:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: i
+                  nullable: true
+                status:
+                  type: string
+                  description: 'Must not be greater than 50 characters.'
+                  example: 'y'
+                  nullable: true
+                description:
+                  type: string
+                  description: ''
+                  example: 'Eius et animi quos velit et.'
+                  nullable: true
+                is_published:
+                  type: boolean
+                  description: ''
+                  example: true
+                  nullable: true
+    delete:
+      summary: 'Remove the specified schedule from a kloter.'
+      operationId: removeTheSpecifiedScheduleFromAKloter
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+    parameters:
+      -
+        in: path
+        name: kloter_id
+        description: 'The ID of the kloter.'
+        example: 019fff5a-e6a2-72d5-8f7d-8814ad6f0c89
+        required: true
+        schema:
+          type: string
+      -
+        in: path
+        name: schedule_id
+        description: 'The ID of the schedule.'
+        example: 01a06c86-0384-702f-b748-164626d2fd9f
+        required: true
+        schema:
+          type: string
+  '/api/kloters/{kloter_id}/schedules/generate-from-template':
+    post:
+      summary: 'Generate or sync kloter rundown schedules from Package Itinerary templates.'
+      operationId: generateOrSyncKloterRundownSchedulesFromPackageItineraryTemplates
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+    parameters:
+      -
+        in: path
+        name: kloter_id
+        description: 'The ID of the kloter.'
+        example: 019fff5a-e6a2-72d5-8f7d-8814ad6f0c89
+        required: true
+        schema:
+          type: string
+  '/api/kloters/{kloter_id}/rooms':
+    get:
+      summary: 'Menampilkan semua kamar dan anggota dalam satu kloter.'
+      operationId: menampilkanSemuaKamarDanAnggotaDalamSatuKloter
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+      tags:
+        - Endpoints
+    parameters:
+      -
+        in: path
+        name: kloter_id
+        description: 'The ID of the kloter.'
+        example: 019fff5a-e6a2-72d5-8f7d-8814ad6f0c89
+        required: true
+        schema:
+          type: string
+  '/api/kloters/{kloter_id}/auto-assign-rooms':
+    post:
+      summary: 'Pembagian Kamar Otomatis (Auto Allocation Roommates).'
+      operationId: pembagianKamarOtomatisAutoAllocationRoommates
+      description: '// DEPRECATED sementara: endpoint ini bergantung pada registration_id dari tabel registrations.'
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                room_type:
+                  type: string
+                  description: ''
+                  example: triple
+                  enum:
+                    - quad
+                    - triple
+                    - double
+                    - single
+                    - quint
+                  nullable: true
+                hotel_id:
+                  type: string
+                  description: 'Must be a valid UUID. Must match an existing stored value.'
+                  example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+                  nullable: true
+    parameters:
+      -
+        in: path
+        name: kloter_id
+        description: 'The ID of the kloter.'
+        example: 019fff5a-e6a2-72d5-8f7d-8814ad6f0c89
+        required: true
+        schema:
+          type: string
+  /api/rooms:
+    post:
+      summary: 'Membuat kamar secara manual oleh Admin.'
+      operationId: membuatKamarSecaraManualOlehAdmin
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                kloter_id:
+                  type: string
+                  description: 'Must be a valid UUID. Must match an existing stored value.'
+                  example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+                hotel_id:
+                  type: string
+                  description: 'Must be a valid UUID. Must match an existing stored value.'
+                  example: 6b72fe4a-5b40-307c-bc24-f79acf9a1bb9
+                  nullable: true
+                room_number:
+                  type: string
+                  description: 'Must not be greater than 30 characters.'
+                  example: m
+                  nullable: true
+                room_type:
+                  type: string
+                  description: ''
+                  example: double
+                  enum:
+                    - quad
+                    - triple
+                    - double
+                    - single
+                    - quint
+                capacity:
+                  type: integer
+                  description: 'Must be at least 1.'
+                  example: 35
+                  nullable: true
+                gender:
+                  type: string
+                  description: ''
+                  example: P
+                  enum:
+                    - L
+                    - P
+                notes:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: 'y'
+                  nullable: true
+              required:
+                - kloter_id
+                - room_type
+                - gender
+  '/api/rooms/{room_id}':
+    get:
+      summary: 'Menampilkan detail satu kamar.'
+      operationId: menampilkanDetailSatuKamar
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+      tags:
+        - Endpoints
+    put:
+      summary: 'Perbarui kamar secara manual.'
+      operationId: perbaruiKamarSecaraManual
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hotel_id:
+                  type: string
+                  description: 'Must be a valid UUID. Must match an existing stored value.'
+                  example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+                  nullable: true
+                room_number:
+                  type: string
+                  description: 'Must not be greater than 30 characters.'
+                  example: g
+                  nullable: true
+                room_type:
+                  type: string
+                  description: ''
+                  example: quint
+                  enum:
+                    - quad
+                    - triple
+                    - double
+                    - single
+                    - quint
+                capacity:
+                  type: integer
+                  description: 'Must be at least 1.'
+                  example: 66
+                gender:
+                  type: string
+                  description: ''
+                  example: L
+                  enum:
+                    - L
+                    - P
+                notes:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: m
+                  nullable: true
+    delete:
+      summary: 'Hapus kamar (semua room_members ikut terhapus via cascade).'
+      operationId: hapusKamarsemuaRoomMembersIkutTerhapusViaCascade
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+    parameters:
+      -
+        in: path
+        name: room_id
+        description: 'The ID of the room.'
+        example: 01a01e2a-d6b9-735a-b565-82e5752db78d
+        required: true
+        schema:
+          type: string
+  '/api/rooms/{room_id}/members':
+    post:
+      summary: 'Menambahkan penghuni ke kamar secara manual atau via jamaah_id.'
+      operationId: menambahkanPenghuniKeKamarSecaraManualAtauViaJamaahId
+      description: "Kamar campuran gender diperbolehkan (tidak ada batasan gender penghuni vs kamar).\nMencegah duplikasi jamaah_id dalam kloter_id & hotel_id yang sama."
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jamaah_id:
+                  type: string
+                  description: 'Must be a valid UUID. Must match an existing stored value.'
+                  example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+                  nullable: true
+                title:
+                  type: string
+                  description: 'This field is required when <code>jamaah_id</code> is not present.'
+                  example: MISS
+                  enum:
+                    - MR
+                    - MRS
+                    - MISS
+                    - MSTR
+                  nullable: true
+                occupant_name:
+                  type: string
+                  description: 'This field is required when <code>jamaah_id</code> is not present. Must not be greater than 255 characters.'
+                  example: g
+                  nullable: true
+                age:
+                  type: integer
+                  description: 'Must be at least 0. Must not be greater than 120.'
+                  example: 16
+                  nullable: true
+    parameters:
+      -
+        in: path
+        name: room_id
+        description: 'The ID of the room.'
+        example: 01a01e2a-d6b9-735a-b565-82e5752db78d
+        required: true
+        schema:
+          type: string
+  '/api/rooms/{room_id}/members/{roomMember_id}':
+    put:
+      summary: 'Memperbarui data penghuni kamar (title, occupant_name, age, jamaah_id).'
+      operationId: memperbaruiDataPenghuniKamartitleOccupantNameAgeJamaahId
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jamaah_id:
+                  type: string
+                  description: 'Must be a valid UUID. Must match an existing stored value.'
+                  example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+                  nullable: true
+                title:
+                  type: string
+                  description: ''
+                  example: MRS
+                  enum:
+                    - MR
+                    - MRS
+                    - MISS
+                    - MSTR
+                occupant_name:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: g
+                age:
+                  type: integer
+                  description: 'Must be at least 0. Must not be greater than 120.'
+                  example: 16
+                  nullable: true
+    delete:
+      summary: 'Menghapus penghuni dari kamar berdasarkan ID room_member.'
+      operationId: menghapusPenghuniDariKamarBerdasarkanIDRoomMember
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+    parameters:
+      -
+        in: path
+        name: room_id
+        description: 'The ID of the room.'
+        example: 01a01e2a-d6b9-735a-b565-82e5752db78d
+        required: true
+        schema:
+          type: string
+      -
+        in: path
+        name: roomMember_id
+        description: 'The ID of the roomMember.'
+        example: 01a01e2a-d6bf-7388-be5c-3f7eebe7e2a6
+        required: true
+        schema:
+          type: string
+  /api/registrations:
+    get:
+      summary: 'Menampilkan semua data pendaftaran (dengan pencarian & filter).'
+      operationId: menampilkanSemuaDataPendaftarandenganPencarianFilter
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+      tags:
+        - Endpoints
+    post:
+      summary: 'Menyimpan pendaftaran baru.'
+      operationId: menyimpanPendaftaranBaru
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                registration_number:
+                  type: string
+                  description: 'Must not be greater than 30 characters.'
+                  example: b
+                  nullable: true
+                full_name:
+                  type: string
+                  description: 'Must not be greater than 150 characters.'
+                  example: 'n'
+                passport_number:
+                  type: string
+                  description: 'Must not be greater than 50 characters.'
+                  example: g
+                  nullable: true
+                nik:
+                  type: string
+                  description: 'Must be 16 characters.'
+                  example: zmiyvdljnikhwayk
+                phone:
+                  type: string
+                  description: 'Must not be greater than 20 characters.'
+                  example: cmyuwpwlvqwrsitc
+                birth_date:
+                  type: string
+                  description: 'Must be a valid date. Must be a date before <code>today</code>.'
+                  example: '2022-09-29'
+                gender:
+                  type: string
+                  description: ''
+                  example: L
+                  enum:
+                    - L
+                    - P
+                registration_date:
+                  type: string
+                  description: 'Must be a valid date.'
+                  example: '2026-09-04T17:01:13'
+                departure_date:
+                  type: string
+                  description: 'Must be a valid date. Must be a date after or equal to <code>registration_date</code>.'
+                  example: '2052-09-27'
+                  nullable: true
+                package_id:
+                  type: string
+                  description: 'Must be a valid UUID. Must match an existing stored value.'
+                  example: a4855dc5-0acb-33c3-b921-f4291f719ca0
+                kloter_id:
+                  type: string
+                  description: 'Must be a valid UUID. Must match an existing stored value.'
+                  example: c90237e9-ced5-3af6-88ea-84aeaa148878
+                  nullable: true
+                meningitis_vaccine_status:
+                  type: string
+                  description: ''
+                  example: sudah_vaksin
+                  enum:
+                    - belum_vaksin
+                    - sudah_vaksin
+                photo_status:
+                  type: string
+                  description: ''
+                  example: sudah_menyerahkan
+                  enum:
+                    - belum_ada
+                    - sudah_menyerahkan
+                total_package_cost:
+                  type: number
+                  description: 'Must be at least 0.'
+                  example: 8
+                status:
+                  type: string
+                  description: ''
+                  example: dp
+                  enum:
+                    - unpaid
+                    - dp
+                    - dp_paid
+                    - paid
+                    - fully_paid
+                    - cancelled
+                    - converted
+                  nullable: true
+                initial_payment:
+                  type: object
+                  description: ''
+                  example: null
+                  properties:
+                    amount:
+                      type: number
+                      description: 'This field is required when <code>initial_payment</code> is present.'
+                      example: 4326.41688
+                    payment_type:
+                      type: string
+                      description: ''
+                      example: full_payment
+                      enum:
+                        - down_payment
+                        - full_payment
+                      nullable: true
+                    payment_method:
+                      type: string
+                      description: ''
+                      example: edc_qris
+                      enum:
+                        - bca_transfer
+                        - mandiri_transfer
+                        - bsi_transfer
+                        - cash
+                        - edc_qris
+                      nullable: true
+                    payment_date:
+                      type: string
+                      description: 'Must be a valid date.'
+                      example: '2026-09-04T17:01:13'
+                      nullable: true
+                  nullable: true
+                equipments:
+                  type: array
+                  description: ''
+                  example: null
+                  items:
+                    type: object
+                    nullable: true
+                    properties:
+                      equipment_name:
+                        type: string
+                        description: 'This field is required when <code>equipments</code> is present. Must not be greater than 100 characters.'
+                        example: m
+                      size:
+                        type: string
+                        description: 'Must not be greater than 20 characters.'
+                        example: iyvdljnikhwaykcm
+                        nullable: true
+                      is_received:
+                        type: boolean
+                        description: 'This field is required when <code>equipments</code> is present.'
+                        example: false
+              required:
+                - full_name
+                - nik
+                - phone
+                - birth_date
+                - gender
+                - registration_date
+                - package_id
+                - meningitis_vaccine_status
+                - photo_status
+                - total_package_cost
+  '/api/registrations/{registration_id}':
+    get:
+      summary: 'Menampilkan detail satu pendaftaran.'
+      operationId: menampilkanDetailSatuPendaftaran
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+      tags:
+        - Endpoints
+    put:
+      summary: 'Perbarui data pendaftaran.'
+      operationId: perbaruiDataPendaftaran
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                full_name:
+                  type: string
+                  description: 'Must not be greater than 150 characters.'
+                  example: b
+                passport_number:
+                  type: string
+                  description: 'Must not be greater than 50 characters.'
+                  example: 'n'
+                  nullable: true
+                nik:
+                  type: string
+                  description: 'Must be 16 characters.'
+                  example: gzmiyvdljnikhway
+                phone:
+                  type: string
+                  description: 'Must not be greater than 20 characters.'
+                  example: kcmyuwpwlvqwrsit
+                birth_date:
+                  type: string
+                  description: 'Must be a valid date. Must be a date before <code>today</code>.'
+                  example: '2022-09-29'
+                gender:
+                  type: string
+                  description: ''
+                  example: L
+                  enum:
+                    - L
+                    - P
+                registration_date:
+                  type: string
+                  description: 'Must be a valid date.'
+                  example: '2026-09-04T17:01:13'
+                departure_date:
+                  type: string
+                  description: 'Must be a valid date.'
+                  example: '2026-09-04T17:01:13'
+                  nullable: true
+                package_id:
+                  type: string
+                  description: 'Must be a valid UUID. Must match an existing stored value.'
+                  example: a4855dc5-0acb-33c3-b921-f4291f719ca0
+                kloter_id:
+                  type: string
+                  description: 'Must be a valid UUID. Must match an existing stored value.'
+                  example: c90237e9-ced5-3af6-88ea-84aeaa148878
+                  nullable: true
+                meningitis_vaccine_status:
+                  type: string
+                  description: ''
+                  example: belum_vaksin
+                  enum:
+                    - belum_vaksin
+                    - sudah_vaksin
+                photo_status:
+                  type: string
+                  description: ''
+                  example: sudah_menyerahkan
+                  enum:
+                    - belum_ada
+                    - sudah_menyerahkan
+                total_package_cost:
+                  type: number
+                  description: 'Must be at least 0.'
+                  example: 8
+                status:
+                  type: string
+                  description: ''
+                  example: dp
+                  enum:
+                    - unpaid
+                    - dp
+                    - dp_paid
+                    - paid
+                    - fully_paid
+                    - cancelled
+                    - converted
+                equipments:
+                  type: array
+                  description: ''
+                  example: null
+                  items:
+                    type: object
+                    nullable: true
+                    properties:
+                      equipment_name:
+                        type: string
+                        description: 'This field is required when <code>equipments</code> is present. Must not be greater than 100 characters.'
+                        example: 'y'
+                      size:
+                        type: string
+                        description: 'Must not be greater than 20 characters.'
+                        example: vdljnikhwaykcmyu
+                        nullable: true
+                      is_received:
+                        type: boolean
+                        description: 'This field is required when <code>equipments</code> is present.'
+                        example: false
+    delete:
+      summary: 'Hapus data pendaftaran.'
+      operationId: hapusDataPendaftaran
+      description: "Catatan revisi [2026-09-02]: Guard 'converted' dihapus karena alur Jamaah\nkini terpisah — tidak ada lagi status 'converted' yang mengunci Pendaftaran.\nData lama berstatus 'converted' di database tetap bisa dihapus oleh admin."
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+    parameters:
+      -
+        in: path
+        name: registration_id
+        description: 'The ID of the registration.'
+        example: 01a03d44-b220-7120-aed2-73ce5afc9517
+        required: true
+        schema:
+          type: string
+  '/api/registrations/{registration_id}/cancel':
+    post:
+      summary: 'Membatalkan pendaftaran.'
+      operationId: membatalkanPendaftaran
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+    parameters:
+      -
+        in: path
+        name: registration_id
+        description: 'The ID of the registration.'
+        example: 01a03d44-b220-7120-aed2-73ce5afc9517
+        required: true
+        schema:
+          type: string
+  /api/payments:
+    get:
+      summary: 'Menampilkan seluruh data transaksi pembayaran (Untuk Admin Keuangan).'
+      operationId: menampilkanSeluruhDataTransaksiPembayaranUntukAdminKeuangan
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+      tags:
+        - Endpoints
+  '/api/registrations/{registration_id}/payments':
+    get:
+      summary: 'Menampilkan semua pembayaran dari satu pendaftaran.'
+      operationId: menampilkanSemuaPembayaranDariSatuPendaftaran
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+      tags:
+        - Endpoints
+    post:
+      summary: 'Menambahkan pembayaran ke pendaftaran.'
+      operationId: menambahkanPembayaranKePendaftaran
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: number
+                  description: ''
+                  example: 4326.41688
+                payment_type:
+                  type: string
+                  description: ''
+                  example: full_payment
+                  enum:
+                    - down_payment
+                    - full_payment
+                payment_method:
+                  type: string
+                  description: ''
+                  example: mandiri_transfer
+                  enum:
+                    - bca_transfer
+                    - mandiri_transfer
+                    - bsi_transfer
+                    - cash
+                    - edc_qris
+                payment_date:
+                  type: string
+                  description: 'Must be a valid date.'
+                  example: '2026-09-04T17:01:13'
+                notes:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: m
+                  nullable: true
+              required:
+                - amount
+                - payment_type
+                - payment_method
+                - payment_date
+    parameters:
+      -
+        in: path
+        name: registration_id
+        description: 'The ID of the registration.'
+        example: 01a03d44-b220-7120-aed2-73ce5afc9517
+        required: true
+        schema:
+          type: string
+  /api/expenses:
+    get:
+      summary: 'Menampilkan daftar pengeluaran kas dengan filter dan ringkasan agregat.'
+      operationId: menampilkanDaftarPengeluaranKasDenganFilterDanRingkasanAgregat
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+      tags:
+        - Endpoints
+    post:
+      summary: 'Menyimpan pengeluaran kas baru.'
+      operationId: menyimpanPengeluaranKasBaru
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                vendor:
+                  type: string
+                  description: 'Must not be greater than 150 characters.'
+                  example: b
+                category:
+                  type: string
+                  description: ''
+                  example: perlengkapan
+                  enum:
+                    - akomodasi_tiket
+                    - perlengkapan
+                    - operasional_bus
+                amount:
+                  type: number
+                  description: ''
+                  example: 4326.41688
+                payment_method:
+                  type: string
+                  description: ''
+                  example: bsi_transfer
+                  enum:
+                    - bca_transfer
+                    - mandiri_transfer
+                    - bsi_transfer
+                    - cash
+                    - edc_qris
+                expense_date:
+                  type: string
+                  description: 'Must be a valid date.'
+                  example: '2026-09-04T17:01:13'
+                reference_number:
+                  type: string
+                  description: 'Must not be greater than 50 characters.'
+                  example: m
+                  nullable: true
+                notes:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: i
+                  nullable: true
+              required:
+                - vendor
+                - category
+                - amount
+                - payment_method
+                - expense_date
+  '/api/expenses/{expense_id}':
+    get:
+      summary: 'Menampilkan detail satu pengeluaran kas.'
+      operationId: menampilkanDetailSatuPengeluaranKas
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+      tags:
+        - Endpoints
+    put:
+      summary: 'Memperbarui data pengeluaran kas.'
+      operationId: memperbaruiDataPengeluaranKas
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                vendor:
+                  type: string
+                  description: 'Must not be greater than 150 characters.'
+                  example: b
+                category:
+                  type: string
+                  description: ''
+                  example: perlengkapan
+                  enum:
+                    - akomodasi_tiket
+                    - perlengkapan
+                    - operasional_bus
+                amount:
+                  type: number
+                  description: ''
+                  example: 4326.41688
+                payment_method:
+                  type: string
+                  description: ''
+                  example: bsi_transfer
+                  enum:
+                    - bca_transfer
+                    - mandiri_transfer
+                    - bsi_transfer
+                    - cash
+                    - edc_qris
+                expense_date:
+                  type: string
+                  description: 'Must be a valid date.'
+                  example: '2026-09-04T17:01:13'
+                reference_number:
+                  type: string
+                  description: 'Must not be greater than 50 characters.'
+                  example: m
+                  nullable: true
+                notes:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: i
+                  nullable: true
+    delete:
+      summary: 'Menghapus data pengeluaran kas.'
+      operationId: menghapusDataPengeluaranKas
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+    parameters:
+      -
+        in: path
+        name: expense_id
+        description: 'The ID of the expense.'
+        example: 01a03c1d-d876-7340-911d-b8bd3b43254d
+        required: true
+        schema:
+          type: string
+  /api/finance/summary:
+    get:
+      summary: 'Menampilkan ringkasan keuangan global (Total Pemasukan, Pengeluaran, Piutang, Saldo Bersih).'
+      operationId: menampilkanRingkasanKeuanganGlobalTotalPemasukanPengeluaranPiutangSaldoBersih
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+      tags:
+        - Endpoints
+  /api/jamaah:
+    get:
+      summary: 'Menampilkan semua data Jamaah resmi.'
+      operationId: menampilkanSemuaDataJamaahResmi
+      description: 'Eager-load relasi package & kloter untuk efisiensi (N+1 prevention).'
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+      tags:
+        - Endpoints
+    post:
+      summary: 'Membuat data Jamaah baru secara manual oleh admin.'
+      operationId: membuatDataJamaahBaruSecaraManualOlehAdmin
+      description: "Revisi [2026-09-02]: Logic auto-generate \"JAMAAH001\" dihapus.\nlogin_id kini wajib diisi manual oleh admin (max 10 karakter, unique)."
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                login_id:
+                  type: string
+                  description: 'Must not be greater than 10 characters.'
+                  example: bngzmi
+                nik:
+                  type: string
+                  description: 'Must be 16 characters.'
+                  example: yvdljnikhwaykcmy
+                full_name:
+                  type: string
+                  description: 'Must not be greater than 150 characters.'
+                  example: u
+                birth_date:
+                  type: string
+                  description: 'Must be a valid date.'
+                  example: '2026-09-04T17:01:13'
+                  nullable: true
+                gender:
+                  type: string
+                  description: ''
+                  example: L
+                  enum:
+                    - L
+                    - P
+                  nullable: true
+                phone:
+                  type: string
+                  description: 'Must not be greater than 20 characters.'
+                  example: wpwlvqwrsitcpscq
+                  nullable: true
+                emergency_contact:
+                  type: string
+                  description: 'Must not be greater than 200 characters.'
+                  example: l
+                  nullable: true
+                passport_number:
+                  type: string
+                  description: 'Must not be greater than 30 characters.'
+                  example: d
+                  nullable: true
+                visa_number:
+                  type: string
+                  description: 'Must not be greater than 50 characters.'
+                  example: z
+                  nullable: true
+                nationality:
+                  type: string
+                  description: 'Must not be greater than 100 characters.'
+                  example: s
+                  nullable: true
+                package_id:
+                  type: string
+                  description: 'Must be a valid UUID. Must match an existing stored value.'
+                  example: 59183559-65ff-3076-b8ca-d2d03d26a42a
+                  nullable: true
+                kloter_id:
+                  type: string
+                  description: 'Must be a valid UUID. Must match an existing stored value.'
+                  example: 1937113a-b0a2-3b03-925a-3163292463db
+                  nullable: true
+                hotel_makkah:
+                  type: string
+                  description: 'Must not be greater than 200 characters.'
+                  example: u
+                  nullable: true
+                hotel_madinah:
+                  type: string
+                  description: 'Must not be greater than 200 characters.'
+                  example: j
+                  nullable: true
+                departure_date:
+                  type: string
+                  description: 'Must be a valid date.'
+                  example: '2026-09-04T17:01:13'
+                  nullable: true
+                return_date:
+                  type: string
+                  description: 'Must be a valid date. Must be a date after or equal to <code>departure_date</code>.'
+                  example: '2052-09-27'
+                  nullable: true
+                tour_leader:
+                  type: string
+                  description: 'Must not be greater than 200 characters.'
+                  example: 'n'
+                  nullable: true
+                mutawif_local:
+                  type: string
+                  description: 'Must not be greater than 200 characters.'
+                  example: g
+                  nullable: true
+                status:
+                  type: string
+                  description: ''
+                  example: archived
+                  enum:
+                    - active
+                    - archived
+                  nullable: true
+              required:
+                - login_id
+                - nik
+                - full_name
+  '/api/jamaah/{jamaah_id}':
+    get:
+      summary: 'Menampilkan detail satu data Jamaah beserta relasi.'
+      operationId: menampilkanDetailSatuDataJamaahBesertaRelasi
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+      tags:
+        - Endpoints
+    put:
+      summary: 'Perbarui data profil Jamaah.'
+      operationId: perbaruiDataProfilJamaah
+      description: 'Semua field baru bisa di-update melalui validated() dari UpdateJamaahRequest.'
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                login_id:
+                  type: string
+                  description: 'Must not be greater than 10 characters.'
+                  example: bngzmi
+                nik:
+                  type: string
+                  description: 'Must be 16 characters.'
+                  example: yvdljnikhwaykcmy
+                full_name:
+                  type: string
+                  description: 'Must not be greater than 150 characters.'
+                  example: u
+                birth_date:
+                  type: string
+                  description: 'Must be a valid date.'
+                  example: '2026-09-04T17:01:13'
+                  nullable: true
+                gender:
+                  type: string
+                  description: ''
+                  example: P
+                  enum:
+                    - L
+                    - P
+                  nullable: true
+                phone:
+                  type: string
+                  description: 'Must not be greater than 20 characters.'
+                  example: wpwlvqwrsitcpscq
+                  nullable: true
+                emergency_contact:
+                  type: string
+                  description: 'Must not be greater than 200 characters.'
+                  example: l
+                  nullable: true
+                passport_number:
+                  type: string
+                  description: 'Must not be greater than 30 characters.'
+                  example: d
+                  nullable: true
+                visa_number:
+                  type: string
+                  description: 'Must not be greater than 50 characters.'
+                  example: z
+                  nullable: true
+                nationality:
+                  type: string
+                  description: 'Must not be greater than 100 characters.'
+                  example: s
+                  nullable: true
+                package_id:
+                  type: string
+                  description: 'Must be a valid UUID. Must match an existing stored value.'
+                  example: 59183559-65ff-3076-b8ca-d2d03d26a42a
+                  nullable: true
+                kloter_id:
+                  type: string
+                  description: 'Must be a valid UUID. Must match an existing stored value.'
+                  example: 1937113a-b0a2-3b03-925a-3163292463db
+                  nullable: true
+                hotel_makkah:
+                  type: string
+                  description: 'Must not be greater than 200 characters.'
+                  example: u
+                  nullable: true
+                hotel_madinah:
+                  type: string
+                  description: 'Must not be greater than 200 characters.'
+                  example: j
+                  nullable: true
+                departure_date:
+                  type: string
+                  description: 'Must be a valid date.'
+                  example: '2026-09-04T17:01:13'
+                  nullable: true
+                return_date:
+                  type: string
+                  description: 'Must be a valid date. Must be a date after or equal to <code>departure_date</code>.'
+                  example: '2052-09-27'
+                  nullable: true
+                tour_leader:
+                  type: string
+                  description: 'Must not be greater than 200 characters.'
+                  example: 'n'
+                  nullable: true
+                mutawif_local:
+                  type: string
+                  description: 'Must not be greater than 200 characters.'
+                  example: g
+                  nullable: true
+                status:
+                  type: string
+                  description: ''
+                  example: archived
+                  enum:
+                    - active
+                    - archived
+    delete:
+      summary: 'Hapus data Jamaah.'
+      operationId: hapusDataJamaah
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+    parameters:
+      -
+        in: path
+        name: jamaah_id
+        description: 'The ID of the jamaah.'
+        example: 01a00fd9-404c-73f8-ac03-7d250410e565
+        required: true
+        schema:
+          type: string

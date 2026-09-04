@@ -4,12 +4,12 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>Laravel API Documentation</title>
+    <title>DNA Tour & Travel API Documentation</title>
 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="{{ asset("/vendor/scribe/css/theme-default.style.css") }}" media="screen">
-    <link rel="stylesheet" href="{{ asset("/vendor/scribe/css/theme-default.print.css") }}" media="print">
+    <link rel="stylesheet" href="../docs/css/theme-default.style.css" media="screen">
+    <link rel="stylesheet" href="../docs/css/theme-default.print.css" media="print">
 
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
 
@@ -30,9 +30,9 @@
         var useCsrf = Boolean();
         var csrfUrl = "/sanctum/csrf-cookie";
     </script>
-    <script src="{{ asset("/vendor/scribe/js/tryitout-5.11.0.js") }}"></script>
+    <script src="../docs/js/tryitout-5.11.0.js"></script>
 
-    <script src="{{ asset("/vendor/scribe/js/theme-default-5.11.0.js") }}"></script>
+    <script src="../docs/js/theme-default-5.11.0.js"></script>
 
 </head>
 
@@ -41,7 +41,7 @@
 <a href="#" id="nav-button">
     <span>
         MENU
-        <img src="{{ asset("/vendor/scribe/images/navbar.png") }}" alt="navbar-image"/>
+        <img src="../docs/images/navbar.png" alt="navbar-image"/>
     </span>
 </a>
 <div class="tocify-wrapper">
@@ -235,8 +235,8 @@
             </div>
 
     <ul class="toc-footer" id="toc-footer">
-                    <li style="padding-bottom: 5px;"><a href="{{ route("scribe.postman") }}">View Postman collection</a></li>
-                            <li style="padding-bottom: 5px;"><a href="{{ route("scribe.openapi") }}">View OpenAPI spec</a></li>
+                    <li style="padding-bottom: 5px;"><a href="../docs/collection.json">View Postman collection</a></li>
+                            <li style="padding-bottom: 5px;"><a href="../docs/openapi.yaml">View OpenAPI spec</a></li>
                 <li><a href="http://github.com/knuckleswtf/scribe">Documentation powered by Scribe ✍</a></li>
     </ul>
 
@@ -249,16 +249,19 @@
     <div class="dark-box"></div>
     <div class="content">
         <h1 id="introduction">Introduction</h1>
+<p>Dokumentasi resmi API Backend DNA Tour &amp; Travel Umrah Management System.</p>
 <aside>
     <strong>Base URL</strong>: <code>http://localhost:8000</code>
 </aside>
-<pre><code>This documentation aims to provide all the information you need to work with our API.
+<pre><code>Selamat datang di Dokumentasi API Backend DNA Tour &amp; Travel.
+Dokumentasi ini menyediakan informasi lengkap mengenai seluruh endpoint API yang tersedia untuk pengelolaan Pendaftaran Jamaah, Paket Umrah, Kloter Keberangkatan, Rundown Activity, Pembagian Kamar (Room Meet), serta Transaksi Keuangan.
 
-&lt;aside&gt;As you scroll, you'll see code examples for working with the API in different programming languages in the dark area to the right (or as part of the content on mobile).
-You can switch the language used with the tabs at the top right (or from the nav menu at the top left on mobile).&lt;/aside&gt;</code></pre>
+&lt;aside&gt;Gunakan header `Authorization: Bearer {token}` pada setiap request yang membutuhkan autentikasi (diperoleh dari endpoint `/api/login`).&lt;/aside&gt;</code></pre>
 
         <h1 id="authenticating-requests">Authenticating requests</h1>
-<p>This API is not authenticated.</p>
+<p>To authenticate requests, include an <strong><code>Authorization</code></strong> header with the value <strong><code>"Bearer {token}"</code></strong>.</p>
+<p>All authenticated endpoints are marked with a <code>requires authentication</code> badge in the documentation below.</p>
+<p>Setiap request membutuhkan header <code>Authorization: Bearer {token}</code> yang didapatkan setelah berhasil login melalui endpoint <code>POST /api/login</code>.</p>
 
         <h1 id="endpoints">Endpoints</h1>
 
@@ -267,6 +270,7 @@ You can switch the language used with the tabs at the top right (or from the nav
                                 <h2 id="endpoints-POSTapi-login">POST api/login</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -278,6 +282,7 @@ You can switch the language used with the tabs at the top right (or from the nav
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
     "http://localhost:8000/api/login" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -293,6 +298,7 @@ You can switch the language used with the tabs at the top right (or from the nav
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -329,7 +335,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-POSTapi-login" data-method="POST"
       data-path="api/login"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -359,6 +365,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/login</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-login"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -413,6 +431,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="endpoints-POSTapi-logout">POST api/logout</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -424,6 +443,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
     "http://localhost:8000/api/logout" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -434,6 +454,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -465,7 +486,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-POSTapi-logout" data-method="POST"
       data-path="api/logout"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -496,6 +517,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-logout"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
  &nbsp;
@@ -524,6 +557,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="endpoints-GETapi-me">GET api/me</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -535,6 +569,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
     --get "http://localhost:8000/api/me" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -545,6 +580,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -592,7 +628,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-GETapi-me" data-method="GET"
       data-path="api/me"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -623,6 +659,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-me"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
  &nbsp;
@@ -651,6 +699,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="endpoints-GETapi-hotels">Menampilkan daftar hotel (dengan opsional filter per kota).</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -662,6 +711,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
     --get "http://localhost:8000/api/hotels" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -672,6 +722,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -719,7 +770,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-GETapi-hotels" data-method="GET"
       data-path="api/hotels"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -750,6 +801,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-hotels"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
  &nbsp;
@@ -778,6 +841,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="endpoints-POSTapi-hotels-find-or-create">Cari hotel berdasarkan nama &amp; kota (case-insensitive exact match).</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 <p>Jika ditemukan: kembalikan hotel yang ada.
@@ -790,6 +854,7 @@ Jika tidak ditemukan: buat hotel baru dan kembalikan data hotel baru.</p>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
     "http://localhost:8000/api/hotels/find-or-create" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -805,6 +870,7 @@ Jika tidak ditemukan: buat hotel baru dan kembalikan data hotel baru.</p>
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -841,7 +907,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-POSTapi-hotels-find-or-create" data-method="POST"
       data-path="api/hotels/find-or-create"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -871,6 +937,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/hotels/find-or-create</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-hotels-find-or-create"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -927,6 +1005,7 @@ Must be one of:
                     <h2 id="endpoints-GETapi-packages">Menampilkan semua data paket Umrah (dengan pencarian &amp; filter).</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -938,6 +1017,7 @@ Must be one of:
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
     --get "http://localhost:8000/api/packages" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -948,6 +1028,7 @@ Must be one of:
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -995,7 +1076,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-GETapi-packages" data-method="GET"
       data-path="api/packages"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -1026,6 +1107,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-packages"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
  &nbsp;
@@ -1054,6 +1147,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="endpoints-POSTapi-packages">Membuat paket Umrah baru.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -1065,13 +1159,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
     "http://localhost:8000/api/packages" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
     \"name\": \"b\",
     \"category\": \"n\",
     \"status\": \"published\",
-    \"is_featured\": false
+    \"is_featured\": true
 }"
 </code></pre></div>
 
@@ -1082,6 +1177,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -1090,7 +1186,7 @@ let body = {
     "name": "b",
     "category": "n",
     "status": "published",
-    "is_featured": false
+    "is_featured": true
 };
 
 fetch(url, {
@@ -1120,7 +1216,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-POSTapi-packages" data-method="POST"
       data-path="api/packages"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -1150,6 +1246,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/packages</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-packages"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -1233,13 +1341,14 @@ Must be one of:
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>false</code></p>
+<p>Example: <code>true</code></p>
         </div>
         </form>
 
                     <h2 id="endpoints-GETapi-packages--package_id-">Menampilkan detail satu paket Umrah.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -1251,6 +1360,7 @@ Must be one of:
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
     --get "http://localhost:8000/api/packages/019fff58-a57b-7024-9105-8669a2b8faeb" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -1261,6 +1371,7 @@ Must be one of:
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -1308,7 +1419,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-GETapi-packages--package_id-" data-method="GET"
       data-path="api/packages/{package_id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -1338,6 +1449,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/packages/{package_id}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-packages--package_id-"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -1380,6 +1503,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="endpoints-PUTapi-packages--package_id-">Perbarui data paket Umrah.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -1391,12 +1515,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
     "http://localhost:8000/api/packages/019fff58-a57b-7024-9105-8669a2b8faeb" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
     \"name\": \"b\",
     \"category\": \"n\",
-    \"status\": \"draft\",
+    \"status\": \"inactive\",
     \"is_featured\": true
 }"
 </code></pre></div>
@@ -1408,6 +1533,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -1415,7 +1541,7 @@ const headers = {
 let body = {
     "name": "b",
     "category": "n",
-    "status": "draft",
+    "status": "inactive",
     "is_featured": true
 };
 
@@ -1446,7 +1572,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-PUTapi-packages--package_id-" data-method="PUT"
       data-path="api/packages/{package_id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -1476,6 +1602,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/packages/{package_id}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="PUTapi-packages--package_id-"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -1545,10 +1683,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="status"                data-endpoint="PUTapi-packages--package_id-"
-               value="draft"
+               value="inactive"
                data-component="body">
     <br>
-<p>Example: <code>draft</code></p>
+<p>Example: <code>inactive</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>draft</code></li> <li><code>published</code></li> <li><code>inactive</code></li></ul>
         </div>
@@ -1579,6 +1717,7 @@ Must be one of:
                     <h2 id="endpoints-DELETEapi-packages--package_id-">Hapus data paket Umrah.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -1590,6 +1729,7 @@ Must be one of:
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
     "http://localhost:8000/api/packages/019fff58-a57b-7024-9105-8669a2b8faeb" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -1600,6 +1740,7 @@ Must be one of:
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -1631,7 +1772,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-DELETEapi-packages--package_id-" data-method="DELETE"
       data-path="api/packages/{package_id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -1661,6 +1802,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/packages/{package_id}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="DELETEapi-packages--package_id-"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -1703,6 +1856,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="endpoints-GETapi-packages--package_id--itineraries">Display a listing of itineraries for a package.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -1714,6 +1868,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
     --get "http://localhost:8000/api/packages/019fff58-a57b-7024-9105-8669a2b8faeb/itineraries" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -1724,6 +1879,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -1771,7 +1927,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-GETapi-packages--package_id--itineraries" data-method="GET"
       data-path="api/packages/{package_id}/itineraries"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -1801,6 +1957,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/packages/{package_id}/itineraries</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-packages--package_id--itineraries"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -1843,6 +2011,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="endpoints-POSTapi-packages--package_id--itineraries">Store a newly created itinerary for a package.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -1854,6 +2023,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
     "http://localhost:8000/api/packages/019fff58-a57b-7024-9105-8669a2b8faeb/itineraries" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -1873,6 +2043,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -1913,7 +2084,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-POSTapi-packages--package_id--itineraries" data-method="POST"
       data-path="api/packages/{package_id}/itineraries"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -1943,6 +2114,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/packages/{package_id}/itineraries</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-packages--package_id--itineraries"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -2058,6 +2241,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="endpoints-PUTapi-packages--package_id--itineraries--itinerary_id-">Update the specified itinerary template and sync to un-customized kloter schedules.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -2069,6 +2253,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
     "http://localhost:8000/api/packages/019fff58-a57b-7024-9105-8669a2b8faeb/itineraries/01a06c85-f2ba-713e-8952-deab62b1c219" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -2088,6 +2273,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -2128,7 +2314,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-PUTapi-packages--package_id--itineraries--itinerary_id-" data-method="PUT"
       data-path="api/packages/{package_id}/itineraries/{itinerary_id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -2158,6 +2344,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/packages/{package_id}/itineraries/{itinerary_id}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="PUTapi-packages--package_id--itineraries--itinerary_id-"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -2285,6 +2483,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="endpoints-DELETEapi-packages--package_id--itineraries--itinerary_id-">Remove the specified itinerary template.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -2296,6 +2495,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
     "http://localhost:8000/api/packages/019fff58-a57b-7024-9105-8669a2b8faeb/itineraries/01a06c85-f2ba-713e-8952-deab62b1c219" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -2306,6 +2506,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -2337,7 +2538,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-DELETEapi-packages--package_id--itineraries--itinerary_id-" data-method="DELETE"
       data-path="api/packages/{package_id}/itineraries/{itinerary_id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -2367,6 +2568,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/packages/{package_id}/itineraries/{itinerary_id}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="DELETEapi-packages--package_id--itineraries--itinerary_id-"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -2421,6 +2634,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="endpoints-GETapi-kloters">Menampilkan semua data kloter keberangkatan (dengan pencarian &amp; filter).</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -2432,6 +2646,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
     --get "http://localhost:8000/api/kloters" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -2442,6 +2657,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -2489,7 +2705,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-GETapi-kloters" data-method="GET"
       data-path="api/kloters"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -2520,6 +2736,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-kloters"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
  &nbsp;
@@ -2548,6 +2776,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="endpoints-POSTapi-kloters">Membuat kloter keberangkatan baru.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 <p>package_id, departure_date, return_date sekarang NULLABLE (keputusan klien).</p>
@@ -2559,6 +2788,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
     "http://localhost:8000/api/kloters" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -2566,11 +2796,11 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"package_id\": \"a4855dc5-0acb-33c3-b921-f4291f719ca0\",
     \"code\": \"z\",
     \"flight_code\": \"m\",
-    \"departure_date\": \"2026-09-04T17:00:06\",
+    \"departure_date\": \"2026-09-04T17:01:13\",
     \"return_date\": \"2052-09-27\",
     \"hotel_makkah_id\": \"a4855dc5-0acb-33c3-b921-f4291f719ca0\",
     \"hotel_madinah_id\": \"c90237e9-ced5-3af6-88ea-84aeaa148878\",
-    \"status\": \"cancelled\",
+    \"status\": \"draft\",
     \"tour_leader\": \"i\",
     \"mutawif_local\": \"y\"
 }"
@@ -2583,6 +2813,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -2592,11 +2823,11 @@ let body = {
     "package_id": "a4855dc5-0acb-33c3-b921-f4291f719ca0",
     "code": "z",
     "flight_code": "m",
-    "departure_date": "2026-09-04T17:00:06",
+    "departure_date": "2026-09-04T17:01:13",
     "return_date": "2052-09-27",
     "hotel_makkah_id": "a4855dc5-0acb-33c3-b921-f4291f719ca0",
     "hotel_madinah_id": "c90237e9-ced5-3af6-88ea-84aeaa148878",
-    "status": "cancelled",
+    "status": "draft",
     "tour_leader": "i",
     "mutawif_local": "y"
 };
@@ -2628,7 +2859,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-POSTapi-kloters" data-method="POST"
       data-path="api/kloters"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -2658,6 +2889,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/kloters</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-kloters"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -2738,10 +2981,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="departure_date"                data-endpoint="POSTapi-kloters"
-               value="2026-09-04T17:00:06"
+               value="2026-09-04T17:01:13"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-04T17:00:06</code></p>
+<p>Must be a valid date. Example: <code>2026-09-04T17:01:13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>return_date</code></b>&nbsp;&nbsp;
@@ -2786,10 +3029,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="status"                data-endpoint="POSTapi-kloters"
-               value="cancelled"
+               value="draft"
                data-component="body">
     <br>
-<p>Example: <code>cancelled</code></p>
+<p>Example: <code>draft</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>draft</code></li> <li><code>active</code></li> <li><code>ready</code></li> <li><code>completed</code></li> <li><code>cancelled</code></li></ul>
         </div>
@@ -2822,6 +3065,7 @@ Must be one of:
                     <h2 id="endpoints-GETapi-kloters--kloter_id-">Menampilkan detail satu kloter keberangkatan beserta daftar jamaah.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -2833,6 +3077,7 @@ Must be one of:
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
     --get "http://localhost:8000/api/kloters/019fff5a-e6a2-72d5-8f7d-8814ad6f0c89" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -2843,6 +3088,7 @@ Must be one of:
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -2890,7 +3136,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-GETapi-kloters--kloter_id-" data-method="GET"
       data-path="api/kloters/{kloter_id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -2920,6 +3166,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/kloters/{kloter_id}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-kloters--kloter_id-"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -2962,6 +3220,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="endpoints-PUTapi-kloters--kloter_id-">Perbarui data kloter keberangkatan.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -2973,6 +3232,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
     "http://localhost:8000/api/kloters/019fff5a-e6a2-72d5-8f7d-8814ad6f0c89" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -2980,7 +3240,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"package_id\": \"a4855dc5-0acb-33c3-b921-f4291f719ca0\",
     \"code\": \"z\",
     \"flight_code\": \"m\",
-    \"departure_date\": \"2026-09-04T17:00:06\",
+    \"departure_date\": \"2026-09-04T17:01:13\",
     \"return_date\": \"2052-09-27\",
     \"hotel_makkah_id\": \"a4855dc5-0acb-33c3-b921-f4291f719ca0\",
     \"hotel_madinah_id\": \"c90237e9-ced5-3af6-88ea-84aeaa148878\",
@@ -2997,6 +3257,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -3006,7 +3267,7 @@ let body = {
     "package_id": "a4855dc5-0acb-33c3-b921-f4291f719ca0",
     "code": "z",
     "flight_code": "m",
-    "departure_date": "2026-09-04T17:00:06",
+    "departure_date": "2026-09-04T17:01:13",
     "return_date": "2052-09-27",
     "hotel_makkah_id": "a4855dc5-0acb-33c3-b921-f4291f719ca0",
     "hotel_madinah_id": "c90237e9-ced5-3af6-88ea-84aeaa148878",
@@ -3042,7 +3303,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-PUTapi-kloters--kloter_id-" data-method="PUT"
       data-path="api/kloters/{kloter_id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -3072,6 +3333,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/kloters/{kloter_id}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="PUTapi-kloters--kloter_id-"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -3165,10 +3438,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="departure_date"                data-endpoint="PUTapi-kloters--kloter_id-"
-               value="2026-09-04T17:00:06"
+               value="2026-09-04T17:01:13"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-04T17:00:06</code></p>
+<p>Must be a valid date. Example: <code>2026-09-04T17:01:13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>return_date</code></b>&nbsp;&nbsp;
@@ -3249,6 +3522,7 @@ Must be one of:
                     <h2 id="endpoints-DELETEapi-kloters--kloter_id-">Hapus data kloter keberangkatan.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 <p>Guard: tidak boleh dihapus jika masih ada jamaah ter-assign via jamaah.kloter_id
@@ -3261,6 +3535,7 @@ Must be one of:
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
     "http://localhost:8000/api/kloters/019fff5a-e6a2-72d5-8f7d-8814ad6f0c89" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -3271,6 +3546,7 @@ Must be one of:
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -3302,7 +3578,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-DELETEapi-kloters--kloter_id-" data-method="DELETE"
       data-path="api/kloters/{kloter_id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -3332,6 +3608,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/kloters/{kloter_id}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="DELETEapi-kloters--kloter_id-"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -3374,6 +3662,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="endpoints-GETapi-kloters--kloter_id--schedules">Display a listing of schedules for a kloter.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -3385,6 +3674,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
     --get "http://localhost:8000/api/kloters/019fff5a-e6a2-72d5-8f7d-8814ad6f0c89/schedules" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -3395,6 +3685,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -3442,7 +3733,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-GETapi-kloters--kloter_id--schedules" data-method="GET"
       data-path="api/kloters/{kloter_id}/schedules"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -3472,6 +3763,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/kloters/{kloter_id}/schedules</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-kloters--kloter_id--schedules"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -3514,6 +3817,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="endpoints-POSTapi-kloters--kloter_id--schedules">Store a manually created schedule for a kloter.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -3525,11 +3829,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
     "http://localhost:8000/api/kloters/019fff5a-e6a2-72d5-8f7d-8814ad6f0c89/schedules" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
     \"day_number\": 16,
-    \"activity_date\": \"2026-09-04T17:00:06\",
+    \"activity_date\": \"2026-09-04T17:01:13\",
     \"activity_time\": \"architecto\",
     \"hijri_date_ref\": \"n\",
     \"title\": \"g\",
@@ -3538,7 +3843,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"pic\": \"i\",
     \"status\": \"y\",
     \"description\": \"Eius et animi quos velit et.\",
-    \"is_published\": true
+    \"is_published\": false
 }"
 </code></pre></div>
 
@@ -3549,13 +3854,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
 
 let body = {
     "day_number": 16,
-    "activity_date": "2026-09-04T17:00:06",
+    "activity_date": "2026-09-04T17:01:13",
     "activity_time": "architecto",
     "hijri_date_ref": "n",
     "title": "g",
@@ -3564,7 +3870,7 @@ let body = {
     "pic": "i",
     "status": "y",
     "description": "Eius et animi quos velit et.",
-    "is_published": true
+    "is_published": false
 };
 
 fetch(url, {
@@ -3594,7 +3900,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-POSTapi-kloters--kloter_id--schedules" data-method="POST"
       data-path="api/kloters/{kloter_id}/schedules"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -3624,6 +3930,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/kloters/{kloter_id}/schedules</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-kloters--kloter_id--schedules"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -3681,10 +3999,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="activity_date"                data-endpoint="POSTapi-kloters--kloter_id--schedules"
-               value="2026-09-04T17:00:06"
+               value="2026-09-04T17:01:13"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-04T17:00:06</code></p>
+<p>Must be a valid date. Example: <code>2026-09-04T17:01:13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>activity_time</code></b>&nbsp;&nbsp;
@@ -3802,13 +4120,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>true</code></p>
+<p>Example: <code>false</code></p>
         </div>
         </form>
 
                     <h2 id="endpoints-PUTapi-kloters--kloter_id--schedules--schedule_id-">Update the specified schedule for a kloter.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 <p>Note: Manual update automatically sets is_customized = true.</p>
@@ -3820,11 +4139,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
     "http://localhost:8000/api/kloters/019fff5a-e6a2-72d5-8f7d-8814ad6f0c89/schedules/01a06c86-0384-702f-b748-164626d2fd9f" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
     \"day_number\": 16,
-    \"activity_date\": \"2026-09-04T17:00:06\",
+    \"activity_date\": \"2026-09-04T17:01:13\",
     \"activity_time\": \"architecto\",
     \"hijri_date_ref\": \"n\",
     \"title\": \"g\",
@@ -3833,7 +4153,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"pic\": \"i\",
     \"status\": \"y\",
     \"description\": \"Eius et animi quos velit et.\",
-    \"is_published\": false
+    \"is_published\": true
 }"
 </code></pre></div>
 
@@ -3844,13 +4164,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
 
 let body = {
     "day_number": 16,
-    "activity_date": "2026-09-04T17:00:06",
+    "activity_date": "2026-09-04T17:01:13",
     "activity_time": "architecto",
     "hijri_date_ref": "n",
     "title": "g",
@@ -3859,7 +4180,7 @@ let body = {
     "pic": "i",
     "status": "y",
     "description": "Eius et animi quos velit et.",
-    "is_published": false
+    "is_published": true
 };
 
 fetch(url, {
@@ -3889,7 +4210,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-PUTapi-kloters--kloter_id--schedules--schedule_id-" data-method="PUT"
       data-path="api/kloters/{kloter_id}/schedules/{schedule_id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -3919,6 +4240,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/kloters/{kloter_id}/schedules/{schedule_id}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="PUTapi-kloters--kloter_id--schedules--schedule_id-"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -3988,10 +4321,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="activity_date"                data-endpoint="PUTapi-kloters--kloter_id--schedules--schedule_id-"
-               value="2026-09-04T17:00:06"
+               value="2026-09-04T17:01:13"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-04T17:00:06</code></p>
+<p>Must be a valid date. Example: <code>2026-09-04T17:01:13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>activity_time</code></b>&nbsp;&nbsp;
@@ -4109,13 +4442,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>false</code></p>
+<p>Example: <code>true</code></p>
         </div>
         </form>
 
                     <h2 id="endpoints-DELETEapi-kloters--kloter_id--schedules--schedule_id-">Remove the specified schedule from a kloter.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -4127,6 +4461,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
     "http://localhost:8000/api/kloters/019fff5a-e6a2-72d5-8f7d-8814ad6f0c89/schedules/01a06c86-0384-702f-b748-164626d2fd9f" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -4137,6 +4472,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -4168,7 +4504,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-DELETEapi-kloters--kloter_id--schedules--schedule_id-" data-method="DELETE"
       data-path="api/kloters/{kloter_id}/schedules/{schedule_id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -4198,6 +4534,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/kloters/{kloter_id}/schedules/{schedule_id}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="DELETEapi-kloters--kloter_id--schedules--schedule_id-"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -4252,6 +4600,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="endpoints-POSTapi-kloters--kloter_id--schedules-generate-from-template">Generate or sync kloter rundown schedules from Package Itinerary templates.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -4263,6 +4612,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
     "http://localhost:8000/api/kloters/019fff5a-e6a2-72d5-8f7d-8814ad6f0c89/schedules/generate-from-template" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -4273,6 +4623,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -4304,7 +4655,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-POSTapi-kloters--kloter_id--schedules-generate-from-template" data-method="POST"
       data-path="api/kloters/{kloter_id}/schedules/generate-from-template"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -4334,6 +4685,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/kloters/{kloter_id}/schedules/generate-from-template</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-kloters--kloter_id--schedules-generate-from-template"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -4376,6 +4739,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="endpoints-GETapi-kloters--kloter_id--rooms">Menampilkan semua kamar dan anggota dalam satu kloter.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -4387,6 +4751,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
     --get "http://localhost:8000/api/kloters/019fff5a-e6a2-72d5-8f7d-8814ad6f0c89/rooms" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -4397,6 +4762,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -4444,7 +4810,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-GETapi-kloters--kloter_id--rooms" data-method="GET"
       data-path="api/kloters/{kloter_id}/rooms"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -4474,6 +4840,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/kloters/{kloter_id}/rooms</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-kloters--kloter_id--rooms"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -4516,6 +4894,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="endpoints-POSTapi-kloters--kloter_id--auto-assign-rooms">Pembagian Kamar Otomatis (Auto Allocation Roommates).</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 <p>// DEPRECATED sementara: endpoint ini bergantung pada registration_id dari tabel registrations.</p>
@@ -4527,10 +4906,11 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
     "http://localhost:8000/api/kloters/019fff5a-e6a2-72d5-8f7d-8814ad6f0c89/auto-assign-rooms" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"room_type\": \"quint\",
+    \"room_type\": \"triple\",
     \"hotel_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\"
 }"
 </code></pre></div>
@@ -4542,12 +4922,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
 
 let body = {
-    "room_type": "quint",
+    "room_type": "triple",
     "hotel_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed"
 };
 
@@ -4578,7 +4959,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-POSTapi-kloters--kloter_id--auto-assign-rooms" data-method="POST"
       data-path="api/kloters/{kloter_id}/auto-assign-rooms"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -4608,6 +4989,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/kloters/{kloter_id}/auto-assign-rooms</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-kloters--kloter_id--auto-assign-rooms"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -4653,10 +5046,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="room_type"                data-endpoint="POSTapi-kloters--kloter_id--auto-assign-rooms"
-               value="quint"
+               value="triple"
                data-component="body">
     <br>
-<p>Example: <code>quint</code></p>
+<p>Example: <code>triple</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>quad</code></li> <li><code>triple</code></li> <li><code>double</code></li> <li><code>single</code></li> <li><code>quint</code></li></ul>
         </div>
@@ -4677,6 +5070,7 @@ Must be one of:
                     <h2 id="endpoints-POSTapi-rooms">Membuat kamar secara manual oleh Admin.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -4688,13 +5082,14 @@ Must be one of:
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
     "http://localhost:8000/api/rooms" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
     \"kloter_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
     \"hotel_id\": \"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9\",
     \"room_number\": \"m\",
-    \"room_type\": \"single\",
+    \"room_type\": \"double\",
     \"capacity\": 35,
     \"gender\": \"P\",
     \"notes\": \"y\"
@@ -4708,6 +5103,7 @@ Must be one of:
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -4716,7 +5112,7 @@ let body = {
     "kloter_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
     "hotel_id": "6b72fe4a-5b40-307c-bc24-f79acf9a1bb9",
     "room_number": "m",
-    "room_type": "single",
+    "room_type": "double",
     "capacity": 35,
     "gender": "P",
     "notes": "y"
@@ -4749,7 +5145,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-POSTapi-rooms" data-method="POST"
       data-path="api/rooms"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -4779,6 +5175,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/rooms</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-rooms"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -4847,10 +5255,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="room_type"                data-endpoint="POSTapi-rooms"
-               value="single"
+               value="double"
                data-component="body">
     <br>
-<p>Example: <code>single</code></p>
+<p>Example: <code>double</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>quad</code></li> <li><code>triple</code></li> <li><code>double</code></li> <li><code>single</code></li> <li><code>quint</code></li></ul>
         </div>
@@ -4897,6 +5305,7 @@ Must be one of:
                     <h2 id="endpoints-GETapi-rooms--room_id-">Menampilkan detail satu kamar.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -4908,6 +5317,7 @@ Must be one of:
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
     --get "http://localhost:8000/api/rooms/01a01e2a-d6b9-735a-b565-82e5752db78d" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -4918,6 +5328,7 @@ Must be one of:
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -4965,7 +5376,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-GETapi-rooms--room_id-" data-method="GET"
       data-path="api/rooms/{room_id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -4995,6 +5406,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/rooms/{room_id}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-rooms--room_id-"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -5037,6 +5460,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="endpoints-PUTapi-rooms--room_id-">Perbarui kamar secara manual.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -5048,12 +5472,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
     "http://localhost:8000/api/rooms/01a01e2a-d6b9-735a-b565-82e5752db78d" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
     \"hotel_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
     \"room_number\": \"g\",
-    \"room_type\": \"double\",
+    \"room_type\": \"quint\",
     \"capacity\": 66,
     \"gender\": \"L\",
     \"notes\": \"m\"
@@ -5067,6 +5492,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -5074,7 +5500,7 @@ const headers = {
 let body = {
     "hotel_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
     "room_number": "g",
-    "room_type": "double",
+    "room_type": "quint",
     "capacity": 66,
     "gender": "L",
     "notes": "m"
@@ -5107,7 +5533,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-PUTapi-rooms--room_id-" data-method="PUT"
       data-path="api/rooms/{room_id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -5137,6 +5563,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/rooms/{room_id}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="PUTapi-rooms--room_id-"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -5206,10 +5644,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="room_type"                data-endpoint="PUTapi-rooms--room_id-"
-               value="double"
+               value="quint"
                data-component="body">
     <br>
-<p>Example: <code>double</code></p>
+<p>Example: <code>quint</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>quad</code></li> <li><code>triple</code></li> <li><code>double</code></li> <li><code>single</code></li> <li><code>quint</code></li></ul>
         </div>
@@ -5256,6 +5694,7 @@ Must be one of:
                     <h2 id="endpoints-DELETEapi-rooms--room_id-">Hapus kamar (semua room_members ikut terhapus via cascade).</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -5267,6 +5706,7 @@ Must be one of:
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
     "http://localhost:8000/api/rooms/01a01e2a-d6b9-735a-b565-82e5752db78d" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -5277,6 +5717,7 @@ Must be one of:
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -5308,7 +5749,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-DELETEapi-rooms--room_id-" data-method="DELETE"
       data-path="api/rooms/{room_id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -5338,6 +5779,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/rooms/{room_id}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="DELETEapi-rooms--room_id-"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -5380,6 +5833,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="endpoints-POSTapi-rooms--room_id--members">Menambahkan penghuni ke kamar secara manual atau via jamaah_id.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 <p>Kamar campuran gender diperbolehkan (tidak ada batasan gender penghuni vs kamar).
@@ -5392,11 +5846,12 @@ Mencegah duplikasi jamaah_id dalam kloter_id &amp; hotel_id yang sama.</p>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
     "http://localhost:8000/api/rooms/01a01e2a-d6b9-735a-b565-82e5752db78d/members" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
     \"jamaah_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
-    \"title\": \"MSTR\",
+    \"title\": \"MISS\",
     \"occupant_name\": \"g\",
     \"age\": 16
 }"
@@ -5409,13 +5864,14 @@ Mencegah duplikasi jamaah_id dalam kloter_id &amp; hotel_id yang sama.</p>
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
 
 let body = {
     "jamaah_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
-    "title": "MSTR",
+    "title": "MISS",
     "occupant_name": "g",
     "age": 16
 };
@@ -5447,7 +5903,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-POSTapi-rooms--room_id--members" data-method="POST"
       data-path="api/rooms/{room_id}/members"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -5477,6 +5933,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/rooms/{room_id}/members</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-rooms--room_id--members"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -5534,10 +6002,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="title"                data-endpoint="POSTapi-rooms--room_id--members"
-               value="MSTR"
+               value="MISS"
                data-component="body">
     <br>
-<p>This field is required when <code>jamaah_id</code> is not present. Example: <code>MSTR</code></p>
+<p>This field is required when <code>jamaah_id</code> is not present. Example: <code>MISS</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>MR</code></li> <li><code>MRS</code></li> <li><code>MISS</code></li> <li><code>MSTR</code></li></ul>
         </div>
@@ -5570,6 +6038,7 @@ Must be one of:
                     <h2 id="endpoints-PUTapi-rooms--room_id--members--roomMember_id-">Memperbarui data penghuni kamar (title, occupant_name, age, jamaah_id).</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -5581,11 +6050,12 @@ Must be one of:
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
     "http://localhost:8000/api/rooms/01a01e2a-d6b9-735a-b565-82e5752db78d/members/01a01e2a-d6bf-7388-be5c-3f7eebe7e2a6" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
     \"jamaah_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
-    \"title\": \"MR\",
+    \"title\": \"MRS\",
     \"occupant_name\": \"g\",
     \"age\": 16
 }"
@@ -5598,13 +6068,14 @@ Must be one of:
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
 
 let body = {
     "jamaah_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
-    "title": "MR",
+    "title": "MRS",
     "occupant_name": "g",
     "age": 16
 };
@@ -5636,7 +6107,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-PUTapi-rooms--room_id--members--roomMember_id-" data-method="PUT"
       data-path="api/rooms/{room_id}/members/{roomMember_id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -5666,6 +6137,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/rooms/{room_id}/members/{roomMember_id}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="PUTapi-rooms--room_id--members--roomMember_id-"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -5735,10 +6218,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="title"                data-endpoint="PUTapi-rooms--room_id--members--roomMember_id-"
-               value="MR"
+               value="MRS"
                data-component="body">
     <br>
-<p>Example: <code>MR</code></p>
+<p>Example: <code>MRS</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>MR</code></li> <li><code>MRS</code></li> <li><code>MISS</code></li> <li><code>MSTR</code></li></ul>
         </div>
@@ -5771,6 +6254,7 @@ Must be one of:
                     <h2 id="endpoints-DELETEapi-rooms--room_id--members--roomMember_id-">Menghapus penghuni dari kamar berdasarkan ID room_member.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -5782,6 +6266,7 @@ Must be one of:
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
     "http://localhost:8000/api/rooms/01a01e2a-d6b9-735a-b565-82e5752db78d/members/01a01e2a-d6bf-7388-be5c-3f7eebe7e2a6" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -5792,6 +6277,7 @@ Must be one of:
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -5823,7 +6309,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-DELETEapi-rooms--room_id--members--roomMember_id-" data-method="DELETE"
       data-path="api/rooms/{room_id}/members/{roomMember_id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -5853,6 +6339,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/rooms/{room_id}/members/{roomMember_id}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="DELETEapi-rooms--room_id--members--roomMember_id-"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -5907,6 +6405,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="endpoints-GETapi-registrations">Menampilkan semua data pendaftaran (dengan pencarian &amp; filter).</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -5918,6 +6417,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
     --get "http://localhost:8000/api/registrations" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -5928,6 +6428,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -5975,7 +6476,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-GETapi-registrations" data-method="GET"
       data-path="api/registrations"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -6006,6 +6507,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-registrations"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
  &nbsp;
@@ -6034,6 +6547,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="endpoints-POSTapi-registrations">Menyimpan pendaftaran baru.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -6045,6 +6559,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
     "http://localhost:8000/api/registrations" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -6054,20 +6569,20 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"nik\": \"zmiyvdljnikhwayk\",
     \"phone\": \"cmyuwpwlvqwrsitc\",
     \"birth_date\": \"2022-09-29\",
-    \"gender\": \"P\",
-    \"registration_date\": \"2026-09-04T17:00:06\",
+    \"gender\": \"L\",
+    \"registration_date\": \"2026-09-04T17:01:13\",
     \"departure_date\": \"2052-09-27\",
     \"package_id\": \"a4855dc5-0acb-33c3-b921-f4291f719ca0\",
     \"kloter_id\": \"c90237e9-ced5-3af6-88ea-84aeaa148878\",
-    \"meningitis_vaccine_status\": \"belum_vaksin\",
+    \"meningitis_vaccine_status\": \"sudah_vaksin\",
     \"photo_status\": \"sudah_menyerahkan\",
     \"total_package_cost\": 8,
     \"status\": \"dp\",
     \"initial_payment\": {
         \"amount\": 4326.41688,
-        \"payment_type\": \"down_payment\",
+        \"payment_type\": \"full_payment\",
         \"payment_method\": \"edc_qris\",
-        \"payment_date\": \"2026-09-04T17:00:06\"
+        \"payment_date\": \"2026-09-04T17:01:13\"
     },
     \"equipments\": [
         {
@@ -6086,6 +6601,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -6097,20 +6613,20 @@ let body = {
     "nik": "zmiyvdljnikhwayk",
     "phone": "cmyuwpwlvqwrsitc",
     "birth_date": "2022-09-29",
-    "gender": "P",
-    "registration_date": "2026-09-04T17:00:06",
+    "gender": "L",
+    "registration_date": "2026-09-04T17:01:13",
     "departure_date": "2052-09-27",
     "package_id": "a4855dc5-0acb-33c3-b921-f4291f719ca0",
     "kloter_id": "c90237e9-ced5-3af6-88ea-84aeaa148878",
-    "meningitis_vaccine_status": "belum_vaksin",
+    "meningitis_vaccine_status": "sudah_vaksin",
     "photo_status": "sudah_menyerahkan",
     "total_package_cost": 8,
     "status": "dp",
     "initial_payment": {
         "amount": 4326.41688,
-        "payment_type": "down_payment",
+        "payment_type": "full_payment",
         "payment_method": "edc_qris",
-        "payment_date": "2026-09-04T17:00:06"
+        "payment_date": "2026-09-04T17:01:13"
     },
     "equipments": [
         {
@@ -6148,7 +6664,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-POSTapi-registrations" data-method="POST"
       data-path="api/registrations"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -6178,6 +6694,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/registrations</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-registrations"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -6282,10 +6810,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="gender"                data-endpoint="POSTapi-registrations"
-               value="P"
+               value="L"
                data-component="body">
     <br>
-<p>Example: <code>P</code></p>
+<p>Example: <code>L</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>L</code></li> <li><code>P</code></li></ul>
         </div>
@@ -6296,10 +6824,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="registration_date"                data-endpoint="POSTapi-registrations"
-               value="2026-09-04T17:00:06"
+               value="2026-09-04T17:01:13"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-04T17:00:06</code></p>
+<p>Must be a valid date. Example: <code>2026-09-04T17:01:13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>departure_date</code></b>&nbsp;&nbsp;
@@ -6344,10 +6872,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="meningitis_vaccine_status"                data-endpoint="POSTapi-registrations"
-               value="belum_vaksin"
+               value="sudah_vaksin"
                data-component="body">
     <br>
-<p>Example: <code>belum_vaksin</code></p>
+<p>Example: <code>sudah_vaksin</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>belum_vaksin</code></li> <li><code>sudah_vaksin</code></li></ul>
         </div>
@@ -6420,10 +6948,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="initial_payment.payment_type"                data-endpoint="POSTapi-registrations"
-               value="down_payment"
+               value="full_payment"
                data-component="body">
     <br>
-<p>Example: <code>down_payment</code></p>
+<p>Example: <code>full_payment</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>down_payment</code></li> <li><code>full_payment</code></li></ul>
                     </div>
@@ -6448,10 +6976,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="initial_payment.payment_date"                data-endpoint="POSTapi-registrations"
-               value="2026-09-04T17:00:06"
+               value="2026-09-04T17:01:13"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-04T17:00:06</code></p>
+<p>Must be a valid date. Example: <code>2026-09-04T17:01:13</code></p>
                     </div>
                                     </details>
         </div>
@@ -6518,6 +7046,7 @@ Must be one of:
                     <h2 id="endpoints-GETapi-registrations--registration_id-">Menampilkan detail satu pendaftaran.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -6529,6 +7058,7 @@ Must be one of:
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
     --get "http://localhost:8000/api/registrations/01a03d44-b220-7120-aed2-73ce5afc9517" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -6539,6 +7069,7 @@ Must be one of:
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -6586,7 +7117,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-GETapi-registrations--registration_id-" data-method="GET"
       data-path="api/registrations/{registration_id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -6616,6 +7147,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/registrations/{registration_id}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-registrations--registration_id-"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -6658,6 +7201,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="endpoints-PUTapi-registrations--registration_id-">Perbarui data pendaftaran.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -6669,6 +7213,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
     "http://localhost:8000/api/registrations/01a03d44-b220-7120-aed2-73ce5afc9517" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -6677,15 +7222,15 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"nik\": \"gzmiyvdljnikhway\",
     \"phone\": \"kcmyuwpwlvqwrsit\",
     \"birth_date\": \"2022-09-29\",
-    \"gender\": \"P\",
-    \"registration_date\": \"2026-09-04T17:00:06\",
-    \"departure_date\": \"2026-09-04T17:00:06\",
+    \"gender\": \"L\",
+    \"registration_date\": \"2026-09-04T17:01:13\",
+    \"departure_date\": \"2026-09-04T17:01:13\",
     \"package_id\": \"a4855dc5-0acb-33c3-b921-f4291f719ca0\",
     \"kloter_id\": \"c90237e9-ced5-3af6-88ea-84aeaa148878\",
-    \"meningitis_vaccine_status\": \"sudah_vaksin\",
-    \"photo_status\": \"belum_ada\",
+    \"meningitis_vaccine_status\": \"belum_vaksin\",
+    \"photo_status\": \"sudah_menyerahkan\",
     \"total_package_cost\": 8,
-    \"status\": \"dp_paid\",
+    \"status\": \"dp\",
     \"equipments\": [
         {
             \"equipment_name\": \"y\",
@@ -6703,6 +7248,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -6713,15 +7259,15 @@ let body = {
     "nik": "gzmiyvdljnikhway",
     "phone": "kcmyuwpwlvqwrsit",
     "birth_date": "2022-09-29",
-    "gender": "P",
-    "registration_date": "2026-09-04T17:00:06",
-    "departure_date": "2026-09-04T17:00:06",
+    "gender": "L",
+    "registration_date": "2026-09-04T17:01:13",
+    "departure_date": "2026-09-04T17:01:13",
     "package_id": "a4855dc5-0acb-33c3-b921-f4291f719ca0",
     "kloter_id": "c90237e9-ced5-3af6-88ea-84aeaa148878",
-    "meningitis_vaccine_status": "sudah_vaksin",
-    "photo_status": "belum_ada",
+    "meningitis_vaccine_status": "belum_vaksin",
+    "photo_status": "sudah_menyerahkan",
     "total_package_cost": 8,
-    "status": "dp_paid",
+    "status": "dp",
     "equipments": [
         {
             "equipment_name": "y",
@@ -6758,7 +7304,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-PUTapi-registrations--registration_id-" data-method="PUT"
       data-path="api/registrations/{registration_id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -6788,6 +7334,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/registrations/{registration_id}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="PUTapi-registrations--registration_id-"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -6893,10 +7451,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="gender"                data-endpoint="PUTapi-registrations--registration_id-"
-               value="P"
+               value="L"
                data-component="body">
     <br>
-<p>Example: <code>P</code></p>
+<p>Example: <code>L</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>L</code></li> <li><code>P</code></li></ul>
         </div>
@@ -6907,10 +7465,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="registration_date"                data-endpoint="PUTapi-registrations--registration_id-"
-               value="2026-09-04T17:00:06"
+               value="2026-09-04T17:01:13"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-04T17:00:06</code></p>
+<p>Must be a valid date. Example: <code>2026-09-04T17:01:13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>departure_date</code></b>&nbsp;&nbsp;
@@ -6919,10 +7477,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="departure_date"                data-endpoint="PUTapi-registrations--registration_id-"
-               value="2026-09-04T17:00:06"
+               value="2026-09-04T17:01:13"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-04T17:00:06</code></p>
+<p>Must be a valid date. Example: <code>2026-09-04T17:01:13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>package_id</code></b>&nbsp;&nbsp;
@@ -6955,10 +7513,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="meningitis_vaccine_status"                data-endpoint="PUTapi-registrations--registration_id-"
-               value="sudah_vaksin"
+               value="belum_vaksin"
                data-component="body">
     <br>
-<p>Example: <code>sudah_vaksin</code></p>
+<p>Example: <code>belum_vaksin</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>belum_vaksin</code></li> <li><code>sudah_vaksin</code></li></ul>
         </div>
@@ -6969,10 +7527,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="photo_status"                data-endpoint="PUTapi-registrations--registration_id-"
-               value="belum_ada"
+               value="sudah_menyerahkan"
                data-component="body">
     <br>
-<p>Example: <code>belum_ada</code></p>
+<p>Example: <code>sudah_menyerahkan</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>belum_ada</code></li> <li><code>sudah_menyerahkan</code></li></ul>
         </div>
@@ -6995,10 +7553,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="status"                data-endpoint="PUTapi-registrations--registration_id-"
-               value="dp_paid"
+               value="dp"
                data-component="body">
     <br>
-<p>Example: <code>dp_paid</code></p>
+<p>Example: <code>dp</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>unpaid</code></li> <li><code>dp</code></li> <li><code>dp_paid</code></li> <li><code>paid</code></li> <li><code>fully_paid</code></li> <li><code>cancelled</code></li> <li><code>converted</code></li></ul>
         </div>
@@ -7065,6 +7623,7 @@ Must be one of:
                     <h2 id="endpoints-DELETEapi-registrations--registration_id-">Hapus data pendaftaran.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 <p>Catatan revisi [2026-09-02]: Guard 'converted' dihapus karena alur Jamaah
@@ -7078,6 +7637,7 @@ Data lama berstatus 'converted' di database tetap bisa dihapus oleh admin.</p>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
     "http://localhost:8000/api/registrations/01a03d44-b220-7120-aed2-73ce5afc9517" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -7088,6 +7648,7 @@ Data lama berstatus 'converted' di database tetap bisa dihapus oleh admin.</p>
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -7119,7 +7680,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-DELETEapi-registrations--registration_id-" data-method="DELETE"
       data-path="api/registrations/{registration_id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -7149,6 +7710,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/registrations/{registration_id}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="DELETEapi-registrations--registration_id-"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -7191,6 +7764,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="endpoints-POSTapi-registrations--registration_id--cancel">Membatalkan pendaftaran.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -7202,6 +7776,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
     "http://localhost:8000/api/registrations/01a03d44-b220-7120-aed2-73ce5afc9517/cancel" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -7212,6 +7787,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -7243,7 +7819,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-POSTapi-registrations--registration_id--cancel" data-method="POST"
       data-path="api/registrations/{registration_id}/cancel"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -7273,6 +7849,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/registrations/{registration_id}/cancel</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-registrations--registration_id--cancel"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -7315,6 +7903,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="endpoints-GETapi-payments">Menampilkan seluruh data transaksi pembayaran (Untuk Admin Keuangan).</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -7326,6 +7915,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
     --get "http://localhost:8000/api/payments" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -7336,6 +7926,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -7383,7 +7974,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-GETapi-payments" data-method="GET"
       data-path="api/payments"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -7414,6 +8005,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-payments"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
  &nbsp;
@@ -7442,6 +8045,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="endpoints-GETapi-registrations--registration_id--payments">Menampilkan semua pembayaran dari satu pendaftaran.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -7453,6 +8057,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
     --get "http://localhost:8000/api/registrations/01a03d44-b220-7120-aed2-73ce5afc9517/payments" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -7463,6 +8068,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -7510,7 +8116,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-GETapi-registrations--registration_id--payments" data-method="GET"
       data-path="api/registrations/{registration_id}/payments"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -7540,6 +8146,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/registrations/{registration_id}/payments</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-registrations--registration_id--payments"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -7582,6 +8200,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="endpoints-POSTapi-registrations--registration_id--payments">Menambahkan pembayaran ke pendaftaran.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -7593,13 +8212,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
     "http://localhost:8000/api/registrations/01a03d44-b220-7120-aed2-73ce5afc9517/payments" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
     \"amount\": 4326.41688,
-    \"payment_type\": \"down_payment\",
-    \"payment_method\": \"cash\",
-    \"payment_date\": \"2026-09-04T17:00:06\",
+    \"payment_type\": \"full_payment\",
+    \"payment_method\": \"mandiri_transfer\",
+    \"payment_date\": \"2026-09-04T17:01:13\",
     \"notes\": \"m\"
 }"
 </code></pre></div>
@@ -7611,15 +8231,16 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
 
 let body = {
     "amount": 4326.41688,
-    "payment_type": "down_payment",
-    "payment_method": "cash",
-    "payment_date": "2026-09-04T17:00:06",
+    "payment_type": "full_payment",
+    "payment_method": "mandiri_transfer",
+    "payment_date": "2026-09-04T17:01:13",
     "notes": "m"
 };
 
@@ -7650,7 +8271,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-POSTapi-registrations--registration_id--payments" data-method="POST"
       data-path="api/registrations/{registration_id}/payments"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -7680,6 +8301,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/registrations/{registration_id}/payments</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-registrations--registration_id--payments"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -7737,10 +8370,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="payment_type"                data-endpoint="POSTapi-registrations--registration_id--payments"
-               value="down_payment"
+               value="full_payment"
                data-component="body">
     <br>
-<p>Example: <code>down_payment</code></p>
+<p>Example: <code>full_payment</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>down_payment</code></li> <li><code>full_payment</code></li></ul>
         </div>
@@ -7751,10 +8384,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="payment_method"                data-endpoint="POSTapi-registrations--registration_id--payments"
-               value="cash"
+               value="mandiri_transfer"
                data-component="body">
     <br>
-<p>Example: <code>cash</code></p>
+<p>Example: <code>mandiri_transfer</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>bca_transfer</code></li> <li><code>mandiri_transfer</code></li> <li><code>bsi_transfer</code></li> <li><code>cash</code></li> <li><code>edc_qris</code></li></ul>
         </div>
@@ -7765,10 +8398,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="payment_date"                data-endpoint="POSTapi-registrations--registration_id--payments"
-               value="2026-09-04T17:00:06"
+               value="2026-09-04T17:01:13"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-04T17:00:06</code></p>
+<p>Must be a valid date. Example: <code>2026-09-04T17:01:13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>notes</code></b>&nbsp;&nbsp;
@@ -7787,6 +8420,7 @@ Must be one of:
                     <h2 id="endpoints-GETapi-expenses">Menampilkan daftar pengeluaran kas dengan filter dan ringkasan agregat.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -7798,6 +8432,7 @@ Must be one of:
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
     --get "http://localhost:8000/api/expenses" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -7808,6 +8443,7 @@ Must be one of:
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -7855,7 +8491,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-GETapi-expenses" data-method="GET"
       data-path="api/expenses"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -7886,6 +8522,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-expenses"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
  &nbsp;
@@ -7914,6 +8562,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="endpoints-POSTapi-expenses">Menyimpan pengeluaran kas baru.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -7925,14 +8574,15 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
     "http://localhost:8000/api/expenses" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
     \"vendor\": \"b\",
-    \"category\": \"akomodasi_tiket\",
+    \"category\": \"perlengkapan\",
     \"amount\": 4326.41688,
-    \"payment_method\": \"cash\",
-    \"expense_date\": \"2026-09-04T17:00:06\",
+    \"payment_method\": \"bsi_transfer\",
+    \"expense_date\": \"2026-09-04T17:01:13\",
     \"reference_number\": \"m\",
     \"notes\": \"i\"
 }"
@@ -7945,16 +8595,17 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
 
 let body = {
     "vendor": "b",
-    "category": "akomodasi_tiket",
+    "category": "perlengkapan",
     "amount": 4326.41688,
-    "payment_method": "cash",
-    "expense_date": "2026-09-04T17:00:06",
+    "payment_method": "bsi_transfer",
+    "expense_date": "2026-09-04T17:01:13",
     "reference_number": "m",
     "notes": "i"
 };
@@ -7986,7 +8637,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-POSTapi-expenses" data-method="POST"
       data-path="api/expenses"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -8016,6 +8667,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/expenses</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-expenses"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -8060,10 +8723,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="category"                data-endpoint="POSTapi-expenses"
-               value="akomodasi_tiket"
+               value="perlengkapan"
                data-component="body">
     <br>
-<p>Example: <code>akomodasi_tiket</code></p>
+<p>Example: <code>perlengkapan</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>akomodasi_tiket</code></li> <li><code>perlengkapan</code></li> <li><code>operasional_bus</code></li></ul>
         </div>
@@ -8086,10 +8749,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="payment_method"                data-endpoint="POSTapi-expenses"
-               value="cash"
+               value="bsi_transfer"
                data-component="body">
     <br>
-<p>Example: <code>cash</code></p>
+<p>Example: <code>bsi_transfer</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>bca_transfer</code></li> <li><code>mandiri_transfer</code></li> <li><code>bsi_transfer</code></li> <li><code>cash</code></li> <li><code>edc_qris</code></li></ul>
         </div>
@@ -8100,10 +8763,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="expense_date"                data-endpoint="POSTapi-expenses"
-               value="2026-09-04T17:00:06"
+               value="2026-09-04T17:01:13"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-04T17:00:06</code></p>
+<p>Must be a valid date. Example: <code>2026-09-04T17:01:13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>reference_number</code></b>&nbsp;&nbsp;
@@ -8134,6 +8797,7 @@ Must be one of:
                     <h2 id="endpoints-GETapi-expenses--expense_id-">Menampilkan detail satu pengeluaran kas.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -8145,6 +8809,7 @@ Must be one of:
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
     --get "http://localhost:8000/api/expenses/01a03c1d-d876-7340-911d-b8bd3b43254d" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -8155,6 +8820,7 @@ Must be one of:
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -8202,7 +8868,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-GETapi-expenses--expense_id-" data-method="GET"
       data-path="api/expenses/{expense_id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -8232,6 +8898,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/expenses/{expense_id}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-expenses--expense_id-"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -8274,6 +8952,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="endpoints-PUTapi-expenses--expense_id-">Memperbarui data pengeluaran kas.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -8285,14 +8964,15 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
     "http://localhost:8000/api/expenses/01a03c1d-d876-7340-911d-b8bd3b43254d" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
     \"vendor\": \"b\",
-    \"category\": \"operasional_bus\",
+    \"category\": \"perlengkapan\",
     \"amount\": 4326.41688,
-    \"payment_method\": \"edc_qris\",
-    \"expense_date\": \"2026-09-04T17:00:07\",
+    \"payment_method\": \"bsi_transfer\",
+    \"expense_date\": \"2026-09-04T17:01:13\",
     \"reference_number\": \"m\",
     \"notes\": \"i\"
 }"
@@ -8305,16 +8985,17 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
 
 let body = {
     "vendor": "b",
-    "category": "operasional_bus",
+    "category": "perlengkapan",
     "amount": 4326.41688,
-    "payment_method": "edc_qris",
-    "expense_date": "2026-09-04T17:00:07",
+    "payment_method": "bsi_transfer",
+    "expense_date": "2026-09-04T17:01:13",
     "reference_number": "m",
     "notes": "i"
 };
@@ -8346,7 +9027,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-PUTapi-expenses--expense_id-" data-method="PUT"
       data-path="api/expenses/{expense_id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -8376,6 +9057,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/expenses/{expense_id}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="PUTapi-expenses--expense_id-"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -8433,10 +9126,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="category"                data-endpoint="PUTapi-expenses--expense_id-"
-               value="operasional_bus"
+               value="perlengkapan"
                data-component="body">
     <br>
-<p>Example: <code>operasional_bus</code></p>
+<p>Example: <code>perlengkapan</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>akomodasi_tiket</code></li> <li><code>perlengkapan</code></li> <li><code>operasional_bus</code></li></ul>
         </div>
@@ -8459,10 +9152,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="payment_method"                data-endpoint="PUTapi-expenses--expense_id-"
-               value="edc_qris"
+               value="bsi_transfer"
                data-component="body">
     <br>
-<p>Example: <code>edc_qris</code></p>
+<p>Example: <code>bsi_transfer</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>bca_transfer</code></li> <li><code>mandiri_transfer</code></li> <li><code>bsi_transfer</code></li> <li><code>cash</code></li> <li><code>edc_qris</code></li></ul>
         </div>
@@ -8473,10 +9166,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="expense_date"                data-endpoint="PUTapi-expenses--expense_id-"
-               value="2026-09-04T17:00:07"
+               value="2026-09-04T17:01:13"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-04T17:00:07</code></p>
+<p>Must be a valid date. Example: <code>2026-09-04T17:01:13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>reference_number</code></b>&nbsp;&nbsp;
@@ -8507,6 +9200,7 @@ Must be one of:
                     <h2 id="endpoints-DELETEapi-expenses--expense_id-">Menghapus data pengeluaran kas.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -8518,6 +9212,7 @@ Must be one of:
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
     "http://localhost:8000/api/expenses/01a03c1d-d876-7340-911d-b8bd3b43254d" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -8528,6 +9223,7 @@ Must be one of:
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -8559,7 +9255,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-DELETEapi-expenses--expense_id-" data-method="DELETE"
       data-path="api/expenses/{expense_id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -8589,6 +9285,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/expenses/{expense_id}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="DELETEapi-expenses--expense_id-"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -8631,6 +9339,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="endpoints-GETapi-finance-summary">Menampilkan ringkasan keuangan global (Total Pemasukan, Pengeluaran, Piutang, Saldo Bersih).</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -8642,6 +9351,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
     --get "http://localhost:8000/api/finance/summary" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -8652,6 +9362,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -8699,7 +9410,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-GETapi-finance-summary" data-method="GET"
       data-path="api/finance/summary"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -8730,6 +9441,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-finance-summary"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
  &nbsp;
@@ -8758,6 +9481,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="endpoints-GETapi-jamaah">Menampilkan semua data Jamaah resmi.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 <p>Eager-load relasi package &amp; kloter untuk efisiensi (N+1 prevention).</p>
@@ -8769,6 +9493,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
     --get "http://localhost:8000/api/jamaah" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -8779,6 +9504,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -8826,7 +9552,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-GETapi-jamaah" data-method="GET"
       data-path="api/jamaah"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -8857,6 +9583,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-jamaah"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
  &nbsp;
@@ -8885,6 +9623,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="endpoints-POSTapi-jamaah">Membuat data Jamaah baru secara manual oleh admin.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 <p>Revisi [2026-09-02]: Logic auto-generate "JAMAAH001" dihapus.
@@ -8897,13 +9636,14 @@ login_id kini wajib diisi manual oleh admin (max 10 karakter, unique).</p>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
     "http://localhost:8000/api/jamaah" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
     \"login_id\": \"bngzmi\",
     \"nik\": \"yvdljnikhwaykcmy\",
     \"full_name\": \"u\",
-    \"birth_date\": \"2026-09-04T17:00:07\",
+    \"birth_date\": \"2026-09-04T17:01:13\",
     \"gender\": \"L\",
     \"phone\": \"wpwlvqwrsitcpscq\",
     \"emergency_contact\": \"l\",
@@ -8914,7 +9654,7 @@ login_id kini wajib diisi manual oleh admin (max 10 karakter, unique).</p>
     \"kloter_id\": \"1937113a-b0a2-3b03-925a-3163292463db\",
     \"hotel_makkah\": \"u\",
     \"hotel_madinah\": \"j\",
-    \"departure_date\": \"2026-09-04T17:00:07\",
+    \"departure_date\": \"2026-09-04T17:01:13\",
     \"return_date\": \"2052-09-27\",
     \"tour_leader\": \"n\",
     \"mutawif_local\": \"g\",
@@ -8929,6 +9669,7 @@ login_id kini wajib diisi manual oleh admin (max 10 karakter, unique).</p>
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -8937,7 +9678,7 @@ let body = {
     "login_id": "bngzmi",
     "nik": "yvdljnikhwaykcmy",
     "full_name": "u",
-    "birth_date": "2026-09-04T17:00:07",
+    "birth_date": "2026-09-04T17:01:13",
     "gender": "L",
     "phone": "wpwlvqwrsitcpscq",
     "emergency_contact": "l",
@@ -8948,7 +9689,7 @@ let body = {
     "kloter_id": "1937113a-b0a2-3b03-925a-3163292463db",
     "hotel_makkah": "u",
     "hotel_madinah": "j",
-    "departure_date": "2026-09-04T17:00:07",
+    "departure_date": "2026-09-04T17:01:13",
     "return_date": "2052-09-27",
     "tour_leader": "n",
     "mutawif_local": "g",
@@ -8982,7 +9723,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-POSTapi-jamaah" data-method="POST"
       data-path="api/jamaah"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -9012,6 +9753,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/jamaah</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-jamaah"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -9080,10 +9833,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="birth_date"                data-endpoint="POSTapi-jamaah"
-               value="2026-09-04T17:00:07"
+               value="2026-09-04T17:01:13"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-04T17:00:07</code></p>
+<p>Must be a valid date. Example: <code>2026-09-04T17:01:13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>gender</code></b>&nbsp;&nbsp;
@@ -9214,10 +9967,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="departure_date"                data-endpoint="POSTapi-jamaah"
-               value="2026-09-04T17:00:07"
+               value="2026-09-04T17:01:13"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-04T17:00:07</code></p>
+<p>Must be a valid date. Example: <code>2026-09-04T17:01:13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>return_date</code></b>&nbsp;&nbsp;
@@ -9274,6 +10027,7 @@ Must be one of:
                     <h2 id="endpoints-GETapi-jamaah--jamaah_id-">Menampilkan detail satu data Jamaah beserta relasi.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -9285,6 +10039,7 @@ Must be one of:
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
     --get "http://localhost:8000/api/jamaah/01a00fd9-404c-73f8-ac03-7d250410e565" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -9295,6 +10050,7 @@ Must be one of:
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -9342,7 +10098,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-GETapi-jamaah--jamaah_id-" data-method="GET"
       data-path="api/jamaah/{jamaah_id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -9372,6 +10128,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/jamaah/{jamaah_id}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-jamaah--jamaah_id-"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -9414,6 +10182,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     <h2 id="endpoints-PUTapi-jamaah--jamaah_id-">Perbarui data profil Jamaah.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 <p>Semua field baru bisa di-update melalui validated() dari UpdateJamaahRequest.</p>
@@ -9425,14 +10194,15 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
     "http://localhost:8000/api/jamaah/01a00fd9-404c-73f8-ac03-7d250410e565" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
     \"login_id\": \"bngzmi\",
     \"nik\": \"yvdljnikhwaykcmy\",
     \"full_name\": \"u\",
-    \"birth_date\": \"2026-09-04T17:00:07\",
-    \"gender\": \"L\",
+    \"birth_date\": \"2026-09-04T17:01:13\",
+    \"gender\": \"P\",
     \"phone\": \"wpwlvqwrsitcpscq\",
     \"emergency_contact\": \"l\",
     \"passport_number\": \"d\",
@@ -9442,11 +10212,11 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"kloter_id\": \"1937113a-b0a2-3b03-925a-3163292463db\",
     \"hotel_makkah\": \"u\",
     \"hotel_madinah\": \"j\",
-    \"departure_date\": \"2026-09-04T17:00:07\",
+    \"departure_date\": \"2026-09-04T17:01:13\",
     \"return_date\": \"2052-09-27\",
     \"tour_leader\": \"n\",
     \"mutawif_local\": \"g\",
-    \"status\": \"active\"
+    \"status\": \"archived\"
 }"
 </code></pre></div>
 
@@ -9457,6 +10227,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -9465,8 +10236,8 @@ let body = {
     "login_id": "bngzmi",
     "nik": "yvdljnikhwaykcmy",
     "full_name": "u",
-    "birth_date": "2026-09-04T17:00:07",
-    "gender": "L",
+    "birth_date": "2026-09-04T17:01:13",
+    "gender": "P",
     "phone": "wpwlvqwrsitcpscq",
     "emergency_contact": "l",
     "passport_number": "d",
@@ -9476,11 +10247,11 @@ let body = {
     "kloter_id": "1937113a-b0a2-3b03-925a-3163292463db",
     "hotel_makkah": "u",
     "hotel_madinah": "j",
-    "departure_date": "2026-09-04T17:00:07",
+    "departure_date": "2026-09-04T17:01:13",
     "return_date": "2052-09-27",
     "tour_leader": "n",
     "mutawif_local": "g",
-    "status": "active"
+    "status": "archived"
 };
 
 fetch(url, {
@@ -9510,7 +10281,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-PUTapi-jamaah--jamaah_id-" data-method="PUT"
       data-path="api/jamaah/{jamaah_id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -9540,6 +10311,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/jamaah/{jamaah_id}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="PUTapi-jamaah--jamaah_id-"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -9621,10 +10404,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="birth_date"                data-endpoint="PUTapi-jamaah--jamaah_id-"
-               value="2026-09-04T17:00:07"
+               value="2026-09-04T17:01:13"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-04T17:00:07</code></p>
+<p>Must be a valid date. Example: <code>2026-09-04T17:01:13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>gender</code></b>&nbsp;&nbsp;
@@ -9633,10 +10416,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="gender"                data-endpoint="PUTapi-jamaah--jamaah_id-"
-               value="L"
+               value="P"
                data-component="body">
     <br>
-<p>Example: <code>L</code></p>
+<p>Example: <code>P</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>L</code></li> <li><code>P</code></li></ul>
         </div>
@@ -9755,10 +10538,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="departure_date"                data-endpoint="PUTapi-jamaah--jamaah_id-"
-               value="2026-09-04T17:00:07"
+               value="2026-09-04T17:01:13"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-04T17:00:07</code></p>
+<p>Must be a valid date. Example: <code>2026-09-04T17:01:13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>return_date</code></b>&nbsp;&nbsp;
@@ -9803,10 +10586,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="status"                data-endpoint="PUTapi-jamaah--jamaah_id-"
-               value="active"
+               value="archived"
                data-component="body">
     <br>
-<p>Example: <code>active</code></p>
+<p>Example: <code>archived</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>active</code></li> <li><code>archived</code></li></ul>
         </div>
@@ -9815,6 +10598,7 @@ Must be one of:
                     <h2 id="endpoints-DELETEapi-jamaah--jamaah_id-">Hapus data Jamaah.</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -9826,6 +10610,7 @@ Must be one of:
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
     "http://localhost:8000/api/jamaah/01a00fd9-404c-73f8-ac03-7d250410e565" \
+    --header "Authorization: Bearer {token}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -9836,6 +10621,7 @@ Must be one of:
 );
 
 const headers = {
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -9867,7 +10653,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </span>
 <form id="form-DELETEapi-jamaah--jamaah_id-" data-method="DELETE"
       data-path="api/jamaah/{jamaah_id}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -9897,6 +10683,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <b><code>api/jamaah/{jamaah_id}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="DELETEapi-jamaah--jamaah_id-"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;

@@ -1,0 +1,2121 @@
+{
+    "variable": [
+        {
+            "id": "baseUrl",
+            "key": "baseUrl",
+            "type": "string",
+            "name": "string",
+            "value": "http:\/\/localhost:8000"
+        }
+    ],
+    "info": {
+        "name": "DNA Tour & Travel API Documentation",
+        "_postman_id": "da087b09-f2e4-41fc-970e-a13bbd48b62b",
+        "description": "Dokumentasi resmi API Backend DNA Tour & Travel Umrah Management System.",
+        "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
+    },
+    "item": [
+        {
+            "name": "Endpoints",
+            "description": "",
+            "item": [
+                {
+                    "name": "POST api\/login",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/login",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/login"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"email\":\"gbailey@example.net\",\"password\":\"architecto\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "POST api\/logout",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/logout",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/logout"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "GET api\/me",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/me",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/me"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Menampilkan daftar hotel (dengan opsional filter per kota).",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/hotels",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/hotels"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Cari hotel berdasarkan nama & kota (case-insensitive exact match).",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/hotels\/find-or-create",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/hotels\/find-or-create"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"b\",\"city\":\"Makkah\"}"
+                        },
+                        "description": "Jika ditemukan: kembalikan hotel yang ada.\nJika tidak ditemukan: buat hotel baru dan kembalikan data hotel baru."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Menampilkan semua data paket Umrah (dengan pencarian & filter).",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/packages",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/packages"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Membuat paket Umrah baru.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/packages",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/packages"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"b\",\"category\":\"n\",\"status\":\"published\",\"is_featured\":true}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Menampilkan detail satu paket Umrah.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/packages\/:package_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/packages\/:package_id",
+                            "variable": [
+                                {
+                                    "id": "package_id",
+                                    "key": "package_id",
+                                    "value": "019fff58-a57b-7024-9105-8669a2b8faeb",
+                                    "description": "The ID of the package."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Perbarui data paket Umrah.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/packages\/:package_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/packages\/:package_id",
+                            "variable": [
+                                {
+                                    "id": "package_id",
+                                    "key": "package_id",
+                                    "value": "019fff58-a57b-7024-9105-8669a2b8faeb",
+                                    "description": "The ID of the package."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"b\",\"category\":\"n\",\"status\":\"inactive\",\"is_featured\":true}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Hapus data paket Umrah.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/packages\/:package_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/packages\/:package_id",
+                            "variable": [
+                                {
+                                    "id": "package_id",
+                                    "key": "package_id",
+                                    "value": "019fff58-a57b-7024-9105-8669a2b8faeb",
+                                    "description": "The ID of the package."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Display a listing of itineraries for a package.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/packages\/:package_id\/itineraries",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/packages\/:package_id\/itineraries",
+                            "variable": [
+                                {
+                                    "id": "package_id",
+                                    "key": "package_id",
+                                    "value": "019fff58-a57b-7024-9105-8669a2b8faeb",
+                                    "description": "The ID of the package."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Store a newly created itinerary for a package.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/packages\/:package_id\/itineraries",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/packages\/:package_id\/itineraries",
+                            "variable": [
+                                {
+                                    "id": "package_id",
+                                    "key": "package_id",
+                                    "value": "019fff58-a57b-7024-9105-8669a2b8faeb",
+                                    "description": "The ID of the package."
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"day_number\":16,\"title\":\"n\",\"activity_time\":\"architecto\",\"location\":\"n\",\"category\":\"g\",\"description\":\"Eius et animi quos velit et.\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update the specified itinerary template and sync to un-customized kloter schedules.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/packages\/:package_id\/itineraries\/:itinerary_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/packages\/:package_id\/itineraries\/:itinerary_id",
+                            "variable": [
+                                {
+                                    "id": "package_id",
+                                    "key": "package_id",
+                                    "value": "019fff58-a57b-7024-9105-8669a2b8faeb",
+                                    "description": "The ID of the package."
+                                },
+                                {
+                                    "id": "itinerary_id",
+                                    "key": "itinerary_id",
+                                    "value": "01a06c85-f2ba-713e-8952-deab62b1c219",
+                                    "description": "The ID of the itinerary."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"day_number\":16,\"title\":\"n\",\"activity_time\":\"architecto\",\"location\":\"n\",\"category\":\"g\",\"description\":\"Eius et animi quos velit et.\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Remove the specified itinerary template.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/packages\/:package_id\/itineraries\/:itinerary_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/packages\/:package_id\/itineraries\/:itinerary_id",
+                            "variable": [
+                                {
+                                    "id": "package_id",
+                                    "key": "package_id",
+                                    "value": "019fff58-a57b-7024-9105-8669a2b8faeb",
+                                    "description": "The ID of the package."
+                                },
+                                {
+                                    "id": "itinerary_id",
+                                    "key": "itinerary_id",
+                                    "value": "01a06c85-f2ba-713e-8952-deab62b1c219",
+                                    "description": "The ID of the itinerary."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Menampilkan semua data kloter keberangkatan (dengan pencarian & filter).",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/kloters",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/kloters"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Membuat kloter keberangkatan baru.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/kloters",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/kloters"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"b\",\"package_id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"code\":\"z\",\"flight_code\":\"m\",\"departure_date\":\"2026-09-04T17:01:13\",\"return_date\":\"2052-09-27\",\"hotel_makkah_id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"hotel_madinah_id\":\"c90237e9-ced5-3af6-88ea-84aeaa148878\",\"status\":\"draft\",\"tour_leader\":\"i\",\"mutawif_local\":\"y\"}"
+                        },
+                        "description": "package_id, departure_date, return_date sekarang NULLABLE (keputusan klien)."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Menampilkan detail satu kloter keberangkatan beserta daftar jamaah.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/kloters\/:kloter_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/kloters\/:kloter_id",
+                            "variable": [
+                                {
+                                    "id": "kloter_id",
+                                    "key": "kloter_id",
+                                    "value": "019fff5a-e6a2-72d5-8f7d-8814ad6f0c89",
+                                    "description": "The ID of the kloter."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Perbarui data kloter keberangkatan.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/kloters\/:kloter_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/kloters\/:kloter_id",
+                            "variable": [
+                                {
+                                    "id": "kloter_id",
+                                    "key": "kloter_id",
+                                    "value": "019fff5a-e6a2-72d5-8f7d-8814ad6f0c89",
+                                    "description": "The ID of the kloter."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"b\",\"package_id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"code\":\"z\",\"flight_code\":\"m\",\"departure_date\":\"2026-09-04T17:01:13\",\"return_date\":\"2052-09-27\",\"hotel_makkah_id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"hotel_madinah_id\":\"c90237e9-ced5-3af6-88ea-84aeaa148878\",\"status\":\"cancelled\",\"tour_leader\":\"i\",\"mutawif_local\":\"y\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Hapus data kloter keberangkatan.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/kloters\/:kloter_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/kloters\/:kloter_id",
+                            "variable": [
+                                {
+                                    "id": "kloter_id",
+                                    "key": "kloter_id",
+                                    "value": "019fff5a-e6a2-72d5-8f7d-8814ad6f0c89",
+                                    "description": "The ID of the kloter."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Guard: tidak boleh dihapus jika masih ada jamaah ter-assign via jamaah.kloter_id\n(single source of truth \u2014 menggantikan pengecekan via registrations() lama)."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Display a listing of schedules for a kloter.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/kloters\/:kloter_id\/schedules",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/kloters\/:kloter_id\/schedules",
+                            "variable": [
+                                {
+                                    "id": "kloter_id",
+                                    "key": "kloter_id",
+                                    "value": "019fff5a-e6a2-72d5-8f7d-8814ad6f0c89",
+                                    "description": "The ID of the kloter."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Store a manually created schedule for a kloter.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/kloters\/:kloter_id\/schedules",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/kloters\/:kloter_id\/schedules",
+                            "variable": [
+                                {
+                                    "id": "kloter_id",
+                                    "key": "kloter_id",
+                                    "value": "019fff5a-e6a2-72d5-8f7d-8814ad6f0c89",
+                                    "description": "The ID of the kloter."
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"day_number\":16,\"activity_date\":\"2026-09-04T17:01:13\",\"activity_time\":\"architecto\",\"hijri_date_ref\":\"n\",\"title\":\"g\",\"location\":\"z\",\"category\":\"m\",\"pic\":\"i\",\"status\":\"y\",\"description\":\"Eius et animi quos velit et.\",\"is_published\":false}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update the specified schedule for a kloter.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/kloters\/:kloter_id\/schedules\/:schedule_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/kloters\/:kloter_id\/schedules\/:schedule_id",
+                            "variable": [
+                                {
+                                    "id": "kloter_id",
+                                    "key": "kloter_id",
+                                    "value": "019fff5a-e6a2-72d5-8f7d-8814ad6f0c89",
+                                    "description": "The ID of the kloter."
+                                },
+                                {
+                                    "id": "schedule_id",
+                                    "key": "schedule_id",
+                                    "value": "01a06c86-0384-702f-b748-164626d2fd9f",
+                                    "description": "The ID of the schedule."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"day_number\":16,\"activity_date\":\"2026-09-04T17:01:13\",\"activity_time\":\"architecto\",\"hijri_date_ref\":\"n\",\"title\":\"g\",\"location\":\"z\",\"category\":\"m\",\"pic\":\"i\",\"status\":\"y\",\"description\":\"Eius et animi quos velit et.\",\"is_published\":true}"
+                        },
+                        "description": "Note: Manual update automatically sets is_customized = true."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Remove the specified schedule from a kloter.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/kloters\/:kloter_id\/schedules\/:schedule_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/kloters\/:kloter_id\/schedules\/:schedule_id",
+                            "variable": [
+                                {
+                                    "id": "kloter_id",
+                                    "key": "kloter_id",
+                                    "value": "019fff5a-e6a2-72d5-8f7d-8814ad6f0c89",
+                                    "description": "The ID of the kloter."
+                                },
+                                {
+                                    "id": "schedule_id",
+                                    "key": "schedule_id",
+                                    "value": "01a06c86-0384-702f-b748-164626d2fd9f",
+                                    "description": "The ID of the schedule."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Generate or sync kloter rundown schedules from Package Itinerary templates.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/kloters\/:kloter_id\/schedules\/generate-from-template",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/kloters\/:kloter_id\/schedules\/generate-from-template",
+                            "variable": [
+                                {
+                                    "id": "kloter_id",
+                                    "key": "kloter_id",
+                                    "value": "019fff5a-e6a2-72d5-8f7d-8814ad6f0c89",
+                                    "description": "The ID of the kloter."
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Menampilkan semua kamar dan anggota dalam satu kloter.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/kloters\/:kloter_id\/rooms",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/kloters\/:kloter_id\/rooms",
+                            "variable": [
+                                {
+                                    "id": "kloter_id",
+                                    "key": "kloter_id",
+                                    "value": "019fff5a-e6a2-72d5-8f7d-8814ad6f0c89",
+                                    "description": "The ID of the kloter."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Pembagian Kamar Otomatis (Auto Allocation Roommates).",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/kloters\/:kloter_id\/auto-assign-rooms",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/kloters\/:kloter_id\/auto-assign-rooms",
+                            "variable": [
+                                {
+                                    "id": "kloter_id",
+                                    "key": "kloter_id",
+                                    "value": "019fff5a-e6a2-72d5-8f7d-8814ad6f0c89",
+                                    "description": "The ID of the kloter."
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"room_type\":\"triple\",\"hotel_id\":\"6ff8f7f6-1eb3-3525-be4a-3932c805afed\"}"
+                        },
+                        "description": "\/\/ DEPRECATED sementara: endpoint ini bergantung pada registration_id dari tabel registrations."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Membuat kamar secara manual oleh Admin.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/rooms",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/rooms"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"kloter_id\":\"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",\"hotel_id\":\"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9\",\"room_number\":\"m\",\"room_type\":\"double\",\"capacity\":35,\"gender\":\"P\",\"notes\":\"y\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Menampilkan detail satu kamar.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/rooms\/:room_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/rooms\/:room_id",
+                            "variable": [
+                                {
+                                    "id": "room_id",
+                                    "key": "room_id",
+                                    "value": "01a01e2a-d6b9-735a-b565-82e5752db78d",
+                                    "description": "The ID of the room."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Perbarui kamar secara manual.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/rooms\/:room_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/rooms\/:room_id",
+                            "variable": [
+                                {
+                                    "id": "room_id",
+                                    "key": "room_id",
+                                    "value": "01a01e2a-d6b9-735a-b565-82e5752db78d",
+                                    "description": "The ID of the room."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"hotel_id\":\"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",\"room_number\":\"g\",\"room_type\":\"quint\",\"capacity\":66,\"gender\":\"L\",\"notes\":\"m\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Hapus kamar (semua room_members ikut terhapus via cascade).",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/rooms\/:room_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/rooms\/:room_id",
+                            "variable": [
+                                {
+                                    "id": "room_id",
+                                    "key": "room_id",
+                                    "value": "01a01e2a-d6b9-735a-b565-82e5752db78d",
+                                    "description": "The ID of the room."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Menambahkan penghuni ke kamar secara manual atau via jamaah_id.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/rooms\/:room_id\/members",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/rooms\/:room_id\/members",
+                            "variable": [
+                                {
+                                    "id": "room_id",
+                                    "key": "room_id",
+                                    "value": "01a01e2a-d6b9-735a-b565-82e5752db78d",
+                                    "description": "The ID of the room."
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"jamaah_id\":\"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",\"title\":\"MISS\",\"occupant_name\":\"g\",\"age\":16}"
+                        },
+                        "description": "Kamar campuran gender diperbolehkan (tidak ada batasan gender penghuni vs kamar).\nMencegah duplikasi jamaah_id dalam kloter_id & hotel_id yang sama."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Memperbarui data penghuni kamar (title, occupant_name, age, jamaah_id).",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/rooms\/:room_id\/members\/:roomMember_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/rooms\/:room_id\/members\/:roomMember_id",
+                            "variable": [
+                                {
+                                    "id": "room_id",
+                                    "key": "room_id",
+                                    "value": "01a01e2a-d6b9-735a-b565-82e5752db78d",
+                                    "description": "The ID of the room."
+                                },
+                                {
+                                    "id": "roomMember_id",
+                                    "key": "roomMember_id",
+                                    "value": "01a01e2a-d6bf-7388-be5c-3f7eebe7e2a6",
+                                    "description": "The ID of the roomMember."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"jamaah_id\":\"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",\"title\":\"MRS\",\"occupant_name\":\"g\",\"age\":16}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Menghapus penghuni dari kamar berdasarkan ID room_member.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/rooms\/:room_id\/members\/:roomMember_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/rooms\/:room_id\/members\/:roomMember_id",
+                            "variable": [
+                                {
+                                    "id": "room_id",
+                                    "key": "room_id",
+                                    "value": "01a01e2a-d6b9-735a-b565-82e5752db78d",
+                                    "description": "The ID of the room."
+                                },
+                                {
+                                    "id": "roomMember_id",
+                                    "key": "roomMember_id",
+                                    "value": "01a01e2a-d6bf-7388-be5c-3f7eebe7e2a6",
+                                    "description": "The ID of the roomMember."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Menampilkan semua data pendaftaran (dengan pencarian & filter).",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/registrations",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/registrations"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Menyimpan pendaftaran baru.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/registrations",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/registrations"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"registration_number\":\"b\",\"full_name\":\"n\",\"passport_number\":\"g\",\"nik\":\"zmiyvdljnikhwayk\",\"phone\":\"cmyuwpwlvqwrsitc\",\"birth_date\":\"2022-09-29\",\"gender\":\"L\",\"registration_date\":\"2026-09-04T17:01:13\",\"departure_date\":\"2052-09-27\",\"package_id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"kloter_id\":\"c90237e9-ced5-3af6-88ea-84aeaa148878\",\"meningitis_vaccine_status\":\"sudah_vaksin\",\"photo_status\":\"sudah_menyerahkan\",\"total_package_cost\":8,\"status\":\"dp\",\"initial_payment\":{\"amount\":4326.41688,\"payment_type\":\"full_payment\",\"payment_method\":\"edc_qris\",\"payment_date\":\"2026-09-04T17:01:13\"},\"equipments\":[{\"equipment_name\":\"m\",\"size\":\"iyvdljnikhwaykcm\",\"is_received\":false}]}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Menampilkan detail satu pendaftaran.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/registrations\/:registration_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/registrations\/:registration_id",
+                            "variable": [
+                                {
+                                    "id": "registration_id",
+                                    "key": "registration_id",
+                                    "value": "01a03d44-b220-7120-aed2-73ce5afc9517",
+                                    "description": "The ID of the registration."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Perbarui data pendaftaran.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/registrations\/:registration_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/registrations\/:registration_id",
+                            "variable": [
+                                {
+                                    "id": "registration_id",
+                                    "key": "registration_id",
+                                    "value": "01a03d44-b220-7120-aed2-73ce5afc9517",
+                                    "description": "The ID of the registration."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"full_name\":\"b\",\"passport_number\":\"n\",\"nik\":\"gzmiyvdljnikhway\",\"phone\":\"kcmyuwpwlvqwrsit\",\"birth_date\":\"2022-09-29\",\"gender\":\"L\",\"registration_date\":\"2026-09-04T17:01:13\",\"departure_date\":\"2026-09-04T17:01:13\",\"package_id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"kloter_id\":\"c90237e9-ced5-3af6-88ea-84aeaa148878\",\"meningitis_vaccine_status\":\"belum_vaksin\",\"photo_status\":\"sudah_menyerahkan\",\"total_package_cost\":8,\"status\":\"dp\",\"equipments\":[{\"equipment_name\":\"y\",\"size\":\"vdljnikhwaykcmyu\",\"is_received\":false}]}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Hapus data pendaftaran.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/registrations\/:registration_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/registrations\/:registration_id",
+                            "variable": [
+                                {
+                                    "id": "registration_id",
+                                    "key": "registration_id",
+                                    "value": "01a03d44-b220-7120-aed2-73ce5afc9517",
+                                    "description": "The ID of the registration."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Catatan revisi [2026-09-02]: Guard 'converted' dihapus karena alur Jamaah\nkini terpisah \u2014 tidak ada lagi status 'converted' yang mengunci Pendaftaran.\nData lama berstatus 'converted' di database tetap bisa dihapus oleh admin."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Membatalkan pendaftaran.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/registrations\/:registration_id\/cancel",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/registrations\/:registration_id\/cancel",
+                            "variable": [
+                                {
+                                    "id": "registration_id",
+                                    "key": "registration_id",
+                                    "value": "01a03d44-b220-7120-aed2-73ce5afc9517",
+                                    "description": "The ID of the registration."
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Menampilkan seluruh data transaksi pembayaran (Untuk Admin Keuangan).",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/payments",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/payments"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Menampilkan semua pembayaran dari satu pendaftaran.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/registrations\/:registration_id\/payments",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/registrations\/:registration_id\/payments",
+                            "variable": [
+                                {
+                                    "id": "registration_id",
+                                    "key": "registration_id",
+                                    "value": "01a03d44-b220-7120-aed2-73ce5afc9517",
+                                    "description": "The ID of the registration."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Menambahkan pembayaran ke pendaftaran.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/registrations\/:registration_id\/payments",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/registrations\/:registration_id\/payments",
+                            "variable": [
+                                {
+                                    "id": "registration_id",
+                                    "key": "registration_id",
+                                    "value": "01a03d44-b220-7120-aed2-73ce5afc9517",
+                                    "description": "The ID of the registration."
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"amount\":4326.41688,\"payment_type\":\"full_payment\",\"payment_method\":\"mandiri_transfer\",\"payment_date\":\"2026-09-04T17:01:13\",\"notes\":\"m\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Menampilkan daftar pengeluaran kas dengan filter dan ringkasan agregat.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/expenses",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/expenses"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Menyimpan pengeluaran kas baru.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/expenses",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/expenses"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"vendor\":\"b\",\"category\":\"perlengkapan\",\"amount\":4326.41688,\"payment_method\":\"bsi_transfer\",\"expense_date\":\"2026-09-04T17:01:13\",\"reference_number\":\"m\",\"notes\":\"i\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Menampilkan detail satu pengeluaran kas.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/expenses\/:expense_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/expenses\/:expense_id",
+                            "variable": [
+                                {
+                                    "id": "expense_id",
+                                    "key": "expense_id",
+                                    "value": "01a03c1d-d876-7340-911d-b8bd3b43254d",
+                                    "description": "The ID of the expense."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Memperbarui data pengeluaran kas.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/expenses\/:expense_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/expenses\/:expense_id",
+                            "variable": [
+                                {
+                                    "id": "expense_id",
+                                    "key": "expense_id",
+                                    "value": "01a03c1d-d876-7340-911d-b8bd3b43254d",
+                                    "description": "The ID of the expense."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"vendor\":\"b\",\"category\":\"perlengkapan\",\"amount\":4326.41688,\"payment_method\":\"bsi_transfer\",\"expense_date\":\"2026-09-04T17:01:13\",\"reference_number\":\"m\",\"notes\":\"i\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Menghapus data pengeluaran kas.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/expenses\/:expense_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/expenses\/:expense_id",
+                            "variable": [
+                                {
+                                    "id": "expense_id",
+                                    "key": "expense_id",
+                                    "value": "01a03c1d-d876-7340-911d-b8bd3b43254d",
+                                    "description": "The ID of the expense."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Menampilkan ringkasan keuangan global (Total Pemasukan, Pengeluaran, Piutang, Saldo Bersih).",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/finance\/summary",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/finance\/summary"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Menampilkan semua data Jamaah resmi.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/jamaah",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/jamaah"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Eager-load relasi package & kloter untuk efisiensi (N+1 prevention)."
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Membuat data Jamaah baru secara manual oleh admin.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/jamaah",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/jamaah"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"login_id\":\"bngzmi\",\"nik\":\"yvdljnikhwaykcmy\",\"full_name\":\"u\",\"birth_date\":\"2026-09-04T17:01:13\",\"gender\":\"L\",\"phone\":\"wpwlvqwrsitcpscq\",\"emergency_contact\":\"l\",\"passport_number\":\"d\",\"visa_number\":\"z\",\"nationality\":\"s\",\"package_id\":\"59183559-65ff-3076-b8ca-d2d03d26a42a\",\"kloter_id\":\"1937113a-b0a2-3b03-925a-3163292463db\",\"hotel_makkah\":\"u\",\"hotel_madinah\":\"j\",\"departure_date\":\"2026-09-04T17:01:13\",\"return_date\":\"2052-09-27\",\"tour_leader\":\"n\",\"mutawif_local\":\"g\",\"status\":\"archived\"}"
+                        },
+                        "description": "Revisi [2026-09-02]: Logic auto-generate \"JAMAAH001\" dihapus.\nlogin_id kini wajib diisi manual oleh admin (max 10 karakter, unique)."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Menampilkan detail satu data Jamaah beserta relasi.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/jamaah\/:jamaah_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/jamaah\/:jamaah_id",
+                            "variable": [
+                                {
+                                    "id": "jamaah_id",
+                                    "key": "jamaah_id",
+                                    "value": "01a00fd9-404c-73f8-ac03-7d250410e565",
+                                    "description": "The ID of the jamaah."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Perbarui data profil Jamaah.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/jamaah\/:jamaah_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/jamaah\/:jamaah_id",
+                            "variable": [
+                                {
+                                    "id": "jamaah_id",
+                                    "key": "jamaah_id",
+                                    "value": "01a00fd9-404c-73f8-ac03-7d250410e565",
+                                    "description": "The ID of the jamaah."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"login_id\":\"bngzmi\",\"nik\":\"yvdljnikhwaykcmy\",\"full_name\":\"u\",\"birth_date\":\"2026-09-04T17:01:13\",\"gender\":\"P\",\"phone\":\"wpwlvqwrsitcpscq\",\"emergency_contact\":\"l\",\"passport_number\":\"d\",\"visa_number\":\"z\",\"nationality\":\"s\",\"package_id\":\"59183559-65ff-3076-b8ca-d2d03d26a42a\",\"kloter_id\":\"1937113a-b0a2-3b03-925a-3163292463db\",\"hotel_makkah\":\"u\",\"hotel_madinah\":\"j\",\"departure_date\":\"2026-09-04T17:01:13\",\"return_date\":\"2052-09-27\",\"tour_leader\":\"n\",\"mutawif_local\":\"g\",\"status\":\"archived\"}"
+                        },
+                        "description": "Semua field baru bisa di-update melalui validated() dari UpdateJamaahRequest."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Hapus data Jamaah.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/jamaah\/:jamaah_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/jamaah\/:jamaah_id",
+                            "variable": [
+                                {
+                                    "id": "jamaah_id",
+                                    "key": "jamaah_id",
+                                    "value": "01a00fd9-404c-73f8-ac03-7d250410e565",
+                                    "description": "The ID of the jamaah."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": []
+                }
+            ]
+        }
+    ],
+    "auth": {
+        "type": "bearer",
+        "bearer": [
+            {
+                "key": "Authorization",
+                "type": "string"
+            }
+        ]
+    }
+}

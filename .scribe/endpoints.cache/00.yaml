@@ -16,9 +16,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {token}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -54,7 +55,10 @@ endpoints:
     fileParameters: []
     responses: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
     controller: null
     method: null
     route: null
@@ -71,9 +75,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {token}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -85,7 +90,10 @@ endpoints:
     fileParameters: []
     responses: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
     controller: null
     method: null
     route: null
@@ -102,9 +110,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {token}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -125,7 +134,117 @@ endpoints:
           access-control-allow-origin: '*'
         description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/hotels
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Menampilkan daftar hotel (dengan opsional filter per kota).'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {token}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/hotels/find-or-create
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Cari hotel berdasarkan nama & kota (case-insensitive exact match).'
+      description: |-
+        Jika ditemukan: kembalikan hotel yang ada.
+        Jika tidak ditemukan: buat hotel baru dan kembalikan data hotel baru.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {token}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        custom: []
+        name: name
+        description: 'Must not be greater than 150 characters.'
+        required: true
+        example: b
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      city:
+        custom: []
+        name: city
+        description: ''
+        required: true
+        example: Makkah
+        type: string
+        enumValues:
+          - Makkah
+          - Madinah
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      name: b
+      city: Makkah
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
     controller: null
     method: null
     route: null
@@ -142,9 +261,10 @@ endpoints:
       subgroupDescription: ''
       title: 'Menampilkan semua data paket Umrah (dengan pencarian & filter).'
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {token}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -165,7 +285,10 @@ endpoints:
           access-control-allow-origin: '*'
         description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
     controller: null
     method: null
     route: null
@@ -182,9 +305,10 @@ endpoints:
       subgroupDescription: ''
       title: 'Membuat paket Umrah baru.'
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {token}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -219,7 +343,7 @@ endpoints:
         name: status
         description: ''
         required: false
-        example: inactive
+        example: published
         type: string
         enumValues:
           - draft
@@ -242,12 +366,15 @@ endpoints:
     cleanBodyParameters:
       name: b
       category: 'n'
-      status: inactive
+      status: published
       is_featured: true
     fileParameters: []
     responses: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
     controller: null
     method: null
     route: null
@@ -264,9 +391,10 @@ endpoints:
       subgroupDescription: ''
       title: 'Menampilkan detail satu paket Umrah.'
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {token}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -299,7 +427,10 @@ endpoints:
           access-control-allow-origin: '*'
         description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
     controller: null
     method: null
     route: null
@@ -316,9 +447,10 @@ endpoints:
       subgroupDescription: ''
       title: 'Perbarui data paket Umrah.'
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {token}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -379,7 +511,7 @@ endpoints:
         name: is_featured
         description: ''
         required: false
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -389,11 +521,14 @@ endpoints:
       name: b
       category: 'n'
       status: inactive
-      is_featured: false
+      is_featured: true
     fileParameters: []
     responses: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
     controller: null
     method: null
     route: null
@@ -410,9 +545,10 @@ endpoints:
       subgroupDescription: ''
       title: 'Hapus data paket Umrah.'
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {token}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -436,7 +572,375 @@ endpoints:
     fileParameters: []
     responses: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/packages/{package_id}/itineraries'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Display a listing of itineraries for a package.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {token}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      package_id:
+        custom: []
+        name: package_id
+        description: 'The ID of the package.'
+        required: true
+        example: 019fff58-a57b-7024-9105-8669a2b8faeb
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      package_id: 019fff58-a57b-7024-9105-8669a2b8faeb
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/packages/{package_id}/itineraries'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Store a newly created itinerary for a package.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {token}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      package_id:
+        custom: []
+        name: package_id
+        description: 'The ID of the package.'
+        required: true
+        example: 019fff58-a57b-7024-9105-8669a2b8faeb
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      package_id: 019fff58-a57b-7024-9105-8669a2b8faeb
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      day_number:
+        custom: []
+        name: day_number
+        description: 'Must be at least 1.'
+        required: true
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      title:
+        custom: []
+        name: title
+        description: 'Must not be greater than 255 characters.'
+        required: true
+        example: 'n'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      activity_time:
+        custom: []
+        name: activity_time
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      location:
+        custom: []
+        name: location
+        description: 'Must not be greater than 255 characters.'
+        required: false
+        example: 'n'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      category:
+        custom: []
+        name: category
+        description: 'Must not be greater than 100 characters.'
+        required: false
+        example: g
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      description:
+        custom: []
+        name: description
+        description: ''
+        required: false
+        example: 'Eius et animi quos velit et.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      day_number: 16
+      title: 'n'
+      activity_time: architecto
+      location: 'n'
+      category: g
+      description: 'Eius et animi quos velit et.'
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+    uri: 'api/packages/{package_id}/itineraries/{itinerary_id}'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update the specified itinerary template and sync to un-customized kloter schedules.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {token}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      package_id:
+        custom: []
+        name: package_id
+        description: 'The ID of the package.'
+        required: true
+        example: 019fff58-a57b-7024-9105-8669a2b8faeb
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      itinerary_id:
+        custom: []
+        name: itinerary_id
+        description: 'The ID of the itinerary.'
+        required: true
+        example: 01a06c85-f2ba-713e-8952-deab62b1c219
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      package_id: 019fff58-a57b-7024-9105-8669a2b8faeb
+      itinerary_id: 01a06c85-f2ba-713e-8952-deab62b1c219
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      day_number:
+        custom: []
+        name: day_number
+        description: 'Must be at least 1.'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      title:
+        custom: []
+        name: title
+        description: 'Must not be greater than 255 characters.'
+        required: false
+        example: 'n'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      activity_time:
+        custom: []
+        name: activity_time
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      location:
+        custom: []
+        name: location
+        description: 'Must not be greater than 255 characters.'
+        required: false
+        example: 'n'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      category:
+        custom: []
+        name: category
+        description: 'Must not be greater than 100 characters.'
+        required: false
+        example: g
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      description:
+        custom: []
+        name: description
+        description: ''
+        required: false
+        example: 'Eius et animi quos velit et.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      day_number: 16
+      title: 'n'
+      activity_time: architecto
+      location: 'n'
+      category: g
+      description: 'Eius et animi quos velit et.'
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/packages/{package_id}/itineraries/{itinerary_id}'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Remove the specified itinerary template.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {token}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      package_id:
+        custom: []
+        name: package_id
+        description: 'The ID of the package.'
+        required: true
+        example: 019fff58-a57b-7024-9105-8669a2b8faeb
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      itinerary_id:
+        custom: []
+        name: itinerary_id
+        description: 'The ID of the itinerary.'
+        required: true
+        example: 01a06c85-f2ba-713e-8952-deab62b1c219
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      package_id: 019fff58-a57b-7024-9105-8669a2b8faeb
+      itinerary_id: 01a06c85-f2ba-713e-8952-deab62b1c219
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
     controller: null
     method: null
     route: null
@@ -453,9 +957,10 @@ endpoints:
       subgroupDescription: ''
       title: 'Menampilkan semua data kloter keberangkatan (dengan pencarian & filter).'
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {token}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -476,7 +981,10 @@ endpoints:
           access-control-allow-origin: '*'
         description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
     controller: null
     method: null
     route: null
@@ -492,10 +1000,11 @@ endpoints:
       subgroup: ''
       subgroupDescription: ''
       title: 'Membuat kloter keberangkatan baru.'
-      description: ''
-      authenticated: false
+      description: 'package_id, departure_date, return_date sekarang NULLABLE (keputusan klien).'
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {token}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -503,23 +1012,45 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      package_id:
+      name:
         custom: []
-        name: package_id
-        description: 'Must be a valid UUID. Must match an existing stored value.'
+        name: name
+        description: 'Must not be greater than 150 characters.'
         required: true
-        example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+        example: b
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
+        deprecated: false
+      package_id:
+        custom: []
+        name: package_id
+        description: 'Must be a valid UUID. Must match an existing stored value.'
+        required: false
+        example: a4855dc5-0acb-33c3-b921-f4291f719ca0
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
         deprecated: false
       code:
         custom: []
         name: code
         description: 'Must not be greater than 30 characters.'
         required: false
-        example: g
+        example: z
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      flight_code:
+        custom: []
+        name: flight_code
+        description: 'Must not be greater than 50 characters.'
+        required: false
+        example: m
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -529,23 +1060,23 @@ endpoints:
         custom: []
         name: departure_date
         description: 'Must be a valid date.'
-        required: true
-        example: '2026-08-24T03:15:37'
+        required: false
+        example: '2026-09-04T17:01:13'
         type: string
         enumValues: []
         exampleWasSpecified: false
-        nullable: false
+        nullable: true
         deprecated: false
       return_date:
         custom: []
         name: return_date
         description: 'Must be a valid date. Must be a date after or equal to <code>departure_date</code>.'
-        required: true
-        example: '2052-09-16'
+        required: false
+        example: '2052-09-27'
         type: string
         enumValues: []
         exampleWasSpecified: false
-        nullable: false
+        nullable: true
         deprecated: false
       hotel_makkah_id:
         custom: []
@@ -574,21 +1105,21 @@ endpoints:
         name: status
         description: ''
         required: false
-        example: ready
+        example: draft
         type: string
         enumValues:
           - draft
-          - ready
           - active
+          - ready
           - completed
           - cancelled
         exampleWasSpecified: false
         nullable: true
         deprecated: false
-      cancellation_reason:
+      tour_leader:
         custom: []
-        name: cancellation_reason
-        description: 'Must not be greater than 255 characters.'
+        name: tour_leader
+        description: 'Must not be greater than 200 characters.'
         required: false
         example: i
         type: string
@@ -596,19 +1127,36 @@ endpoints:
         exampleWasSpecified: false
         nullable: true
         deprecated: false
+      mutawif_local:
+        custom: []
+        name: mutawif_local
+        description: 'Must not be greater than 200 characters.'
+        required: false
+        example: 'y'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
     cleanBodyParameters:
-      package_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
-      code: g
-      departure_date: '2026-08-24T03:15:37'
-      return_date: '2052-09-16'
+      name: b
+      package_id: a4855dc5-0acb-33c3-b921-f4291f719ca0
+      code: z
+      flight_code: m
+      departure_date: '2026-09-04T17:01:13'
+      return_date: '2052-09-27'
       hotel_makkah_id: a4855dc5-0acb-33c3-b921-f4291f719ca0
       hotel_madinah_id: c90237e9-ced5-3af6-88ea-84aeaa148878
-      status: ready
-      cancellation_reason: i
+      status: draft
+      tour_leader: i
+      mutawif_local: 'y'
     fileParameters: []
     responses: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
     controller: null
     method: null
     route: null
@@ -623,11 +1171,12 @@ endpoints:
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Menampilkan detail satu kloter keberangkatan.'
+      title: 'Menampilkan detail satu kloter keberangkatan beserta daftar jamaah.'
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {token}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -636,14 +1185,14 @@ endpoints:
         name: kloter_id
         description: 'The ID of the kloter.'
         required: true
-        example: 01a01e0f-c0f6-7032-af6c-98f8f614e107
+        example: 019fff5a-e6a2-72d5-8f7d-8814ad6f0c89
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      kloter_id: 01a01e0f-c0f6-7032-af6c-98f8f614e107
+      kloter_id: 019fff5a-e6a2-72d5-8f7d-8814ad6f0c89
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -660,7 +1209,10 @@ endpoints:
           access-control-allow-origin: '*'
         description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
     controller: null
     method: null
     route: null
@@ -677,9 +1229,10 @@ endpoints:
       subgroupDescription: ''
       title: 'Perbarui data kloter keberangkatan.'
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {token}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -688,60 +1241,82 @@ endpoints:
         name: kloter_id
         description: 'The ID of the kloter.'
         required: true
-        example: 01a01e0f-c0f6-7032-af6c-98f8f614e107
+        example: 019fff5a-e6a2-72d5-8f7d-8814ad6f0c89
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      kloter_id: 01a01e0f-c0f6-7032-af6c-98f8f614e107
+      kloter_id: 019fff5a-e6a2-72d5-8f7d-8814ad6f0c89
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
+      name:
+        custom: []
+        name: name
+        description: 'Must not be greater than 150 characters.'
+        required: false
+        example: b
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
       package_id:
         custom: []
         name: package_id
         description: 'Must be a valid UUID. Must match an existing stored value.'
         required: false
-        example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+        example: a4855dc5-0acb-33c3-b921-f4291f719ca0
         type: string
         enumValues: []
         exampleWasSpecified: false
-        nullable: false
+        nullable: true
         deprecated: false
       code:
         custom: []
         name: code
         description: 'Must not be greater than 30 characters.'
         required: false
-        example: g
+        example: z
         type: string
         enumValues: []
         exampleWasSpecified: false
-        nullable: false
+        nullable: true
+        deprecated: false
+      flight_code:
+        custom: []
+        name: flight_code
+        description: 'Must not be greater than 50 characters.'
+        required: false
+        example: m
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
         deprecated: false
       departure_date:
         custom: []
         name: departure_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-08-24T03:15:37'
+        example: '2026-09-04T17:01:13'
         type: string
         enumValues: []
         exampleWasSpecified: false
-        nullable: false
+        nullable: true
         deprecated: false
       return_date:
         custom: []
         name: return_date
         description: 'Must be a valid date. Must be a date after or equal to <code>departure_date</code>.'
         required: false
-        example: '2052-09-16'
+        example: '2052-09-27'
         type: string
         enumValues: []
         exampleWasSpecified: false
-        nullable: false
+        nullable: true
         deprecated: false
       hotel_makkah_id:
         custom: []
@@ -774,17 +1349,17 @@ endpoints:
         type: string
         enumValues:
           - draft
-          - ready
           - active
+          - ready
           - completed
           - cancelled
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      cancellation_reason:
+      tour_leader:
         custom: []
-        name: cancellation_reason
-        description: 'Must not be greater than 255 characters.'
+        name: tour_leader
+        description: 'Must not be greater than 200 characters.'
         required: false
         example: i
         type: string
@@ -792,19 +1367,36 @@ endpoints:
         exampleWasSpecified: false
         nullable: true
         deprecated: false
+      mutawif_local:
+        custom: []
+        name: mutawif_local
+        description: 'Must not be greater than 200 characters.'
+        required: false
+        example: 'y'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
     cleanBodyParameters:
-      package_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
-      code: g
-      departure_date: '2026-08-24T03:15:37'
-      return_date: '2052-09-16'
+      name: b
+      package_id: a4855dc5-0acb-33c3-b921-f4291f719ca0
+      code: z
+      flight_code: m
+      departure_date: '2026-09-04T17:01:13'
+      return_date: '2052-09-27'
       hotel_makkah_id: a4855dc5-0acb-33c3-b921-f4291f719ca0
       hotel_madinah_id: c90237e9-ced5-3af6-88ea-84aeaa148878
       status: cancelled
-      cancellation_reason: i
+      tour_leader: i
+      mutawif_local: 'y'
     fileParameters: []
     responses: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
     controller: null
     method: null
     route: null
@@ -820,10 +1412,13 @@ endpoints:
       subgroup: ''
       subgroupDescription: ''
       title: 'Hapus data kloter keberangkatan.'
-      description: ''
-      authenticated: false
+      description: |-
+        Guard: tidak boleh dihapus jika masih ada jamaah ter-assign via jamaah.kloter_id
+        (single source of truth — menggantikan pengecekan via registrations() lama).
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {token}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -832,14 +1427,14 @@ endpoints:
         name: kloter_id
         description: 'The ID of the kloter.'
         required: true
-        example: 01a01e0f-c0f6-7032-af6c-98f8f614e107
+        example: 019fff5a-e6a2-72d5-8f7d-8814ad6f0c89
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      kloter_id: 01a01e0f-c0f6-7032-af6c-98f8f614e107
+      kloter_id: 019fff5a-e6a2-72d5-8f7d-8814ad6f0c89
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -847,7 +1442,10 @@ endpoints:
     fileParameters: []
     responses: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
     controller: null
     method: null
     route: null
@@ -855,18 +1453,19 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/kloters/{kloter_id}/rooms'
+    uri: 'api/kloters/{kloter_id}/schedules'
     metadata:
       custom: []
       groupName: Endpoints
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Menampilkan semua kamar dan status pembagian roommate dalam satu kloter.'
+      title: 'Display a listing of schedules for a kloter.'
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {token}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -875,14 +1474,14 @@ endpoints:
         name: kloter_id
         description: 'The ID of the kloter.'
         required: true
-        example: 01a01e0f-c0f6-7032-af6c-98f8f614e107
+        example: 019fff5a-e6a2-72d5-8f7d-8814ad6f0c89
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      kloter_id: 01a01e0f-c0f6-7032-af6c-98f8f614e107
+      kloter_id: 019fff5a-e6a2-72d5-8f7d-8814ad6f0c89
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -899,7 +1498,542 @@ endpoints:
           access-control-allow-origin: '*'
         description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/kloters/{kloter_id}/schedules'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Store a manually created schedule for a kloter.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {token}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      kloter_id:
+        custom: []
+        name: kloter_id
+        description: 'The ID of the kloter.'
+        required: true
+        example: 019fff5a-e6a2-72d5-8f7d-8814ad6f0c89
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      kloter_id: 019fff5a-e6a2-72d5-8f7d-8814ad6f0c89
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      day_number:
+        custom: []
+        name: day_number
+        description: 'Must be at least 1.'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      activity_date:
+        custom: []
+        name: activity_date
+        description: 'Must be a valid date.'
+        required: true
+        example: '2026-09-04T17:01:13'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      activity_time:
+        custom: []
+        name: activity_time
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      hijri_date_ref:
+        custom: []
+        name: hijri_date_ref
+        description: 'Must not be greater than 30 characters.'
+        required: false
+        example: 'n'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      title:
+        custom: []
+        name: title
+        description: 'Must not be greater than 255 characters.'
+        required: true
+        example: g
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      location:
+        custom: []
+        name: location
+        description: 'Must not be greater than 255 characters.'
+        required: false
+        example: z
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      category:
+        custom: []
+        name: category
+        description: 'Must not be greater than 100 characters.'
+        required: false
+        example: m
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      pic:
+        custom: []
+        name: pic
+        description: 'Must not be greater than 255 characters.'
+        required: false
+        example: i
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: 'Must not be greater than 50 characters.'
+        required: false
+        example: 'y'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      description:
+        custom: []
+        name: description
+        description: ''
+        required: false
+        example: 'Eius et animi quos velit et.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      is_published:
+        custom: []
+        name: is_published
+        description: ''
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      day_number: 16
+      activity_date: '2026-09-04T17:01:13'
+      activity_time: architecto
+      hijri_date_ref: 'n'
+      title: g
+      location: z
+      category: m
+      pic: i
+      status: 'y'
+      description: 'Eius et animi quos velit et.'
+      is_published: false
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+    uri: 'api/kloters/{kloter_id}/schedules/{schedule_id}'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update the specified schedule for a kloter.'
+      description: 'Note: Manual update automatically sets is_customized = true.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {token}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      kloter_id:
+        custom: []
+        name: kloter_id
+        description: 'The ID of the kloter.'
+        required: true
+        example: 019fff5a-e6a2-72d5-8f7d-8814ad6f0c89
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      schedule_id:
+        custom: []
+        name: schedule_id
+        description: 'The ID of the schedule.'
+        required: true
+        example: 01a06c86-0384-702f-b748-164626d2fd9f
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      kloter_id: 019fff5a-e6a2-72d5-8f7d-8814ad6f0c89
+      schedule_id: 01a06c86-0384-702f-b748-164626d2fd9f
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      day_number:
+        custom: []
+        name: day_number
+        description: 'Must be at least 1.'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      activity_date:
+        custom: []
+        name: activity_date
+        description: 'Must be a valid date.'
+        required: false
+        example: '2026-09-04T17:01:13'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      activity_time:
+        custom: []
+        name: activity_time
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      hijri_date_ref:
+        custom: []
+        name: hijri_date_ref
+        description: 'Must not be greater than 30 characters.'
+        required: false
+        example: 'n'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      title:
+        custom: []
+        name: title
+        description: 'Must not be greater than 255 characters.'
+        required: false
+        example: g
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      location:
+        custom: []
+        name: location
+        description: 'Must not be greater than 255 characters.'
+        required: false
+        example: z
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      category:
+        custom: []
+        name: category
+        description: 'Must not be greater than 100 characters.'
+        required: false
+        example: m
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      pic:
+        custom: []
+        name: pic
+        description: 'Must not be greater than 255 characters.'
+        required: false
+        example: i
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: 'Must not be greater than 50 characters.'
+        required: false
+        example: 'y'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      description:
+        custom: []
+        name: description
+        description: ''
+        required: false
+        example: 'Eius et animi quos velit et.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      is_published:
+        custom: []
+        name: is_published
+        description: ''
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      day_number: 16
+      activity_date: '2026-09-04T17:01:13'
+      activity_time: architecto
+      hijri_date_ref: 'n'
+      title: g
+      location: z
+      category: m
+      pic: i
+      status: 'y'
+      description: 'Eius et animi quos velit et.'
+      is_published: true
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/kloters/{kloter_id}/schedules/{schedule_id}'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Remove the specified schedule from a kloter.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {token}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      kloter_id:
+        custom: []
+        name: kloter_id
+        description: 'The ID of the kloter.'
+        required: true
+        example: 019fff5a-e6a2-72d5-8f7d-8814ad6f0c89
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      schedule_id:
+        custom: []
+        name: schedule_id
+        description: 'The ID of the schedule.'
+        required: true
+        example: 01a06c86-0384-702f-b748-164626d2fd9f
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      kloter_id: 019fff5a-e6a2-72d5-8f7d-8814ad6f0c89
+      schedule_id: 01a06c86-0384-702f-b748-164626d2fd9f
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/kloters/{kloter_id}/schedules/generate-from-template'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Generate or sync kloter rundown schedules from Package Itinerary templates.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {token}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      kloter_id:
+        custom: []
+        name: kloter_id
+        description: 'The ID of the kloter.'
+        required: true
+        example: 019fff5a-e6a2-72d5-8f7d-8814ad6f0c89
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      kloter_id: 019fff5a-e6a2-72d5-8f7d-8814ad6f0c89
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/kloters/{kloter_id}/rooms'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Menampilkan semua kamar dan anggota dalam satu kloter.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {token}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      kloter_id:
+        custom: []
+        name: kloter_id
+        description: 'The ID of the kloter.'
+        required: true
+        example: 019fff5a-e6a2-72d5-8f7d-8814ad6f0c89
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      kloter_id: 019fff5a-e6a2-72d5-8f7d-8814ad6f0c89
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
     controller: null
     method: null
     route: null
@@ -915,10 +2049,11 @@ endpoints:
       subgroup: ''
       subgroupDescription: ''
       title: 'Pembagian Kamar Otomatis (Auto Allocation Roommates).'
-      description: ''
-      authenticated: false
+      description: '// DEPRECATED sementara: endpoint ini bergantung pada registration_id dari tabel registrations.'
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {token}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -927,14 +2062,14 @@ endpoints:
         name: kloter_id
         description: 'The ID of the kloter.'
         required: true
-        example: 01a01e0f-c0f6-7032-af6c-98f8f614e107
+        example: 019fff5a-e6a2-72d5-8f7d-8814ad6f0c89
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      kloter_id: 01a01e0f-c0f6-7032-af6c-98f8f614e107
+      kloter_id: 019fff5a-e6a2-72d5-8f7d-8814ad6f0c89
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -950,6 +2085,7 @@ endpoints:
           - triple
           - double
           - single
+          - quint
         exampleWasSpecified: false
         nullable: true
         deprecated: false
@@ -970,7 +2106,10 @@ endpoints:
     fileParameters: []
     responses: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
     controller: null
     method: null
     route: null
@@ -985,11 +2124,12 @@ endpoints:
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Membuat kamar secara manual oleh Admin (Manual Create Room).'
+      title: 'Membuat kamar secara manual oleh Admin.'
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {token}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -1023,25 +2163,26 @@ endpoints:
         custom: []
         name: room_number
         description: 'Must not be greater than 30 characters.'
-        required: true
+        required: false
         example: m
         type: string
         enumValues: []
         exampleWasSpecified: false
-        nullable: false
+        nullable: true
         deprecated: false
       room_type:
         custom: []
         name: room_type
         description: ''
         required: true
-        example: triple
+        example: double
         type: string
         enumValues:
           - quad
           - triple
           - double
           - single
+          - quint
         exampleWasSpecified: false
         nullable: false
         deprecated: false
@@ -1084,14 +2225,73 @@ endpoints:
       kloter_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
       hotel_id: 6b72fe4a-5b40-307c-bc24-f79acf9a1bb9
       room_number: m
-      room_type: triple
+      room_type: double
       capacity: 35
       gender: P
       notes: 'y'
     fileParameters: []
     responses: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/rooms/{room_id}'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Menampilkan detail satu kamar.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {token}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      room_id:
+        custom: []
+        name: room_id
+        description: 'The ID of the room.'
+        required: true
+        example: 01a01e2a-d6b9-735a-b565-82e5752db78d
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      room_id: 01a01e2a-d6b9-735a-b565-82e5752db78d
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
     controller: null
     method: null
     route: null
@@ -1106,11 +2306,12 @@ endpoints:
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Perbarui kamar secara manual (Manual Edit Room).'
+      title: 'Perbarui kamar secara manual.'
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {token}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -1150,20 +2351,21 @@ endpoints:
         type: string
         enumValues: []
         exampleWasSpecified: false
-        nullable: false
+        nullable: true
         deprecated: false
       room_type:
         custom: []
         name: room_type
         description: ''
         required: false
-        example: double
+        example: quint
         type: string
         enumValues:
           - quad
           - triple
           - double
           - single
+          - quint
         exampleWasSpecified: false
         nullable: false
         deprecated: false
@@ -1183,7 +2385,7 @@ endpoints:
         name: gender
         description: ''
         required: false
-        example: P
+        example: L
         type: string
         enumValues:
           - L
@@ -1205,14 +2407,17 @@ endpoints:
     cleanBodyParameters:
       hotel_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
       room_number: g
-      room_type: double
+      room_type: quint
       capacity: 66
-      gender: P
+      gender: L
       notes: m
     fileParameters: []
     responses: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
     controller: null
     method: null
     route: null
@@ -1227,11 +2432,12 @@ endpoints:
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Hapus kamar (Manual Delete Room).'
+      title: 'Hapus kamar (semua room_members ikut terhapus via cascade).'
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {token}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -1255,7 +2461,10 @@ endpoints:
     fileParameters: []
     responses: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
     controller: null
     method: null
     route: null
@@ -1270,11 +2479,14 @@ endpoints:
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Menambahkan anggota/roommate ke dalam kamar secara manual.'
-      description: ''
-      authenticated: false
+      title: 'Menambahkan penghuni ke kamar secara manual atau via jamaah_id.'
+      description: |-
+        Kamar campuran gender diperbolehkan (tidak ada batasan gender penghuni vs kamar).
+        Mencegah duplikasi jamaah_id dalam kloter_id & hotel_id yang sama.
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {token}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -1294,42 +2506,86 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      registration_id:
+      jamaah_id:
         custom: []
-        name: registration_id
+        name: jamaah_id
         description: 'Must be a valid UUID. Must match an existing stored value.'
-        required: true
+        required: false
         example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
         type: string
         enumValues: []
         exampleWasSpecified: false
-        nullable: false
+        nullable: true
+        deprecated: false
+      title:
+        custom: []
+        name: title
+        description: 'This field is required when <code>jamaah_id</code> is not present.'
+        required: false
+        example: MISS
+        type: string
+        enumValues:
+          - MR
+          - MRS
+          - MISS
+          - MSTR
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      occupant_name:
+        custom: []
+        name: occupant_name
+        description: 'This field is required when <code>jamaah_id</code> is not present. Must not be greater than 255 characters.'
+        required: false
+        example: g
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      age:
+        custom: []
+        name: age
+        description: 'Must be at least 0. Must not be greater than 120.'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
         deprecated: false
     cleanBodyParameters:
-      registration_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+      jamaah_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+      title: MISS
+      occupant_name: g
+      age: 16
     fileParameters: []
     responses: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
     controller: null
     method: null
     route: null
   -
     custom: []
     httpMethods:
-      - DELETE
-    uri: 'api/rooms/{room_id}/members/{registration_id}'
+      - PUT
+    uri: 'api/rooms/{room_id}/members/{roomMember_id}'
     metadata:
       custom: []
       groupName: Endpoints
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Menghapus anggota/roommate dari kamar secara manual.'
+      title: 'Memperbarui data penghuni kamar (title, occupant_name, age, jamaah_id).'
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {token}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -1344,12 +2600,12 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      registration_id:
+      roomMember_id:
         custom: []
-        name: registration_id
-        description: 'The ID of the registration.'
+        name: roomMember_id
+        description: 'The ID of the roomMember.'
         required: true
-        example: 01a00f86-d749-7021-9aa7-5fb254da3b23
+        example: 01a01e2a-d6bf-7388-be5c-3f7eebe7e2a6
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1357,7 +2613,118 @@ endpoints:
         deprecated: false
     cleanUrlParameters:
       room_id: 01a01e2a-d6b9-735a-b565-82e5752db78d
-      registration_id: 01a00f86-d749-7021-9aa7-5fb254da3b23
+      roomMember_id: 01a01e2a-d6bf-7388-be5c-3f7eebe7e2a6
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      jamaah_id:
+        custom: []
+        name: jamaah_id
+        description: 'Must be a valid UUID. Must match an existing stored value.'
+        required: false
+        example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      title:
+        custom: []
+        name: title
+        description: ''
+        required: false
+        example: MRS
+        type: string
+        enumValues:
+          - MR
+          - MRS
+          - MISS
+          - MSTR
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      occupant_name:
+        custom: []
+        name: occupant_name
+        description: 'Must not be greater than 255 characters.'
+        required: false
+        example: g
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      age:
+        custom: []
+        name: age
+        description: 'Must be at least 0. Must not be greater than 120.'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      jamaah_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+      title: MRS
+      occupant_name: g
+      age: 16
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/rooms/{room_id}/members/{roomMember_id}'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Menghapus penghuni dari kamar berdasarkan ID room_member.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {token}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      room_id:
+        custom: []
+        name: room_id
+        description: 'The ID of the room.'
+        required: true
+        example: 01a01e2a-d6b9-735a-b565-82e5752db78d
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      roomMember_id:
+        custom: []
+        name: roomMember_id
+        description: 'The ID of the roomMember.'
+        required: true
+        example: 01a01e2a-d6bf-7388-be5c-3f7eebe7e2a6
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      room_id: 01a01e2a-d6b9-735a-b565-82e5752db78d
+      roomMember_id: 01a01e2a-d6bf-7388-be5c-3f7eebe7e2a6
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1365,7 +2732,10 @@ endpoints:
     fileParameters: []
     responses: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
     controller: null
     method: null
     route: null
@@ -1382,9 +2752,10 @@ endpoints:
       subgroupDescription: ''
       title: 'Menampilkan semua data pendaftaran (dengan pencarian & filter).'
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {token}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -1405,7 +2776,10 @@ endpoints:
           access-control-allow-origin: '*'
         description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
     controller: null
     method: null
     route: null
@@ -1422,9 +2796,10 @@ endpoints:
       subgroupDescription: ''
       title: 'Menyimpan pendaftaran baru.'
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {token}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -1492,7 +2867,7 @@ endpoints:
         name: birth_date
         description: 'Must be a valid date. Must be a date before <code>today</code>.'
         required: true
-        example: '2022-09-17'
+        example: '2022-09-29'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1516,7 +2891,7 @@ endpoints:
         name: registration_date
         description: 'Must be a valid date.'
         required: true
-        example: '2026-08-24T03:15:37'
+        example: '2026-09-04T17:01:13'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1527,7 +2902,7 @@ endpoints:
         name: departure_date
         description: 'Must be a valid date. Must be a date after or equal to <code>registration_date</code>.'
         required: false
-        example: '2052-09-16'
+        example: '2052-09-27'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1560,7 +2935,7 @@ endpoints:
         name: meningitis_vaccine_status
         description: ''
         required: true
-        example: belum_vaksin
+        example: sudah_vaksin
         type: string
         enumValues:
           - belum_vaksin
@@ -1597,7 +2972,7 @@ endpoints:
         name: status
         description: ''
         required: false
-        example: cancelled
+        example: dp
         type: string
         enumValues:
           - unpaid
@@ -1637,7 +3012,7 @@ endpoints:
         name: initial_payment.payment_type
         description: ''
         required: false
-        example: down_payment
+        example: full_payment
         type: string
         enumValues:
           - down_payment
@@ -1650,7 +3025,7 @@ endpoints:
         name: initial_payment.payment_method
         description: ''
         required: false
-        example: mandiri_transfer
+        example: edc_qris
         type: string
         enumValues:
           - bca_transfer
@@ -1666,7 +3041,7 @@ endpoints:
         name: initial_payment.payment_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-08-24T03:15:37'
+        example: '2026-09-04T17:01:13'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1694,12 +3069,23 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
+      'equipments[].size':
+        custom: []
+        name: 'equipments[].size'
+        description: 'Must not be greater than 20 characters.'
+        required: false
+        example: iyvdljnikhwaykcm
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
       'equipments[].is_received':
         custom: []
         name: 'equipments[].is_received'
         description: 'This field is required when <code>equipments</code> is present.'
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -1711,29 +3097,33 @@ endpoints:
       passport_number: g
       nik: zmiyvdljnikhwayk
       phone: cmyuwpwlvqwrsitc
-      birth_date: '2022-09-17'
+      birth_date: '2022-09-29'
       gender: L
-      registration_date: '2026-08-24T03:15:37'
-      departure_date: '2052-09-16'
+      registration_date: '2026-09-04T17:01:13'
+      departure_date: '2052-09-27'
       package_id: a4855dc5-0acb-33c3-b921-f4291f719ca0
       kloter_id: c90237e9-ced5-3af6-88ea-84aeaa148878
-      meningitis_vaccine_status: belum_vaksin
+      meningitis_vaccine_status: sudah_vaksin
       photo_status: sudah_menyerahkan
       total_package_cost: 8
-      status: cancelled
+      status: dp
       initial_payment:
         amount: 4326.41688
-        payment_type: down_payment
-        payment_method: mandiri_transfer
-        payment_date: '2026-08-24T03:15:37'
+        payment_type: full_payment
+        payment_method: edc_qris
+        payment_date: '2026-09-04T17:01:13'
       equipments:
         -
           equipment_name: m
-          is_received: true
+          size: iyvdljnikhwaykcm
+          is_received: false
     fileParameters: []
     responses: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
     controller: null
     method: null
     route: null
@@ -1750,9 +3140,10 @@ endpoints:
       subgroupDescription: ''
       title: 'Menampilkan detail satu pendaftaran.'
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {token}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -1761,14 +3152,14 @@ endpoints:
         name: registration_id
         description: 'The ID of the registration.'
         required: true
-        example: 01a00f86-d749-7021-9aa7-5fb254da3b23
+        example: 01a03d44-b220-7120-aed2-73ce5afc9517
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      registration_id: 01a00f86-d749-7021-9aa7-5fb254da3b23
+      registration_id: 01a03d44-b220-7120-aed2-73ce5afc9517
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1785,7 +3176,10 @@ endpoints:
           access-control-allow-origin: '*'
         description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
     controller: null
     method: null
     route: null
@@ -1802,9 +3196,10 @@ endpoints:
       subgroupDescription: ''
       title: 'Perbarui data pendaftaran.'
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {token}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -1813,14 +3208,14 @@ endpoints:
         name: registration_id
         description: 'The ID of the registration.'
         required: true
-        example: 01a00f86-d749-7021-9aa7-5fb254da3b23
+        example: 01a03d44-b220-7120-aed2-73ce5afc9517
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      registration_id: 01a00f86-d749-7021-9aa7-5fb254da3b23
+      registration_id: 01a03d44-b220-7120-aed2-73ce5afc9517
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -1873,7 +3268,7 @@ endpoints:
         name: birth_date
         description: 'Must be a valid date. Must be a date before <code>today</code>.'
         required: false
-        example: '2022-09-17'
+        example: '2022-09-29'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1884,7 +3279,7 @@ endpoints:
         name: gender
         description: ''
         required: false
-        example: P
+        example: L
         type: string
         enumValues:
           - L
@@ -1897,7 +3292,7 @@ endpoints:
         name: registration_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-08-24T03:15:37'
+        example: '2026-09-04T17:01:13'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1908,7 +3303,7 @@ endpoints:
         name: departure_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-08-24T03:15:37'
+        example: '2026-09-04T17:01:13'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1941,7 +3336,7 @@ endpoints:
         name: meningitis_vaccine_status
         description: ''
         required: false
-        example: sudah_vaksin
+        example: belum_vaksin
         type: string
         enumValues:
           - belum_vaksin
@@ -1954,7 +3349,7 @@ endpoints:
         name: photo_status
         description: ''
         required: false
-        example: belum_ada
+        example: sudah_menyerahkan
         type: string
         enumValues:
           - belum_ada
@@ -1978,7 +3373,7 @@ endpoints:
         name: status
         description: ''
         required: false
-        example: converted
+        example: dp
         type: string
         enumValues:
           - unpaid
@@ -2013,12 +3408,23 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
+      'equipments[].size':
+        custom: []
+        name: 'equipments[].size'
+        description: 'Must not be greater than 20 characters.'
+        required: false
+        example: vdljnikhwaykcmyu
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
       'equipments[].is_received':
         custom: []
         name: 'equipments[].is_received'
         description: 'This field is required when <code>equipments</code> is present.'
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -2029,24 +3435,28 @@ endpoints:
       passport_number: 'n'
       nik: gzmiyvdljnikhway
       phone: kcmyuwpwlvqwrsit
-      birth_date: '2022-09-17'
-      gender: P
-      registration_date: '2026-08-24T03:15:37'
-      departure_date: '2026-08-24T03:15:37'
+      birth_date: '2022-09-29'
+      gender: L
+      registration_date: '2026-09-04T17:01:13'
+      departure_date: '2026-09-04T17:01:13'
       package_id: a4855dc5-0acb-33c3-b921-f4291f719ca0
       kloter_id: c90237e9-ced5-3af6-88ea-84aeaa148878
-      meningitis_vaccine_status: sudah_vaksin
-      photo_status: belum_ada
+      meningitis_vaccine_status: belum_vaksin
+      photo_status: sudah_menyerahkan
       total_package_cost: 8
-      status: converted
+      status: dp
       equipments:
         -
           equipment_name: 'y'
-          is_received: true
+          size: vdljnikhwaykcmyu
+          is_received: false
     fileParameters: []
     responses: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
     controller: null
     method: null
     route: null
@@ -2062,10 +3472,14 @@ endpoints:
       subgroup: ''
       subgroupDescription: ''
       title: 'Hapus data pendaftaran.'
-      description: ''
-      authenticated: false
+      description: |-
+        Catatan revisi [2026-09-02]: Guard 'converted' dihapus karena alur Jamaah
+        kini terpisah — tidak ada lagi status 'converted' yang mengunci Pendaftaran.
+        Data lama berstatus 'converted' di database tetap bisa dihapus oleh admin.
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {token}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -2074,14 +3488,14 @@ endpoints:
         name: registration_id
         description: 'The ID of the registration.'
         required: true
-        example: 01a00f86-d749-7021-9aa7-5fb254da3b23
+        example: 01a03d44-b220-7120-aed2-73ce5afc9517
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      registration_id: 01a00f86-d749-7021-9aa7-5fb254da3b23
+      registration_id: 01a03d44-b220-7120-aed2-73ce5afc9517
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -2089,7 +3503,10 @@ endpoints:
     fileParameters: []
     responses: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
     controller: null
     method: null
     route: null
@@ -2106,9 +3523,10 @@ endpoints:
       subgroupDescription: ''
       title: 'Membatalkan pendaftaran.'
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {token}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -2117,14 +3535,14 @@ endpoints:
         name: registration_id
         description: 'The ID of the registration.'
         required: true
-        example: 01a00f86-d749-7021-9aa7-5fb254da3b23
+        example: 01a03d44-b220-7120-aed2-73ce5afc9517
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      registration_id: 01a00f86-d749-7021-9aa7-5fb254da3b23
+      registration_id: 01a03d44-b220-7120-aed2-73ce5afc9517
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -2132,50 +3550,10 @@ endpoints:
     fileParameters: []
     responses: []
     responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - POST
-    uri: 'api/registrations/{registration_id}/convert-to-jamaah'
-    metadata:
-      custom: []
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Mengonversi data pendaftaran menjadi Jamaah resmi.'
-      description: ''
-      authenticated: false
-      deprecated: false
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      registration_id:
-        custom: []
-        name: registration_id
-        description: 'The ID of the registration.'
-        required: true
-        example: 01a00f86-d749-7021-9aa7-5fb254da3b23
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      registration_id: 01a00f86-d749-7021-9aa7-5fb254da3b23
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses: []
-    responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
     controller: null
     method: null
     route: null
@@ -2192,9 +3570,10 @@ endpoints:
       subgroupDescription: ''
       title: 'Menampilkan seluruh data transaksi pembayaran (Untuk Admin Keuangan).'
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {token}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -2215,7 +3594,10 @@ endpoints:
           access-control-allow-origin: '*'
         description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
     controller: null
     method: null
     route: null
@@ -2232,9 +3614,10 @@ endpoints:
       subgroupDescription: ''
       title: 'Menampilkan semua pembayaran dari satu pendaftaran.'
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {token}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -2243,14 +3626,14 @@ endpoints:
         name: registration_id
         description: 'The ID of the registration.'
         required: true
-        example: 01a00f86-d749-7021-9aa7-5fb254da3b23
+        example: 01a03d44-b220-7120-aed2-73ce5afc9517
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      registration_id: 01a00f86-d749-7021-9aa7-5fb254da3b23
+      registration_id: 01a03d44-b220-7120-aed2-73ce5afc9517
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -2267,7 +3650,10 @@ endpoints:
           access-control-allow-origin: '*'
         description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
     controller: null
     method: null
     route: null
@@ -2284,9 +3670,10 @@ endpoints:
       subgroupDescription: ''
       title: 'Menambahkan pembayaran ke pendaftaran.'
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {token}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -2295,14 +3682,14 @@ endpoints:
         name: registration_id
         description: 'The ID of the registration.'
         required: true
-        example: 01a00f86-d749-7021-9aa7-5fb254da3b23
+        example: 01a03d44-b220-7120-aed2-73ce5afc9517
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      registration_id: 01a00f86-d749-7021-9aa7-5fb254da3b23
+      registration_id: 01a03d44-b220-7120-aed2-73ce5afc9517
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -2335,7 +3722,7 @@ endpoints:
         name: payment_method
         description: ''
         required: true
-        example: cash
+        example: mandiri_transfer
         type: string
         enumValues:
           - bca_transfer
@@ -2351,7 +3738,7 @@ endpoints:
         name: payment_date
         description: 'Must be a valid date.'
         required: true
-        example: '2026-08-24T03:15:37'
+        example: '2026-09-04T17:01:13'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2371,13 +3758,16 @@ endpoints:
     cleanBodyParameters:
       amount: 4326.41688
       payment_type: full_payment
-      payment_method: cash
-      payment_date: '2026-08-24T03:15:37'
+      payment_method: mandiri_transfer
+      payment_date: '2026-09-04T17:01:13'
       notes: m
     fileParameters: []
     responses: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
     controller: null
     method: null
     route: null
@@ -2385,18 +3775,19 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: api/jamaah
+    uri: api/expenses
     metadata:
       custom: []
       groupName: Endpoints
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Menampilkan semua data Jamaah resmi.'
+      title: 'Menampilkan daftar pengeluaran kas dengan filter dan ringkasan agregat.'
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {token}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -2417,7 +3808,467 @@ endpoints:
           access-control-allow-origin: '*'
         description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/expenses
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Menyimpan pengeluaran kas baru.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {token}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      vendor:
+        custom: []
+        name: vendor
+        description: 'Must not be greater than 150 characters.'
+        required: true
+        example: b
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      category:
+        custom: []
+        name: category
+        description: ''
+        required: true
+        example: perlengkapan
+        type: string
+        enumValues:
+          - akomodasi_tiket
+          - perlengkapan
+          - operasional_bus
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      amount:
+        custom: []
+        name: amount
+        description: ''
+        required: true
+        example: 4326.41688
+        type: number
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      payment_method:
+        custom: []
+        name: payment_method
+        description: ''
+        required: true
+        example: bsi_transfer
+        type: string
+        enumValues:
+          - bca_transfer
+          - mandiri_transfer
+          - bsi_transfer
+          - cash
+          - edc_qris
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      expense_date:
+        custom: []
+        name: expense_date
+        description: 'Must be a valid date.'
+        required: true
+        example: '2026-09-04T17:01:13'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      reference_number:
+        custom: []
+        name: reference_number
+        description: 'Must not be greater than 50 characters.'
+        required: false
+        example: m
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      notes:
+        custom: []
+        name: notes
+        description: 'Must not be greater than 255 characters.'
+        required: false
+        example: i
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      vendor: b
+      category: perlengkapan
+      amount: 4326.41688
+      payment_method: bsi_transfer
+      expense_date: '2026-09-04T17:01:13'
+      reference_number: m
+      notes: i
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/expenses/{expense_id}'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Menampilkan detail satu pengeluaran kas.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {token}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      expense_id:
+        custom: []
+        name: expense_id
+        description: 'The ID of the expense.'
+        required: true
+        example: 01a03c1d-d876-7340-911d-b8bd3b43254d
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      expense_id: 01a03c1d-d876-7340-911d-b8bd3b43254d
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+    uri: 'api/expenses/{expense_id}'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Memperbarui data pengeluaran kas.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {token}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      expense_id:
+        custom: []
+        name: expense_id
+        description: 'The ID of the expense.'
+        required: true
+        example: 01a03c1d-d876-7340-911d-b8bd3b43254d
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      expense_id: 01a03c1d-d876-7340-911d-b8bd3b43254d
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      vendor:
+        custom: []
+        name: vendor
+        description: 'Must not be greater than 150 characters.'
+        required: false
+        example: b
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      category:
+        custom: []
+        name: category
+        description: ''
+        required: false
+        example: perlengkapan
+        type: string
+        enumValues:
+          - akomodasi_tiket
+          - perlengkapan
+          - operasional_bus
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      amount:
+        custom: []
+        name: amount
+        description: ''
+        required: false
+        example: 4326.41688
+        type: number
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      payment_method:
+        custom: []
+        name: payment_method
+        description: ''
+        required: false
+        example: bsi_transfer
+        type: string
+        enumValues:
+          - bca_transfer
+          - mandiri_transfer
+          - bsi_transfer
+          - cash
+          - edc_qris
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      expense_date:
+        custom: []
+        name: expense_date
+        description: 'Must be a valid date.'
+        required: false
+        example: '2026-09-04T17:01:13'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      reference_number:
+        custom: []
+        name: reference_number
+        description: 'Must not be greater than 50 characters.'
+        required: false
+        example: m
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      notes:
+        custom: []
+        name: notes
+        description: 'Must not be greater than 255 characters.'
+        required: false
+        example: i
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      vendor: b
+      category: perlengkapan
+      amount: 4326.41688
+      payment_method: bsi_transfer
+      expense_date: '2026-09-04T17:01:13'
+      reference_number: m
+      notes: i
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/expenses/{expense_id}'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Menghapus data pengeluaran kas.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {token}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      expense_id:
+        custom: []
+        name: expense_id
+        description: 'The ID of the expense.'
+        required: true
+        example: 01a03c1d-d876-7340-911d-b8bd3b43254d
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      expense_id: 01a03c1d-d876-7340-911d-b8bd3b43254d
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/finance/summary
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Menampilkan ringkasan keuangan global (Total Pemasukan, Pengeluaran, Piutang, Saldo Bersih).'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {token}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/jamaah
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Menampilkan semua data Jamaah resmi.'
+      description: 'Eager-load relasi package & kloter untuk efisiensi (N+1 prevention).'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {token}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
     controller: null
     method: null
     route: null
@@ -2432,11 +4283,14 @@ endpoints:
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Membuat data Jamaah baru secara langsung.'
-      description: ''
-      authenticated: false
+      title: 'Membuat data Jamaah baru secara manual oleh admin.'
+      description: |-
+        Revisi [2026-09-02]: Logic auto-generate "JAMAAH001" dihapus.
+        login_id kini wajib diisi manual oleh admin (max 10 karakter, unique).
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {token}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -2444,12 +4298,23 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
+      login_id:
+        custom: []
+        name: login_id
+        description: 'Must not be greater than 10 characters.'
+        required: true
+        example: bngzmi
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
       nik:
         custom: []
         name: nik
         description: 'Must be 16 characters.'
         required: true
-        example: bngzmiyvdljnikhw
+        example: yvdljnikhwaykcmy
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2460,29 +4325,18 @@ endpoints:
         name: full_name
         description: 'Must not be greater than 150 characters.'
         required: true
-        example: a
+        example: u
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        deprecated: false
-      birth_place:
-        custom: []
-        name: birth_place
-        description: 'Must not be greater than 100 characters.'
-        required: false
-        example: 'y'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
         deprecated: false
       birth_date:
         custom: []
         name: birth_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-08-24T03:15:37'
+        example: '2026-09-04T17:01:13'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2501,53 +4355,9 @@ endpoints:
         exampleWasSpecified: false
         nullable: true
         deprecated: false
-      address:
-        custom: []
-        name: address
-        description: ''
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
       phone:
         custom: []
         name: phone
-        description: 'Must not be greater than 20 characters.'
-        required: false
-        example: ngzmiyvdljnikhwa
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      email:
-        custom: []
-        name: email
-        description: 'Must be a valid email address. Must not be greater than 150 characters.'
-        required: false
-        example: breitenberg.gilbert@example.com
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      emergency_contact_name:
-        custom: []
-        name: emergency_contact_name
-        description: 'Must not be greater than 150 characters.'
-        required: false
-        example: u
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      emergency_contact_phone:
-        custom: []
-        name: emergency_contact_phone
         description: 'Must not be greater than 20 characters.'
         required: false
         example: wpwlvqwrsitcpscq
@@ -2556,12 +4366,133 @@ endpoints:
         exampleWasSpecified: false
         nullable: true
         deprecated: false
-      passport_expiry_date:
+      emergency_contact:
         custom: []
-        name: passport_expiry_date
+        name: emergency_contact
+        description: 'Must not be greater than 200 characters.'
+        required: false
+        example: l
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      passport_number:
+        custom: []
+        name: passport_number
+        description: 'Must not be greater than 30 characters.'
+        required: false
+        example: d
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      visa_number:
+        custom: []
+        name: visa_number
+        description: 'Must not be greater than 50 characters.'
+        required: false
+        example: z
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      nationality:
+        custom: []
+        name: nationality
+        description: 'Must not be greater than 100 characters.'
+        required: false
+        example: s
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      package_id:
+        custom: []
+        name: package_id
+        description: 'Must be a valid UUID. Must match an existing stored value.'
+        required: false
+        example: 59183559-65ff-3076-b8ca-d2d03d26a42a
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      kloter_id:
+        custom: []
+        name: kloter_id
+        description: 'Must be a valid UUID. Must match an existing stored value.'
+        required: false
+        example: 1937113a-b0a2-3b03-925a-3163292463db
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      hotel_makkah:
+        custom: []
+        name: hotel_makkah
+        description: 'Must not be greater than 200 characters.'
+        required: false
+        example: u
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      hotel_madinah:
+        custom: []
+        name: hotel_madinah
+        description: 'Must not be greater than 200 characters.'
+        required: false
+        example: j
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      departure_date:
+        custom: []
+        name: departure_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-08-24T03:15:37'
+        example: '2026-09-04T17:01:13'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      return_date:
+        custom: []
+        name: return_date
+        description: 'Must be a valid date. Must be a date after or equal to <code>departure_date</code>.'
+        required: false
+        example: '2052-09-27'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      tour_leader:
+        custom: []
+        name: tour_leader
+        description: 'Must not be greater than 200 characters.'
+        required: false
+        example: 'n'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      mutawif_local:
+        custom: []
+        name: mutawif_local
+        description: 'Must not be greater than 200 characters.'
+        required: false
+        example: g
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2572,7 +4503,7 @@ endpoints:
         name: status
         description: ''
         required: false
-        example: active
+        example: archived
         type: string
         enumValues:
           - active
@@ -2581,22 +4512,32 @@ endpoints:
         nullable: true
         deprecated: false
     cleanBodyParameters:
-      nik: bngzmiyvdljnikhw
-      full_name: a
-      birth_place: 'y'
-      birth_date: '2026-08-24T03:15:37'
+      login_id: bngzmi
+      nik: yvdljnikhwaykcmy
+      full_name: u
+      birth_date: '2026-09-04T17:01:13'
       gender: L
-      address: architecto
-      phone: ngzmiyvdljnikhwa
-      email: breitenberg.gilbert@example.com
-      emergency_contact_name: u
-      emergency_contact_phone: wpwlvqwrsitcpscq
-      passport_expiry_date: '2026-08-24T03:15:37'
-      status: active
+      phone: wpwlvqwrsitcpscq
+      emergency_contact: l
+      passport_number: d
+      visa_number: z
+      nationality: s
+      package_id: 59183559-65ff-3076-b8ca-d2d03d26a42a
+      kloter_id: 1937113a-b0a2-3b03-925a-3163292463db
+      hotel_makkah: u
+      hotel_madinah: j
+      departure_date: '2026-09-04T17:01:13'
+      return_date: '2052-09-27'
+      tour_leader: 'n'
+      mutawif_local: g
+      status: archived
     fileParameters: []
     responses: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
     controller: null
     method: null
     route: null
@@ -2611,11 +4552,12 @@ endpoints:
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Menampilkan detail satu data Jamaah.'
+      title: 'Menampilkan detail satu data Jamaah beserta relasi.'
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {token}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -2648,7 +4590,10 @@ endpoints:
           access-control-allow-origin: '*'
         description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
     controller: null
     method: null
     route: null
@@ -2664,10 +4609,11 @@ endpoints:
       subgroup: ''
       subgroupDescription: ''
       title: 'Perbarui data profil Jamaah.'
-      description: ''
-      authenticated: false
+      description: 'Semua field baru bisa di-update melalui validated() dari UpdateJamaahRequest.'
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {token}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -2687,12 +4633,23 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
+      login_id:
+        custom: []
+        name: login_id
+        description: 'Must not be greater than 10 characters.'
+        required: false
+        example: bngzmi
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
       nik:
         custom: []
         name: nik
         description: 'Must be 16 characters.'
         required: false
-        example: bngzmiyvdljnikhw
+        example: yvdljnikhwaykcmy
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2703,33 +4660,22 @@ endpoints:
         name: full_name
         description: 'Must not be greater than 150 characters.'
         required: false
-        example: a
+        example: u
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        deprecated: false
-      birth_place:
-        custom: []
-        name: birth_place
-        description: 'Must not be greater than 100 characters.'
-        required: false
-        example: 'y'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
         deprecated: false
       birth_date:
         custom: []
         name: birth_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-08-24T03:15:37'
+        example: '2026-09-04T17:01:13'
         type: string
         enumValues: []
         exampleWasSpecified: false
-        nullable: false
+        nullable: true
         deprecated: false
       gender:
         custom: []
@@ -2742,55 +4688,11 @@ endpoints:
           - L
           - P
         exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      address:
-        custom: []
-        name: address
-        description: ''
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
         nullable: true
         deprecated: false
       phone:
         custom: []
         name: phone
-        description: 'Must not be greater than 20 characters.'
-        required: false
-        example: ngzmiyvdljnikhwa
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      email:
-        custom: []
-        name: email
-        description: 'Must be a valid email address. Must not be greater than 150 characters.'
-        required: false
-        example: breitenberg.gilbert@example.com
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      emergency_contact_name:
-        custom: []
-        name: emergency_contact_name
-        description: 'Must not be greater than 150 characters.'
-        required: false
-        example: u
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      emergency_contact_phone:
-        custom: []
-        name: emergency_contact_phone
         description: 'Must not be greater than 20 characters.'
         required: false
         example: wpwlvqwrsitcpscq
@@ -2799,12 +4701,133 @@ endpoints:
         exampleWasSpecified: false
         nullable: true
         deprecated: false
-      passport_expiry_date:
+      emergency_contact:
         custom: []
-        name: passport_expiry_date
+        name: emergency_contact
+        description: 'Must not be greater than 200 characters.'
+        required: false
+        example: l
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      passport_number:
+        custom: []
+        name: passport_number
+        description: 'Must not be greater than 30 characters.'
+        required: false
+        example: d
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      visa_number:
+        custom: []
+        name: visa_number
+        description: 'Must not be greater than 50 characters.'
+        required: false
+        example: z
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      nationality:
+        custom: []
+        name: nationality
+        description: 'Must not be greater than 100 characters.'
+        required: false
+        example: s
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      package_id:
+        custom: []
+        name: package_id
+        description: 'Must be a valid UUID. Must match an existing stored value.'
+        required: false
+        example: 59183559-65ff-3076-b8ca-d2d03d26a42a
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      kloter_id:
+        custom: []
+        name: kloter_id
+        description: 'Must be a valid UUID. Must match an existing stored value.'
+        required: false
+        example: 1937113a-b0a2-3b03-925a-3163292463db
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      hotel_makkah:
+        custom: []
+        name: hotel_makkah
+        description: 'Must not be greater than 200 characters.'
+        required: false
+        example: u
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      hotel_madinah:
+        custom: []
+        name: hotel_madinah
+        description: 'Must not be greater than 200 characters.'
+        required: false
+        example: j
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      departure_date:
+        custom: []
+        name: departure_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-08-24T03:15:37'
+        example: '2026-09-04T17:01:13'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      return_date:
+        custom: []
+        name: return_date
+        description: 'Must be a valid date. Must be a date after or equal to <code>departure_date</code>.'
+        required: false
+        example: '2052-09-27'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      tour_leader:
+        custom: []
+        name: tour_leader
+        description: 'Must not be greater than 200 characters.'
+        required: false
+        example: 'n'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      mutawif_local:
+        custom: []
+        name: mutawif_local
+        description: 'Must not be greater than 200 characters.'
+        required: false
+        example: g
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2824,22 +4847,32 @@ endpoints:
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      nik: bngzmiyvdljnikhw
-      full_name: a
-      birth_place: 'y'
-      birth_date: '2026-08-24T03:15:37'
+      login_id: bngzmi
+      nik: yvdljnikhwaykcmy
+      full_name: u
+      birth_date: '2026-09-04T17:01:13'
       gender: P
-      address: architecto
-      phone: ngzmiyvdljnikhwa
-      email: breitenberg.gilbert@example.com
-      emergency_contact_name: u
-      emergency_contact_phone: wpwlvqwrsitcpscq
-      passport_expiry_date: '2026-08-24T03:15:37'
+      phone: wpwlvqwrsitcpscq
+      emergency_contact: l
+      passport_number: d
+      visa_number: z
+      nationality: s
+      package_id: 59183559-65ff-3076-b8ca-d2d03d26a42a
+      kloter_id: 1937113a-b0a2-3b03-925a-3163292463db
+      hotel_makkah: u
+      hotel_madinah: j
+      departure_date: '2026-09-04T17:01:13'
+      return_date: '2052-09-27'
+      tour_leader: 'n'
+      mutawif_local: g
       status: archived
     fileParameters: []
     responses: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
     controller: null
     method: null
     route: null
@@ -2856,9 +4889,10 @@ endpoints:
       subgroupDescription: ''
       title: 'Hapus data Jamaah.'
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {token}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -2882,7 +4916,10 @@ endpoints:
     fileParameters: []
     responses: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
     controller: null
     method: null
     route: null
