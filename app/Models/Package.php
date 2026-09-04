@@ -48,4 +48,10 @@ class Package extends Model
     {
         return $this->hasMany(Registration::class);
     }
+
+    // Template itinerary per paket
+    public function itineraries()
+    {
+        return $this->hasMany(PackageItinerary::class, 'package_id');
+    }
 }

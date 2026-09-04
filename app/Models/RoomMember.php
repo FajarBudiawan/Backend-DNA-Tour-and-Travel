@@ -14,6 +14,7 @@ class RoomMember extends Model
     protected $fillable = [
         'room_id',
         'registration_id',
+        'jamaah_id',
         'title',
         'occupant_name',
         'age',
@@ -27,5 +28,10 @@ class RoomMember extends Model
     public function registration()
     {
         return $this->belongsTo(Registration::class);
+    }
+
+    public function jamaah()
+    {
+        return $this->belongsTo(Jamaah::class);
     }
 }

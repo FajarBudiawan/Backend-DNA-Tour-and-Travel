@@ -3,9 +3,12 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ExpenseController;
 use App\Http\Controllers\Api\FinanceSummaryController;
+use App\Http\Controllers\Api\HotelController;
 use App\Http\Controllers\Api\JamaahController;
 use App\Http\Controllers\Api\KloterController;
+use App\Http\Controllers\Api\KloterScheduleController;
 use App\Http\Controllers\Api\PackageController;
+use App\Http\Controllers\Api\PackageItineraryController;
 use App\Http\Controllers\Api\RegistrationController;
 use App\Http\Controllers\Api\RegistrationPaymentController;
 use App\Http\Controllers\Api\RoomController;
@@ -26,6 +29,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/me', [AuthController::class, 'me']);
 
     // ====================
+    // MASTER DATA HOTEL
+    // ====================
+
+    Route::get('/hotels', [HotelController::class, 'index']);
+    Route::post('/hotels/find-or-create', [HotelController::class, 'findOrCreate']);
+
+    // ====================
     // MASTER DATA PAKET UMRAH (CRUD)
     // ====================
 
@@ -34,6 +44,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/packages/{package}', [PackageController::class, 'show']);
     Route::put('/packages/{package}', [PackageController::class, 'update']);
     Route::delete('/packages/{package}', [PackageController::class, 'destroy']);
+
+    // Template Itinerary per Paket
+    Route::get('/packages/{package}/itineraries', [PackageItineraryController::class, 'index']);
+    Route::post('/packages/{package}/itineraries', [PackageItineraryController::class, 'store']);
+    Route::put('/packages/{package}/itineraries/{itinerary}', [PackageItineraryController::class, 'update']);
+    Route::delete('/packages/{package}/itineraries/{itinerary}', [PackageItineraryController::class, 'destroy']);
 
     // ====================
     // KLOTER KEBERANGKATAN (CRUD)
@@ -44,6 +60,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/kloters/{kloter}', [KloterController::class, 'show']);
     Route::put('/kloters/{kloter}', [KloterController::class, 'update']);
     Route::delete('/kloters/{kloter}', [KloterController::class, 'destroy']);
+
+    // Rundown Jadwal per Kloter
+    Route::get('/kloters/{kloter}/schedules', [KloterScheduleController::class, 'index']);
+    Route::post('/kloters/{kloter}/schedules', [KloterScheduleController::class, 'store']);
+    Route::put('/kloters/{kloter}/schedules/{schedule}', [KloterScheduleController::class, 'update']);
+    Route::delete('/kloters/{kloter}/schedules/{schedule}', [KloterScheduleController::class, 'destroy']);
+    Route::post('/kloters/{kloter}/schedules/generate-from-template', [KloterScheduleController::class, 'generateFromTemplate']);
 
     // ====================
     // PEMBAGIAN KAMAR & ROOMMATE
@@ -57,11 +80,13 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // CRUD Kamar Manual
     Route::post('/rooms', [RoomController::class, 'store']);
+    Route::get('/rooms/{room}', [RoomController::class, 'show']);
     Route::put('/rooms/{room}', [RoomController::class, 'update']);
     Route::delete('/rooms/{room}', [RoomController::class, 'destroy']);
 
-    // Manajemen Roommate Manual (Tambah/Keluarkan Jamaah dari Kamar)
+    // Manajemen Roommate Manual (Tambah/Edit/Keluarkan Jamaah dari Kamar)
     Route::post('/rooms/{room}/members', [RoomController::class, 'addMember']);
+    Route::put('/rooms/{room}/members/{roomMember}', [RoomController::class, 'updateMember']);
     Route::delete('/rooms/{room}/members/{roomMember}', [RoomController::class, 'removeMember']);
 
 

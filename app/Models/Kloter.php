@@ -79,4 +79,12 @@ class Kloter extends Model
     {
         return $this->belongsTo(Hotel::class, 'hotel_madinah_id');
     }
+
+    /**
+     * Rundown jadwal kegiatan kloter ini.
+     */
+    public function schedules()
+    {
+        return $this->hasMany(KloterSchedule::class, 'kloter_id');
+    }
 }

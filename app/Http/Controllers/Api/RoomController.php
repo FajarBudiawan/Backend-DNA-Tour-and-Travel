@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Jamaah;
 use App\Models\Kloter;
 use App\Models\Registration;
 use App\Models\Room;
@@ -14,12 +15,12 @@ use Illuminate\Support\Facades\DB;
 class RoomController extends Controller
 {
     /**
-     * Menampilkan semua kamar dan anggota (title, occupant_name, age) dalam satu kloter.
+     * Menampilkan semua kamar dan anggota dalam satu kloter.
      */
     public function index(Kloter $kloter): JsonResponse
     {
         $rooms = Room::where('kloter_id', $kloter->id)
-            ->with(['hotel', 'members'])
+            ->with(['hotel', 'members.jamaah'])
             ->get();
 
         return response()->json([
@@ -32,15 +33,27 @@ class RoomController extends Controller
     }
 
     /**
+     * Menampilkan detail satu kamar.
+     */
+    public function show(Room $room): JsonResponse
+    {
+        return response()->json([
+            'message' => 'Detail kamar berhasil diambil.',
+            'data'    => $room->load(['hotel', 'members.jamaah', 'kloter']),
+        ]);
+    }
+
+    /**
      * Pembagian Kamar Otomatis (Auto Allocation Roommates).
      *
      * // DEPRECATED sementara: endpoint ini bergantung pada registration_id dari tabel registrations.
-     * // Sejak migrasi manual-occupant (2026_08_31_000001), cara mencatat penghuni kamar telah berubah
-     * // menjadi input manual (title, occupant_name, age). Jangan hapus kode ini — tunggu keputusan
-     * // desain ulang sebelum diaktifkan kembali.
      */
     public function autoAssign(Request $request, Kloter $kloter): JsonResponse
     {
+        if ($request->has('room_type')) {
+            $request->merge(['room_type' => strtolower($request->room_type)]);
+        }
+
         $request->validate([
             'room_type' => 'nullable|in:quad,triple,double,single,quint',
             'hotel_id'  => 'nullable|uuid|exists:hotels,id',
@@ -97,7 +110,7 @@ class RoomController extends Controller
                         ]);
                     }
 
-                    $newRooms[] = $room->load('members');
+                    $newRooms[] = $room->load(['hotel', 'members.jamaah']);
                 }
             }
 
@@ -125,7 +138,7 @@ class RoomController extends Controller
                         ]);
                     }
 
-                    $newRooms[] = $room->load('members');
+                    $newRooms[] = $room->load(['hotel', 'members.jamaah']);
                 }
             }
 
@@ -143,6 +156,10 @@ class RoomController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
+        if ($request->has('room_type')) {
+            $request->merge(['room_type' => strtolower($request->room_type)]);
+        }
+
         $validated = $request->validate([
             'kloter_id'   => 'required|uuid|exists:kloters,id',
             'hotel_id'    => 'nullable|uuid|exists:hotels,id',
@@ -167,7 +184,7 @@ class RoomController extends Controller
 
         return response()->json([
             'message' => 'Kamar berhasil dibuat secara manual.',
-            'data'    => $room->load(['hotel', 'members']),
+            'data'    => $room->load(['hotel', 'members.jamaah']),
         ], 201);
     }
 
@@ -176,6 +193,10 @@ class RoomController extends Controller
      */
     public function update(Request $request, Room $room): JsonResponse
     {
+        if ($request->has('room_type')) {
+            $request->merge(['room_type' => strtolower($request->room_type)]);
+        }
+
         $validated = $request->validate([
             'hotel_id'    => 'nullable|uuid|exists:hotels,id',
             'room_number' => 'nullable|string|max:30',
@@ -189,7 +210,7 @@ class RoomController extends Controller
 
         return response()->json([
             'message' => 'Data kamar berhasil diperbarui.',
-            'data'    => $room->load(['hotel', 'members']),
+            'data'    => $room->load(['hotel', 'members.jamaah']),
         ]);
     }
 
@@ -206,14 +227,16 @@ class RoomController extends Controller
     }
 
     /**
-     * Menambahkan penghuni ke kamar secara manual (title, occupant_name, age).
-     * Gender divalidasi dari title: MR/MSTR → L, MRS/MISS → P.
+     * Menambahkan penghuni ke kamar secara manual atau via jamaah_id.
+     * Kamar campuran gender diperbolehkan (tidak ada batasan gender penghuni vs kamar).
+     * Mencegah duplikasi jamaah_id dalam kloter_id & hotel_id yang sama.
      */
     public function addMember(Request $request, Room $room): JsonResponse
     {
         $request->validate([
-            'title'         => 'required|in:MR,MRS,MISS,MSTR',
-            'occupant_name' => 'required|string|max:255',
+            'jamaah_id'     => 'nullable|uuid|exists:jamaah,id',
+            'title'         => 'required_without:jamaah_id|nullable|in:MR,MRS,MISS,MSTR',
+            'occupant_name' => 'required_without:jamaah_id|nullable|string|max:255',
             'age'           => 'nullable|integer|min:0|max:120',
         ]);
 
@@ -224,26 +247,51 @@ class RoomController extends Controller
             ], 422);
         }
 
-        // 2. Derive gender dari title dan cocokkan dengan gender kamar
-        $titleGenderMap = [
-            'MR'   => 'L',
-            'MSTR' => 'L',
-            'MRS'  => 'P',
-            'MISS' => 'P',
-        ];
-        $derivedGender = $titleGenderMap[$request->title];
-        if ($derivedGender !== $room->gender) {
-            return response()->json([
-                'message' => 'Gender penghuni (' . $request->title . ' → ' . $derivedGender . ') tidak cocok dengan gender kamar (' . $room->gender . ').',
-            ], 422);
+        $occupantName = $request->occupant_name;
+        $title        = $request->title;
+        $age          = $request->age;
+        $jamaahId     = $request->jamaah_id;
+
+        if ($jamaahId) {
+            // Cek duplikasi jamaah_id di kloter & hotel yang sama
+            $existingMember = RoomMember::where('jamaah_id', $jamaahId)
+                ->whereHas('room', function ($q) use ($room) {
+                    $q->where('kloter_id', $room->kloter_id);
+                    if ($room->hotel_id) {
+                        $q->where('hotel_id', $room->hotel_id);
+                    } else {
+                        $q->whereNull('hotel_id');
+                    }
+                })
+                ->with('room')
+                ->first();
+
+            if ($existingMember) {
+                $existingRoomNumber = $existingMember->room->room_number ?? 'tanpa nomor';
+                return response()->json([
+                    'message' => 'Jamaah ini sudah terdaftar di kamar ' . $existingRoomNumber . ' pada kloter dan hotel yang sama.',
+                ], 422);
+            }
+
+            $jamaah = Jamaah::findOrFail($jamaahId);
+            if (empty($occupantName)) {
+                $occupantName = $jamaah->full_name;
+            }
+            if (empty($title)) {
+                $title = ($jamaah->gender === 'L' || $jamaah->gender === 'Laki-laki') ? 'MR' : 'MRS';
+            }
+            if ($age === null && $jamaah->birth_date) {
+                $age = $jamaah->birth_date->age;
+            }
         }
 
-        // 3. Simpan penghuni baru
+        // 2. Simpan penghuni baru (tanpa validasi gender vs kamar)
         RoomMember::create([
             'room_id'       => $room->id,
-            'title'         => $request->title,
-            'occupant_name' => $request->occupant_name,
-            'age'           => $request->age,
+            'jamaah_id'     => $jamaahId,
+            'title'         => $title,
+            'occupant_name' => $occupantName,
+            'age'           => $age,
         ]);
 
         // Refresh room setelah penambahan
@@ -251,8 +299,59 @@ class RoomController extends Controller
 
         return response()->json([
             'message' => 'Penghuni berhasil ditambahkan ke kamar.',
-            'data'    => $room->load(['hotel', 'members']),
+            'data'    => $room->load(['hotel', 'members.jamaah']),
         ], 201);
+    }
+
+    /**
+     * Memperbarui data penghuni kamar (title, occupant_name, age, jamaah_id).
+     */
+    public function updateMember(Request $request, Room $room, RoomMember $roomMember): JsonResponse
+    {
+        if ($roomMember->room_id !== $room->id) {
+            return response()->json([
+                'message' => 'Penghuni tidak berada di kamar tersebut.',
+            ], 422);
+        }
+
+        $validated = $request->validate([
+            'jamaah_id'     => 'nullable|uuid|exists:jamaah,id',
+            'title'         => 'sometimes|in:MR,MRS,MISS,MSTR',
+            'occupant_name' => 'sometimes|string|max:255',
+            'age'           => 'nullable|integer|min:0|max:120',
+        ]);
+
+        $targetJamaahId = array_key_exists('jamaah_id', $validated) ? $validated['jamaah_id'] : $roomMember->jamaah_id;
+
+        if ($targetJamaahId) {
+            $existingMember = RoomMember::where('jamaah_id', $targetJamaahId)
+                ->where('id', '!=', $roomMember->id)
+                ->whereHas('room', function ($q) use ($room) {
+                    $q->where('kloter_id', $room->kloter_id);
+                    if ($room->hotel_id) {
+                        $q->where('hotel_id', $room->hotel_id);
+                    } else {
+                        $q->whereNull('hotel_id');
+                    }
+                })
+                ->with('room')
+                ->first();
+
+            if ($existingMember) {
+                $existingRoomNumber = $existingMember->room->room_number ?? 'tanpa nomor';
+                return response()->json([
+                    'message' => 'Jamaah ini sudah terdaftar di kamar ' . $existingRoomNumber . ' pada kloter dan hotel yang sama.',
+                ], 422);
+            }
+        }
+
+        $roomMember->update($validated);
+        $room->refresh();
+
+        return response()->json([
+            'message' => 'Data penghuni kamar berhasil diperbarui.',
+            'data'    => $room->load(['hotel', 'members.jamaah']),
+        ]);
     }
 
     /**
@@ -271,7 +370,8 @@ class RoomController extends Controller
 
         return response()->json([
             'message' => 'Penghuni berhasil dikeluarkan dari kamar.',
-            'data'    => $room->load(['hotel', 'members']),
+            'data'    => $room->load(['hotel', 'members.jamaah']),
         ]);
     }
 }
+
