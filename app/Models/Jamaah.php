@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Laravel\Sanctum\HasApiTokens;
 
-class Jamaah extends Model
+class Jamaah extends Authenticatable
 {
-    use HasUuids;
+    use HasApiTokens, HasUuids;
 
     protected $table = 'jamaah';
 

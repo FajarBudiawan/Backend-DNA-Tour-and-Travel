@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\RegistrationController;
 use App\Http\Controllers\Api\RegistrationPaymentController;
 use App\Http\Controllers\Api\RoomController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\JamaahAuthController; //ini yang baru saya tambaahkan 
 
 // ====================
 // AUTH
@@ -21,12 +22,19 @@ use Illuminate\Support\Facades\Route;
 // Login tidak memerlukan token
 Route::post('/login', [AuthController::class, 'login']);
 
+// Login Jamaah (Mobile App) tidak memerlukan token
+Route::post('/jamaah/login', [JamaahAuthController::class, 'login']);
+
 // Route yang memerlukan login
 Route::middleware('auth:sanctum')->group(function () {
 
-    // AUTH
+    // AUTH ADMIN
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/me', [AuthController::class, 'me']);
+
+    // AUTH JAMAAH
+    route :: get('/jamaah/me', [JamaahAuthController::class, 'me']);
+    route :: post('/jamaah/logout',[JamaahAuthController::class, 'logout']);
 
     // ====================
     // MASTER DATA HOTEL
