@@ -13,6 +13,7 @@ class Registration extends Model
 
     protected $fillable = [
         'registration_number',
+        'pilgrim_id',
         'full_name',
         'passport_number',
         'nik',
