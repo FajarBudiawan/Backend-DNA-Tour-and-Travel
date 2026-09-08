@@ -64,9 +64,9 @@ Route::middleware('auth:sanctum')->group(function () {
     // Rundown Jadwal per Kloter
     Route::get('/kloters/{kloter}/schedules', [KloterScheduleController::class, 'index']);
     Route::post('/kloters/{kloter}/schedules', [KloterScheduleController::class, 'store']);
+    Route::post('/kloters/{kloter}/schedules/generate-from-template', [KloterScheduleController::class, 'generateFromTemplate']);
     Route::put('/kloters/{kloter}/schedules/{schedule}', [KloterScheduleController::class, 'update']);
     Route::delete('/kloters/{kloter}/schedules/{schedule}', [KloterScheduleController::class, 'destroy']);
-    Route::post('/kloters/{kloter}/schedules/generate-from-template', [KloterScheduleController::class, 'generateFromTemplate']);
 
     // ====================
     // PEMBAGIAN KAMAR & ROOMMATE

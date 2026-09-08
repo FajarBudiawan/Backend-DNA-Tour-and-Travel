@@ -392,6 +392,13 @@ Dokumentasi ini dibuat secara independen dari source code tanpa mengubah busines
 
 ---
 
+## Deprecated Endpoints
+
+| Method | Endpoint | Reason |
+| :--- | :--- | :--- |
+| POST | /api/registrations/{registration}/convert-to-jamaah | Deprecated since 2026-09-02, manual Jamaah input used instead |
+
+
 ## Catatan Verifikasi & Integritas
 * Seluruh 42 endpoint telah diverifikasi langsung terhadap `routes/api.php`, Eloquent Models, dan Form Requests.
 * Tidak ada perubahan pada business logic, schema database, maupun source code controller dalam project.

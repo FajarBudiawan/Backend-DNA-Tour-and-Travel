@@ -18,6 +18,7 @@ class UpdateRegistrationRequest extends FormRequest
         return [
             'full_name' => ['sometimes', 'string', 'max:150'],
             'passport_number' => ['nullable', 'string', 'max:50'],
+            'passport_number' => ['nullable', 'string', 'max:50'],
             'nik' => [
                 'sometimes',
                 'string',

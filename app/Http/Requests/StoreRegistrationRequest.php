@@ -28,6 +28,12 @@ class StoreRegistrationRequest extends FormRequest
                 'unique:registrations,registration_number',
             ],
 
+            'pilgrim_id' => [
+                'nullable',
+                'string',
+                'max:30',
+            ],
+
             'full_name' => [
                 'required',
                 'string',

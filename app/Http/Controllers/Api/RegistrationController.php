@@ -88,6 +88,7 @@ class RegistrationController extends Controller
 
             $registration = Registration::create([
                 'registration_number' => $regNumber,
+                'pilgrim_id' => $request->pilgrim_id,
                 'full_name' => $request->full_name,
                 'passport_number' => $request->passport_number,
                 'nik' => $request->nik,
@@ -210,6 +211,7 @@ class RegistrationController extends Controller
     ): JsonResponse {
         $registration = DB::transaction(function () use ($request, $registration) {
             $registration->update($request->only([
+                'pilgrim_id',
                 'full_name',
                 'passport_number',
                 'nik',
