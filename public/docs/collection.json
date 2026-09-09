@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "DNA Tour & Travel API Documentation",
-        "_postman_id": "da087b09-f2e4-41fc-970e-a13bbd48b62b",
+        "_postman_id": "92de21fb-c4a3-4c7b-8141-b972e4771c42",
         "description": "Dokumentasi resmi API Backend DNA Tour & Travel Umrah Management System.",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -42,6 +42,34 @@
                         "body": {
                             "mode": "raw",
                             "raw": "{\"email\":\"gbailey@example.net\",\"password\":\"architecto\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "POST api\/jamaah\/login",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/jamaah\/login",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/jamaah\/login"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"login_id\":\"architecto\"}"
                         },
                         "description": ""
                     },
@@ -118,6 +146,76 @@
                     ]
                 },
                 {
+                    "name": "GET api\/jamaah\/me",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/jamaah\/me",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/jamaah\/me"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "POST api\/jamaah\/logout",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/jamaah\/logout",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/jamaah\/logout"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
                     "name": "Menampilkan daftar hotel (dengan opsional filter per kota).",
                     "request": {
                         "url": {
@@ -184,7 +282,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"b\",\"city\":\"Makkah\"}"
+                            "raw": "{\"name\":\"b\",\"city\":\"Madinah\"}"
                         },
                         "description": "Jika ditemukan: kembalikan hotel yang ada.\nJika tidak ditemukan: buat hotel baru dan kembalikan data hotel baru."
                     },
@@ -257,7 +355,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"b\",\"category\":\"n\",\"status\":\"published\",\"is_featured\":true}"
+                            "raw": "{\"name\":\"b\",\"category\":\"n\",\"status\":\"draft\",\"is_featured\":false}"
                         },
                         "description": ""
                     },
@@ -622,7 +720,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"b\",\"package_id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"code\":\"z\",\"flight_code\":\"m\",\"departure_date\":\"2026-09-04T17:01:13\",\"return_date\":\"2052-09-27\",\"hotel_makkah_id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"hotel_madinah_id\":\"c90237e9-ced5-3af6-88ea-84aeaa148878\",\"status\":\"draft\",\"tour_leader\":\"i\",\"mutawif_local\":\"y\"}"
+                            "raw": "{\"name\":\"b\",\"package_id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"code\":\"z\",\"flight_code\":\"m\",\"departure_date\":\"2026-09-09T09:03:52\",\"return_date\":\"2052-10-02\",\"hotel_makkah_id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"hotel_madinah_id\":\"c90237e9-ced5-3af6-88ea-84aeaa148878\",\"status\":\"draft\",\"tour_leader\":\"i\",\"mutawif_local\":\"y\"}"
                         },
                         "description": "package_id, departure_date, return_date sekarang NULLABLE (keputusan klien)."
                     },
@@ -711,7 +809,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"b\",\"package_id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"code\":\"z\",\"flight_code\":\"m\",\"departure_date\":\"2026-09-04T17:01:13\",\"return_date\":\"2052-09-27\",\"hotel_makkah_id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"hotel_madinah_id\":\"c90237e9-ced5-3af6-88ea-84aeaa148878\",\"status\":\"cancelled\",\"tour_leader\":\"i\",\"mutawif_local\":\"y\"}"
+                            "raw": "{\"name\":\"b\",\"package_id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"code\":\"z\",\"flight_code\":\"m\",\"departure_date\":\"2026-09-09T09:03:52\",\"return_date\":\"2052-10-02\",\"hotel_makkah_id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"hotel_madinah_id\":\"c90237e9-ced5-3af6-88ea-84aeaa148878\",\"status\":\"ready\",\"tour_leader\":\"i\",\"mutawif_local\":\"y\"}"
                         },
                         "description": ""
                     },
@@ -833,8 +931,41 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"day_number\":16,\"activity_date\":\"2026-09-04T17:01:13\",\"activity_time\":\"architecto\",\"hijri_date_ref\":\"n\",\"title\":\"g\",\"location\":\"z\",\"category\":\"m\",\"pic\":\"i\",\"status\":\"y\",\"description\":\"Eius et animi quos velit et.\",\"is_published\":false}"
+                            "raw": "{\"day_number\":16,\"activity_date\":\"2026-09-09T09:03:52\",\"activity_time\":\"architecto\",\"hijri_date_ref\":\"n\",\"title\":\"g\",\"location\":\"z\",\"category\":\"m\",\"pic\":\"i\",\"status\":\"y\",\"description\":\"Eius et animi quos velit et.\",\"is_published\":true}"
                         },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Generate or sync kloter rundown schedules from Package Itinerary templates.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/kloters\/:kloter_id\/schedules\/generate-from-template",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/kloters\/:kloter_id\/schedules\/generate-from-template",
+                            "variable": [
+                                {
+                                    "id": "kloter_id",
+                                    "key": "kloter_id",
+                                    "value": "019fff5a-e6a2-72d5-8f7d-8814ad6f0c89",
+                                    "description": "The ID of the kloter."
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
                         "description": ""
                     },
                     "response": []
@@ -875,7 +1006,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"day_number\":16,\"activity_date\":\"2026-09-04T17:01:13\",\"activity_time\":\"architecto\",\"hijri_date_ref\":\"n\",\"title\":\"g\",\"location\":\"z\",\"category\":\"m\",\"pic\":\"i\",\"status\":\"y\",\"description\":\"Eius et animi quos velit et.\",\"is_published\":true}"
+                            "raw": "{\"day_number\":16,\"activity_date\":\"2026-09-09T09:03:52\",\"activity_time\":\"architecto\",\"hijri_date_ref\":\"n\",\"title\":\"g\",\"location\":\"z\",\"category\":\"m\",\"pic\":\"i\",\"status\":\"y\",\"description\":\"Eius et animi quos velit et.\",\"is_published\":true}"
                         },
                         "description": "Note: Manual update automatically sets is_customized = true."
                     },
@@ -905,39 +1036,6 @@
                             ]
                         },
                         "method": "DELETE",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": ""
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Generate or sync kloter rundown schedules from Package Itinerary templates.",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/kloters\/:kloter_id\/schedules\/generate-from-template",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/kloters\/:kloter_id\/schedules\/generate-from-template",
-                            "variable": [
-                                {
-                                    "id": "kloter_id",
-                                    "key": "kloter_id",
-                                    "value": "019fff5a-e6a2-72d5-8f7d-8814ad6f0c89",
-                                    "description": "The ID of the kloter."
-                                }
-                            ]
-                        },
-                        "method": "POST",
                         "header": [
                             {
                                 "key": "Content-Type",
@@ -1036,7 +1134,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"room_type\":\"triple\",\"hotel_id\":\"6ff8f7f6-1eb3-3525-be4a-3932c805afed\"}"
+                            "raw": "{\"room_type\":\"double\",\"hotel_id\":\"6ff8f7f6-1eb3-3525-be4a-3932c805afed\"}"
                         },
                         "description": "\/\/ DEPRECATED sementara: endpoint ini bergantung pada registration_id dari tabel registrations."
                     },
@@ -1064,7 +1162,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"kloter_id\":\"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",\"hotel_id\":\"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9\",\"room_number\":\"m\",\"room_type\":\"double\",\"capacity\":35,\"gender\":\"P\",\"notes\":\"y\"}"
+                            "raw": "{\"kloter_id\":\"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",\"hotel_id\":\"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9\",\"room_number\":\"m\",\"room_type\":\"quad\",\"capacity\":35,\"gender\":\"L\",\"notes\":\"y\"}"
                         },
                         "description": ""
                     },
@@ -1153,7 +1251,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"hotel_id\":\"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",\"room_number\":\"g\",\"room_type\":\"quint\",\"capacity\":66,\"gender\":\"L\",\"notes\":\"m\"}"
+                            "raw": "{\"hotel_id\":\"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",\"room_number\":\"g\",\"room_type\":\"triple\",\"capacity\":66,\"gender\":\"L\",\"notes\":\"m\"}"
                         },
                         "description": ""
                     },
@@ -1222,7 +1320,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"jamaah_id\":\"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",\"title\":\"MISS\",\"occupant_name\":\"g\",\"age\":16}"
+                            "raw": "{\"jamaah_id\":\"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",\"title\":\"MR\",\"occupant_name\":\"g\",\"age\":16}"
                         },
                         "description": "Kamar campuran gender diperbolehkan (tidak ada batasan gender penghuni vs kamar).\nMencegah duplikasi jamaah_id dalam kloter_id & hotel_id yang sama."
                     },
@@ -1376,7 +1474,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"registration_number\":\"b\",\"full_name\":\"n\",\"passport_number\":\"g\",\"nik\":\"zmiyvdljnikhwayk\",\"phone\":\"cmyuwpwlvqwrsitc\",\"birth_date\":\"2022-09-29\",\"gender\":\"L\",\"registration_date\":\"2026-09-04T17:01:13\",\"departure_date\":\"2052-09-27\",\"package_id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"kloter_id\":\"c90237e9-ced5-3af6-88ea-84aeaa148878\",\"meningitis_vaccine_status\":\"sudah_vaksin\",\"photo_status\":\"sudah_menyerahkan\",\"total_package_cost\":8,\"status\":\"dp\",\"initial_payment\":{\"amount\":4326.41688,\"payment_type\":\"full_payment\",\"payment_method\":\"edc_qris\",\"payment_date\":\"2026-09-04T17:01:13\"},\"equipments\":[{\"equipment_name\":\"m\",\"size\":\"iyvdljnikhwaykcm\",\"is_received\":false}]}"
+                            "raw": "{\"registration_number\":\"b\",\"pilgrim_id\":\"n\",\"full_name\":\"g\",\"passport_number\":\"z\",\"nik\":\"miyvdljnikhwaykc\",\"phone\":\"myuwpwlvqwrsitcp\",\"birth_date\":\"2022-10-03\",\"gender\":\"P\",\"registration_date\":\"2026-09-09T09:03:53\",\"departure_date\":\"2052-10-02\",\"package_id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"kloter_id\":\"c90237e9-ced5-3af6-88ea-84aeaa148878\",\"meningitis_vaccine_status\":\"belum_vaksin\",\"photo_status\":\"belum_ada\",\"total_package_cost\":8,\"status\":\"dp_paid\",\"initial_payment\":{\"amount\":4326.41688,\"payment_type\":\"full_payment\",\"payment_method\":\"edc_qris\",\"payment_date\":\"2026-09-09T09:03:53\"},\"equipments\":[{\"equipment_name\":\"m\",\"size\":\"iyvdljnikhwaykcm\",\"is_received\":false}]}"
                         },
                         "description": ""
                     },
@@ -1465,7 +1563,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"full_name\":\"b\",\"passport_number\":\"n\",\"nik\":\"gzmiyvdljnikhway\",\"phone\":\"kcmyuwpwlvqwrsit\",\"birth_date\":\"2022-09-29\",\"gender\":\"L\",\"registration_date\":\"2026-09-04T17:01:13\",\"departure_date\":\"2026-09-04T17:01:13\",\"package_id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"kloter_id\":\"c90237e9-ced5-3af6-88ea-84aeaa148878\",\"meningitis_vaccine_status\":\"belum_vaksin\",\"photo_status\":\"sudah_menyerahkan\",\"total_package_cost\":8,\"status\":\"dp\",\"equipments\":[{\"equipment_name\":\"y\",\"size\":\"vdljnikhwaykcmyu\",\"is_received\":false}]}"
+                            "raw": "{\"full_name\":\"b\",\"passport_number\":\"n\",\"nik\":\"gzmiyvdljnikhway\",\"phone\":\"kcmyuwpwlvqwrsit\",\"birth_date\":\"2022-10-03\",\"gender\":\"L\",\"registration_date\":\"2026-09-09T09:03:53\",\"departure_date\":\"2026-09-09T09:03:53\",\"package_id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"kloter_id\":\"c90237e9-ced5-3af6-88ea-84aeaa148878\",\"meningitis_vaccine_status\":\"sudah_vaksin\",\"photo_status\":\"sudah_menyerahkan\",\"total_package_cost\":8,\"status\":\"paid\",\"equipments\":[{\"equipment_name\":\"y\",\"size\":\"vdljnikhwaykcmyu\",\"is_received\":false}]}"
                         },
                         "description": ""
                     },
@@ -1665,7 +1763,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"amount\":4326.41688,\"payment_type\":\"full_payment\",\"payment_method\":\"mandiri_transfer\",\"payment_date\":\"2026-09-04T17:01:13\",\"notes\":\"m\"}"
+                            "raw": "{\"amount\":4326.41688,\"payment_type\":\"down_payment\",\"payment_method\":\"cash\",\"payment_date\":\"2026-09-09T09:03:53\",\"notes\":\"m\"}"
                         },
                         "description": ""
                     },
@@ -1738,7 +1836,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"vendor\":\"b\",\"category\":\"perlengkapan\",\"amount\":4326.41688,\"payment_method\":\"bsi_transfer\",\"expense_date\":\"2026-09-04T17:01:13\",\"reference_number\":\"m\",\"notes\":\"i\"}"
+                            "raw": "{\"vendor\":\"b\",\"category\":\"akomodasi_tiket\",\"amount\":4326.41688,\"payment_method\":\"mandiri_transfer\",\"expense_date\":\"2026-09-09T09:03:53\",\"reference_number\":\"m\",\"notes\":\"i\"}"
                         },
                         "description": ""
                     },
@@ -1827,7 +1925,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"vendor\":\"b\",\"category\":\"perlengkapan\",\"amount\":4326.41688,\"payment_method\":\"bsi_transfer\",\"expense_date\":\"2026-09-04T17:01:13\",\"reference_number\":\"m\",\"notes\":\"i\"}"
+                            "raw": "{\"vendor\":\"b\",\"category\":\"akomodasi_tiket\",\"amount\":4326.41688,\"payment_method\":\"bca_transfer\",\"expense_date\":\"2026-09-09T09:03:53\",\"reference_number\":\"m\",\"notes\":\"i\"}"
                         },
                         "description": ""
                     },
@@ -1978,7 +2076,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"login_id\":\"bngzmi\",\"nik\":\"yvdljnikhwaykcmy\",\"full_name\":\"u\",\"birth_date\":\"2026-09-04T17:01:13\",\"gender\":\"L\",\"phone\":\"wpwlvqwrsitcpscq\",\"emergency_contact\":\"l\",\"passport_number\":\"d\",\"visa_number\":\"z\",\"nationality\":\"s\",\"package_id\":\"59183559-65ff-3076-b8ca-d2d03d26a42a\",\"kloter_id\":\"1937113a-b0a2-3b03-925a-3163292463db\",\"hotel_makkah\":\"u\",\"hotel_madinah\":\"j\",\"departure_date\":\"2026-09-04T17:01:13\",\"return_date\":\"2052-09-27\",\"tour_leader\":\"n\",\"mutawif_local\":\"g\",\"status\":\"archived\"}"
+                            "raw": "{\"login_id\":\"bngzmi\",\"nik\":\"yvdljnikhwaykcmy\",\"full_name\":\"u\",\"birth_date\":\"2026-09-09T09:03:53\",\"gender\":\"P\",\"phone\":\"wpwlvqwrsitcpscq\",\"emergency_contact\":\"l\",\"passport_number\":\"d\",\"visa_number\":\"z\",\"nationality\":\"s\",\"package_id\":\"59183559-65ff-3076-b8ca-d2d03d26a42a\",\"kloter_id\":\"1937113a-b0a2-3b03-925a-3163292463db\",\"hotel_makkah\":\"u\",\"hotel_madinah\":\"j\",\"departure_date\":\"2026-09-09T09:03:53\",\"return_date\":\"2052-10-02\",\"tour_leader\":\"n\",\"mutawif_local\":\"g\",\"status\":\"active\"}"
                         },
                         "description": "Revisi [2026-09-02]: Logic auto-generate \"JAMAAH001\" dihapus.\nlogin_id kini wajib diisi manual oleh admin (max 10 karakter, unique)."
                     },
@@ -2067,7 +2165,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"login_id\":\"bngzmi\",\"nik\":\"yvdljnikhwaykcmy\",\"full_name\":\"u\",\"birth_date\":\"2026-09-04T17:01:13\",\"gender\":\"P\",\"phone\":\"wpwlvqwrsitcpscq\",\"emergency_contact\":\"l\",\"passport_number\":\"d\",\"visa_number\":\"z\",\"nationality\":\"s\",\"package_id\":\"59183559-65ff-3076-b8ca-d2d03d26a42a\",\"kloter_id\":\"1937113a-b0a2-3b03-925a-3163292463db\",\"hotel_makkah\":\"u\",\"hotel_madinah\":\"j\",\"departure_date\":\"2026-09-04T17:01:13\",\"return_date\":\"2052-09-27\",\"tour_leader\":\"n\",\"mutawif_local\":\"g\",\"status\":\"archived\"}"
+                            "raw": "{\"login_id\":\"bngzmi\",\"nik\":\"yvdljnikhwaykcmy\",\"full_name\":\"u\",\"birth_date\":\"2026-09-09T09:03:53\",\"gender\":\"P\",\"phone\":\"wpwlvqwrsitcpscq\",\"emergency_contact\":\"l\",\"passport_number\":\"d\",\"visa_number\":\"z\",\"nationality\":\"s\",\"package_id\":\"59183559-65ff-3076-b8ca-d2d03d26a42a\",\"kloter_id\":\"1937113a-b0a2-3b03-925a-3163292463db\",\"hotel_makkah\":\"u\",\"hotel_madinah\":\"j\",\"departure_date\":\"2026-09-09T09:03:53\",\"return_date\":\"2052-10-02\",\"tour_leader\":\"n\",\"mutawif_local\":\"g\",\"status\":\"active\"}"
                         },
                         "description": "Semua field baru bisa di-update melalui validated() dari UpdateJamaahRequest."
                     },
@@ -2087,6 +2185,292 @@
                                     "key": "jamaah_id",
                                     "value": "01a00fd9-404c-73f8-ac03-7d250410e565",
                                     "description": "The ID of the jamaah."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Perjalanan \/ Schedule",
+            "description": "\nAPI untuk mengelola data jadwal perjalanan.",
+            "item": [
+                {
+                    "name": "Mengambil daftar perjalanan",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/schedules",
+                            "query": [
+                                {
+                                    "key": "q",
+                                    "value": "Ziarah",
+                                    "description": "Kata kunci pencarian pada title, location, keterangan, atau pic.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "category",
+                                    "value": "Ibadah",
+                                    "description": "Filter berdasarkan kategori kegiatan.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "date",
+                                    "value": "2026-09-10",
+                                    "description": "Filter berdasarkan tanggal (YYYY-MM-DD).",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "day_number",
+                                    "value": "1",
+                                    "description": "Filter berdasarkan nomor hari.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/schedules?q=Ziarah&category=Ibadah&date=2026-09-10&day_number=1"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Mendukung search dan filter berdasarkan query parameter."
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Menambahkan perjalanan baru",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/schedules",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/schedules"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"day_number\":1,\"date\":\"2026-09-10\",\"time\":\"08:00\",\"title\":\"Ziarah Kota Madinah\",\"category\":\"Ziarah\",\"location\":\"Masjid Nabawi\",\"keterangan\":\"Berkumpul di lobby hotel tepat waktu\",\"pic\":\"Ustadz Ahmad\",\"status_override\":\"upcoming\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Mengambil detail perjalanan",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/schedules\/:schedule_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/schedules\/:schedule_id",
+                            "variable": [
+                                {
+                                    "id": "schedule_id",
+                                    "key": "schedule_id",
+                                    "value": 2,
+                                    "description": "The ID of the schedule."
+                                },
+                                {
+                                    "id": "schedule",
+                                    "key": "schedule",
+                                    "value": 1,
+                                    "description": "ID Schedule."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Memperbarui data perjalanan",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/schedules\/:schedule_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/schedules\/:schedule_id",
+                            "variable": [
+                                {
+                                    "id": "schedule_id",
+                                    "key": "schedule_id",
+                                    "value": 2,
+                                    "description": "The ID of the schedule."
+                                },
+                                {
+                                    "id": "schedule",
+                                    "key": "schedule",
+                                    "value": 1,
+                                    "description": "ID Schedule."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"day_number\":1,\"date\":\"2026-09-10\",\"time\":\"09:00\",\"title\":\"Ziarah Kota Madinah (Updated)\",\"category\":\"Ziarah\",\"location\":\"Masjid Nabawi\",\"keterangan\":\"Berkumpul di lobby hotel\",\"pic\":\"Ustadz Ahmad\",\"status_override\":\"in_progress\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Memperbarui status override perjalanan",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/schedules\/:schedule_id\/status",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/schedules\/:schedule_id\/status",
+                            "variable": [
+                                {
+                                    "id": "schedule_id",
+                                    "key": "schedule_id",
+                                    "value": 2,
+                                    "description": "The ID of the schedule."
+                                },
+                                {
+                                    "id": "schedule",
+                                    "key": "schedule",
+                                    "value": 1,
+                                    "description": "ID Schedule."
+                                }
+                            ]
+                        },
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"status_override\":\"in_progress\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Menghapus perjalanan",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/schedules\/:schedule_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/schedules\/:schedule_id",
+                            "variable": [
+                                {
+                                    "id": "schedule_id",
+                                    "key": "schedule_id",
+                                    "value": 2,
+                                    "description": "The ID of the schedule."
+                                },
+                                {
+                                    "id": "schedule",
+                                    "key": "schedule",
+                                    "value": 1,
+                                    "description": "ID Schedule."
                                 }
                             ]
                         },

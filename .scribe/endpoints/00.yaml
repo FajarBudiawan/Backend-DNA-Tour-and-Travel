@@ -64,6 +64,53 @@ endpoints:
     custom: []
     httpMethods:
       - POST
+    uri: api/jamaah/login
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {token}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      login_id:
+        custom: []
+        name: login_id
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      login_id: architecto
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
     uri: api/logout
     metadata:
       custom: []
@@ -131,6 +178,85 @@ endpoints:
           content-type: application/json
           access-control-allow-origin: '*'
         description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/jamaah/me
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {token}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/jamaah/logout
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {token}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
     responseFields: []
     auth:
       - headers
@@ -225,7 +351,7 @@ endpoints:
         name: city
         description: ''
         required: true
-        example: Makkah
+        example: Madinah
         type: string
         enumValues:
           - Makkah
@@ -235,7 +361,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       name: b
-      city: Makkah
+      city: Madinah
     fileParameters: []
     responses: []
     responseFields: []
@@ -341,7 +467,7 @@ endpoints:
         name: status
         description: ''
         required: false
-        example: published
+        example: draft
         type: string
         enumValues:
           - draft
@@ -355,7 +481,7 @@ endpoints:
         name: is_featured
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -364,8 +490,8 @@ endpoints:
     cleanBodyParameters:
       name: b
       category: 'n'
-      status: published
-      is_featured: true
+      status: draft
+      is_featured: false
     fileParameters: []
     responses: []
     responseFields: []
@@ -1059,7 +1185,7 @@ endpoints:
         name: departure_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-04T17:01:13'
+        example: '2026-09-09T09:03:52'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1070,7 +1196,7 @@ endpoints:
         name: return_date
         description: 'Must be a valid date. Must be a date after or equal to <code>departure_date</code>.'
         required: false
-        example: '2052-09-27'
+        example: '2052-10-02'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1141,8 +1267,8 @@ endpoints:
       package_id: a4855dc5-0acb-33c3-b921-f4291f719ca0
       code: z
       flight_code: m
-      departure_date: '2026-09-04T17:01:13'
-      return_date: '2052-09-27'
+      departure_date: '2026-09-09T09:03:52'
+      return_date: '2052-10-02'
       hotel_makkah_id: a4855dc5-0acb-33c3-b921-f4291f719ca0
       hotel_madinah_id: c90237e9-ced5-3af6-88ea-84aeaa148878
       status: draft
@@ -1299,7 +1425,7 @@ endpoints:
         name: departure_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-04T17:01:13'
+        example: '2026-09-09T09:03:52'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1310,7 +1436,7 @@ endpoints:
         name: return_date
         description: 'Must be a valid date. Must be a date after or equal to <code>departure_date</code>.'
         required: false
-        example: '2052-09-27'
+        example: '2052-10-02'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1343,7 +1469,7 @@ endpoints:
         name: status
         description: ''
         required: false
-        example: cancelled
+        example: ready
         type: string
         enumValues:
           - draft
@@ -1381,11 +1507,11 @@ endpoints:
       package_id: a4855dc5-0acb-33c3-b921-f4291f719ca0
       code: z
       flight_code: m
-      departure_date: '2026-09-04T17:01:13'
-      return_date: '2052-09-27'
+      departure_date: '2026-09-09T09:03:52'
+      return_date: '2052-10-02'
       hotel_makkah_id: a4855dc5-0acb-33c3-b921-f4291f719ca0
       hotel_madinah_id: c90237e9-ced5-3af6-88ea-84aeaa148878
-      status: cancelled
+      status: ready
       tour_leader: i
       mutawif_local: 'y'
     fileParameters: []
@@ -1555,7 +1681,7 @@ endpoints:
         name: activity_date
         description: 'Must be a valid date.'
         required: true
-        example: '2026-09-04T17:01:13'
+        example: '2026-09-09T09:03:52'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1654,7 +1780,7 @@ endpoints:
         name: is_published
         description: ''
         required: false
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -1662,7 +1788,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       day_number: 16
-      activity_date: '2026-09-04T17:01:13'
+      activity_date: '2026-09-09T09:03:52'
       activity_time: architecto
       hijri_date_ref: 'n'
       title: g
@@ -1671,7 +1797,54 @@ endpoints:
       pic: i
       status: 'y'
       description: 'Eius et animi quos velit et.'
-      is_published: false
+      is_published: true
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/kloters/{kloter_id}/schedules/generate-from-template'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Generate or sync kloter rundown schedules from Package Itinerary templates.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {token}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      kloter_id:
+        custom: []
+        name: kloter_id
+        description: 'The ID of the kloter.'
+        required: true
+        example: 019fff5a-e6a2-72d5-8f7d-8814ad6f0c89
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      kloter_id: 019fff5a-e6a2-72d5-8f7d-8814ad6f0c89
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
     fileParameters: []
     responses: []
     responseFields: []
@@ -1746,7 +1919,7 @@ endpoints:
         name: activity_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-04T17:01:13'
+        example: '2026-09-09T09:03:52'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1853,7 +2026,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       day_number: 16
-      activity_date: '2026-09-04T17:01:13'
+      activity_date: '2026-09-09T09:03:52'
       activity_time: architecto
       hijri_date_ref: 'n'
       title: g
@@ -1918,53 +2091,6 @@ endpoints:
     cleanUrlParameters:
       kloter_id: 019fff5a-e6a2-72d5-8f7d-8814ad6f0c89
       schedule_id: 01a06c86-0384-702f-b748-164626d2fd9f
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses: []
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - POST
-    uri: 'api/kloters/{kloter_id}/schedules/generate-from-template'
-    metadata:
-      custom: []
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Generate or sync kloter rundown schedules from Package Itinerary templates.'
-      description: ''
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {token}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      kloter_id:
-        custom: []
-        name: kloter_id
-        description: 'The ID of the kloter.'
-        required: true
-        example: 019fff5a-e6a2-72d5-8f7d-8814ad6f0c89
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      kloter_id: 019fff5a-e6a2-72d5-8f7d-8814ad6f0c89
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -2076,7 +2202,7 @@ endpoints:
         name: room_type
         description: ''
         required: false
-        example: triple
+        example: double
         type: string
         enumValues:
           - quad
@@ -2099,7 +2225,7 @@ endpoints:
         nullable: true
         deprecated: false
     cleanBodyParameters:
-      room_type: triple
+      room_type: double
       hotel_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
     fileParameters: []
     responses: []
@@ -2173,7 +2299,7 @@ endpoints:
         name: room_type
         description: ''
         required: true
-        example: double
+        example: quad
         type: string
         enumValues:
           - quad
@@ -2200,7 +2326,7 @@ endpoints:
         name: gender
         description: ''
         required: true
-        example: P
+        example: L
         type: string
         enumValues:
           - L
@@ -2223,9 +2349,9 @@ endpoints:
       kloter_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
       hotel_id: 6b72fe4a-5b40-307c-bc24-f79acf9a1bb9
       room_number: m
-      room_type: double
+      room_type: quad
       capacity: 35
-      gender: P
+      gender: L
       notes: 'y'
     fileParameters: []
     responses: []
@@ -2356,7 +2482,7 @@ endpoints:
         name: room_type
         description: ''
         required: false
-        example: quint
+        example: triple
         type: string
         enumValues:
           - quad
@@ -2405,7 +2531,7 @@ endpoints:
     cleanBodyParameters:
       hotel_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
       room_number: g
-      room_type: quint
+      room_type: triple
       capacity: 66
       gender: L
       notes: m
@@ -2520,7 +2646,7 @@ endpoints:
         name: title
         description: 'This field is required when <code>jamaah_id</code> is not present.'
         required: false
-        example: MISS
+        example: MR
         type: string
         enumValues:
           - MR
@@ -2554,7 +2680,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       jamaah_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
-      title: MISS
+      title: MR
       occupant_name: g
       age: 16
     fileParameters: []
@@ -2816,12 +2942,23 @@ endpoints:
         exampleWasSpecified: false
         nullable: true
         deprecated: false
+      pilgrim_id:
+        custom: []
+        name: pilgrim_id
+        description: 'Must not be greater than 30 characters.'
+        required: false
+        example: 'n'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
       full_name:
         custom: []
         name: full_name
         description: 'Must not be greater than 150 characters.'
         required: true
-        example: 'n'
+        example: g
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2832,7 +2969,7 @@ endpoints:
         name: passport_number
         description: 'Must not be greater than 50 characters.'
         required: false
-        example: g
+        example: z
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2843,7 +2980,7 @@ endpoints:
         name: nik
         description: 'Must be 16 characters.'
         required: true
-        example: zmiyvdljnikhwayk
+        example: miyvdljnikhwaykc
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2854,7 +2991,7 @@ endpoints:
         name: phone
         description: 'Must not be greater than 20 characters.'
         required: true
-        example: cmyuwpwlvqwrsitc
+        example: myuwpwlvqwrsitcp
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2865,7 +3002,7 @@ endpoints:
         name: birth_date
         description: 'Must be a valid date. Must be a date before <code>today</code>.'
         required: true
-        example: '2022-09-29'
+        example: '2022-10-03'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2876,7 +3013,7 @@ endpoints:
         name: gender
         description: ''
         required: true
-        example: L
+        example: P
         type: string
         enumValues:
           - L
@@ -2889,7 +3026,7 @@ endpoints:
         name: registration_date
         description: 'Must be a valid date.'
         required: true
-        example: '2026-09-04T17:01:13'
+        example: '2026-09-09T09:03:53'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2900,7 +3037,7 @@ endpoints:
         name: departure_date
         description: 'Must be a valid date. Must be a date after or equal to <code>registration_date</code>.'
         required: false
-        example: '2052-09-27'
+        example: '2052-10-02'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2933,7 +3070,7 @@ endpoints:
         name: meningitis_vaccine_status
         description: ''
         required: true
-        example: sudah_vaksin
+        example: belum_vaksin
         type: string
         enumValues:
           - belum_vaksin
@@ -2946,7 +3083,7 @@ endpoints:
         name: photo_status
         description: ''
         required: true
-        example: sudah_menyerahkan
+        example: belum_ada
         type: string
         enumValues:
           - belum_ada
@@ -2970,7 +3107,7 @@ endpoints:
         name: status
         description: ''
         required: false
-        example: dp
+        example: dp_paid
         type: string
         enumValues:
           - unpaid
@@ -3039,7 +3176,7 @@ endpoints:
         name: initial_payment.payment_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-04T17:01:13'
+        example: '2026-09-09T09:03:53'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3091,25 +3228,26 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       registration_number: b
-      full_name: 'n'
-      passport_number: g
-      nik: zmiyvdljnikhwayk
-      phone: cmyuwpwlvqwrsitc
-      birth_date: '2022-09-29'
-      gender: L
-      registration_date: '2026-09-04T17:01:13'
-      departure_date: '2052-09-27'
+      pilgrim_id: 'n'
+      full_name: g
+      passport_number: z
+      nik: miyvdljnikhwaykc
+      phone: myuwpwlvqwrsitcp
+      birth_date: '2022-10-03'
+      gender: P
+      registration_date: '2026-09-09T09:03:53'
+      departure_date: '2052-10-02'
       package_id: a4855dc5-0acb-33c3-b921-f4291f719ca0
       kloter_id: c90237e9-ced5-3af6-88ea-84aeaa148878
-      meningitis_vaccine_status: sudah_vaksin
-      photo_status: sudah_menyerahkan
+      meningitis_vaccine_status: belum_vaksin
+      photo_status: belum_ada
       total_package_cost: 8
-      status: dp
+      status: dp_paid
       initial_payment:
         amount: 4326.41688
         payment_type: full_payment
         payment_method: edc_qris
-        payment_date: '2026-09-04T17:01:13'
+        payment_date: '2026-09-09T09:03:53'
       equipments:
         -
           equipment_name: m
@@ -3266,7 +3404,7 @@ endpoints:
         name: birth_date
         description: 'Must be a valid date. Must be a date before <code>today</code>.'
         required: false
-        example: '2022-09-29'
+        example: '2022-10-03'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3290,7 +3428,7 @@ endpoints:
         name: registration_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-04T17:01:13'
+        example: '2026-09-09T09:03:53'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3301,7 +3439,7 @@ endpoints:
         name: departure_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-04T17:01:13'
+        example: '2026-09-09T09:03:53'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3334,7 +3472,7 @@ endpoints:
         name: meningitis_vaccine_status
         description: ''
         required: false
-        example: belum_vaksin
+        example: sudah_vaksin
         type: string
         enumValues:
           - belum_vaksin
@@ -3371,7 +3509,7 @@ endpoints:
         name: status
         description: ''
         required: false
-        example: dp
+        example: paid
         type: string
         enumValues:
           - unpaid
@@ -3433,16 +3571,16 @@ endpoints:
       passport_number: 'n'
       nik: gzmiyvdljnikhway
       phone: kcmyuwpwlvqwrsit
-      birth_date: '2022-09-29'
+      birth_date: '2022-10-03'
       gender: L
-      registration_date: '2026-09-04T17:01:13'
-      departure_date: '2026-09-04T17:01:13'
+      registration_date: '2026-09-09T09:03:53'
+      departure_date: '2026-09-09T09:03:53'
       package_id: a4855dc5-0acb-33c3-b921-f4291f719ca0
       kloter_id: c90237e9-ced5-3af6-88ea-84aeaa148878
-      meningitis_vaccine_status: belum_vaksin
+      meningitis_vaccine_status: sudah_vaksin
       photo_status: sudah_menyerahkan
       total_package_cost: 8
-      status: dp
+      status: paid
       equipments:
         -
           equipment_name: 'y'
@@ -3707,7 +3845,7 @@ endpoints:
         name: payment_type
         description: ''
         required: true
-        example: full_payment
+        example: down_payment
         type: string
         enumValues:
           - down_payment
@@ -3720,7 +3858,7 @@ endpoints:
         name: payment_method
         description: ''
         required: true
-        example: mandiri_transfer
+        example: cash
         type: string
         enumValues:
           - bca_transfer
@@ -3736,7 +3874,7 @@ endpoints:
         name: payment_date
         description: 'Must be a valid date.'
         required: true
-        example: '2026-09-04T17:01:13'
+        example: '2026-09-09T09:03:53'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3755,9 +3893,9 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       amount: 4326.41688
-      payment_type: full_payment
-      payment_method: mandiri_transfer
-      payment_date: '2026-09-04T17:01:13'
+      payment_type: down_payment
+      payment_method: cash
+      payment_date: '2026-09-09T09:03:53'
       notes: m
     fileParameters: []
     responses: []
@@ -3853,7 +3991,7 @@ endpoints:
         name: category
         description: ''
         required: true
-        example: perlengkapan
+        example: akomodasi_tiket
         type: string
         enumValues:
           - akomodasi_tiket
@@ -3878,7 +4016,7 @@ endpoints:
         name: payment_method
         description: ''
         required: true
-        example: bsi_transfer
+        example: mandiri_transfer
         type: string
         enumValues:
           - bca_transfer
@@ -3894,7 +4032,7 @@ endpoints:
         name: expense_date
         description: 'Must be a valid date.'
         required: true
-        example: '2026-09-04T17:01:13'
+        example: '2026-09-09T09:03:53'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3924,10 +4062,10 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       vendor: b
-      category: perlengkapan
+      category: akomodasi_tiket
       amount: 4326.41688
-      payment_method: bsi_transfer
-      expense_date: '2026-09-04T17:01:13'
+      payment_method: mandiri_transfer
+      expense_date: '2026-09-09T09:03:53'
       reference_number: m
       notes: i
     fileParameters: []
@@ -4048,7 +4186,7 @@ endpoints:
         name: category
         description: ''
         required: false
-        example: perlengkapan
+        example: akomodasi_tiket
         type: string
         enumValues:
           - akomodasi_tiket
@@ -4073,7 +4211,7 @@ endpoints:
         name: payment_method
         description: ''
         required: false
-        example: bsi_transfer
+        example: bca_transfer
         type: string
         enumValues:
           - bca_transfer
@@ -4089,7 +4227,7 @@ endpoints:
         name: expense_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-04T17:01:13'
+        example: '2026-09-09T09:03:53'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -4119,10 +4257,10 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       vendor: b
-      category: perlengkapan
+      category: akomodasi_tiket
       amount: 4326.41688
-      payment_method: bsi_transfer
-      expense_date: '2026-09-04T17:01:13'
+      payment_method: bca_transfer
+      expense_date: '2026-09-09T09:03:53'
       reference_number: m
       notes: i
     fileParameters: []
@@ -4334,7 +4472,7 @@ endpoints:
         name: birth_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-04T17:01:13'
+        example: '2026-09-09T09:03:53'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -4345,7 +4483,7 @@ endpoints:
         name: gender
         description: ''
         required: false
-        example: L
+        example: P
         type: string
         enumValues:
           - L
@@ -4457,7 +4595,7 @@ endpoints:
         name: departure_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-04T17:01:13'
+        example: '2026-09-09T09:03:53'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -4468,7 +4606,7 @@ endpoints:
         name: return_date
         description: 'Must be a valid date. Must be a date after or equal to <code>departure_date</code>.'
         required: false
-        example: '2052-09-27'
+        example: '2052-10-02'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -4501,7 +4639,7 @@ endpoints:
         name: status
         description: ''
         required: false
-        example: archived
+        example: active
         type: string
         enumValues:
           - active
@@ -4513,8 +4651,8 @@ endpoints:
       login_id: bngzmi
       nik: yvdljnikhwaykcmy
       full_name: u
-      birth_date: '2026-09-04T17:01:13'
-      gender: L
+      birth_date: '2026-09-09T09:03:53'
+      gender: P
       phone: wpwlvqwrsitcpscq
       emergency_contact: l
       passport_number: d
@@ -4524,11 +4662,11 @@ endpoints:
       kloter_id: 1937113a-b0a2-3b03-925a-3163292463db
       hotel_makkah: u
       hotel_madinah: j
-      departure_date: '2026-09-04T17:01:13'
-      return_date: '2052-09-27'
+      departure_date: '2026-09-09T09:03:53'
+      return_date: '2052-10-02'
       tour_leader: 'n'
       mutawif_local: g
-      status: archived
+      status: active
     fileParameters: []
     responses: []
     responseFields: []
@@ -4669,7 +4807,7 @@ endpoints:
         name: birth_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-04T17:01:13'
+        example: '2026-09-09T09:03:53'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -4792,7 +4930,7 @@ endpoints:
         name: departure_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-04T17:01:13'
+        example: '2026-09-09T09:03:53'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -4803,7 +4941,7 @@ endpoints:
         name: return_date
         description: 'Must be a valid date. Must be a date after or equal to <code>departure_date</code>.'
         required: false
-        example: '2052-09-27'
+        example: '2052-10-02'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -4836,7 +4974,7 @@ endpoints:
         name: status
         description: ''
         required: false
-        example: archived
+        example: active
         type: string
         enumValues:
           - active
@@ -4848,7 +4986,7 @@ endpoints:
       login_id: bngzmi
       nik: yvdljnikhwaykcmy
       full_name: u
-      birth_date: '2026-09-04T17:01:13'
+      birth_date: '2026-09-09T09:03:53'
       gender: P
       phone: wpwlvqwrsitcpscq
       emergency_contact: l
@@ -4859,11 +4997,11 @@ endpoints:
       kloter_id: 1937113a-b0a2-3b03-925a-3163292463db
       hotel_makkah: u
       hotel_madinah: j
-      departure_date: '2026-09-04T17:01:13'
-      return_date: '2052-09-27'
+      departure_date: '2026-09-09T09:03:53'
+      return_date: '2052-10-02'
       tour_leader: 'n'
       mutawif_local: g
-      status: archived
+      status: active
     fileParameters: []
     responses: []
     responseFields: []

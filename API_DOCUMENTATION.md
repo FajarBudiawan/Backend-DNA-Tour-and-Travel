@@ -23,7 +23,7 @@ Dokumentasi ini dibuat secara independen dari source code tanpa mengubah busines
 
 ---
 
-## Ringkasan Modul & Endpoint (Total 42 Endpoints)
+### Ringkasan Modul & Endpoint (Total 48 Endpoints)
 
 | Modul | Method | Endpoint | Auth Required | Status |
 | :--- | :--- | :--- | :---: | :---: |
@@ -80,6 +80,12 @@ Dokumentasi ini dibuat secara independen dari source code tanpa mengubah busines
 | **Manajemen Jamaah** | `GET` | `/api/jamaah/{jamaah}` | Yes | Active |
 | **Manajemen Jamaah** | `PUT` | `/api/jamaah/{jamaah}` | Yes | Active |
 | **Manajemen Jamaah** | `DELETE` | `/api/jamaah/{jamaah}` | Yes | Active |
+| **Perjalanan / Schedule** | `GET` | `/api/schedules` | Yes | Active |
+| **Perjalanan / Schedule** | `POST` | `/api/schedules` | Yes | Active |
+| **Perjalanan / Schedule** | `GET` | `/api/schedules/{schedule}` | Yes | Active |
+| **Perjalanan / Schedule** | `PUT` | `/api/schedules/{schedule}` | Yes | Active |
+| **Perjalanan / Schedule** | `PATCH` | `/api/schedules/{schedule}/status` | Yes | Active |
+| **Perjalanan / Schedule** | `DELETE` | `/api/schedules/{schedule}` | Yes | Active |
 
 ---
 

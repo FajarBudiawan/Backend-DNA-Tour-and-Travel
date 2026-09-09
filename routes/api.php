@@ -13,7 +13,8 @@ use App\Http\Controllers\Api\RegistrationController;
 use App\Http\Controllers\Api\RegistrationPaymentController;
 use App\Http\Controllers\Api\RoomController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\JamaahAuthController; //ini yang baru saya tambaahkan 
+use App\Http\Controllers\Api\JamaahAuthController;
+use App\Http\Controllers\Api\ScheduleController;
 
 // ====================
 // AUTH
@@ -165,4 +166,16 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/jamaah/{jamaah}', [JamaahController::class, 'show']);
     Route::put('/jamaah/{jamaah}', [JamaahController::class, 'update']);
     Route::delete('/jamaah/{jamaah}', [JamaahController::class, 'destroy']);
+
+    // ====================
+    // PERJALANAN / SCHEDULE (CRUD)
+    // ====================
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('/schedules', [ScheduleController::class, 'index']);
+        Route::post('/schedules', [ScheduleController::class, 'store']);
+        Route::get('/schedules/{schedule}', [ScheduleController::class, 'show']);
+        Route::put('/schedules/{schedule}', [ScheduleController::class, 'update']);
+        Route::patch('/schedules/{schedule}/status', [ScheduleController::class, 'updateStatus']);
+        Route::delete('/schedules/{schedule}', [ScheduleController::class, 'destroy']);
+    });
 });

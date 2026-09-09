@@ -1,0 +1,617 @@
+name: 'Perjalanan / Schedule'
+description: |-
+
+  API untuk mengelola data jadwal perjalanan.
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/schedules
+    metadata:
+      custom: []
+      groupName: 'Perjalanan / Schedule'
+      groupDescription: |-
+
+        API untuk mengelola data jadwal perjalanan.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Mengambil daftar perjalanan'
+      description: 'Mendukung search dan filter berdasarkan query parameter.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {token}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      q:
+        custom: []
+        name: q
+        description: 'Kata kunci pencarian pada title, location, keterangan, atau pic.'
+        required: false
+        example: Ziarah
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      category:
+        custom: []
+        name: category
+        description: 'Filter berdasarkan kategori kegiatan.'
+        required: false
+        example: Ibadah
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      date:
+        custom: []
+        name: date
+        description: 'Filter berdasarkan tanggal (YYYY-MM-DD).'
+        required: false
+        example: '2026-09-10'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      day_number:
+        custom: []
+        name: day_number
+        description: 'Filter berdasarkan nomor hari.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      q: Ziarah
+      category: Ibadah
+      date: '2026-09-10'
+      day_number: 1
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/schedules
+    metadata:
+      custom: []
+      groupName: 'Perjalanan / Schedule'
+      groupDescription: |-
+
+        API untuk mengelola data jadwal perjalanan.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Menambahkan perjalanan baru'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {token}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      day_number:
+        custom: []
+        name: day_number
+        description: 'Nomor hari ke berapa.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      date:
+        custom: []
+        name: date
+        description: 'Format tanggal YYYY-MM-DD.'
+        required: false
+        example: '2026-09-10'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      time:
+        custom: []
+        name: time
+        description: 'Format waktu HH:MM.'
+        required: false
+        example: '08:00'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      title:
+        custom: []
+        name: title
+        description: 'Judul kegiatan perjalanan.'
+        required: false
+        example: 'Ziarah Kota Madinah'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      category:
+        custom: []
+        name: category
+        description: 'Kategori kegiatan.'
+        required: false
+        example: Ziarah
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      location:
+        custom: []
+        name: location
+        description: 'Lokasi kegiatan.'
+        required: false
+        example: 'Masjid Nabawi'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      keterangan:
+        custom: []
+        name: keterangan
+        description: 'Keterangan/deskripsi kegiatan.'
+        required: false
+        example: 'Berkumpul di lobby hotel tepat waktu'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      pic:
+        custom: []
+        name: pic
+        description: 'Person in charge / penanggung jawab.'
+        required: false
+        example: 'Ustadz Ahmad'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      status_override:
+        custom: []
+        name: status_override
+        description: 'Status override jika ingin menentukan status secara manual (upcoming, in_progress, completed).'
+        required: false
+        example: upcoming
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      day_number: 1
+      date: '2026-09-10'
+      time: '08:00'
+      title: 'Ziarah Kota Madinah'
+      category: Ziarah
+      location: 'Masjid Nabawi'
+      keterangan: 'Berkumpul di lobby hotel tepat waktu'
+      pic: 'Ustadz Ahmad'
+      status_override: upcoming
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/schedules/{schedule_id}'
+    metadata:
+      custom: []
+      groupName: 'Perjalanan / Schedule'
+      groupDescription: |-
+
+        API untuk mengelola data jadwal perjalanan.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Mengambil detail perjalanan'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {token}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      schedule_id:
+        custom: []
+        name: schedule_id
+        description: 'The ID of the schedule.'
+        required: true
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      schedule:
+        custom: []
+        name: schedule
+        description: 'ID Schedule.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      schedule_id: 2
+      schedule: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+    uri: 'api/schedules/{schedule_id}'
+    metadata:
+      custom: []
+      groupName: 'Perjalanan / Schedule'
+      groupDescription: |-
+
+        API untuk mengelola data jadwal perjalanan.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Memperbarui data perjalanan'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {token}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      schedule_id:
+        custom: []
+        name: schedule_id
+        description: 'The ID of the schedule.'
+        required: true
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      schedule:
+        custom: []
+        name: schedule
+        description: 'ID Schedule.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      schedule_id: 2
+      schedule: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      day_number:
+        custom: []
+        name: day_number
+        description: 'Nomor hari ke berapa.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      date:
+        custom: []
+        name: date
+        description: 'Format tanggal YYYY-MM-DD.'
+        required: false
+        example: '2026-09-10'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      time:
+        custom: []
+        name: time
+        description: 'Format waktu HH:MM.'
+        required: false
+        example: '09:00'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      title:
+        custom: []
+        name: title
+        description: 'Judul kegiatan perjalanan.'
+        required: false
+        example: 'Ziarah Kota Madinah (Updated)'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      category:
+        custom: []
+        name: category
+        description: 'Kategori kegiatan.'
+        required: false
+        example: Ziarah
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      location:
+        custom: []
+        name: location
+        description: 'Lokasi kegiatan.'
+        required: false
+        example: 'Masjid Nabawi'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      keterangan:
+        custom: []
+        name: keterangan
+        description: 'Keterangan/deskripsi kegiatan.'
+        required: false
+        example: 'Berkumpul di lobby hotel'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      pic:
+        custom: []
+        name: pic
+        description: 'Person in charge / penanggung jawab.'
+        required: false
+        example: 'Ustadz Ahmad'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      status_override:
+        custom: []
+        name: status_override
+        description: 'Status override (upcoming, in_progress, completed).'
+        required: false
+        example: in_progress
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      day_number: 1
+      date: '2026-09-10'
+      time: '09:00'
+      title: 'Ziarah Kota Madinah (Updated)'
+      category: Ziarah
+      location: 'Masjid Nabawi'
+      keterangan: 'Berkumpul di lobby hotel'
+      pic: 'Ustadz Ahmad'
+      status_override: in_progress
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PATCH
+    uri: 'api/schedules/{schedule_id}/status'
+    metadata:
+      custom: []
+      groupName: 'Perjalanan / Schedule'
+      groupDescription: |-
+
+        API untuk mengelola data jadwal perjalanan.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Memperbarui status override perjalanan'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {token}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      schedule_id:
+        custom: []
+        name: schedule_id
+        description: 'The ID of the schedule.'
+        required: true
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      schedule:
+        custom: []
+        name: schedule
+        description: 'ID Schedule.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      schedule_id: 2
+      schedule: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      status_override:
+        custom: []
+        name: status_override
+        description: 'Status override baru (upcoming, in_progress, completed).'
+        required: true
+        example: in_progress
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      status_override: in_progress
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/schedules/{schedule_id}'
+    metadata:
+      custom: []
+      groupName: 'Perjalanan / Schedule'
+      groupDescription: |-
+
+        API untuk mengelola data jadwal perjalanan.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Menghapus perjalanan'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {token}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      schedule_id:
+        custom: []
+        name: schedule_id
+        description: 'The ID of the schedule.'
+        required: true
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      schedule:
+        custom: []
+        name: schedule
+        description: 'ID Schedule.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      schedule_id: 2
+      schedule: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
