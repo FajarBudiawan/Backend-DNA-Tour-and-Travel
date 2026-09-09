@@ -33,27 +33,27 @@ class UpdateJamaahRequest extends FormRequest
             'full_name'         => ['sometimes', 'string', 'max:150'],
             'birth_date'        => ['sometimes', 'nullable', 'date'],
             'gender'            => ['sometimes', 'nullable', 'in:L,P'],
-            'phone'             => ['nullable', 'string', 'max:20'],
-            'emergency_contact' => ['nullable', 'string', 'max:200'],
+            'phone'             => ['sometimes', 'nullable', 'string', 'max:20'],
+            'emergency_contact' => ['sometimes', 'nullable', 'string', 'max:200'],
 
             // ── Dokumen Perjalanan ────────────────────────────────────────────
-            'passport_number'   => ['nullable', 'string', 'max:30'],
-            'visa_number'       => ['nullable', 'string', 'max:50'],
-            'nationality'       => ['nullable', 'string', 'max:100'],
+            'passport_number'   => ['sometimes', 'nullable', 'string', 'max:30'],
+            'visa_number'       => ['sometimes', 'nullable', 'string', 'max:50'],
+            'nationality'       => ['sometimes', 'nullable', 'string', 'max:100'],
 
             // ── Relasi Paket & Kloter ─────────────────────────────────────────
-            'package_id'        => ['nullable', 'uuid', 'exists:packages,id'],
-            'kloter_id'         => ['nullable', 'uuid', 'exists:kloters,id'],
+            'package_id'        => ['sometimes', 'nullable', 'uuid', 'exists:packages,id'],
+            'kloter_id'         => ['sometimes', 'nullable', 'uuid', 'exists:kloters,id'],
 
             // ── Logistik Perjalanan ───────────────────────────────────────────
-            'hotel_makkah'      => ['nullable', 'string', 'max:200'],
-            'hotel_madinah'     => ['nullable', 'string', 'max:200'],
-            'departure_date'    => ['nullable', 'date'],
-            'return_date'       => ['nullable', 'date', 'after_or_equal:departure_date'],
+            'hotel_makkah'      => ['sometimes', 'nullable', 'string', 'max:200'],
+            'hotel_madinah'     => ['sometimes', 'nullable', 'string', 'max:200'],
+            'departure_date'    => ['sometimes', 'nullable', 'date'],
+            'return_date'       => ['sometimes', 'nullable', 'date', 'after_or_equal:departure_date'],
 
             // ── Pembimbing (plain text) ───────────────────────────────────────
-            'tour_leader'       => ['nullable', 'string', 'max:200'],
-            'mutawif_local'     => ['nullable', 'string', 'max:200'],
+            'tour_leader'       => ['sometimes', 'nullable', 'string', 'max:200'],
+            'mutawif_local'     => ['sometimes', 'nullable', 'string', 'max:200'],
 
             // ── Status ────────────────────────────────────────────────────────
             'status'            => ['sometimes', 'in:active,archived'],

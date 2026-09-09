@@ -22,12 +22,14 @@ class JamaahController extends Controller
         // Filter pencarian berdasarkan nama, NIK, login_id, nomor paspor, atau telepon
         if ($request->filled('q')) {
             $search = $request->q;
-            $query->where(function ($q) use ($search) {
-                $q->where('full_name', 'ilike', "%{$search}%")
+            // SQLite tidak mendukung ILIKE – gunakan LIKE (case-insensitive di SQLite by default untuk ASCII)
+            $likeOp = \DB::getDriverName() === 'pgsql' ? 'ilike' : 'like';
+            $query->where(function ($q) use ($search, $likeOp) {
+                $q->where('full_name', $likeOp, "%{$search}%")
                   ->orWhere('nik', 'like', "%{$search}%")
-                  ->orWhere('login_id', 'ilike', "%{$search}%")
+                  ->orWhere('login_id', $likeOp, "%{$search}%")
                   ->orWhere('phone', 'like', "%{$search}%")
-                  ->orWhere('passport_number', 'ilike', "%{$search}%");
+                  ->orWhere('passport_number', $likeOp, "%{$search}%");
             });
         }
 
