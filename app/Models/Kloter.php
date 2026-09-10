@@ -98,4 +98,15 @@ class Kloter extends Model
             'tour_leader_id'
         )->withPivot('assigned_at');
     }
+
+    //Muttawif
+    public function mutawifs(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Mutawif::class,
+            'mutawif_kloter_assignments',
+            'kloter_id',
+            'mutawif_id'
+        )->withPivot('assigned_at');
+    }
 }

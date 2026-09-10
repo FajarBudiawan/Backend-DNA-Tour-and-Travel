@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\JamaahAuthController;
 use App\Http\Controllers\Api\ScheduleController;
 use App\Http\Controllers\Api\TourLeaderController;
+use App\Http\Controllers\Api\MutawifController;
 
 // ====================
 // AUTH
@@ -190,5 +191,20 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete(
         'tour-leaders/{tour_leader}/kloters/{kloter}',
         [TourLeaderController::class, 'removeKloter']
+    );
+
+    // ====================
+    // MUTAWIF (CRUD)
+    // ====================
+    Route::apiResource('mutawifs', MutawifController::class);
+
+    Route::post(
+        'mutawifs/{mutawif}/kloters/{kloter}',
+        [MutawifController::class, 'assignKloter']
+    );
+
+    Route::delete(
+        'mutawifs/{mutawif}/kloters/{kloter}',
+        [MutawifController::class, 'removeKloter']
     );
 });

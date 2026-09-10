@@ -17,7 +17,7 @@ class KloterController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        $query = Kloter::with(['package', 'hotelMakkah', 'hotelMadinah'])
+        $query = Kloter::with(['package', 'hotelMakkah', 'hotelMadinah', 'tourLeaders', 'mutawifs'])
             ->withCount('jamaah'); // diganti dari registrations ke jamaah (single source of truth)
 
         // Filter pencarian kode kloter, nama kloter, kode penerbangan, atau nama paket
@@ -78,7 +78,7 @@ class KloterController extends Controller
 
         return response()->json([
             'message' => 'Kloter keberangkatan berhasil dibuat.',
-            'data'    => $kloter->load(['package', 'hotelMakkah', 'hotelMadinah']),
+            'data'    => $kloter->load(['package', 'hotelMakkah', 'hotelMadinah', 'tourLeaders', 'mutawifs']),
         ], 201);
     }
 
@@ -89,7 +89,7 @@ class KloterController extends Controller
     {
         return response()->json([
             'message' => 'Detail kloter keberangkatan berhasil diambil.',
-            'data'    => $kloter->load(['package', 'hotelMakkah', 'hotelMadinah', 'jamaah']),
+            'data'    => $kloter->load(['package', 'hotelMakkah', 'hotelMadinah', 'jamaah', 'tourLeaders', 'mutawifs']),
         ]);
     }
 
@@ -102,7 +102,7 @@ class KloterController extends Controller
 
         return response()->json([
             'message' => 'Data kloter keberangkatan berhasil diperbarui.',
-            'data'    => $kloter->load(['package', 'hotelMakkah', 'hotelMadinah']),
+            'data'    => $kloter->load(['package', 'hotelMakkah', 'hotelMadinah', 'tourLeaders', 'mutawifs']),
         ]);
     }
 
