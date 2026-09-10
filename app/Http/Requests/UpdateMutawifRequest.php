@@ -15,13 +15,14 @@ class UpdateMutawifRequest extends FormRequest
     public function rules(): array
     {
         $mutawif = $this->route('mutawif');
+        $mutawifId = is_object($mutawif) ? $mutawif->id : $mutawif;
 
         return [
             'code' => [
                 'required',
                 'string',
                 'max:20',
-                Rule::unique('mutawifs', 'code')->ignore($mutawif->id),
+                Rule::unique('mutawifs', 'code')->ignore($mutawifId),
             ],
             'name' => [
                 'required',

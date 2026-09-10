@@ -1,7 +1,7 @@
 # DNA Tour & Travel - Backend API Documentation
 
 Selamat datang di Dokumentasi Resmi API Backend DNA Tour & Travel (Umrah Management System).
-Dokumentasi ini dibuat secara independen dari source code tanpa mengubah business logic maupun controller application.
+Dokumentasi ini dibuat berdasarkan kondisi source code TERKINI tanpa mengubah business logic maupun controller application.
 
 ---
 
@@ -19,17 +19,20 @@ Dokumentasi ini dibuat secara independen dari source code tanpa mengubah busines
   ```http
   Authorization: Bearer {token}
   ```
-  Token diperoleh melalui endpoint `POST /api/login`.
+  Token diperoleh melalui endpoint `POST /api/login` (Admin/Staff) atau `POST /api/jamaah/login` (Jamaah).
 
 ---
 
-### Ringkasan Modul & Endpoint (Total 48 Endpoints)
+### Ringkasan Modul & Endpoint (Total 64 Endpoints)
 
 | Modul | Method | Endpoint | Auth Required | Status |
 | :--- | :--- | :--- | :---: | :---: |
 | **Authentication** | `POST` | `/api/login` | No | Active |
 | **Authentication** | `POST` | `/api/logout` | Yes | Active |
 | **Authentication** | `GET` | `/api/me` | Yes | Active |
+| **Jamaah Authentication** | `POST` | `/api/jamaah/login` | No | Active |
+| **Jamaah Authentication** | `POST` | `/api/jamaah/logout` | Yes | Active |
+| **Jamaah Authentication** | `GET` | `/api/jamaah/me` | Yes | Active |
 | **Master Hotel** | `GET` | `/api/hotels` | Yes | Active |
 | **Master Hotel** | `POST` | `/api/hotels/find-or-create` | Yes | Active |
 | **Master Paket Umrah** | `GET` | `/api/packages` | Yes | Active |
@@ -86,12 +89,26 @@ Dokumentasi ini dibuat secara independen dari source code tanpa mengubah busines
 | **Perjalanan / Schedule** | `PUT` | `/api/schedules/{schedule}` | Yes | Active |
 | **Perjalanan / Schedule** | `PATCH` | `/api/schedules/{schedule}/status` | Yes | Active |
 | **Perjalanan / Schedule** | `DELETE` | `/api/schedules/{schedule}` | Yes | Active |
+| **Tour Leader** | `GET` | `/api/tour-leaders` | Yes | Active |
+| **Tour Leader** | `POST` | `/api/tour-leaders` | Yes | Active |
+| **Tour Leader** | `GET` | `/api/tour-leaders/{tour_leader}` | Yes | Active |
+| **Tour Leader** | `PUT` / `PATCH` | `/api/tour-leaders/{tour_leader}` | Yes | Active |
+| **Tour Leader** | `DELETE` | `/api/tour-leaders/{tour_leader}` | Yes | Active |
+| **Tour Leader Assignment** | `POST` | `/api/tour-leaders/{tour_leader}/kloters/{kloter}` | Yes | Active |
+| **Tour Leader Assignment** | `DELETE` | `/api/tour-leaders/{tour_leader}/kloters/{kloter}` | Yes | Active |
+| **Muttawif** | `GET` | `/api/mutawifs` | Yes | Active |
+| **Muttawif** | `POST` | `/api/mutawifs` | Yes | Active |
+| **Muttawif** | `GET` | `/api/mutawifs/{mutawif}` | Yes | Active |
+| **Muttawif** | `PUT` / `PATCH` | `/api/mutawifs/{mutawif}` | Yes | Active |
+| **Muttawif** | `DELETE` | `/api/mutawifs/{mutawif}` | Yes | Active |
+| **Muttawif Assignment** | `POST` | `/api/mutawifs/{mutawif}/kloters/{kloter}` | Yes | Active |
+| **Muttawif Assignment** | `DELETE` | `/api/mutawifs/{mutawif}/kloters/{kloter}` | Yes | Active |
 
 ---
 
 ## Detail Rincian Endpoint per Modul
 
-### 1. Authentication
+### 1. Authentication & Jamaah Auth
 
 #### `POST /api/login`
 * **Auth**: No
@@ -115,7 +132,7 @@ Dokumentasi ini dibuat secara independen dari source code tanpa mengubah busines
 
 #### `POST /api/logout`
 * **Auth**: Yes (Bearer Token)
-* **Deskripsi**: Revoke current access token.
+* **Deskripsi**: Revoke current access token Admin/Staff.
 * **Response Contoh (200 OK)**:
   ```json
   {
@@ -125,7 +142,7 @@ Dokumentasi ini dibuat secara independen dari source code tanpa mengubah busines
 
 #### `GET /api/me`
 * **Auth**: Yes (Bearer Token)
-* **Deskripsi**: Mengambil profil user terautentikasi.
+* **Deskripsi**: Mengambil profil user terautentikasi (Admin/Staff).
 * **Response Contoh (200 OK)**:
   ```json
   {
@@ -135,6 +152,18 @@ Dokumentasi ini dibuat secara independen dari source code tanpa mengubah busines
     "role": "admin"
   }
   ```
+
+#### `POST /api/jamaah/login`
+* **Auth**: No
+* **Deskripsi**: Login akun Jamaah (Mobile App).
+
+#### `POST /api/jamaah/logout`
+* **Auth**: Yes (Bearer Token)
+* **Deskripsi**: Revoke current access token Jamaah.
+
+#### `GET /api/jamaah/me`
+* **Auth**: Yes (Bearer Token)
+* **Deskripsi**: Mengambil profil jamaah terautentikasi.
 
 ---
 
@@ -235,9 +264,72 @@ Dokumentasi ini dibuat secara independen dari source code tanpa mengubah busines
 ### 5. Kloter Keberangkatan
 
 #### `GET /api/kloters`
-* **Query Parameters**: `q`, `status`, `package_id`
+* **Auth**: Yes
+* **Query Parameters**:
+  * `q` (string, optional): Kata kunci pencarian (name, code, flight_code, package name).
+  * `status` (string, optional): Filter status.
+  * `package_id` (uuid, optional): Filter ID paket.
+* **Response Contoh (200 OK)**:
+  ```json
+  {
+    "message": "Data kloter keberangkatan berhasil diambil.",
+    "data": [
+      {
+        "id": "c1122334-5566-7788-9900-112233445566",
+        "name": "Kloter Reguler Syawal 1447H",
+        "package_id": "d1122334-5566-7788-9900-112233445567",
+        "code": "KLT-20260901-ABCD",
+        "flight_code": "GA-980",
+        "departure_date": "2026-10-01",
+        "return_date": "2026-10-12",
+        "hotel_makkah_id": "a0011223-3344-5566-7788-99aabbccdd01",
+        "hotel_madinah_id": "b1122334-4455-6677-8899-00aabbccdd02",
+        "status": "draft",
+        "tour_leader": "Ustadz Abdullah",
+        "mutawif_local": "Syeikh Ahmad",
+        "jamaah_count": 45,
+        "package": { "id": "...", "name": "Paket Executive" },
+        "hotel_makkah": { "id": "...", "name": "Hotel Safwah Tower" },
+        "hotel_madinah": { "id": "...", "name": "Pullman Zamzam" },
+        "tour_leaders": [
+          {
+            "id": "e1122334-5566-7788-9900-112233445568",
+            "login_id": "TL-001",
+            "full_name": "Ustadz Abdullah",
+            "certification_number": "CERT-12345",
+            "phone": "081234567890",
+            "experience": "5 Tahun",
+            "performance": "Sangat Baik",
+            "status": "active",
+            "pivot": {
+              "kloter_id": "c1122334-5566-7788-9900-112233445566",
+              "tour_leader_id": "e1122334-5566-7788-9900-112233445568",
+              "assigned_at": "2026-09-10 14:00:00"
+            }
+          }
+        ],
+        "mutawifs": [
+          {
+            "id": "f1122334-5566-7788-9900-112233445569",
+            "code": "MTW-001",
+            "name": "Syeikh Ahmad",
+            "language": "Indonesia, Arab",
+            "experience": "7 Tahun",
+            "status": "active",
+            "pivot": {
+              "kloter_id": "c1122334-5566-7788-9900-112233445566",
+              "mutawif_id": "f1122334-5566-7788-9900-112233445569",
+              "assigned_at": "2026-09-10 14:00:00"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  ```
 
 #### `POST /api/kloters`
+* **Auth**: Yes
 * **Request Body**:
   * `name` (string, required, max:150)
   * `package_id` (uuid, optional, exists:packages,id)
@@ -248,12 +340,21 @@ Dokumentasi ini dibuat secara independen dari source code tanpa mengubah busines
   * `hotel_makkah_id` (uuid, optional, exists:hotels,id)
   * `hotel_madinah_id` (uuid, optional, exists:hotels,id)
   * `status` (string, optional, in:draft,active,ready,completed,cancelled)
-  * `tour_leader` (string, optional, max:200)
-  * `mutawif_local` (string, optional, max:200)
+  * `tour_leader` (string, optional, max:200) - *field legacy plain text*
+  * `mutawif_local` (string, optional, max:200) - *field legacy plain text*
 
 #### `GET /api/kloters/{kloter}`
+* **Auth**: Yes
+* **Path Parameter**: `kloter` (UUID)
+* **Response**: Mengembalikan detail Kloter beserta `package`, `hotelMakkah`, `hotelMadinah`, `jamaah`, `tour_leaders`, dan `mutawifs`.
+
 #### `PUT /api/kloters/{kloter}`
+* **Auth**: Yes
+* **Path Parameter**: `kloter` (UUID)
+
 #### `DELETE /api/kloters/{kloter}`
+* **Auth**: Yes
+* **Path Parameter**: `kloter` (UUID)
 * **Guard**: Gagal jika masih ada jamaah ter-assign via `jamaah.kloter_id` (HTTP 422).
 
 ---
@@ -398,6 +499,281 @@ Dokumentasi ini dibuat secara independen dari source code tanpa mengubah busines
 
 ---
 
+### 13. Modul Tour Leader
+
+Modul ini mengelola data Tour Leader dan penugasannya (assignment) ke Kloter Keberangkatan dengan hubungan **MANY-TO-MANY** via pivot table `kloter_leader_assignments`.
+
+#### Field Model Tour Leader:
+* `id` (uuid, primary key)
+* `login_id` (string, required, max:20, unique)
+* `full_name` (string, required, max:150) — *pada TourLeaderResource dikembalikan sebagai key `name`*
+* `certification_number` (string, optional, max:50, unique)
+* `phone` (string, optional, max:20)
+* `experience` (string, optional)
+* `performance` (string, optional)
+* `status` (string, required, in: `active`, `resting`, `standby`, `inactive`)
+
+#### Endpoints Tour Leader:
+
+#### `GET /api/tour-leaders`
+* **Auth**: Yes
+* **Query Parameters**:
+  * `q` (string, optional): Search keyword (full_name, login_id, phone, experience).
+  * `status` (string, optional, in:active,resting,standby,inactive): Filter status.
+* **Response Contoh (200 OK)**:
+  ```json
+  {
+    "message": "Daftar Tour Leader berhasil diambil.",
+    "data": [
+      {
+        "id": "e1122334-5566-7788-9900-112233445568",
+        "login_id": "TL-001",
+        "name": "Ustadz Abdullah",
+        "phone": "081234567890",
+        "certification_number": "CERT-12345",
+        "experience": "5 Tahun",
+        "performance": "Sangat Baik",
+        "status": "active",
+        "kloters": [
+          {
+            "id": "c1122334-5566-7788-9900-112233445566",
+            "name": "Kloter Reguler Syawal 1447H",
+            "code": "KLT-20260901-ABCD"
+          }
+        ],
+        "created_at": "2026-09-10T10:00:00.000000Z",
+        "updated_at": "2026-09-10T10:00:00.000000Z"
+      }
+    ]
+  }
+  ```
+
+#### `POST /api/tour-leaders`
+* **Auth**: Yes
+* **Request Body**:
+  * `login_id` (string, required, max:20, unique:tour_leaders,login_id)
+  * `full_name` (string, required, max:150)
+  * `certification_number` (string, optional, max:50, unique:tour_leaders,certification_number)
+  * `phone` (string, optional, max:20)
+  * `experience` (string, optional)
+  * `performance` (string, optional)
+  * `status` (string, required, in:active,resting,standby,inactive)
+* **Response Contoh (201 Created)**:
+  ```json
+  {
+    "message": "Tour Leader berhasil ditambahkan.",
+    "data": {
+      "id": "e1122334-5566-7788-9900-112233445568",
+      "login_id": "TL-001",
+      "name": "Ustadz Abdullah",
+      "phone": "081234567890",
+      "certification_number": "CERT-12345",
+      "experience": "5 Tahun",
+      "performance": "Sangat Baik",
+      "status": "active",
+      "kloters": [],
+      "created_at": "2026-09-10T10:00:00.000000Z",
+      "updated_at": "2026-09-10T10:00:00.000000Z"
+    }
+  }
+  ```
+
+#### `GET /api/tour-leaders/{tour_leader}`
+* **Auth**: Yes
+* **Path Parameter**: `tour_leader` (UUID)
+* **Response**: Mengembalikan detail Tour Leader beserta relasi `kloters`.
+
+#### `PUT /api/tour-leaders/{tour_leader}` & `PATCH /api/tour-leaders/{tour_leader}`
+* **Auth**: Yes
+* **Path Parameter**: `tour_leader` (UUID)
+* **Request Body**:
+  * `login_id` (string, sometimes, max:20, unique:tour_leaders,login_id,{id})
+  * `full_name` (string, sometimes, max:150)
+  * `certification_number` (string, sometimes, optional, max:50, unique:tour_leaders,certification_number,{id})
+  * `phone` (string, sometimes, optional, max:20)
+  * `experience` (string, sometimes, optional)
+  * `performance` (string, sometimes, optional)
+  * `status` (string, sometimes, in:active,resting,standby,inactive)
+
+#### `DELETE /api/tour-leaders/{tour_leader}`
+* **Auth**: Yes
+* **Path Parameter**: `tour_leader` (UUID)
+* **Response Contoh (200 OK)**:
+  ```json
+  {
+    "message": "Tour Leader berhasil dihapus."
+  }
+  ```
+
+#### `POST /api/tour-leaders/{tour_leader}/kloters/{kloter}`
+* **Auth**: Yes
+* **Deskripsi**: Menugaskan Tour Leader ke Kloter tertentu (relasi Many-to-Many via `syncWithoutDetaching` dengan `assigned_at`).
+* **Path Parameter**: `tour_leader` (UUID), `kloter` (UUID)
+* **Response Contoh (200 OK)**:
+  ```json
+  {
+    "message": "Tour Leader berhasil ditugaskan ke Kloter.",
+    "data": {
+      "id": "e1122334-5566-7788-9900-112233445568",
+      "login_id": "TL-001",
+      "name": "Ustadz Abdullah",
+      "phone": "081234567890",
+      "certification_number": "CERT-12345",
+      "experience": "5 Tahun",
+      "performance": "Sangat Baik",
+      "status": "active",
+      "kloters": [
+        {
+          "id": "c1122334-5566-7788-9900-112233445566",
+          "name": "Kloter Reguler Syawal 1447H",
+          "code": "KLT-20260901-ABCD"
+        }
+      ]
+    }
+  }
+  ```
+
+#### `DELETE /api/tour-leaders/{tour_leader}/kloters/{kloter}`
+* **Auth**: Yes
+* **Deskripsi**: Melepas penugasan Tour Leader dari Kloter tertentu.
+* **Path Parameter**: `tour_leader` (UUID), `kloter` (UUID)
+* **Response Contoh (200 OK)**:
+  ```json
+  {
+    "message": "Tour Leader berhasil dilepas dari Kloter."
+  }
+  ```
+
+---
+
+### 14. Modul Muttawif
+
+Modul ini mengelola data Muttawif dan penugasannya (assignment) ke Kloter Keberangkatan dengan hubungan **MANY-TO-MANY** via pivot table `mutawif_kloter_assignments`.
+
+#### Field Utama Muttawif:
+* `id` (uuid, primary key)
+* `code` (string, required, max:20, unique)
+* `name` (string, required, max:200)
+* `language` (string, required, max:250)
+* `experience` (string, optional, max:250)
+* `status` (string, required, in: `active`, `standby`)
+
+#### Endpoints Muttawif:
+
+#### `GET /api/mutawifs`
+* **Auth**: Yes
+* **Query Parameters**:
+  * `q` (string, optional): Search keyword (code, name, language, experience).
+  * `status` (string, optional, in:active,standby): Filter status.
+* **Response Contoh (200 OK)**:
+  ```json
+  [
+    {
+      "id": "f1122334-5566-7788-9900-112233445569",
+      "code": "MTW-001",
+      "name": "Syeikh Ahmad",
+      "language": "Indonesia, Arab",
+      "experience": "7 Tahun",
+      "status": "active",
+      "kloters": [
+        {
+          "id": "c1122334-5566-7788-9900-112233445566",
+          "name": "Kloter Reguler Syawal 1447H",
+          "code": "KLT-20260901-ABCD",
+          "assigned_at": "2026-09-10 14:00:00"
+        }
+      ],
+      "created_at": "2026-09-10T10:00:00.000000Z",
+      "updated_at": "2026-09-10T10:00:00.000000Z"
+    }
+  ]
+  ```
+
+#### `POST /api/mutawifs`
+* **Auth**: Yes
+* **Request Body**:
+  * `code` (string, required, max:20, unique:mutawifs,code)
+  * `name` (string, required, max:200)
+  * `language` (string, required, max:250)
+  * `experience` (string, optional, max:250)
+  * `status` (string, required, in:active,standby)
+* **Response Contoh (201 Created)**:
+  ```json
+  {
+    "id": "f1122334-5566-7788-9900-112233445569",
+    "code": "MTW-001",
+    "name": "Syeikh Ahmad",
+    "language": "Indonesia, Arab",
+    "experience": "7 Tahun",
+    "status": "active",
+    "kloters": [],
+    "created_at": "2026-09-10T10:00:00.000000Z",
+    "updated_at": "2026-09-10T10:00:00.000000Z"
+  }
+  ```
+
+#### `GET /api/mutawifs/{mutawif}`
+* **Auth**: Yes
+* **Path Parameter**: `mutawif` (UUID)
+* **Response**: Mengembalikan detail Muttawif beserta relasi `kloters`.
+
+#### `PUT /api/mutawifs/{mutawif}` & `PATCH /api/mutawifs/{mutawif}`
+* **Auth**: Yes
+* **Path Parameter**: `mutawif` (UUID)
+* **Request Body**:
+  * `code` (string, required, max:20, unique:mutawifs,code,{id})
+  * `name` (string, required, max:200)
+  * `language` (string, required, max:250)
+  * `experience` (string, optional, max:250)
+  * `status` (string, required, in:active,standby)
+
+#### `DELETE /api/mutawifs/{mutawif}`
+* **Auth**: Yes
+* **Path Parameter**: `mutawif` (UUID)
+* **Response Contoh (200 OK)**:
+  ```json
+  {
+    "message": "Muttawif berhasil dihapus."
+  }
+  ```
+
+#### `POST /api/mutawifs/{mutawif}/kloters/{kloter}`
+* **Auth**: Yes
+* **Deskripsi**: Menugaskan Muttawif ke Kloter tertentu (relasi Many-to-Many via `syncWithoutDetaching` dengan `assigned_at`).
+* **Path Parameter**: `mutawif` (UUID), `kloter` (UUID)
+* **Response Contoh (200 OK)**:
+  ```json
+  {
+    "id": "f1122334-5566-7788-9900-112233445569",
+    "code": "MTW-001",
+    "name": "Syeikh Ahmad",
+    "language": "Indonesia, Arab",
+    "experience": "7 Tahun",
+    "status": "active",
+    "kloters": [
+      {
+        "id": "c1122334-5566-7788-9900-112233445566",
+        "name": "Kloter Reguler Syawal 1447H",
+        "code": "KLT-20260901-ABCD",
+        "assigned_at": "2026-09-10 14:00:00"
+      }
+    ]
+  }
+  ```
+
+#### `DELETE /api/mutawifs/{mutawif}/kloters/{kloter}`
+* **Auth**: Yes
+* **Deskripsi**: Melepas penugasan Muttawif dari Kloter tertentu.
+* **Path Parameter**: `mutawif` (UUID), `kloter` (UUID)
+* **Response Contoh (200 OK)**:
+  ```json
+  {
+    "message": "Muttawif berhasil dilepas dari Kloter."
+  }
+  ```
+
+---
+
 ## Deprecated Endpoints
 
 | Method | Endpoint | Reason |
@@ -406,5 +782,7 @@ Dokumentasi ini dibuat secara independen dari source code tanpa mengubah busines
 
 
 ## Catatan Verifikasi & Integritas
-* Seluruh 42 endpoint telah diverifikasi langsung terhadap `routes/api.php`, Eloquent Models, dan Form Requests.
-* Tidak ada perubahan pada business logic, schema database, maupun source code controller dalam project.
+* Seluruh endpoint telah diverifikasi langsung terhadap `routes/api.php` (`php artisan route:list --path=api`), Eloquent Models, Form Requests, dan API Resources.
+* Modul **Tour Leader** dan **Muttawif** beserta relasi Many-to-Many ke Kloter telah terdokumentasi dengan lengkap.
+* Response Kloter telah dikonfirmasi memuat array relation `tour_leaders` dan `mutawifs` tanpa menghapus field legacy `tour_leader` dan `mutawif_local`.
+* Tidak ada perubahan pada business logic, schema database, maupun controller application.

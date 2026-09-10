@@ -239,6 +239,48 @@
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-DELETEapi-jamaah--jamaah_id-">
                                 <a href="#endpoints-DELETEapi-jamaah--jamaah_id-">Hapus data Jamaah.</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-tour-leaders">
+                                <a href="#endpoints-GETapi-tour-leaders">GET api/tour-leaders</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-tour-leaders">
+                                <a href="#endpoints-POSTapi-tour-leaders">POST api/tour-leaders</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-tour-leaders--id-">
+                                <a href="#endpoints-GETapi-tour-leaders--id-">GET api/tour-leaders/{id}</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-PUTapi-tour-leaders--id-">
+                                <a href="#endpoints-PUTapi-tour-leaders--id-">PUT api/tour-leaders/{id}</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-DELETEapi-tour-leaders--id-">
+                                <a href="#endpoints-DELETEapi-tour-leaders--id-">DELETE api/tour-leaders/{id}</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-tour-leaders--tour_leader_id--kloters--kloter_id-">
+                                <a href="#endpoints-POSTapi-tour-leaders--tour_leader_id--kloters--kloter_id-">POST api/tour-leaders/{tour_leader_id}/kloters/{kloter_id}</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-DELETEapi-tour-leaders--tour_leader_id--kloters--kloter_id-">
+                                <a href="#endpoints-DELETEapi-tour-leaders--tour_leader_id--kloters--kloter_id-">DELETE api/tour-leaders/{tour_leader_id}/kloters/{kloter_id}</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-mutawifs">
+                                <a href="#endpoints-GETapi-mutawifs">GET api/mutawifs</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-mutawifs">
+                                <a href="#endpoints-POSTapi-mutawifs">POST api/mutawifs</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-mutawifs--id-">
+                                <a href="#endpoints-GETapi-mutawifs--id-">GET api/mutawifs/{id}</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-PUTapi-mutawifs--id-">
+                                <a href="#endpoints-PUTapi-mutawifs--id-">PUT api/mutawifs/{id}</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-DELETEapi-mutawifs--id-">
+                                <a href="#endpoints-DELETEapi-mutawifs--id-">DELETE api/mutawifs/{id}</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-mutawifs--mutawif_id--kloters--kloter_id-">
+                                <a href="#endpoints-POSTapi-mutawifs--mutawif_id--kloters--kloter_id-">POST api/mutawifs/{mutawif_id}/kloters/{kloter_id}</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-DELETEapi-mutawifs--mutawif_id--kloters--kloter_id-">
+                                <a href="#endpoints-DELETEapi-mutawifs--mutawif_id--kloters--kloter_id-">DELETE api/mutawifs/{mutawif_id}/kloters/{kloter_id}</a>
+                            </li>
                                                                         </ul>
                             </ul>
                     <ul id="tocify-header-perjalanan-schedule" class="tocify-header">
@@ -275,7 +317,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: September 9, 2026</li>
+        <li>Last updated: September 10, 2026</li>
     </ul>
 </div>
 
@@ -1614,7 +1656,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"name\": \"b\",
     \"category\": \"n\",
-    \"status\": \"draft\",
+    \"status\": \"published\",
     \"is_featured\": false
 }"
 </code></pre></div>
@@ -1634,7 +1676,7 @@ const headers = {
 let body = {
     "name": "b",
     "category": "n",
-    "status": "draft",
+    "status": "published",
     "is_featured": false
 };
 
@@ -1763,10 +1805,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="status"                data-endpoint="POSTapi-packages"
-               value="draft"
+               value="published"
                data-component="body">
     <br>
-<p>Example: <code>draft</code></p>
+<p>Example: <code>published</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>draft</code></li> <li><code>published</code></li> <li><code>inactive</code></li></ul>
         </div>
@@ -1970,8 +2012,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"name\": \"b\",
     \"category\": \"n\",
-    \"status\": \"inactive\",
-    \"is_featured\": true
+    \"status\": \"published\",
+    \"is_featured\": false
 }"
 </code></pre></div>
 
@@ -1990,8 +2032,8 @@ const headers = {
 let body = {
     "name": "b",
     "category": "n",
-    "status": "inactive",
-    "is_featured": true
+    "status": "published",
+    "is_featured": false
 };
 
 fetch(url, {
@@ -2132,10 +2174,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="status"                data-endpoint="PUTapi-packages--package_id-"
-               value="inactive"
+               value="published"
                data-component="body">
     <br>
-<p>Example: <code>inactive</code></p>
+<p>Example: <code>published</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>draft</code></li> <li><code>published</code></li> <li><code>inactive</code></li></ul>
         </div>
@@ -2159,7 +2201,7 @@ Must be one of:
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>true</code></p>
+<p>Example: <code>false</code></p>
         </div>
         </form>
 
@@ -3245,11 +3287,11 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"package_id\": \"a4855dc5-0acb-33c3-b921-f4291f719ca0\",
     \"code\": \"z\",
     \"flight_code\": \"m\",
-    \"departure_date\": \"2026-09-09T09:03:52\",
-    \"return_date\": \"2052-10-02\",
+    \"departure_date\": \"2026-09-10T07:56:29\",
+    \"return_date\": \"2052-10-03\",
     \"hotel_makkah_id\": \"a4855dc5-0acb-33c3-b921-f4291f719ca0\",
     \"hotel_madinah_id\": \"c90237e9-ced5-3af6-88ea-84aeaa148878\",
-    \"status\": \"draft\",
+    \"status\": \"cancelled\",
     \"tour_leader\": \"i\",
     \"mutawif_local\": \"y\"
 }"
@@ -3272,11 +3314,11 @@ let body = {
     "package_id": "a4855dc5-0acb-33c3-b921-f4291f719ca0",
     "code": "z",
     "flight_code": "m",
-    "departure_date": "2026-09-09T09:03:52",
-    "return_date": "2052-10-02",
+    "departure_date": "2026-09-10T07:56:29",
+    "return_date": "2052-10-03",
     "hotel_makkah_id": "a4855dc5-0acb-33c3-b921-f4291f719ca0",
     "hotel_madinah_id": "c90237e9-ced5-3af6-88ea-84aeaa148878",
-    "status": "draft",
+    "status": "cancelled",
     "tour_leader": "i",
     "mutawif_local": "y"
 };
@@ -3430,10 +3472,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="departure_date"                data-endpoint="POSTapi-kloters"
-               value="2026-09-09T09:03:52"
+               value="2026-09-10T07:56:29"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-09T09:03:52</code></p>
+<p>Must be a valid date. Example: <code>2026-09-10T07:56:29</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>return_date</code></b>&nbsp;&nbsp;
@@ -3442,10 +3484,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="return_date"                data-endpoint="POSTapi-kloters"
-               value="2052-10-02"
+               value="2052-10-03"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after or equal to <code>departure_date</code>. Example: <code>2052-10-02</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>departure_date</code>. Example: <code>2052-10-03</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>hotel_makkah_id</code></b>&nbsp;&nbsp;
@@ -3478,10 +3520,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="status"                data-endpoint="POSTapi-kloters"
-               value="draft"
+               value="cancelled"
                data-component="body">
     <br>
-<p>Example: <code>draft</code></p>
+<p>Example: <code>cancelled</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>draft</code></li> <li><code>active</code></li> <li><code>ready</code></li> <li><code>completed</code></li> <li><code>cancelled</code></li></ul>
         </div>
@@ -3689,8 +3731,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"package_id\": \"a4855dc5-0acb-33c3-b921-f4291f719ca0\",
     \"code\": \"z\",
     \"flight_code\": \"m\",
-    \"departure_date\": \"2026-09-09T09:03:52\",
-    \"return_date\": \"2052-10-02\",
+    \"departure_date\": \"2026-09-10T07:56:29\",
+    \"return_date\": \"2052-10-03\",
     \"hotel_makkah_id\": \"a4855dc5-0acb-33c3-b921-f4291f719ca0\",
     \"hotel_madinah_id\": \"c90237e9-ced5-3af6-88ea-84aeaa148878\",
     \"status\": \"ready\",
@@ -3716,8 +3758,8 @@ let body = {
     "package_id": "a4855dc5-0acb-33c3-b921-f4291f719ca0",
     "code": "z",
     "flight_code": "m",
-    "departure_date": "2026-09-09T09:03:52",
-    "return_date": "2052-10-02",
+    "departure_date": "2026-09-10T07:56:29",
+    "return_date": "2052-10-03",
     "hotel_makkah_id": "a4855dc5-0acb-33c3-b921-f4291f719ca0",
     "hotel_madinah_id": "c90237e9-ced5-3af6-88ea-84aeaa148878",
     "status": "ready",
@@ -3887,10 +3929,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="departure_date"                data-endpoint="PUTapi-kloters--kloter_id-"
-               value="2026-09-09T09:03:52"
+               value="2026-09-10T07:56:29"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-09T09:03:52</code></p>
+<p>Must be a valid date. Example: <code>2026-09-10T07:56:29</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>return_date</code></b>&nbsp;&nbsp;
@@ -3899,10 +3941,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="return_date"                data-endpoint="PUTapi-kloters--kloter_id-"
-               value="2052-10-02"
+               value="2052-10-03"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after or equal to <code>departure_date</code>. Example: <code>2052-10-02</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>departure_date</code>. Example: <code>2052-10-03</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>hotel_makkah_id</code></b>&nbsp;&nbsp;
@@ -4283,7 +4325,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"day_number\": 16,
-    \"activity_date\": \"2026-09-09T09:03:52\",
+    \"activity_date\": \"2026-09-10T07:56:29\",
     \"activity_time\": \"architecto\",
     \"hijri_date_ref\": \"n\",
     \"title\": \"g\",
@@ -4292,7 +4334,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"pic\": \"i\",
     \"status\": \"y\",
     \"description\": \"Eius et animi quos velit et.\",
-    \"is_published\": true
+    \"is_published\": false
 }"
 </code></pre></div>
 
@@ -4310,7 +4352,7 @@ const headers = {
 
 let body = {
     "day_number": 16,
-    "activity_date": "2026-09-09T09:03:52",
+    "activity_date": "2026-09-10T07:56:29",
     "activity_time": "architecto",
     "hijri_date_ref": "n",
     "title": "g",
@@ -4319,7 +4361,7 @@ let body = {
     "pic": "i",
     "status": "y",
     "description": "Eius et animi quos velit et.",
-    "is_published": true
+    "is_published": false
 };
 
 fetch(url, {
@@ -4448,10 +4490,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="activity_date"                data-endpoint="POSTapi-kloters--kloter_id--schedules"
-               value="2026-09-09T09:03:52"
+               value="2026-09-10T07:56:29"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-09T09:03:52</code></p>
+<p>Must be a valid date. Example: <code>2026-09-10T07:56:29</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>activity_time</code></b>&nbsp;&nbsp;
@@ -4569,7 +4611,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>true</code></p>
+<p>Example: <code>false</code></p>
         </div>
         </form>
 
@@ -4732,7 +4774,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"day_number\": 16,
-    \"activity_date\": \"2026-09-09T09:03:52\",
+    \"activity_date\": \"2026-09-10T07:56:30\",
     \"activity_time\": \"architecto\",
     \"hijri_date_ref\": \"n\",
     \"title\": \"g\",
@@ -4759,7 +4801,7 @@ const headers = {
 
 let body = {
     "day_number": 16,
-    "activity_date": "2026-09-09T09:03:52",
+    "activity_date": "2026-09-10T07:56:30",
     "activity_time": "architecto",
     "hijri_date_ref": "n",
     "title": "g",
@@ -4909,10 +4951,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="activity_date"                data-endpoint="PUTapi-kloters--kloter_id--schedules--schedule_id-"
-               value="2026-09-09T09:03:52"
+               value="2026-09-10T07:56:30"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-09T09:03:52</code></p>
+<p>Must be a valid date. Example: <code>2026-09-10T07:56:30</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>activity_time</code></b>&nbsp;&nbsp;
@@ -5359,7 +5401,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"room_type\": \"double\",
+    \"room_type\": \"quint\",
     \"hotel_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\"
 }"
 </code></pre></div>
@@ -5377,7 +5419,7 @@ const headers = {
 };
 
 let body = {
-    "room_type": "double",
+    "room_type": "quint",
     "hotel_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed"
 };
 
@@ -5495,10 +5537,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="room_type"                data-endpoint="POSTapi-kloters--kloter_id--auto-assign-rooms"
-               value="double"
+               value="quint"
                data-component="body">
     <br>
-<p>Example: <code>double</code></p>
+<p>Example: <code>quint</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>quad</code></li> <li><code>triple</code></li> <li><code>double</code></li> <li><code>single</code></li> <li><code>quint</code></li></ul>
         </div>
@@ -5538,7 +5580,7 @@ Must be one of:
     \"kloter_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
     \"hotel_id\": \"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9\",
     \"room_number\": \"m\",
-    \"room_type\": \"quad\",
+    \"room_type\": \"single\",
     \"capacity\": 35,
     \"gender\": \"L\",
     \"notes\": \"y\"
@@ -5561,7 +5603,7 @@ let body = {
     "kloter_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
     "hotel_id": "6b72fe4a-5b40-307c-bc24-f79acf9a1bb9",
     "room_number": "m",
-    "room_type": "quad",
+    "room_type": "single",
     "capacity": 35,
     "gender": "L",
     "notes": "y"
@@ -5704,10 +5746,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="room_type"                data-endpoint="POSTapi-rooms"
-               value="quad"
+               value="single"
                data-component="body">
     <br>
-<p>Example: <code>quad</code></p>
+<p>Example: <code>single</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>quad</code></li> <li><code>triple</code></li> <li><code>double</code></li> <li><code>single</code></li> <li><code>quint</code></li></ul>
         </div>
@@ -5927,9 +5969,9 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"hotel_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
     \"room_number\": \"g\",
-    \"room_type\": \"triple\",
+    \"room_type\": \"single\",
     \"capacity\": 66,
-    \"gender\": \"L\",
+    \"gender\": \"P\",
     \"notes\": \"m\"
 }"
 </code></pre></div>
@@ -5949,9 +5991,9 @@ const headers = {
 let body = {
     "hotel_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
     "room_number": "g",
-    "room_type": "triple",
+    "room_type": "single",
     "capacity": 66,
-    "gender": "L",
+    "gender": "P",
     "notes": "m"
 };
 
@@ -6093,10 +6135,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="room_type"                data-endpoint="PUTapi-rooms--room_id-"
-               value="triple"
+               value="single"
                data-component="body">
     <br>
-<p>Example: <code>triple</code></p>
+<p>Example: <code>single</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>quad</code></li> <li><code>triple</code></li> <li><code>double</code></li> <li><code>single</code></li> <li><code>quint</code></li></ul>
         </div>
@@ -6119,10 +6161,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="gender"                data-endpoint="PUTapi-rooms--room_id-"
-               value="L"
+               value="P"
                data-component="body">
     <br>
-<p>Example: <code>L</code></p>
+<p>Example: <code>P</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>L</code></li> <li><code>P</code></li></ul>
         </div>
@@ -6300,7 +6342,7 @@ Mencegah duplikasi jamaah_id dalam kloter_id &amp; hotel_id yang sama.</p>
     --header "Accept: application/json" \
     --data "{
     \"jamaah_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
-    \"title\": \"MR\",
+    \"title\": \"MISS\",
     \"occupant_name\": \"g\",
     \"age\": 16
 }"
@@ -6320,7 +6362,7 @@ const headers = {
 
 let body = {
     "jamaah_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
-    "title": "MR",
+    "title": "MISS",
     "occupant_name": "g",
     "age": 16
 };
@@ -6451,10 +6493,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="title"                data-endpoint="POSTapi-rooms--room_id--members"
-               value="MR"
+               value="MISS"
                data-component="body">
     <br>
-<p>This field is required when <code>jamaah_id</code> is not present. Example: <code>MR</code></p>
+<p>This field is required when <code>jamaah_id</code> is not present. Example: <code>MISS</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>MR</code></li> <li><code>MRS</code></li> <li><code>MISS</code></li> <li><code>MSTR</code></li></ul>
         </div>
@@ -6504,7 +6546,7 @@ Must be one of:
     --header "Accept: application/json" \
     --data "{
     \"jamaah_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
-    \"title\": \"MRS\",
+    \"title\": \"MSTR\",
     \"occupant_name\": \"g\",
     \"age\": 16
 }"
@@ -6524,7 +6566,7 @@ const headers = {
 
 let body = {
     "jamaah_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
-    "title": "MRS",
+    "title": "MSTR",
     "occupant_name": "g",
     "age": 16
 };
@@ -6667,10 +6709,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="title"                data-endpoint="PUTapi-rooms--room_id--members--roomMember_id-"
-               value="MRS"
+               value="MSTR"
                data-component="body">
     <br>
-<p>Example: <code>MRS</code></p>
+<p>Example: <code>MSTR</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>MR</code></li> <li><code>MRS</code></li> <li><code>MISS</code></li> <li><code>MSTR</code></li></ul>
         </div>
@@ -7018,27 +7060,27 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"passport_number\": \"z\",
     \"nik\": \"miyvdljnikhwaykc\",
     \"phone\": \"myuwpwlvqwrsitcp\",
-    \"birth_date\": \"2022-10-03\",
-    \"gender\": \"P\",
-    \"registration_date\": \"2026-09-09T09:03:53\",
-    \"departure_date\": \"2052-10-02\",
+    \"birth_date\": \"2022-10-04\",
+    \"gender\": \"L\",
+    \"registration_date\": \"2026-09-10T07:56:30\",
+    \"departure_date\": \"2052-10-03\",
     \"package_id\": \"a4855dc5-0acb-33c3-b921-f4291f719ca0\",
     \"kloter_id\": \"c90237e9-ced5-3af6-88ea-84aeaa148878\",
-    \"meningitis_vaccine_status\": \"belum_vaksin\",
+    \"meningitis_vaccine_status\": \"sudah_vaksin\",
     \"photo_status\": \"belum_ada\",
     \"total_package_cost\": 8,
-    \"status\": \"dp_paid\",
+    \"status\": \"cancelled\",
     \"initial_payment\": {
         \"amount\": 4326.41688,
-        \"payment_type\": \"full_payment\",
-        \"payment_method\": \"edc_qris\",
-        \"payment_date\": \"2026-09-09T09:03:53\"
+        \"payment_type\": \"down_payment\",
+        \"payment_method\": \"cash\",
+        \"payment_date\": \"2026-09-10T07:56:30\"
     },
     \"equipments\": [
         {
             \"equipment_name\": \"m\",
             \"size\": \"iyvdljnikhwaykcm\",
-            \"is_received\": false
+            \"is_received\": true
         }
     ]
 }"
@@ -7063,27 +7105,27 @@ let body = {
     "passport_number": "z",
     "nik": "miyvdljnikhwaykc",
     "phone": "myuwpwlvqwrsitcp",
-    "birth_date": "2022-10-03",
-    "gender": "P",
-    "registration_date": "2026-09-09T09:03:53",
-    "departure_date": "2052-10-02",
+    "birth_date": "2022-10-04",
+    "gender": "L",
+    "registration_date": "2026-09-10T07:56:30",
+    "departure_date": "2052-10-03",
     "package_id": "a4855dc5-0acb-33c3-b921-f4291f719ca0",
     "kloter_id": "c90237e9-ced5-3af6-88ea-84aeaa148878",
-    "meningitis_vaccine_status": "belum_vaksin",
+    "meningitis_vaccine_status": "sudah_vaksin",
     "photo_status": "belum_ada",
     "total_package_cost": 8,
-    "status": "dp_paid",
+    "status": "cancelled",
     "initial_payment": {
         "amount": 4326.41688,
-        "payment_type": "full_payment",
-        "payment_method": "edc_qris",
-        "payment_date": "2026-09-09T09:03:53"
+        "payment_type": "down_payment",
+        "payment_method": "cash",
+        "payment_date": "2026-09-10T07:56:30"
     },
     "equipments": [
         {
             "equipment_name": "m",
             "size": "iyvdljnikhwaykcm",
-            "is_received": false
+            "is_received": true
         }
     ]
 };
@@ -7261,10 +7303,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="birth_date"                data-endpoint="POSTapi-registrations"
-               value="2022-10-03"
+               value="2022-10-04"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date before <code>today</code>. Example: <code>2022-10-03</code></p>
+<p>Must be a valid date. Must be a date before <code>today</code>. Example: <code>2022-10-04</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>gender</code></b>&nbsp;&nbsp;
@@ -7273,10 +7315,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="gender"                data-endpoint="POSTapi-registrations"
-               value="P"
+               value="L"
                data-component="body">
     <br>
-<p>Example: <code>P</code></p>
+<p>Example: <code>L</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>L</code></li> <li><code>P</code></li></ul>
         </div>
@@ -7287,10 +7329,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="registration_date"                data-endpoint="POSTapi-registrations"
-               value="2026-09-09T09:03:53"
+               value="2026-09-10T07:56:30"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-09T09:03:53</code></p>
+<p>Must be a valid date. Example: <code>2026-09-10T07:56:30</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>departure_date</code></b>&nbsp;&nbsp;
@@ -7299,10 +7341,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="departure_date"                data-endpoint="POSTapi-registrations"
-               value="2052-10-02"
+               value="2052-10-03"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after or equal to <code>registration_date</code>. Example: <code>2052-10-02</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>registration_date</code>. Example: <code>2052-10-03</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>package_id</code></b>&nbsp;&nbsp;
@@ -7335,10 +7377,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="meningitis_vaccine_status"                data-endpoint="POSTapi-registrations"
-               value="belum_vaksin"
+               value="sudah_vaksin"
                data-component="body">
     <br>
-<p>Example: <code>belum_vaksin</code></p>
+<p>Example: <code>sudah_vaksin</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>belum_vaksin</code></li> <li><code>sudah_vaksin</code></li></ul>
         </div>
@@ -7375,10 +7417,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="status"                data-endpoint="POSTapi-registrations"
-               value="dp_paid"
+               value="cancelled"
                data-component="body">
     <br>
-<p>Example: <code>dp_paid</code></p>
+<p>Example: <code>cancelled</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>unpaid</code></li> <li><code>dp</code></li> <li><code>dp_paid</code></li> <li><code>paid</code></li> <li><code>fully_paid</code></li> <li><code>cancelled</code></li> <li><code>converted</code></li></ul>
         </div>
@@ -7411,10 +7453,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="initial_payment.payment_type"                data-endpoint="POSTapi-registrations"
-               value="full_payment"
+               value="down_payment"
                data-component="body">
     <br>
-<p>Example: <code>full_payment</code></p>
+<p>Example: <code>down_payment</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>down_payment</code></li> <li><code>full_payment</code></li></ul>
                     </div>
@@ -7425,10 +7467,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="initial_payment.payment_method"                data-endpoint="POSTapi-registrations"
-               value="edc_qris"
+               value="cash"
                data-component="body">
     <br>
-<p>Example: <code>edc_qris</code></p>
+<p>Example: <code>cash</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>bca_transfer</code></li> <li><code>mandiri_transfer</code></li> <li><code>bsi_transfer</code></li> <li><code>cash</code></li> <li><code>edc_qris</code></li></ul>
                     </div>
@@ -7439,10 +7481,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="initial_payment.payment_date"                data-endpoint="POSTapi-registrations"
-               value="2026-09-09T09:03:53"
+               value="2026-09-10T07:56:30"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-09T09:03:53</code></p>
+<p>Must be a valid date. Example: <code>2026-09-10T07:56:30</code></p>
                     </div>
                                     </details>
         </div>
@@ -7500,7 +7542,7 @@ Must be one of:
             <code>false</code>
         </label>
     <br>
-<p>This field is required when <code>equipments</code> is present. Example: <code>false</code></p>
+<p>This field is required when <code>equipments</code> is present. Example: <code>true</code></p>
                     </div>
                                     </details>
         </div>
@@ -7684,16 +7726,16 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"passport_number\": \"n\",
     \"nik\": \"gzmiyvdljnikhway\",
     \"phone\": \"kcmyuwpwlvqwrsit\",
-    \"birth_date\": \"2022-10-03\",
-    \"gender\": \"L\",
-    \"registration_date\": \"2026-09-09T09:03:53\",
-    \"departure_date\": \"2026-09-09T09:03:53\",
+    \"birth_date\": \"2022-10-04\",
+    \"gender\": \"P\",
+    \"registration_date\": \"2026-09-10T07:56:30\",
+    \"departure_date\": \"2026-09-10T07:56:30\",
     \"package_id\": \"a4855dc5-0acb-33c3-b921-f4291f719ca0\",
     \"kloter_id\": \"c90237e9-ced5-3af6-88ea-84aeaa148878\",
-    \"meningitis_vaccine_status\": \"sudah_vaksin\",
-    \"photo_status\": \"sudah_menyerahkan\",
+    \"meningitis_vaccine_status\": \"belum_vaksin\",
+    \"photo_status\": \"belum_ada\",
     \"total_package_cost\": 8,
-    \"status\": \"paid\",
+    \"status\": \"unpaid\",
     \"equipments\": [
         {
             \"equipment_name\": \"y\",
@@ -7721,16 +7763,16 @@ let body = {
     "passport_number": "n",
     "nik": "gzmiyvdljnikhway",
     "phone": "kcmyuwpwlvqwrsit",
-    "birth_date": "2022-10-03",
-    "gender": "L",
-    "registration_date": "2026-09-09T09:03:53",
-    "departure_date": "2026-09-09T09:03:53",
+    "birth_date": "2022-10-04",
+    "gender": "P",
+    "registration_date": "2026-09-10T07:56:30",
+    "departure_date": "2026-09-10T07:56:30",
     "package_id": "a4855dc5-0acb-33c3-b921-f4291f719ca0",
     "kloter_id": "c90237e9-ced5-3af6-88ea-84aeaa148878",
-    "meningitis_vaccine_status": "sudah_vaksin",
-    "photo_status": "sudah_menyerahkan",
+    "meningitis_vaccine_status": "belum_vaksin",
+    "photo_status": "belum_ada",
     "total_package_cost": 8,
-    "status": "paid",
+    "status": "unpaid",
     "equipments": [
         {
             "equipment_name": "y",
@@ -7902,10 +7944,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="birth_date"                data-endpoint="PUTapi-registrations--registration_id-"
-               value="2022-10-03"
+               value="2022-10-04"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date before <code>today</code>. Example: <code>2022-10-03</code></p>
+<p>Must be a valid date. Must be a date before <code>today</code>. Example: <code>2022-10-04</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>gender</code></b>&nbsp;&nbsp;
@@ -7914,10 +7956,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="gender"                data-endpoint="PUTapi-registrations--registration_id-"
-               value="L"
+               value="P"
                data-component="body">
     <br>
-<p>Example: <code>L</code></p>
+<p>Example: <code>P</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>L</code></li> <li><code>P</code></li></ul>
         </div>
@@ -7928,10 +7970,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="registration_date"                data-endpoint="PUTapi-registrations--registration_id-"
-               value="2026-09-09T09:03:53"
+               value="2026-09-10T07:56:30"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-09T09:03:53</code></p>
+<p>Must be a valid date. Example: <code>2026-09-10T07:56:30</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>departure_date</code></b>&nbsp;&nbsp;
@@ -7940,10 +7982,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="departure_date"                data-endpoint="PUTapi-registrations--registration_id-"
-               value="2026-09-09T09:03:53"
+               value="2026-09-10T07:56:30"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-09T09:03:53</code></p>
+<p>Must be a valid date. Example: <code>2026-09-10T07:56:30</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>package_id</code></b>&nbsp;&nbsp;
@@ -7976,10 +8018,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="meningitis_vaccine_status"                data-endpoint="PUTapi-registrations--registration_id-"
-               value="sudah_vaksin"
+               value="belum_vaksin"
                data-component="body">
     <br>
-<p>Example: <code>sudah_vaksin</code></p>
+<p>Example: <code>belum_vaksin</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>belum_vaksin</code></li> <li><code>sudah_vaksin</code></li></ul>
         </div>
@@ -7990,10 +8032,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="photo_status"                data-endpoint="PUTapi-registrations--registration_id-"
-               value="sudah_menyerahkan"
+               value="belum_ada"
                data-component="body">
     <br>
-<p>Example: <code>sudah_menyerahkan</code></p>
+<p>Example: <code>belum_ada</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>belum_ada</code></li> <li><code>sudah_menyerahkan</code></li></ul>
         </div>
@@ -8016,10 +8058,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="status"                data-endpoint="PUTapi-registrations--registration_id-"
-               value="paid"
+               value="unpaid"
                data-component="body">
     <br>
-<p>Example: <code>paid</code></p>
+<p>Example: <code>unpaid</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>unpaid</code></li> <li><code>dp</code></li> <li><code>dp_paid</code></li> <li><code>paid</code></li> <li><code>fully_paid</code></li> <li><code>cancelled</code></li> <li><code>converted</code></li></ul>
         </div>
@@ -8680,9 +8722,9 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"amount\": 4326.41688,
-    \"payment_type\": \"down_payment\",
-    \"payment_method\": \"cash\",
-    \"payment_date\": \"2026-09-09T09:03:53\",
+    \"payment_type\": \"full_payment\",
+    \"payment_method\": \"bca_transfer\",
+    \"payment_date\": \"2026-09-10T07:56:30\",
     \"notes\": \"m\"
 }"
 </code></pre></div>
@@ -8701,9 +8743,9 @@ const headers = {
 
 let body = {
     "amount": 4326.41688,
-    "payment_type": "down_payment",
-    "payment_method": "cash",
-    "payment_date": "2026-09-09T09:03:53",
+    "payment_type": "full_payment",
+    "payment_method": "bca_transfer",
+    "payment_date": "2026-09-10T07:56:30",
     "notes": "m"
 };
 
@@ -8833,10 +8875,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="payment_type"                data-endpoint="POSTapi-registrations--registration_id--payments"
-               value="down_payment"
+               value="full_payment"
                data-component="body">
     <br>
-<p>Example: <code>down_payment</code></p>
+<p>Example: <code>full_payment</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>down_payment</code></li> <li><code>full_payment</code></li></ul>
         </div>
@@ -8847,10 +8889,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="payment_method"                data-endpoint="POSTapi-registrations--registration_id--payments"
-               value="cash"
+               value="bca_transfer"
                data-component="body">
     <br>
-<p>Example: <code>cash</code></p>
+<p>Example: <code>bca_transfer</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>bca_transfer</code></li> <li><code>mandiri_transfer</code></li> <li><code>bsi_transfer</code></li> <li><code>cash</code></li> <li><code>edc_qris</code></li></ul>
         </div>
@@ -8861,10 +8903,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="payment_date"                data-endpoint="POSTapi-registrations--registration_id--payments"
-               value="2026-09-09T09:03:53"
+               value="2026-09-10T07:56:30"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-09T09:03:53</code></p>
+<p>Must be a valid date. Example: <code>2026-09-10T07:56:30</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>notes</code></b>&nbsp;&nbsp;
@@ -9045,7 +9087,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"category\": \"akomodasi_tiket\",
     \"amount\": 4326.41688,
     \"payment_method\": \"mandiri_transfer\",
-    \"expense_date\": \"2026-09-09T09:03:53\",
+    \"expense_date\": \"2026-09-10T07:56:30\",
     \"reference_number\": \"m\",
     \"notes\": \"i\"
 }"
@@ -9068,7 +9110,7 @@ let body = {
     "category": "akomodasi_tiket",
     "amount": 4326.41688,
     "payment_method": "mandiri_transfer",
-    "expense_date": "2026-09-09T09:03:53",
+    "expense_date": "2026-09-10T07:56:30",
     "reference_number": "m",
     "notes": "i"
 };
@@ -9226,10 +9268,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="expense_date"                data-endpoint="POSTapi-expenses"
-               value="2026-09-09T09:03:53"
+               value="2026-09-10T07:56:30"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-09T09:03:53</code></p>
+<p>Must be a valid date. Example: <code>2026-09-10T07:56:30</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>reference_number</code></b>&nbsp;&nbsp;
@@ -9432,10 +9474,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"vendor\": \"b\",
-    \"category\": \"akomodasi_tiket\",
+    \"category\": \"perlengkapan\",
     \"amount\": 4326.41688,
-    \"payment_method\": \"bca_transfer\",
-    \"expense_date\": \"2026-09-09T09:03:53\",
+    \"payment_method\": \"edc_qris\",
+    \"expense_date\": \"2026-09-10T07:56:30\",
     \"reference_number\": \"m\",
     \"notes\": \"i\"
 }"
@@ -9455,10 +9497,10 @@ const headers = {
 
 let body = {
     "vendor": "b",
-    "category": "akomodasi_tiket",
+    "category": "perlengkapan",
     "amount": 4326.41688,
-    "payment_method": "bca_transfer",
-    "expense_date": "2026-09-09T09:03:53",
+    "payment_method": "edc_qris",
+    "expense_date": "2026-09-10T07:56:30",
     "reference_number": "m",
     "notes": "i"
 };
@@ -9589,10 +9631,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="category"                data-endpoint="PUTapi-expenses--expense_id-"
-               value="akomodasi_tiket"
+               value="perlengkapan"
                data-component="body">
     <br>
-<p>Example: <code>akomodasi_tiket</code></p>
+<p>Example: <code>perlengkapan</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>akomodasi_tiket</code></li> <li><code>perlengkapan</code></li> <li><code>operasional_bus</code></li></ul>
         </div>
@@ -9615,10 +9657,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="payment_method"                data-endpoint="PUTapi-expenses--expense_id-"
-               value="bca_transfer"
+               value="edc_qris"
                data-component="body">
     <br>
-<p>Example: <code>bca_transfer</code></p>
+<p>Example: <code>edc_qris</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>bca_transfer</code></li> <li><code>mandiri_transfer</code></li> <li><code>bsi_transfer</code></li> <li><code>cash</code></li> <li><code>edc_qris</code></li></ul>
         </div>
@@ -9629,10 +9671,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="expense_date"                data-endpoint="PUTapi-expenses--expense_id-"
-               value="2026-09-09T09:03:53"
+               value="2026-09-10T07:56:30"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-09T09:03:53</code></p>
+<p>Must be a valid date. Example: <code>2026-09-10T07:56:30</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>reference_number</code></b>&nbsp;&nbsp;
@@ -10106,8 +10148,8 @@ login_id kini wajib diisi manual oleh admin (max 10 karakter, unique).</p>
     \"login_id\": \"bngzmi\",
     \"nik\": \"yvdljnikhwaykcmy\",
     \"full_name\": \"u\",
-    \"birth_date\": \"2026-09-09T09:03:53\",
-    \"gender\": \"P\",
+    \"birth_date\": \"2026-09-10T07:56:30\",
+    \"gender\": \"L\",
     \"phone\": \"wpwlvqwrsitcpscq\",
     \"emergency_contact\": \"l\",
     \"passport_number\": \"d\",
@@ -10117,8 +10159,8 @@ login_id kini wajib diisi manual oleh admin (max 10 karakter, unique).</p>
     \"kloter_id\": \"1937113a-b0a2-3b03-925a-3163292463db\",
     \"hotel_makkah\": \"u\",
     \"hotel_madinah\": \"j\",
-    \"departure_date\": \"2026-09-09T09:03:53\",
-    \"return_date\": \"2052-10-02\",
+    \"departure_date\": \"2026-09-10T07:56:30\",
+    \"return_date\": \"2052-10-03\",
     \"tour_leader\": \"n\",
     \"mutawif_local\": \"g\",
     \"status\": \"active\"
@@ -10141,8 +10183,8 @@ let body = {
     "login_id": "bngzmi",
     "nik": "yvdljnikhwaykcmy",
     "full_name": "u",
-    "birth_date": "2026-09-09T09:03:53",
-    "gender": "P",
+    "birth_date": "2026-09-10T07:56:30",
+    "gender": "L",
     "phone": "wpwlvqwrsitcpscq",
     "emergency_contact": "l",
     "passport_number": "d",
@@ -10152,8 +10194,8 @@ let body = {
     "kloter_id": "1937113a-b0a2-3b03-925a-3163292463db",
     "hotel_makkah": "u",
     "hotel_madinah": "j",
-    "departure_date": "2026-09-09T09:03:53",
-    "return_date": "2052-10-02",
+    "departure_date": "2026-09-10T07:56:30",
+    "return_date": "2052-10-03",
     "tour_leader": "n",
     "mutawif_local": "g",
     "status": "active"
@@ -10296,10 +10338,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="birth_date"                data-endpoint="POSTapi-jamaah"
-               value="2026-09-09T09:03:53"
+               value="2026-09-10T07:56:30"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-09T09:03:53</code></p>
+<p>Must be a valid date. Example: <code>2026-09-10T07:56:30</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>gender</code></b>&nbsp;&nbsp;
@@ -10308,10 +10350,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="gender"                data-endpoint="POSTapi-jamaah"
-               value="P"
+               value="L"
                data-component="body">
     <br>
-<p>Example: <code>P</code></p>
+<p>Example: <code>L</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>L</code></li> <li><code>P</code></li></ul>
         </div>
@@ -10430,10 +10472,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="departure_date"                data-endpoint="POSTapi-jamaah"
-               value="2026-09-09T09:03:53"
+               value="2026-09-10T07:56:30"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-09T09:03:53</code></p>
+<p>Must be a valid date. Example: <code>2026-09-10T07:56:30</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>return_date</code></b>&nbsp;&nbsp;
@@ -10442,10 +10484,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="return_date"                data-endpoint="POSTapi-jamaah"
-               value="2052-10-02"
+               value="2052-10-03"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after or equal to <code>departure_date</code>. Example: <code>2052-10-02</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>departure_date</code>. Example: <code>2052-10-03</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>tour_leader</code></b>&nbsp;&nbsp;
@@ -10664,7 +10706,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"login_id\": \"bngzmi\",
     \"nik\": \"yvdljnikhwaykcmy\",
     \"full_name\": \"u\",
-    \"birth_date\": \"2026-09-09T09:03:53\",
+    \"birth_date\": \"2026-09-10T07:56:30\",
     \"gender\": \"P\",
     \"phone\": \"wpwlvqwrsitcpscq\",
     \"emergency_contact\": \"l\",
@@ -10675,11 +10717,11 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"kloter_id\": \"1937113a-b0a2-3b03-925a-3163292463db\",
     \"hotel_makkah\": \"u\",
     \"hotel_madinah\": \"j\",
-    \"departure_date\": \"2026-09-09T09:03:53\",
-    \"return_date\": \"2052-10-02\",
+    \"departure_date\": \"2026-09-10T07:56:30\",
+    \"return_date\": \"2052-10-03\",
     \"tour_leader\": \"n\",
     \"mutawif_local\": \"g\",
-    \"status\": \"active\"
+    \"status\": \"archived\"
 }"
 </code></pre></div>
 
@@ -10699,7 +10741,7 @@ let body = {
     "login_id": "bngzmi",
     "nik": "yvdljnikhwaykcmy",
     "full_name": "u",
-    "birth_date": "2026-09-09T09:03:53",
+    "birth_date": "2026-09-10T07:56:30",
     "gender": "P",
     "phone": "wpwlvqwrsitcpscq",
     "emergency_contact": "l",
@@ -10710,11 +10752,11 @@ let body = {
     "kloter_id": "1937113a-b0a2-3b03-925a-3163292463db",
     "hotel_makkah": "u",
     "hotel_madinah": "j",
-    "departure_date": "2026-09-09T09:03:53",
-    "return_date": "2052-10-02",
+    "departure_date": "2026-09-10T07:56:30",
+    "return_date": "2052-10-03",
     "tour_leader": "n",
     "mutawif_local": "g",
-    "status": "active"
+    "status": "archived"
 };
 
 fetch(url, {
@@ -10867,10 +10909,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="birth_date"                data-endpoint="PUTapi-jamaah--jamaah_id-"
-               value="2026-09-09T09:03:53"
+               value="2026-09-10T07:56:30"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-09T09:03:53</code></p>
+<p>Must be a valid date. Example: <code>2026-09-10T07:56:30</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>gender</code></b>&nbsp;&nbsp;
@@ -11001,10 +11043,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="departure_date"                data-endpoint="PUTapi-jamaah--jamaah_id-"
-               value="2026-09-09T09:03:53"
+               value="2026-09-10T07:56:30"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-09T09:03:53</code></p>
+<p>Must be a valid date. Example: <code>2026-09-10T07:56:30</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>return_date</code></b>&nbsp;&nbsp;
@@ -11013,10 +11055,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="return_date"                data-endpoint="PUTapi-jamaah--jamaah_id-"
-               value="2052-10-02"
+               value="2052-10-03"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after or equal to <code>departure_date</code>. Example: <code>2052-10-02</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>departure_date</code>. Example: <code>2052-10-03</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>tour_leader</code></b>&nbsp;&nbsp;
@@ -11049,10 +11091,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="status"                data-endpoint="PUTapi-jamaah--jamaah_id-"
-               value="active"
+               value="archived"
                data-component="body">
     <br>
-<p>Example: <code>active</code></p>
+<p>Example: <code>archived</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>active</code></li> <li><code>archived</code></li></ul>
         </div>
@@ -11194,6 +11236,2392 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="url">
     <br>
 <p>The ID of the jamaah. Example: <code>01a00fd9-404c-73f8-ac03-7d250410e565</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="endpoints-GETapi-tour-leaders">GET api/tour-leaders</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-GETapi-tour-leaders">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/tour-leaders" \
+    --header "Authorization: Bearer {token}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/tour-leaders"
+);
+
+const headers = {
+    "Authorization": "Bearer {token}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-tour-leaders">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+access-control-allow-origin: *
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-tour-leaders" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-tour-leaders"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-tour-leaders"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-tour-leaders" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-tour-leaders">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-tour-leaders" data-method="GET"
+      data-path="api/tour-leaders"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-tour-leaders', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-tour-leaders"
+                    onclick="tryItOut('GETapi-tour-leaders');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-tour-leaders"
+                    onclick="cancelTryOut('GETapi-tour-leaders');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-tour-leaders"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/tour-leaders</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-tour-leaders"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-tour-leaders"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-tour-leaders"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
+                    <h2 id="endpoints-POSTapi-tour-leaders">POST api/tour-leaders</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-POSTapi-tour-leaders">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8000/api/tour-leaders" \
+    --header "Authorization: Bearer {token}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"login_id\": \"bngzmiyvdljnikhw\",
+    \"full_name\": \"a\",
+    \"certification_number\": \"y\",
+    \"phone\": \"kcmyuwpwlvqwrsit\",
+    \"experience\": \"architecto\",
+    \"performance\": \"architecto\",
+    \"status\": \"standby\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/tour-leaders"
+);
+
+const headers = {
+    "Authorization": "Bearer {token}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "login_id": "bngzmiyvdljnikhw",
+    "full_name": "a",
+    "certification_number": "y",
+    "phone": "kcmyuwpwlvqwrsit",
+    "experience": "architecto",
+    "performance": "architecto",
+    "status": "standby"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-tour-leaders">
+</span>
+<span id="execution-results-POSTapi-tour-leaders" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-tour-leaders"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-tour-leaders"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-tour-leaders" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-tour-leaders">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-tour-leaders" data-method="POST"
+      data-path="api/tour-leaders"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-tour-leaders', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-tour-leaders"
+                    onclick="tryItOut('POSTapi-tour-leaders');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-tour-leaders"
+                    onclick="cancelTryOut('POSTapi-tour-leaders');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-tour-leaders"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/tour-leaders</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-tour-leaders"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-tour-leaders"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-tour-leaders"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>login_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="login_id"                data-endpoint="POSTapi-tour-leaders"
+               value="bngzmiyvdljnikhw"
+               data-component="body">
+    <br>
+<p>Must not be greater than 20 characters. Example: <code>bngzmiyvdljnikhw</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>full_name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="full_name"                data-endpoint="POSTapi-tour-leaders"
+               value="a"
+               data-component="body">
+    <br>
+<p>Must not be greater than 150 characters. Example: <code>a</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>certification_number</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="certification_number"                data-endpoint="POSTapi-tour-leaders"
+               value="y"
+               data-component="body">
+    <br>
+<p>Must not be greater than 50 characters. Example: <code>y</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>phone</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="phone"                data-endpoint="POSTapi-tour-leaders"
+               value="kcmyuwpwlvqwrsit"
+               data-component="body">
+    <br>
+<p>Must not be greater than 20 characters. Example: <code>kcmyuwpwlvqwrsit</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>experience</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="experience"                data-endpoint="POSTapi-tour-leaders"
+               value="architecto"
+               data-component="body">
+    <br>
+<p>Example: <code>architecto</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>performance</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="performance"                data-endpoint="POSTapi-tour-leaders"
+               value="architecto"
+               data-component="body">
+    <br>
+<p>Example: <code>architecto</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="status"                data-endpoint="POSTapi-tour-leaders"
+               value="standby"
+               data-component="body">
+    <br>
+<p>Example: <code>standby</code></p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>active</code></li> <li><code>resting</code></li> <li><code>standby</code></li> <li><code>inactive</code></li></ul>
+        </div>
+        </form>
+
+                    <h2 id="endpoints-GETapi-tour-leaders--id-">GET api/tour-leaders/{id}</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-GETapi-tour-leaders--id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/tour-leaders/01a0899c-754b-73bc-856a-d6fe4e37fec0" \
+    --header "Authorization: Bearer {token}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/tour-leaders/01a0899c-754b-73bc-856a-d6fe4e37fec0"
+);
+
+const headers = {
+    "Authorization": "Bearer {token}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-tour-leaders--id-">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+access-control-allow-origin: *
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-tour-leaders--id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-tour-leaders--id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-tour-leaders--id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-tour-leaders--id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-tour-leaders--id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-tour-leaders--id-" data-method="GET"
+      data-path="api/tour-leaders/{id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-tour-leaders--id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-tour-leaders--id-"
+                    onclick="tryItOut('GETapi-tour-leaders--id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-tour-leaders--id-"
+                    onclick="cancelTryOut('GETapi-tour-leaders--id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-tour-leaders--id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/tour-leaders/{id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-tour-leaders--id-"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-tour-leaders--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-tour-leaders--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="id"                data-endpoint="GETapi-tour-leaders--id-"
+               value="01a0899c-754b-73bc-856a-d6fe4e37fec0"
+               data-component="url">
+    <br>
+<p>The ID of the tour leader. Example: <code>01a0899c-754b-73bc-856a-d6fe4e37fec0</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="endpoints-PUTapi-tour-leaders--id-">PUT api/tour-leaders/{id}</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-PUTapi-tour-leaders--id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request PUT \
+    "http://localhost:8000/api/tour-leaders/01a0899c-754b-73bc-856a-d6fe4e37fec0" \
+    --header "Authorization: Bearer {token}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"login_id\": \"bngzmiyvdljnikhw\",
+    \"full_name\": \"a\",
+    \"certification_number\": \"y\",
+    \"phone\": \"kcmyuwpwlvqwrsit\",
+    \"experience\": \"architecto\",
+    \"performance\": \"architecto\",
+    \"status\": \"inactive\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/tour-leaders/01a0899c-754b-73bc-856a-d6fe4e37fec0"
+);
+
+const headers = {
+    "Authorization": "Bearer {token}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "login_id": "bngzmiyvdljnikhw",
+    "full_name": "a",
+    "certification_number": "y",
+    "phone": "kcmyuwpwlvqwrsit",
+    "experience": "architecto",
+    "performance": "architecto",
+    "status": "inactive"
+};
+
+fetch(url, {
+    method: "PUT",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-PUTapi-tour-leaders--id-">
+</span>
+<span id="execution-results-PUTapi-tour-leaders--id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-PUTapi-tour-leaders--id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-PUTapi-tour-leaders--id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-PUTapi-tour-leaders--id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-PUTapi-tour-leaders--id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-PUTapi-tour-leaders--id-" data-method="PUT"
+      data-path="api/tour-leaders/{id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('PUTapi-tour-leaders--id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-PUTapi-tour-leaders--id-"
+                    onclick="tryItOut('PUTapi-tour-leaders--id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-PUTapi-tour-leaders--id-"
+                    onclick="cancelTryOut('PUTapi-tour-leaders--id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-PUTapi-tour-leaders--id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-darkblue">PUT</small>
+            <b><code>api/tour-leaders/{id}</code></b>
+        </p>
+            <p>
+            <small class="badge badge-purple">PATCH</small>
+            <b><code>api/tour-leaders/{id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="PUTapi-tour-leaders--id-"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="PUTapi-tour-leaders--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="PUTapi-tour-leaders--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="id"                data-endpoint="PUTapi-tour-leaders--id-"
+               value="01a0899c-754b-73bc-856a-d6fe4e37fec0"
+               data-component="url">
+    <br>
+<p>The ID of the tour leader. Example: <code>01a0899c-754b-73bc-856a-d6fe4e37fec0</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>login_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="login_id"                data-endpoint="PUTapi-tour-leaders--id-"
+               value="bngzmiyvdljnikhw"
+               data-component="body">
+    <br>
+<p>Must not be greater than 20 characters. Example: <code>bngzmiyvdljnikhw</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>full_name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="full_name"                data-endpoint="PUTapi-tour-leaders--id-"
+               value="a"
+               data-component="body">
+    <br>
+<p>Must not be greater than 150 characters. Example: <code>a</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>certification_number</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="certification_number"                data-endpoint="PUTapi-tour-leaders--id-"
+               value="y"
+               data-component="body">
+    <br>
+<p>Must not be greater than 50 characters. Example: <code>y</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>phone</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="phone"                data-endpoint="PUTapi-tour-leaders--id-"
+               value="kcmyuwpwlvqwrsit"
+               data-component="body">
+    <br>
+<p>Must not be greater than 20 characters. Example: <code>kcmyuwpwlvqwrsit</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>experience</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="experience"                data-endpoint="PUTapi-tour-leaders--id-"
+               value="architecto"
+               data-component="body">
+    <br>
+<p>Example: <code>architecto</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>performance</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="performance"                data-endpoint="PUTapi-tour-leaders--id-"
+               value="architecto"
+               data-component="body">
+    <br>
+<p>Example: <code>architecto</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="status"                data-endpoint="PUTapi-tour-leaders--id-"
+               value="inactive"
+               data-component="body">
+    <br>
+<p>Example: <code>inactive</code></p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>active</code></li> <li><code>resting</code></li> <li><code>standby</code></li> <li><code>inactive</code></li></ul>
+        </div>
+        </form>
+
+                    <h2 id="endpoints-DELETEapi-tour-leaders--id-">DELETE api/tour-leaders/{id}</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-DELETEapi-tour-leaders--id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request DELETE \
+    "http://localhost:8000/api/tour-leaders/01a0899c-754b-73bc-856a-d6fe4e37fec0" \
+    --header "Authorization: Bearer {token}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/tour-leaders/01a0899c-754b-73bc-856a-d6fe4e37fec0"
+);
+
+const headers = {
+    "Authorization": "Bearer {token}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "DELETE",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-DELETEapi-tour-leaders--id-">
+</span>
+<span id="execution-results-DELETEapi-tour-leaders--id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-DELETEapi-tour-leaders--id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-DELETEapi-tour-leaders--id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-DELETEapi-tour-leaders--id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-DELETEapi-tour-leaders--id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-DELETEapi-tour-leaders--id-" data-method="DELETE"
+      data-path="api/tour-leaders/{id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('DELETEapi-tour-leaders--id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-DELETEapi-tour-leaders--id-"
+                    onclick="tryItOut('DELETEapi-tour-leaders--id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-DELETEapi-tour-leaders--id-"
+                    onclick="cancelTryOut('DELETEapi-tour-leaders--id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-DELETEapi-tour-leaders--id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-red">DELETE</small>
+            <b><code>api/tour-leaders/{id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="DELETEapi-tour-leaders--id-"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="DELETEapi-tour-leaders--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="DELETEapi-tour-leaders--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="id"                data-endpoint="DELETEapi-tour-leaders--id-"
+               value="01a0899c-754b-73bc-856a-d6fe4e37fec0"
+               data-component="url">
+    <br>
+<p>The ID of the tour leader. Example: <code>01a0899c-754b-73bc-856a-d6fe4e37fec0</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="endpoints-POSTapi-tour-leaders--tour_leader_id--kloters--kloter_id-">POST api/tour-leaders/{tour_leader_id}/kloters/{kloter_id}</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-POSTapi-tour-leaders--tour_leader_id--kloters--kloter_id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8000/api/tour-leaders/01a0899c-754b-73bc-856a-d6fe4e37fec0/kloters/019fff5a-e6a2-72d5-8f7d-8814ad6f0c89" \
+    --header "Authorization: Bearer {token}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/tour-leaders/01a0899c-754b-73bc-856a-d6fe4e37fec0/kloters/019fff5a-e6a2-72d5-8f7d-8814ad6f0c89"
+);
+
+const headers = {
+    "Authorization": "Bearer {token}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-tour-leaders--tour_leader_id--kloters--kloter_id-">
+</span>
+<span id="execution-results-POSTapi-tour-leaders--tour_leader_id--kloters--kloter_id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-tour-leaders--tour_leader_id--kloters--kloter_id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-tour-leaders--tour_leader_id--kloters--kloter_id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-tour-leaders--tour_leader_id--kloters--kloter_id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-tour-leaders--tour_leader_id--kloters--kloter_id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-tour-leaders--tour_leader_id--kloters--kloter_id-" data-method="POST"
+      data-path="api/tour-leaders/{tour_leader_id}/kloters/{kloter_id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-tour-leaders--tour_leader_id--kloters--kloter_id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-tour-leaders--tour_leader_id--kloters--kloter_id-"
+                    onclick="tryItOut('POSTapi-tour-leaders--tour_leader_id--kloters--kloter_id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-tour-leaders--tour_leader_id--kloters--kloter_id-"
+                    onclick="cancelTryOut('POSTapi-tour-leaders--tour_leader_id--kloters--kloter_id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-tour-leaders--tour_leader_id--kloters--kloter_id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/tour-leaders/{tour_leader_id}/kloters/{kloter_id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-tour-leaders--tour_leader_id--kloters--kloter_id-"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-tour-leaders--tour_leader_id--kloters--kloter_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-tour-leaders--tour_leader_id--kloters--kloter_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>tour_leader_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="tour_leader_id"                data-endpoint="POSTapi-tour-leaders--tour_leader_id--kloters--kloter_id-"
+               value="01a0899c-754b-73bc-856a-d6fe4e37fec0"
+               data-component="url">
+    <br>
+<p>The ID of the tour leader. Example: <code>01a0899c-754b-73bc-856a-d6fe4e37fec0</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>kloter_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="kloter_id"                data-endpoint="POSTapi-tour-leaders--tour_leader_id--kloters--kloter_id-"
+               value="019fff5a-e6a2-72d5-8f7d-8814ad6f0c89"
+               data-component="url">
+    <br>
+<p>The ID of the kloter. Example: <code>019fff5a-e6a2-72d5-8f7d-8814ad6f0c89</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="endpoints-DELETEapi-tour-leaders--tour_leader_id--kloters--kloter_id-">DELETE api/tour-leaders/{tour_leader_id}/kloters/{kloter_id}</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-DELETEapi-tour-leaders--tour_leader_id--kloters--kloter_id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request DELETE \
+    "http://localhost:8000/api/tour-leaders/01a0899c-754b-73bc-856a-d6fe4e37fec0/kloters/019fff5a-e6a2-72d5-8f7d-8814ad6f0c89" \
+    --header "Authorization: Bearer {token}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/tour-leaders/01a0899c-754b-73bc-856a-d6fe4e37fec0/kloters/019fff5a-e6a2-72d5-8f7d-8814ad6f0c89"
+);
+
+const headers = {
+    "Authorization": "Bearer {token}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "DELETE",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-DELETEapi-tour-leaders--tour_leader_id--kloters--kloter_id-">
+</span>
+<span id="execution-results-DELETEapi-tour-leaders--tour_leader_id--kloters--kloter_id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-DELETEapi-tour-leaders--tour_leader_id--kloters--kloter_id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-DELETEapi-tour-leaders--tour_leader_id--kloters--kloter_id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-DELETEapi-tour-leaders--tour_leader_id--kloters--kloter_id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-DELETEapi-tour-leaders--tour_leader_id--kloters--kloter_id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-DELETEapi-tour-leaders--tour_leader_id--kloters--kloter_id-" data-method="DELETE"
+      data-path="api/tour-leaders/{tour_leader_id}/kloters/{kloter_id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('DELETEapi-tour-leaders--tour_leader_id--kloters--kloter_id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-DELETEapi-tour-leaders--tour_leader_id--kloters--kloter_id-"
+                    onclick="tryItOut('DELETEapi-tour-leaders--tour_leader_id--kloters--kloter_id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-DELETEapi-tour-leaders--tour_leader_id--kloters--kloter_id-"
+                    onclick="cancelTryOut('DELETEapi-tour-leaders--tour_leader_id--kloters--kloter_id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-DELETEapi-tour-leaders--tour_leader_id--kloters--kloter_id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-red">DELETE</small>
+            <b><code>api/tour-leaders/{tour_leader_id}/kloters/{kloter_id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="DELETEapi-tour-leaders--tour_leader_id--kloters--kloter_id-"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="DELETEapi-tour-leaders--tour_leader_id--kloters--kloter_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="DELETEapi-tour-leaders--tour_leader_id--kloters--kloter_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>tour_leader_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="tour_leader_id"                data-endpoint="DELETEapi-tour-leaders--tour_leader_id--kloters--kloter_id-"
+               value="01a0899c-754b-73bc-856a-d6fe4e37fec0"
+               data-component="url">
+    <br>
+<p>The ID of the tour leader. Example: <code>01a0899c-754b-73bc-856a-d6fe4e37fec0</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>kloter_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="kloter_id"                data-endpoint="DELETEapi-tour-leaders--tour_leader_id--kloters--kloter_id-"
+               value="019fff5a-e6a2-72d5-8f7d-8814ad6f0c89"
+               data-component="url">
+    <br>
+<p>The ID of the kloter. Example: <code>019fff5a-e6a2-72d5-8f7d-8814ad6f0c89</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="endpoints-GETapi-mutawifs">GET api/mutawifs</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-GETapi-mutawifs">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/mutawifs" \
+    --header "Authorization: Bearer {token}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/mutawifs"
+);
+
+const headers = {
+    "Authorization": "Bearer {token}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-mutawifs">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+access-control-allow-origin: *
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-mutawifs" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-mutawifs"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-mutawifs"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-mutawifs" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-mutawifs">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-mutawifs" data-method="GET"
+      data-path="api/mutawifs"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-mutawifs', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-mutawifs"
+                    onclick="tryItOut('GETapi-mutawifs');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-mutawifs"
+                    onclick="cancelTryOut('GETapi-mutawifs');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-mutawifs"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/mutawifs</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-mutawifs"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-mutawifs"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-mutawifs"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
+                    <h2 id="endpoints-POSTapi-mutawifs">POST api/mutawifs</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-POSTapi-mutawifs">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8000/api/mutawifs" \
+    --header "Authorization: Bearer {token}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"code\": \"bngzmiyvdljnikhw\",
+    \"name\": \"a\",
+    \"language\": \"y\",
+    \"experience\": \"k\",
+    \"status\": \"active\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/mutawifs"
+);
+
+const headers = {
+    "Authorization": "Bearer {token}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "code": "bngzmiyvdljnikhw",
+    "name": "a",
+    "language": "y",
+    "experience": "k",
+    "status": "active"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-mutawifs">
+</span>
+<span id="execution-results-POSTapi-mutawifs" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-mutawifs"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-mutawifs"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-mutawifs" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-mutawifs">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-mutawifs" data-method="POST"
+      data-path="api/mutawifs"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-mutawifs', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-mutawifs"
+                    onclick="tryItOut('POSTapi-mutawifs');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-mutawifs"
+                    onclick="cancelTryOut('POSTapi-mutawifs');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-mutawifs"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/mutawifs</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-mutawifs"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-mutawifs"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-mutawifs"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>code</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="code"                data-endpoint="POSTapi-mutawifs"
+               value="bngzmiyvdljnikhw"
+               data-component="body">
+    <br>
+<p>Must not be greater than 20 characters. Example: <code>bngzmiyvdljnikhw</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="name"                data-endpoint="POSTapi-mutawifs"
+               value="a"
+               data-component="body">
+    <br>
+<p>Must not be greater than 200 characters. Example: <code>a</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>language</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="language"                data-endpoint="POSTapi-mutawifs"
+               value="y"
+               data-component="body">
+    <br>
+<p>Must not be greater than 250 characters. Example: <code>y</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>experience</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="experience"                data-endpoint="POSTapi-mutawifs"
+               value="k"
+               data-component="body">
+    <br>
+<p>Must not be greater than 250 characters. Example: <code>k</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="status"                data-endpoint="POSTapi-mutawifs"
+               value="active"
+               data-component="body">
+    <br>
+<p>Example: <code>active</code></p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>active</code></li> <li><code>standby</code></li></ul>
+        </div>
+        </form>
+
+                    <h2 id="endpoints-GETapi-mutawifs--id-">GET api/mutawifs/{id}</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-GETapi-mutawifs--id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/mutawifs/01a08a42-5371-72b0-8dcc-91f59f39845e" \
+    --header "Authorization: Bearer {token}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/mutawifs/01a08a42-5371-72b0-8dcc-91f59f39845e"
+);
+
+const headers = {
+    "Authorization": "Bearer {token}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-mutawifs--id-">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+access-control-allow-origin: *
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-mutawifs--id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-mutawifs--id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-mutawifs--id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-mutawifs--id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-mutawifs--id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-mutawifs--id-" data-method="GET"
+      data-path="api/mutawifs/{id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-mutawifs--id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-mutawifs--id-"
+                    onclick="tryItOut('GETapi-mutawifs--id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-mutawifs--id-"
+                    onclick="cancelTryOut('GETapi-mutawifs--id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-mutawifs--id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/mutawifs/{id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-mutawifs--id-"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-mutawifs--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-mutawifs--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="id"                data-endpoint="GETapi-mutawifs--id-"
+               value="01a08a42-5371-72b0-8dcc-91f59f39845e"
+               data-component="url">
+    <br>
+<p>The ID of the mutawif. Example: <code>01a08a42-5371-72b0-8dcc-91f59f39845e</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="endpoints-PUTapi-mutawifs--id-">PUT api/mutawifs/{id}</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-PUTapi-mutawifs--id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request PUT \
+    "http://localhost:8000/api/mutawifs/01a08a42-5371-72b0-8dcc-91f59f39845e" \
+    --header "Authorization: Bearer {token}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"code\": \"bngzmiyvdljnikhw\",
+    \"name\": \"a\",
+    \"language\": \"y\",
+    \"experience\": \"k\",
+    \"status\": \"standby\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/mutawifs/01a08a42-5371-72b0-8dcc-91f59f39845e"
+);
+
+const headers = {
+    "Authorization": "Bearer {token}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "code": "bngzmiyvdljnikhw",
+    "name": "a",
+    "language": "y",
+    "experience": "k",
+    "status": "standby"
+};
+
+fetch(url, {
+    method: "PUT",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-PUTapi-mutawifs--id-">
+</span>
+<span id="execution-results-PUTapi-mutawifs--id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-PUTapi-mutawifs--id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-PUTapi-mutawifs--id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-PUTapi-mutawifs--id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-PUTapi-mutawifs--id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-PUTapi-mutawifs--id-" data-method="PUT"
+      data-path="api/mutawifs/{id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('PUTapi-mutawifs--id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-PUTapi-mutawifs--id-"
+                    onclick="tryItOut('PUTapi-mutawifs--id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-PUTapi-mutawifs--id-"
+                    onclick="cancelTryOut('PUTapi-mutawifs--id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-PUTapi-mutawifs--id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-darkblue">PUT</small>
+            <b><code>api/mutawifs/{id}</code></b>
+        </p>
+            <p>
+            <small class="badge badge-purple">PATCH</small>
+            <b><code>api/mutawifs/{id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="PUTapi-mutawifs--id-"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="PUTapi-mutawifs--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="PUTapi-mutawifs--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="id"                data-endpoint="PUTapi-mutawifs--id-"
+               value="01a08a42-5371-72b0-8dcc-91f59f39845e"
+               data-component="url">
+    <br>
+<p>The ID of the mutawif. Example: <code>01a08a42-5371-72b0-8dcc-91f59f39845e</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>code</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="code"                data-endpoint="PUTapi-mutawifs--id-"
+               value="bngzmiyvdljnikhw"
+               data-component="body">
+    <br>
+<p>Must not be greater than 20 characters. Example: <code>bngzmiyvdljnikhw</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="name"                data-endpoint="PUTapi-mutawifs--id-"
+               value="a"
+               data-component="body">
+    <br>
+<p>Must not be greater than 200 characters. Example: <code>a</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>language</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="language"                data-endpoint="PUTapi-mutawifs--id-"
+               value="y"
+               data-component="body">
+    <br>
+<p>Must not be greater than 250 characters. Example: <code>y</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>experience</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="experience"                data-endpoint="PUTapi-mutawifs--id-"
+               value="k"
+               data-component="body">
+    <br>
+<p>Must not be greater than 250 characters. Example: <code>k</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="status"                data-endpoint="PUTapi-mutawifs--id-"
+               value="standby"
+               data-component="body">
+    <br>
+<p>Example: <code>standby</code></p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>active</code></li> <li><code>standby</code></li></ul>
+        </div>
+        </form>
+
+                    <h2 id="endpoints-DELETEapi-mutawifs--id-">DELETE api/mutawifs/{id}</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-DELETEapi-mutawifs--id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request DELETE \
+    "http://localhost:8000/api/mutawifs/01a08a42-5371-72b0-8dcc-91f59f39845e" \
+    --header "Authorization: Bearer {token}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/mutawifs/01a08a42-5371-72b0-8dcc-91f59f39845e"
+);
+
+const headers = {
+    "Authorization": "Bearer {token}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "DELETE",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-DELETEapi-mutawifs--id-">
+</span>
+<span id="execution-results-DELETEapi-mutawifs--id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-DELETEapi-mutawifs--id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-DELETEapi-mutawifs--id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-DELETEapi-mutawifs--id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-DELETEapi-mutawifs--id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-DELETEapi-mutawifs--id-" data-method="DELETE"
+      data-path="api/mutawifs/{id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('DELETEapi-mutawifs--id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-DELETEapi-mutawifs--id-"
+                    onclick="tryItOut('DELETEapi-mutawifs--id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-DELETEapi-mutawifs--id-"
+                    onclick="cancelTryOut('DELETEapi-mutawifs--id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-DELETEapi-mutawifs--id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-red">DELETE</small>
+            <b><code>api/mutawifs/{id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="DELETEapi-mutawifs--id-"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="DELETEapi-mutawifs--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="DELETEapi-mutawifs--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="id"                data-endpoint="DELETEapi-mutawifs--id-"
+               value="01a08a42-5371-72b0-8dcc-91f59f39845e"
+               data-component="url">
+    <br>
+<p>The ID of the mutawif. Example: <code>01a08a42-5371-72b0-8dcc-91f59f39845e</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="endpoints-POSTapi-mutawifs--mutawif_id--kloters--kloter_id-">POST api/mutawifs/{mutawif_id}/kloters/{kloter_id}</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-POSTapi-mutawifs--mutawif_id--kloters--kloter_id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8000/api/mutawifs/01a08a42-5371-72b0-8dcc-91f59f39845e/kloters/019fff5a-e6a2-72d5-8f7d-8814ad6f0c89" \
+    --header "Authorization: Bearer {token}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/mutawifs/01a08a42-5371-72b0-8dcc-91f59f39845e/kloters/019fff5a-e6a2-72d5-8f7d-8814ad6f0c89"
+);
+
+const headers = {
+    "Authorization": "Bearer {token}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-mutawifs--mutawif_id--kloters--kloter_id-">
+</span>
+<span id="execution-results-POSTapi-mutawifs--mutawif_id--kloters--kloter_id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-mutawifs--mutawif_id--kloters--kloter_id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-mutawifs--mutawif_id--kloters--kloter_id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-mutawifs--mutawif_id--kloters--kloter_id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-mutawifs--mutawif_id--kloters--kloter_id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-mutawifs--mutawif_id--kloters--kloter_id-" data-method="POST"
+      data-path="api/mutawifs/{mutawif_id}/kloters/{kloter_id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-mutawifs--mutawif_id--kloters--kloter_id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-mutawifs--mutawif_id--kloters--kloter_id-"
+                    onclick="tryItOut('POSTapi-mutawifs--mutawif_id--kloters--kloter_id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-mutawifs--mutawif_id--kloters--kloter_id-"
+                    onclick="cancelTryOut('POSTapi-mutawifs--mutawif_id--kloters--kloter_id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-mutawifs--mutawif_id--kloters--kloter_id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/mutawifs/{mutawif_id}/kloters/{kloter_id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-mutawifs--mutawif_id--kloters--kloter_id-"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-mutawifs--mutawif_id--kloters--kloter_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-mutawifs--mutawif_id--kloters--kloter_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>mutawif_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="mutawif_id"                data-endpoint="POSTapi-mutawifs--mutawif_id--kloters--kloter_id-"
+               value="01a08a42-5371-72b0-8dcc-91f59f39845e"
+               data-component="url">
+    <br>
+<p>The ID of the mutawif. Example: <code>01a08a42-5371-72b0-8dcc-91f59f39845e</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>kloter_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="kloter_id"                data-endpoint="POSTapi-mutawifs--mutawif_id--kloters--kloter_id-"
+               value="019fff5a-e6a2-72d5-8f7d-8814ad6f0c89"
+               data-component="url">
+    <br>
+<p>The ID of the kloter. Example: <code>019fff5a-e6a2-72d5-8f7d-8814ad6f0c89</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="endpoints-DELETEapi-mutawifs--mutawif_id--kloters--kloter_id-">DELETE api/mutawifs/{mutawif_id}/kloters/{kloter_id}</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-DELETEapi-mutawifs--mutawif_id--kloters--kloter_id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request DELETE \
+    "http://localhost:8000/api/mutawifs/01a08a42-5371-72b0-8dcc-91f59f39845e/kloters/019fff5a-e6a2-72d5-8f7d-8814ad6f0c89" \
+    --header "Authorization: Bearer {token}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/mutawifs/01a08a42-5371-72b0-8dcc-91f59f39845e/kloters/019fff5a-e6a2-72d5-8f7d-8814ad6f0c89"
+);
+
+const headers = {
+    "Authorization": "Bearer {token}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "DELETE",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-DELETEapi-mutawifs--mutawif_id--kloters--kloter_id-">
+</span>
+<span id="execution-results-DELETEapi-mutawifs--mutawif_id--kloters--kloter_id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-DELETEapi-mutawifs--mutawif_id--kloters--kloter_id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-DELETEapi-mutawifs--mutawif_id--kloters--kloter_id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-DELETEapi-mutawifs--mutawif_id--kloters--kloter_id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-DELETEapi-mutawifs--mutawif_id--kloters--kloter_id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-DELETEapi-mutawifs--mutawif_id--kloters--kloter_id-" data-method="DELETE"
+      data-path="api/mutawifs/{mutawif_id}/kloters/{kloter_id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('DELETEapi-mutawifs--mutawif_id--kloters--kloter_id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-DELETEapi-mutawifs--mutawif_id--kloters--kloter_id-"
+                    onclick="tryItOut('DELETEapi-mutawifs--mutawif_id--kloters--kloter_id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-DELETEapi-mutawifs--mutawif_id--kloters--kloter_id-"
+                    onclick="cancelTryOut('DELETEapi-mutawifs--mutawif_id--kloters--kloter_id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-DELETEapi-mutawifs--mutawif_id--kloters--kloter_id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-red">DELETE</small>
+            <b><code>api/mutawifs/{mutawif_id}/kloters/{kloter_id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="DELETEapi-mutawifs--mutawif_id--kloters--kloter_id-"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="DELETEapi-mutawifs--mutawif_id--kloters--kloter_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="DELETEapi-mutawifs--mutawif_id--kloters--kloter_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>mutawif_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="mutawif_id"                data-endpoint="DELETEapi-mutawifs--mutawif_id--kloters--kloter_id-"
+               value="01a08a42-5371-72b0-8dcc-91f59f39845e"
+               data-component="url">
+    <br>
+<p>The ID of the mutawif. Example: <code>01a08a42-5371-72b0-8dcc-91f59f39845e</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>kloter_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="kloter_id"                data-endpoint="DELETEapi-mutawifs--mutawif_id--kloters--kloter_id-"
+               value="019fff5a-e6a2-72d5-8f7d-8814ad6f0c89"
+               data-component="url">
+    <br>
+<p>The ID of the kloter. Example: <code>019fff5a-e6a2-72d5-8f7d-8814ad6f0c89</code></p>
             </div>
                     </form>
 
