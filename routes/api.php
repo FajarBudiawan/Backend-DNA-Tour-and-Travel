@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\RoomController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\JamaahAuthController;
 use App\Http\Controllers\Api\ScheduleController;
+use App\Http\Controllers\Api\TourLeaderController;
 
 // ====================
 // AUTH
@@ -170,12 +171,24 @@ Route::middleware('auth:sanctum')->group(function () {
     // ====================
     // PERJALANAN / SCHEDULE (CRUD)
     // ====================
-    Route::middleware('auth:sanctum')->group(function () {
         Route::get('/schedules', [ScheduleController::class, 'index']);
         Route::post('/schedules', [ScheduleController::class, 'store']);
         Route::get('/schedules/{schedule}', [ScheduleController::class, 'show']);
         Route::put('/schedules/{schedule}', [ScheduleController::class, 'update']);
         Route::patch('/schedules/{schedule}/status', [ScheduleController::class, 'updateStatus']);
         Route::delete('/schedules/{schedule}', [ScheduleController::class, 'destroy']);
-    });
+
+    // ====================
+    // TOUR LEADER (CRUD)
+    // ====================
+    Route::apiResource('tour-leaders', TourLeaderController::class);
+
+        Route::post(
+        'tour-leaders/{tour_leader}/kloters/{kloter}',
+        [TourLeaderController::class, 'assignKloter']
+    );
+    Route::delete(
+        'tour-leaders/{tour_leader}/kloters/{kloter}',
+        [TourLeaderController::class, 'removeKloter']
+    );
 });

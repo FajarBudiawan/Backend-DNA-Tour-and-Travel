@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Kloter extends Model
 {
@@ -86,5 +87,15 @@ class Kloter extends Model
     public function schedules()
     {
         return $this->hasMany(KloterSchedule::class, 'kloter_id');
+    }
+
+    public function tourLeaders(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            TourLeader::class,
+            'kloter_leader_assignments',
+            'kloter_id',
+            'tour_leader_id'
+        )->withPivot('assigned_at');
     }
 }
