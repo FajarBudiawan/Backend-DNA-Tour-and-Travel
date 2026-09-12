@@ -7,6 +7,7 @@ use App\Http\Requests\StoreRegistrationRequest;
 use App\Http\Requests\UpdateRegistrationRequest;
 use App\Models\Jamaah;
 use App\Models\Registration;
+use App\Services\RegistrationEquipmentService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,6 +15,14 @@ use Illuminate\Support\Str;
 
 class RegistrationController extends Controller
 {
+    /**
+     * Dependency injection untuk sinkronisasi equipment dengan stock.
+     */
+    public function __construct(
+        private RegistrationEquipmentService $registrationEquipmentService
+    ) {
+    }
+
     /**
      * Menampilkan semua data pendaftaran (dengan pencarian & filter).
      */
@@ -30,15 +39,16 @@ class RegistrationController extends Controller
         // Filter pencarian berdasarkan nama, NIK, phone, atau nomor pendaftaran
         if ($request->filled('q')) {
             $search = $request->q;
+
             $query->where(function ($q) use ($search) {
                 $q->where('full_name', 'ilike', "%{$search}%")
-                  ->orWhere('nik', 'like', "%{$search}%")
-                  ->orWhere('phone', 'like', "%{$search}%")
-                  ->orWhere('registration_number', 'ilike', "%{$search}%");
+                    ->orWhere('nik', 'like', "%{$search}%")
+                    ->orWhere('phone', 'like', "%{$search}%")
+                    ->orWhere('registration_number', 'ilike', "%{$search}%");
             });
         }
 
-        // Filter berdasarkan status (unpaid, dp, paid, cancelled, converted)
+        // Filter berdasarkan status
         if ($request->filled('status')) {
             $query->where('status', $request->status);
         }
@@ -55,7 +65,7 @@ class RegistrationController extends Controller
 
         $registrations = $query->latest()->get();
 
-        // Sinkronkan status keuangan secara otomatis untuk setiap data
+        // Sinkronkan status keuangan secara otomatis
         $registrations->each(function ($registration) {
             $registration->updateFinancialStatus();
         });
@@ -72,20 +82,33 @@ class RegistrationController extends Controller
     public function store(StoreRegistrationRequest $request): JsonResponse
     {
         $registration = DB::transaction(function () use ($request) {
-            // Auto generate nomor pendaftaran jika tidak dikirim
+
+            // =========================================================
+            // REGISTRATION NUMBER
+            // =========================================================
             $regNumber = $request->registration_number;
+
             if (!$regNumber) {
-                $regNumber = 'REG-' . date('Ymd') . '-' . strtoupper(Str::random(5));
+                $regNumber = 'REG-'
+                    . date('Ymd')
+                    . '-'
+                    . strtoupper(Str::random(5));
             }
 
-            // Normalisasi status jika dikirim manual saat pendaftaran (misal: 'dp' -> 'dp_paid', 'paid' -> 'fully_paid')
+            // =========================================================
+            // NORMALISASI STATUS
+            // =========================================================
             $status = $request->status ?? 'unpaid';
+
             if ($status === 'dp') {
                 $status = 'dp_paid';
             } elseif ($status === 'paid') {
                 $status = 'fully_paid';
             }
 
+            // =========================================================
+            // BUAT REGISTRATION
+            // =========================================================
             $registration = Registration::create([
                 'registration_number' => $regNumber,
                 'pilgrim_id' => $request->pilgrim_id,
@@ -111,58 +134,167 @@ class RegistrationController extends Controller
                 'created_by' => auth()->id(),
             ]);
 
-            // Jika ada pembayaran awal (initial_payment) saat pendaftaran dibuat
-            if ($request->has('initial_payment') && is_array($request->initial_payment)) {
+            // =========================================================
+            // INITIAL PAYMENT
+            // =========================================================
+            if (
+                $request->has('initial_payment')
+                && is_array($request->initial_payment)
+            ) {
                 $payData = $request->initial_payment;
+
                 $registration->payments()->create([
                     'amount' => $payData['amount'],
                     'payment_type' => $payData['payment_type'] ?? 'down_payment',
                     'payment_method' => $payData['payment_method'] ?? 'bca_transfer',
                     'payment_date' => $payData['payment_date'] ?? now(),
                     'recorded_by' => auth()->id(),
-                    'notes' => $payData['notes'] ?? 'Pembayaran awal saat pendaftaran',
+                    'notes' => $payData['notes']
+                        ?? 'Pembayaran awal saat pendaftaran',
                 ]);
+
                 $registration->updateFinancialStatus();
             }
 
-            // Simpan perlengkapan (atau auto-generate perlengkapan standar berdasarkan gender jika tidak dikirim)
+            // =========================================================
+            // EQUIPMENT
+            // =========================================================
             $equipments = $request->equipments;
+
+            /*
+             * Jika equipment tidak dikirim,
+             * buat equipment standar berdasarkan gender.
+             */
             if (empty($equipments) || !is_array($equipments)) {
                 if ($request->gender === 'L') {
                     $equipments = [
-                        ['equipment_name' => 'Koper Besar', 'is_received' => false, 'size' => null],
-                        ['equipment_name' => 'Koper Kabin', 'is_received' => false, 'size' => null],
-                        ['equipment_name' => 'Seragam Batik', 'is_received' => false, 'size' => null],
-                        ['equipment_name' => 'Buku Panduan', 'is_received' => false, 'size' => null],
-                        ['equipment_name' => 'Kain Ihram', 'is_received' => false, 'size' => null],
-                        ['equipment_name' => 'Tas Selempang', 'is_received' => false, 'size' => null],
-                        ['equipment_name' => 'Tas Sandal', 'is_received' => false, 'size' => null],
-                        ['equipment_name' => 'Syall', 'is_received' => false, 'size' => null],
-                        ['equipment_name' => 'Sabuk', 'is_received' => false, 'size' => null],
+                        [
+                            'equipment_name' => 'Koper Besar',
+                            'is_received' => false,
+                            'size' => null,
+                        ],
+                        [
+                            'equipment_name' => 'Koper Kabin',
+                            'is_received' => false,
+                            'size' => null,
+                        ],
+                        [
+                            'equipment_name' => 'Seragam Batik',
+                            'is_received' => false,
+                            'size' => null,
+                        ],
+                        [
+                            'equipment_name' => 'Buku Panduan',
+                            'is_received' => false,
+                            'size' => null,
+                        ],
+                        [
+                            'equipment_name' => 'Kain Ihram',
+                            'is_received' => false,
+                            'size' => null,
+                        ],
+                        [
+                            'equipment_name' => 'Tas Selempang',
+                            'is_received' => false,
+                            'size' => null,
+                        ],
+                        [
+                            'equipment_name' => 'Tas Sandal',
+                            'is_received' => false,
+                            'size' => null,
+                        ],
+                        [
+                            'equipment_name' => 'Syall',
+                            'is_received' => false,
+                            'size' => null,
+                        ],
+                        [
+                            'equipment_name' => 'Sabuk',
+                            'is_received' => false,
+                            'size' => null,
+                        ],
                     ];
                 } else {
                     $equipments = [
-                        ['equipment_name' => 'Koper Besar', 'is_received' => false, 'size' => null],
-                        ['equipment_name' => 'Koper Kabin', 'is_received' => false, 'size' => null],
-                        ['equipment_name' => 'Seragam Batik', 'is_received' => false, 'size' => null],
-                        ['equipment_name' => 'Buku Panduan', 'is_received' => false, 'size' => null],
-                        ['equipment_name' => 'Kerudung Merah', 'is_received' => false, 'size' => null],
-                        ['equipment_name' => 'Kerudung Putih', 'is_received' => false, 'size' => null],
-                        ['equipment_name' => 'Tas Selempang', 'is_received' => false, 'size' => null],
-                        ['equipment_name' => 'Tas Sandal', 'is_received' => false, 'size' => null],
-                        ['equipment_name' => 'Syall', 'is_received' => false, 'size' => null],
+                        [
+                            'equipment_name' => 'Koper Besar',
+                            'is_received' => false,
+                            'size' => null,
+                        ],
+                        [
+                            'equipment_name' => 'Koper Kabin',
+                            'is_received' => false,
+                            'size' => null,
+                        ],
+                        [
+                            'equipment_name' => 'Seragam Batik',
+                            'is_received' => false,
+                            'size' => null,
+                        ],
+                        [
+                            'equipment_name' => 'Buku Panduan',
+                            'is_received' => false,
+                            'size' => null,
+                        ],
+                        [
+                            'equipment_name' => 'Kerudung Merah',
+                            'is_received' => false,
+                            'size' => null,
+                        ],
+                        [
+                            'equipment_name' => 'Kerudung Putih',
+                            'is_received' => false,
+                            'size' => null,
+                        ],
+                        [
+                            'equipment_name' => 'Tas Selempang',
+                            'is_received' => false,
+                            'size' => null,
+                        ],
+                        [
+                            'equipment_name' => 'Tas Sandal',
+                            'is_received' => false,
+                            'size' => null,
+                        ],
+                        [
+                            'equipment_name' => 'Syall',
+                            'is_received' => false,
+                            'size' => null,
+                        ],
                     ];
                 }
             }
 
+            /*
+             * Simpan equipment dalam kondisi awal false.
+             *
+             * Jika request meminta is_received=true,
+             * sinkronisasi stok dilakukan melalui
+             * RegistrationEquipmentService.
+             */
             foreach ($equipments as $equipment) {
                 $isReceived = $equipment['is_received'] ?? false;
-                $registration->equipments()->create([
-                    'equipment_name' => $equipment['equipment_name'],
-                    'size' => $equipment['size'] ?? null,
-                    'is_received' => $isReceived,
-                    'received_at' => $isReceived ? now() : null,
-                ]);
+
+                $registrationEquipment = $registration
+                    ->equipments()
+                    ->create([
+                        'equipment_name' => $equipment['equipment_name'],
+                        'stock_id' => $equipment['stock_id'] ?? null,
+                        'size' => $equipment['size'] ?? null,
+                        'is_received' => false,
+                        'received_at' => null,
+                    ]);
+
+                if ($isReceived) {
+                    $this->registrationEquipmentService->syncEquipment(
+                        $registrationEquipment,
+                        [
+                            'stock_id' => $equipment['stock_id'] ?? null,
+                            'size' => $equipment['size'] ?? null,
+                            'is_received' => true,
+                        ]
+                    );
+                }
             }
 
             return $registration;
@@ -185,7 +317,7 @@ class RegistrationController extends Controller
      */
     public function show(Registration $registration): JsonResponse
     {
-        // Otomatis sinkronkan status keuangan untuk data yang dipanggil
+        // Otomatis sinkronkan status keuangan
         $registration->updateFinancialStatus();
 
         $registration->load([
@@ -209,7 +341,13 @@ class RegistrationController extends Controller
         UpdateRegistrationRequest $request,
         Registration $registration
     ): JsonResponse {
-        $registration = DB::transaction(function () use ($request, $registration) {
+        $registration = DB::transaction(function () use (
+            $request,
+            $registration
+        ) {
+            // =========================================================
+            // UPDATE DATA REGISTRATION
+            // =========================================================
             $registration->update($request->only([
                 'pilgrim_id',
                 'full_name',
@@ -228,22 +366,118 @@ class RegistrationController extends Controller
                 'status',
             ]));
 
-            // Jika total_package_cost diubah tanpa mengirim status manual, hitung ulang status keuangan
-            if ($request->has('total_package_cost') && !$request->has('status')) {
+            // Jika total_package_cost diubah tanpa status manual,
+            // hitung ulang status keuangan.
+            if (
+                $request->has('total_package_cost')
+                && !$request->has('status')
+            ) {
                 $registration->updateFinancialStatus();
             }
 
-            // Jika perlengkapan dikirimkan, perbarui data perlengkapan
-            if ($request->has('equipments') && is_array($request->equipments)) {
-                $registration->equipments()->delete();
-                foreach ($request->equipments as $equipment) {
-                    $isReceived = $equipment['is_received'] ?? false;
-                    $registration->equipments()->create([
-                        'equipment_name' => $equipment['equipment_name'],
-                        'size' => $equipment['size'] ?? null,
-                        'is_received' => $isReceived,
-                        'received_at' => $isReceived ? now() : null,
-                    ]);
+            // =========================================================
+            // UPDATE EQUIPMENT
+            // =========================================================
+            if (
+                $request->has('equipments')
+                && is_array($request->equipments)
+            ) {
+                /*
+                 * Ambil ID equipment yang dikirim oleh request.
+                 *
+                 * Equipment lama yang tidak ada di daftar ini
+                 * dianggap dihapus.
+                 */
+                $incomingEquipmentIds = collect($request->equipments)
+                    ->pluck('id')
+                    ->filter()
+                    ->values()
+                    ->toArray();
+
+                /*
+                 * Cari seluruh equipment lama milik registration.
+                 */
+                $existingEquipments = $registration
+                    ->equipments()
+                    ->get();
+
+                /*
+                 * Hapus equipment lama yang sudah tidak ada
+                 * di request.
+                 *
+                 * Jika equipment tersebut sudah diterima,
+                 * deleteEquipment() akan mengembalikan stok.
+                 */
+                foreach ($existingEquipments as $existingEquipment) {
+                    if (
+                        !in_array(
+                            $existingEquipment->id,
+                            $incomingEquipmentIds,
+                            true
+                        )
+                    ) {
+                        $this->registrationEquipmentService
+                            ->deleteEquipment($existingEquipment);
+                    }
+                }
+
+                /*
+                 * Proses equipment yang dikirim dari request.
+                 */
+                foreach ($request->equipments as $equipmentData) {
+                    $equipmentId = $equipmentData['id'] ?? null;
+
+                    // =================================================
+                    // UPDATE EQUIPMENT LAMA
+                    // =================================================
+                    if ($equipmentId) {
+                        $equipment = $registration
+                            ->equipments()
+                            ->where('id', $equipmentId)
+                            ->firstOrFail();
+
+                        $this->registrationEquipmentService->updateEquipment(
+                            $equipment,
+                            [
+                                'equipment_name' => $equipmentData['equipment_name'],
+                                'stock_id' => $equipmentData['stock_id'] ?? null,
+                                'size' => $equipmentData['size'] ?? null,
+                                'is_received' => $equipmentData['is_received'] ?? false,
+                            ]
+                        );
+                    }
+
+                    // =================================================
+                    // BUAT EQUIPMENT BARU
+                    // =================================================
+                    else {
+                        $isReceived = $equipmentData['is_received'] ?? false;
+
+                        $equipment = $registration
+                            ->equipments()
+                            ->create([
+                                'equipment_name' => $equipmentData['equipment_name'],
+                                'stock_id' => $equipmentData['stock_id'] ?? null,
+                                'size' => $equipmentData['size'] ?? null,
+                                'is_received' => false,
+                                'received_at' => null,
+                            ]);
+
+                        /*
+                         * Jika equipment baru langsung diterima,
+                         * sinkronkan stok.
+                         */
+                        if ($isReceived) {
+                            $this->registrationEquipmentService->syncEquipment(
+                                $equipment,
+                                [
+                                    'stock_id' => $equipmentData['stock_id'] ?? null,
+                                    'size' => $equipmentData['size'] ?? null,
+                                    'is_received' => true,
+                                ]
+                            );
+                        }
+                    }
                 }
             }
 
@@ -267,7 +501,9 @@ class RegistrationController extends Controller
      */
     public function cancel(Registration $registration): JsonResponse
     {
-        $registration->update(['status' => 'cancelled']);
+        $registration->update([
+            'status' => 'cancelled',
+        ]);
 
         return response()->json([
             'message' => 'Pendaftaran berhasil dibatalkan.',
@@ -276,58 +512,83 @@ class RegistrationController extends Controller
     }
 
     /**
-     * TODO-DEPRECATED: Method convertToJamaah() dinonaktifkan per revisi [2026-09-02].
-     * Jamaah kini diinput manual terpisah oleh Admin lewat endpoint POST /api/jamaah.
-     * Data Pendaftaran dan data Jamaah adalah dua entitas independen — tidak ada auto-convert.
+     * TODO-DEPRECATED: Method convertToJamaah() dinonaktifkan
+     * per revisi [2026-09-02].
      *
-     * Method ini sengaja TIDAK dihapus untuk menjaga histori kode.
-     * Route-nya sudah di-comment di routes/api.php.
-     *
-     * @deprecated
+     * Jamaah kini diinput manual terpisah oleh Admin.
      */
     // public function convertToJamaah(
     //     Request $request,
     //     Registration $registration
     // ): JsonResponse {
-    //     // 1. Pastikan pendaftaran sudah memiliki pembayaran.
     //     if ($registration->payments()->count() === 0) {
     //         return response()->json([
     //             'message' => 'Pendaftaran belum memiliki pembayaran dan belum dapat dikonversi menjadi Jamaah.',
     //         ], 422);
     //     }
-    //
-    //     // 2. Pastikan NIK belum terdaftar sebagai Jamaah.
-    //     $existingJamaah = Jamaah::where('nik', $registration->nik)->first();
-    //
+
+    //     $existingJamaah = Jamaah::where(
+    //         'nik',
+    //         $registration->nik
+    //     )->first();
+
     //     if ($existingJamaah) {
     //         return response()->json([
     //             'message' => 'Jamaah dengan NIK ini sudah terdaftar.',
     //             'data' => $existingJamaah,
     //         ], 409);
     //     }
-    //
-    //     $jamaah = DB::transaction(function () use ($request, $registration) {
-    //         $lastJamaah = Jamaah::orderBy('created_at', 'desc')->first();
+
+    //     $jamaah = DB::transaction(function () use (
+    //         $request,
+    //         $registration
+    //     ) {
+    //         $lastJamaah = Jamaah::orderBy(
+    //             'created_at',
+    //             'desc'
+    //         )->first();
+
     //         $nextNumber = 1;
-    //         if ($lastJamaah && preg_match('/(\d+)$/', $lastJamaah->login_id, $matches)) {
+
+    //         if (
+    //             $lastJamaah
+    //             && preg_match(
+    //                 '/(\d+)$/',
+    //                 $lastJamaah->login_id,
+    //                 $matches
+    //             )
+    //         ) {
     //             $nextNumber = (int) $matches[1] + 1;
     //         }
-    //         $loginId = 'JAMAAH' . str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
+
+    //         $loginId =
+    //             'JAMAAH'
+    //             . str_pad(
+    //                 $nextNumber,
+    //                 3,
+    //                 '0',
+    //                 STR_PAD_LEFT
+    //             );
+
     //         $jamaah = Jamaah::create([
-    //             'login_id'          => $loginId,
-    //             'nik'               => $registration->nik,
-    //             'full_name'         => $registration->full_name,
-    //             'birth_date'        => $registration->birth_date,
-    //             'gender'            => $registration->gender,
-    //             'phone'             => $registration->phone,
+    //             'login_id' => $loginId,
+    //             'nik' => $registration->nik,
+    //             'full_name' => $registration->full_name,
+    //             'birth_date' => $registration->birth_date,
+    //             'gender' => $registration->gender,
+    //             'phone' => $registration->phone,
     //             'emergency_contact' => $request->emergency_contact ?? null,
-    //             'status'            => 'active',
-    //             'created_by'        => auth()->id(),
+    //             'status' => 'active',
+    //             'created_by' => auth()->id(),
     //         ]);
-    //         $registration->update(['status' => 'converted']);
+
+    //         $registration->update([
+    //             'status' => 'converted',
+    //         ]);
+
     //         return $jamaah;
     //     });
-    //
+
     //     return response()->json([
     //         'message' => 'Pendaftaran berhasil dikonversi menjadi Jamaah resmi.',
     //         'data' => $jamaah->load('createdBy'),
@@ -336,19 +597,27 @@ class RegistrationController extends Controller
 
     /**
      * Hapus data pendaftaran.
-     *
-     * Catatan revisi [2026-09-02]: Guard 'converted' dihapus karena alur Jamaah
-     * kini terpisah — tidak ada lagi status 'converted' yang mengunci Pendaftaran.
-     * Data lama berstatus 'converted' di database tetap bisa dihapus oleh admin.
      */
-    public function destroy(Registration $registration): JsonResponse
-    {
-        // Guard status 'cancelled' — data yang sudah dibatalkan tidak perlu dihapus paksa
-        // (biarkan admin tetap bisa hapus jika perlu; tidak ada guard di sini)
-
+    public function destroy(
+        Registration $registration
+    ): JsonResponse {
         DB::transaction(function () use ($registration) {
-            $registration->equipments()->delete();
+
+            // Ambil semua equipment milik registration
+            $equipments = $registration->equipments()->get();
+
+            // Hapus equipment satu per satu melalui service
+            // agar stok yang sudah diterima dikembalikan.
+            foreach ($equipments as $equipment) {
+                $this->registrationEquipmentService->deleteEquipment(
+                    $equipment
+                );
+            }
+
+            // Hapus payment
             $registration->payments()->delete();
+
+            // Hapus registration
             $registration->delete();
         });
 

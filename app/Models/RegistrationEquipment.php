@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class RegistrationEquipment extends Model
 {
@@ -16,6 +17,7 @@ class RegistrationEquipment extends Model
 
     protected $fillable = [
         'registration_id',
+        'stock_id',
         'equipment_name',
         'size',
         'is_received',
@@ -37,5 +39,10 @@ class RegistrationEquipment extends Model
     public function registration()
     {
         return $this->belongsTo(Registration::class);
+    }
+
+    public function stock(): BelongsTo
+    {
+        return $this->belongsTo(Stock::class);
     }
 }

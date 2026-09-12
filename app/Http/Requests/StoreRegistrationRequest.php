@@ -179,6 +179,13 @@ class StoreRegistrationRequest extends FormRequest
                 'max:100',
             ],
 
+            'equipments.*.stock_id' => [
+                'required_with:equipments',
+                'uuid',
+                'exists:stocks,id',
+            ],
+
+
             'equipments.*.size' => [
                 'nullable',
                 'string',

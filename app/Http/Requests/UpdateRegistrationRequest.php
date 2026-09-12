@@ -18,7 +18,6 @@ class UpdateRegistrationRequest extends FormRequest
         return [
             'full_name' => ['sometimes', 'string', 'max:150'],
             'passport_number' => ['nullable', 'string', 'max:50'],
-            'passport_number' => ['nullable', 'string', 'max:50'],
             'nik' => [
                 'sometimes',
                 'string',
@@ -37,7 +36,9 @@ class UpdateRegistrationRequest extends FormRequest
             'total_package_cost' => ['sometimes', 'numeric', 'min:0'],
             'status' => ['sometimes', 'in:unpaid,dp,dp_paid,paid,fully_paid,cancelled,converted'],
             'equipments' => ['nullable', 'array'],
+            'equipments.*.id' => ['sometimes','uuid','exists:registration_equipments,id',],
             'equipments.*.equipment_name' => ['required_with:equipments', 'string', 'max:100'],
+            'equipments.*.stock_id' => ['required_with:equipments','uuid','exists:stocks,id',],
             'equipments.*.size' => ['nullable', 'string', 'max:20'],
             'equipments.*.is_received' => ['required_with:equipments', 'boolean'],
         ];

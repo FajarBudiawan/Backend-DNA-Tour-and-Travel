@@ -17,6 +17,7 @@ use App\Http\Controllers\Api\JamaahAuthController;
 use App\Http\Controllers\Api\ScheduleController;
 use App\Http\Controllers\Api\TourLeaderController;
 use App\Http\Controllers\Api\MutawifController;
+use App\Http\Controllers\StockController;
 
 // ====================
 // AUTH
@@ -207,4 +208,18 @@ Route::middleware('auth:sanctum')->group(function () {
         'mutawifs/{mutawif}/kloters/{kloter}',
         [MutawifController::class, 'removeKloter']
     );
+
+    // ====================
+    // STOCK (CRUD)
+    // ====================
+    Route::get('/stocks', [StockController::class, 'index']);
+    Route::post('/stocks', [StockController::class, 'store']);
+    Route::get('/stocks/{stock}', [StockController::class, 'show']);
+    Route::put('/stocks/{stock}', [StockController::class, 'update']);
+    Route::delete('/stocks/{stock}', [StockController::class, 'destroy']);
+    Route::get(
+    '/stocks/{stock}/transactions',
+    [StockController::class, 'transactions']
+    );
+
 });
