@@ -281,6 +281,24 @@
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-DELETEapi-mutawifs--mutawif_id--kloters--kloter_id-">
                                 <a href="#endpoints-DELETEapi-mutawifs--mutawif_id--kloters--kloter_id-">DELETE api/mutawifs/{mutawif_id}/kloters/{kloter_id}</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-stocks">
+                                <a href="#endpoints-GETapi-stocks">GET api/stocks</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-stocks">
+                                <a href="#endpoints-POSTapi-stocks">POST api/stocks</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-stocks--stock_id-">
+                                <a href="#endpoints-GETapi-stocks--stock_id-">GET api/stocks/{stock_id}</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-PUTapi-stocks--stock_id-">
+                                <a href="#endpoints-PUTapi-stocks--stock_id-">PUT api/stocks/{stock_id}</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-DELETEapi-stocks--stock_id-">
+                                <a href="#endpoints-DELETEapi-stocks--stock_id-">DELETE api/stocks/{stock_id}</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-stocks--stock_id--transactions">
+                                <a href="#endpoints-GETapi-stocks--stock_id--transactions">GET api/stocks/{stock_id}/transactions</a>
+                            </li>
                                                                         </ul>
                             </ul>
                     <ul id="tocify-header-perjalanan-schedule" class="tocify-header">
@@ -317,7 +335,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: September 10, 2026</li>
+        <li>Last updated: September 12, 2026</li>
     </ul>
 </div>
 
@@ -1350,7 +1368,7 @@ Jika tidak ditemukan: buat hotel baru dan kembalikan data hotel baru.</p>
     --header "Accept: application/json" \
     --data "{
     \"name\": \"b\",
-    \"city\": \"Madinah\"
+    \"city\": \"Makkah\"
 }"
 </code></pre></div>
 
@@ -1368,7 +1386,7 @@ const headers = {
 
 let body = {
     "name": "b",
-    "city": "Madinah"
+    "city": "Makkah"
 };
 
 fetch(url, {
@@ -1484,10 +1502,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="city"                data-endpoint="POSTapi-hotels-find-or-create"
-               value="Madinah"
+               value="Makkah"
                data-component="body">
     <br>
-<p>Example: <code>Madinah</code></p>
+<p>Example: <code>Makkah</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>Makkah</code></li> <li><code>Madinah</code></li></ul>
         </div>
@@ -1656,7 +1674,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"name\": \"b\",
     \"category\": \"n\",
-    \"status\": \"published\",
+    \"status\": \"draft\",
     \"is_featured\": false
 }"
 </code></pre></div>
@@ -1676,7 +1694,7 @@ const headers = {
 let body = {
     "name": "b",
     "category": "n",
-    "status": "published",
+    "status": "draft",
     "is_featured": false
 };
 
@@ -1805,10 +1823,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="status"                data-endpoint="POSTapi-packages"
-               value="published"
+               value="draft"
                data-component="body">
     <br>
-<p>Example: <code>published</code></p>
+<p>Example: <code>draft</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>draft</code></li> <li><code>published</code></li> <li><code>inactive</code></li></ul>
         </div>
@@ -2012,8 +2030,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"name\": \"b\",
     \"category\": \"n\",
-    \"status\": \"published\",
-    \"is_featured\": false
+    \"status\": \"inactive\",
+    \"is_featured\": true
 }"
 </code></pre></div>
 
@@ -2032,8 +2050,8 @@ const headers = {
 let body = {
     "name": "b",
     "category": "n",
-    "status": "published",
-    "is_featured": false
+    "status": "inactive",
+    "is_featured": true
 };
 
 fetch(url, {
@@ -2174,10 +2192,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="status"                data-endpoint="PUTapi-packages--package_id-"
-               value="published"
+               value="inactive"
                data-component="body">
     <br>
-<p>Example: <code>published</code></p>
+<p>Example: <code>inactive</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>draft</code></li> <li><code>published</code></li> <li><code>inactive</code></li></ul>
         </div>
@@ -2201,7 +2219,7 @@ Must be one of:
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>false</code></p>
+<p>Example: <code>true</code></p>
         </div>
         </form>
 
@@ -3287,8 +3305,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"package_id\": \"a4855dc5-0acb-33c3-b921-f4291f719ca0\",
     \"code\": \"z\",
     \"flight_code\": \"m\",
-    \"departure_date\": \"2026-09-10T07:56:29\",
-    \"return_date\": \"2052-10-03\",
+    \"departure_date\": \"2026-09-12T20:29:52\",
+    \"return_date\": \"2052-10-05\",
     \"hotel_makkah_id\": \"a4855dc5-0acb-33c3-b921-f4291f719ca0\",
     \"hotel_madinah_id\": \"c90237e9-ced5-3af6-88ea-84aeaa148878\",
     \"status\": \"cancelled\",
@@ -3314,8 +3332,8 @@ let body = {
     "package_id": "a4855dc5-0acb-33c3-b921-f4291f719ca0",
     "code": "z",
     "flight_code": "m",
-    "departure_date": "2026-09-10T07:56:29",
-    "return_date": "2052-10-03",
+    "departure_date": "2026-09-12T20:29:52",
+    "return_date": "2052-10-05",
     "hotel_makkah_id": "a4855dc5-0acb-33c3-b921-f4291f719ca0",
     "hotel_madinah_id": "c90237e9-ced5-3af6-88ea-84aeaa148878",
     "status": "cancelled",
@@ -3472,10 +3490,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="departure_date"                data-endpoint="POSTapi-kloters"
-               value="2026-09-10T07:56:29"
+               value="2026-09-12T20:29:52"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-10T07:56:29</code></p>
+<p>Must be a valid date. Example: <code>2026-09-12T20:29:52</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>return_date</code></b>&nbsp;&nbsp;
@@ -3484,10 +3502,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="return_date"                data-endpoint="POSTapi-kloters"
-               value="2052-10-03"
+               value="2052-10-05"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after or equal to <code>departure_date</code>. Example: <code>2052-10-03</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>departure_date</code>. Example: <code>2052-10-05</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>hotel_makkah_id</code></b>&nbsp;&nbsp;
@@ -3731,11 +3749,11 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"package_id\": \"a4855dc5-0acb-33c3-b921-f4291f719ca0\",
     \"code\": \"z\",
     \"flight_code\": \"m\",
-    \"departure_date\": \"2026-09-10T07:56:29\",
-    \"return_date\": \"2052-10-03\",
+    \"departure_date\": \"2026-09-12T20:29:52\",
+    \"return_date\": \"2052-10-05\",
     \"hotel_makkah_id\": \"a4855dc5-0acb-33c3-b921-f4291f719ca0\",
     \"hotel_madinah_id\": \"c90237e9-ced5-3af6-88ea-84aeaa148878\",
-    \"status\": \"ready\",
+    \"status\": \"active\",
     \"tour_leader\": \"i\",
     \"mutawif_local\": \"y\"
 }"
@@ -3758,11 +3776,11 @@ let body = {
     "package_id": "a4855dc5-0acb-33c3-b921-f4291f719ca0",
     "code": "z",
     "flight_code": "m",
-    "departure_date": "2026-09-10T07:56:29",
-    "return_date": "2052-10-03",
+    "departure_date": "2026-09-12T20:29:52",
+    "return_date": "2052-10-05",
     "hotel_makkah_id": "a4855dc5-0acb-33c3-b921-f4291f719ca0",
     "hotel_madinah_id": "c90237e9-ced5-3af6-88ea-84aeaa148878",
-    "status": "ready",
+    "status": "active",
     "tour_leader": "i",
     "mutawif_local": "y"
 };
@@ -3929,10 +3947,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="departure_date"                data-endpoint="PUTapi-kloters--kloter_id-"
-               value="2026-09-10T07:56:29"
+               value="2026-09-12T20:29:52"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-10T07:56:29</code></p>
+<p>Must be a valid date. Example: <code>2026-09-12T20:29:52</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>return_date</code></b>&nbsp;&nbsp;
@@ -3941,10 +3959,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="return_date"                data-endpoint="PUTapi-kloters--kloter_id-"
-               value="2052-10-03"
+               value="2052-10-05"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after or equal to <code>departure_date</code>. Example: <code>2052-10-03</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>departure_date</code>. Example: <code>2052-10-05</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>hotel_makkah_id</code></b>&nbsp;&nbsp;
@@ -3977,10 +3995,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="status"                data-endpoint="PUTapi-kloters--kloter_id-"
-               value="ready"
+               value="active"
                data-component="body">
     <br>
-<p>Example: <code>ready</code></p>
+<p>Example: <code>active</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>draft</code></li> <li><code>active</code></li> <li><code>ready</code></li> <li><code>completed</code></li> <li><code>cancelled</code></li></ul>
         </div>
@@ -4325,7 +4343,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"day_number\": 16,
-    \"activity_date\": \"2026-09-10T07:56:29\",
+    \"activity_date\": \"2026-09-12T20:29:52\",
     \"activity_time\": \"architecto\",
     \"hijri_date_ref\": \"n\",
     \"title\": \"g\",
@@ -4352,7 +4370,7 @@ const headers = {
 
 let body = {
     "day_number": 16,
-    "activity_date": "2026-09-10T07:56:29",
+    "activity_date": "2026-09-12T20:29:52",
     "activity_time": "architecto",
     "hijri_date_ref": "n",
     "title": "g",
@@ -4490,10 +4508,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="activity_date"                data-endpoint="POSTapi-kloters--kloter_id--schedules"
-               value="2026-09-10T07:56:29"
+               value="2026-09-12T20:29:52"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-10T07:56:29</code></p>
+<p>Must be a valid date. Example: <code>2026-09-12T20:29:52</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>activity_time</code></b>&nbsp;&nbsp;
@@ -4774,7 +4792,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"day_number\": 16,
-    \"activity_date\": \"2026-09-10T07:56:30\",
+    \"activity_date\": \"2026-09-12T20:29:52\",
     \"activity_time\": \"architecto\",
     \"hijri_date_ref\": \"n\",
     \"title\": \"g\",
@@ -4783,7 +4801,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"pic\": \"i\",
     \"status\": \"y\",
     \"description\": \"Eius et animi quos velit et.\",
-    \"is_published\": true
+    \"is_published\": false
 }"
 </code></pre></div>
 
@@ -4801,7 +4819,7 @@ const headers = {
 
 let body = {
     "day_number": 16,
-    "activity_date": "2026-09-10T07:56:30",
+    "activity_date": "2026-09-12T20:29:52",
     "activity_time": "architecto",
     "hijri_date_ref": "n",
     "title": "g",
@@ -4810,7 +4828,7 @@ let body = {
     "pic": "i",
     "status": "y",
     "description": "Eius et animi quos velit et.",
-    "is_published": true
+    "is_published": false
 };
 
 fetch(url, {
@@ -4951,10 +4969,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="activity_date"                data-endpoint="PUTapi-kloters--kloter_id--schedules--schedule_id-"
-               value="2026-09-10T07:56:30"
+               value="2026-09-12T20:29:52"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-10T07:56:30</code></p>
+<p>Must be a valid date. Example: <code>2026-09-12T20:29:52</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>activity_time</code></b>&nbsp;&nbsp;
@@ -5072,7 +5090,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>true</code></p>
+<p>Example: <code>false</code></p>
         </div>
         </form>
 
@@ -5401,7 +5419,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"room_type\": \"quint\",
+    \"room_type\": \"quad\",
     \"hotel_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\"
 }"
 </code></pre></div>
@@ -5419,7 +5437,7 @@ const headers = {
 };
 
 let body = {
-    "room_type": "quint",
+    "room_type": "quad",
     "hotel_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed"
 };
 
@@ -5537,10 +5555,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="room_type"                data-endpoint="POSTapi-kloters--kloter_id--auto-assign-rooms"
-               value="quint"
+               value="quad"
                data-component="body">
     <br>
-<p>Example: <code>quint</code></p>
+<p>Example: <code>quad</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>quad</code></li> <li><code>triple</code></li> <li><code>double</code></li> <li><code>single</code></li> <li><code>quint</code></li></ul>
         </div>
@@ -5580,9 +5598,9 @@ Must be one of:
     \"kloter_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
     \"hotel_id\": \"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9\",
     \"room_number\": \"m\",
-    \"room_type\": \"single\",
+    \"room_type\": \"double\",
     \"capacity\": 35,
-    \"gender\": \"L\",
+    \"gender\": \"P\",
     \"notes\": \"y\"
 }"
 </code></pre></div>
@@ -5603,9 +5621,9 @@ let body = {
     "kloter_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
     "hotel_id": "6b72fe4a-5b40-307c-bc24-f79acf9a1bb9",
     "room_number": "m",
-    "room_type": "single",
+    "room_type": "double",
     "capacity": 35,
-    "gender": "L",
+    "gender": "P",
     "notes": "y"
 };
 
@@ -5746,10 +5764,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="room_type"                data-endpoint="POSTapi-rooms"
-               value="single"
+               value="double"
                data-component="body">
     <br>
-<p>Example: <code>single</code></p>
+<p>Example: <code>double</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>quad</code></li> <li><code>triple</code></li> <li><code>double</code></li> <li><code>single</code></li> <li><code>quint</code></li></ul>
         </div>
@@ -5772,10 +5790,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="gender"                data-endpoint="POSTapi-rooms"
-               value="L"
+               value="P"
                data-component="body">
     <br>
-<p>Example: <code>L</code></p>
+<p>Example: <code>P</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>L</code></li> <li><code>P</code></li></ul>
         </div>
@@ -5969,9 +5987,9 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"hotel_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
     \"room_number\": \"g\",
-    \"room_type\": \"single\",
+    \"room_type\": \"triple\",
     \"capacity\": 66,
-    \"gender\": \"P\",
+    \"gender\": \"L\",
     \"notes\": \"m\"
 }"
 </code></pre></div>
@@ -5991,9 +6009,9 @@ const headers = {
 let body = {
     "hotel_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
     "room_number": "g",
-    "room_type": "single",
+    "room_type": "triple",
     "capacity": 66,
-    "gender": "P",
+    "gender": "L",
     "notes": "m"
 };
 
@@ -6135,10 +6153,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="room_type"                data-endpoint="PUTapi-rooms--room_id-"
-               value="single"
+               value="triple"
                data-component="body">
     <br>
-<p>Example: <code>single</code></p>
+<p>Example: <code>triple</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>quad</code></li> <li><code>triple</code></li> <li><code>double</code></li> <li><code>single</code></li> <li><code>quint</code></li></ul>
         </div>
@@ -6161,10 +6179,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="gender"                data-endpoint="PUTapi-rooms--room_id-"
-               value="P"
+               value="L"
                data-component="body">
     <br>
-<p>Example: <code>P</code></p>
+<p>Example: <code>L</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>L</code></li> <li><code>P</code></li></ul>
         </div>
@@ -6546,7 +6564,7 @@ Must be one of:
     --header "Accept: application/json" \
     --data "{
     \"jamaah_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
-    \"title\": \"MSTR\",
+    \"title\": \"MR\",
     \"occupant_name\": \"g\",
     \"age\": 16
 }"
@@ -6566,7 +6584,7 @@ const headers = {
 
 let body = {
     "jamaah_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
-    "title": "MSTR",
+    "title": "MR",
     "occupant_name": "g",
     "age": 16
 };
@@ -6709,10 +6727,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="title"                data-endpoint="PUTapi-rooms--room_id--members--roomMember_id-"
-               value="MSTR"
+               value="MR"
                data-component="body">
     <br>
-<p>Example: <code>MSTR</code></p>
+<p>Example: <code>MR</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>MR</code></li> <li><code>MRS</code></li> <li><code>MISS</code></li> <li><code>MSTR</code></li></ul>
         </div>
@@ -7060,27 +7078,28 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"passport_number\": \"z\",
     \"nik\": \"miyvdljnikhwaykc\",
     \"phone\": \"myuwpwlvqwrsitcp\",
-    \"birth_date\": \"2022-10-04\",
-    \"gender\": \"L\",
-    \"registration_date\": \"2026-09-10T07:56:30\",
-    \"departure_date\": \"2052-10-03\",
+    \"birth_date\": \"2022-10-07\",
+    \"gender\": \"P\",
+    \"registration_date\": \"2026-09-12T20:29:52\",
+    \"departure_date\": \"2052-10-05\",
     \"package_id\": \"a4855dc5-0acb-33c3-b921-f4291f719ca0\",
     \"kloter_id\": \"c90237e9-ced5-3af6-88ea-84aeaa148878\",
-    \"meningitis_vaccine_status\": \"sudah_vaksin\",
-    \"photo_status\": \"belum_ada\",
+    \"meningitis_vaccine_status\": \"belum_vaksin\",
+    \"photo_status\": \"sudah_menyerahkan\",
     \"total_package_cost\": 8,
-    \"status\": \"cancelled\",
+    \"status\": \"dp\",
     \"initial_payment\": {
         \"amount\": 4326.41688,
-        \"payment_type\": \"down_payment\",
-        \"payment_method\": \"cash\",
-        \"payment_date\": \"2026-09-10T07:56:30\"
+        \"payment_type\": \"full_payment\",
+        \"payment_method\": \"mandiri_transfer\",
+        \"payment_date\": \"2026-09-12T20:29:52\"
     },
     \"equipments\": [
         {
             \"equipment_name\": \"m\",
-            \"size\": \"iyvdljnikhwaykcm\",
-            \"is_received\": true
+            \"stock_id\": \"a1a0a47d-e8c3-3cf0-8e6e-c1ff9dca5d1f\",
+            \"size\": \"vdljnikhwaykcmyu\",
+            \"is_received\": false
         }
     ]
 }"
@@ -7105,27 +7124,28 @@ let body = {
     "passport_number": "z",
     "nik": "miyvdljnikhwaykc",
     "phone": "myuwpwlvqwrsitcp",
-    "birth_date": "2022-10-04",
-    "gender": "L",
-    "registration_date": "2026-09-10T07:56:30",
-    "departure_date": "2052-10-03",
+    "birth_date": "2022-10-07",
+    "gender": "P",
+    "registration_date": "2026-09-12T20:29:52",
+    "departure_date": "2052-10-05",
     "package_id": "a4855dc5-0acb-33c3-b921-f4291f719ca0",
     "kloter_id": "c90237e9-ced5-3af6-88ea-84aeaa148878",
-    "meningitis_vaccine_status": "sudah_vaksin",
-    "photo_status": "belum_ada",
+    "meningitis_vaccine_status": "belum_vaksin",
+    "photo_status": "sudah_menyerahkan",
     "total_package_cost": 8,
-    "status": "cancelled",
+    "status": "dp",
     "initial_payment": {
         "amount": 4326.41688,
-        "payment_type": "down_payment",
-        "payment_method": "cash",
-        "payment_date": "2026-09-10T07:56:30"
+        "payment_type": "full_payment",
+        "payment_method": "mandiri_transfer",
+        "payment_date": "2026-09-12T20:29:52"
     },
     "equipments": [
         {
             "equipment_name": "m",
-            "size": "iyvdljnikhwaykcm",
-            "is_received": true
+            "stock_id": "a1a0a47d-e8c3-3cf0-8e6e-c1ff9dca5d1f",
+            "size": "vdljnikhwaykcmyu",
+            "is_received": false
         }
     ]
 };
@@ -7303,10 +7323,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="birth_date"                data-endpoint="POSTapi-registrations"
-               value="2022-10-04"
+               value="2022-10-07"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date before <code>today</code>. Example: <code>2022-10-04</code></p>
+<p>Must be a valid date. Must be a date before <code>today</code>. Example: <code>2022-10-07</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>gender</code></b>&nbsp;&nbsp;
@@ -7315,10 +7335,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="gender"                data-endpoint="POSTapi-registrations"
-               value="L"
+               value="P"
                data-component="body">
     <br>
-<p>Example: <code>L</code></p>
+<p>Example: <code>P</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>L</code></li> <li><code>P</code></li></ul>
         </div>
@@ -7329,10 +7349,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="registration_date"                data-endpoint="POSTapi-registrations"
-               value="2026-09-10T07:56:30"
+               value="2026-09-12T20:29:52"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-10T07:56:30</code></p>
+<p>Must be a valid date. Example: <code>2026-09-12T20:29:52</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>departure_date</code></b>&nbsp;&nbsp;
@@ -7341,10 +7361,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="departure_date"                data-endpoint="POSTapi-registrations"
-               value="2052-10-03"
+               value="2052-10-05"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after or equal to <code>registration_date</code>. Example: <code>2052-10-03</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>registration_date</code>. Example: <code>2052-10-05</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>package_id</code></b>&nbsp;&nbsp;
@@ -7377,10 +7397,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="meningitis_vaccine_status"                data-endpoint="POSTapi-registrations"
-               value="sudah_vaksin"
+               value="belum_vaksin"
                data-component="body">
     <br>
-<p>Example: <code>sudah_vaksin</code></p>
+<p>Example: <code>belum_vaksin</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>belum_vaksin</code></li> <li><code>sudah_vaksin</code></li></ul>
         </div>
@@ -7391,10 +7411,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="photo_status"                data-endpoint="POSTapi-registrations"
-               value="belum_ada"
+               value="sudah_menyerahkan"
                data-component="body">
     <br>
-<p>Example: <code>belum_ada</code></p>
+<p>Example: <code>sudah_menyerahkan</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>belum_ada</code></li> <li><code>sudah_menyerahkan</code></li></ul>
         </div>
@@ -7417,10 +7437,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="status"                data-endpoint="POSTapi-registrations"
-               value="cancelled"
+               value="dp"
                data-component="body">
     <br>
-<p>Example: <code>cancelled</code></p>
+<p>Example: <code>dp</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>unpaid</code></li> <li><code>dp</code></li> <li><code>dp_paid</code></li> <li><code>paid</code></li> <li><code>fully_paid</code></li> <li><code>cancelled</code></li> <li><code>converted</code></li></ul>
         </div>
@@ -7453,10 +7473,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="initial_payment.payment_type"                data-endpoint="POSTapi-registrations"
-               value="down_payment"
+               value="full_payment"
                data-component="body">
     <br>
-<p>Example: <code>down_payment</code></p>
+<p>Example: <code>full_payment</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>down_payment</code></li> <li><code>full_payment</code></li></ul>
                     </div>
@@ -7467,10 +7487,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="initial_payment.payment_method"                data-endpoint="POSTapi-registrations"
-               value="cash"
+               value="mandiri_transfer"
                data-component="body">
     <br>
-<p>Example: <code>cash</code></p>
+<p>Example: <code>mandiri_transfer</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>bca_transfer</code></li> <li><code>mandiri_transfer</code></li> <li><code>bsi_transfer</code></li> <li><code>cash</code></li> <li><code>edc_qris</code></li></ul>
                     </div>
@@ -7481,10 +7501,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="initial_payment.payment_date"                data-endpoint="POSTapi-registrations"
-               value="2026-09-10T07:56:30"
+               value="2026-09-12T20:29:52"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-10T07:56:30</code></p>
+<p>Must be a valid date. Example: <code>2026-09-12T20:29:52</code></p>
                     </div>
                                     </details>
         </div>
@@ -7511,16 +7531,28 @@ Must be one of:
 <p>This field is required when <code>equipments</code> is present. Must not be greater than 100 characters. Example: <code>m</code></p>
                     </div>
                                                                 <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>stock_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="equipments.0.stock_id"                data-endpoint="POSTapi-registrations"
+               value="a1a0a47d-e8c3-3cf0-8e6e-c1ff9dca5d1f"
+               data-component="body">
+    <br>
+<p>This field is required when <code>equipments</code> is present. Must be a valid UUID. Must match an existing stored value. Example: <code>a1a0a47d-e8c3-3cf0-8e6e-c1ff9dca5d1f</code></p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
                         <b style="line-height: 2;"><code>size</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
 <i>optional</i> &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
                               name="equipments.0.size"                data-endpoint="POSTapi-registrations"
-               value="iyvdljnikhwaykcm"
+               value="vdljnikhwaykcmyu"
                data-component="body">
     <br>
-<p>Must not be greater than 20 characters. Example: <code>iyvdljnikhwaykcm</code></p>
+<p>Must not be greater than 20 characters. Example: <code>vdljnikhwaykcmyu</code></p>
                     </div>
                                                                 <div style="margin-left: 14px; clear: unset;">
                         <b style="line-height: 2;"><code>is_received</code></b>&nbsp;&nbsp;
@@ -7542,7 +7574,7 @@ Must be one of:
             <code>false</code>
         </label>
     <br>
-<p>This field is required when <code>equipments</code> is present. Example: <code>true</code></p>
+<p>This field is required when <code>equipments</code> is present. Example: <code>false</code></p>
                     </div>
                                     </details>
         </div>
@@ -7726,21 +7758,23 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"passport_number\": \"n\",
     \"nik\": \"gzmiyvdljnikhway\",
     \"phone\": \"kcmyuwpwlvqwrsit\",
-    \"birth_date\": \"2022-10-04\",
+    \"birth_date\": \"2022-10-07\",
     \"gender\": \"P\",
-    \"registration_date\": \"2026-09-10T07:56:30\",
-    \"departure_date\": \"2026-09-10T07:56:30\",
+    \"registration_date\": \"2026-09-12T20:29:52\",
+    \"departure_date\": \"2026-09-12T20:29:52\",
     \"package_id\": \"a4855dc5-0acb-33c3-b921-f4291f719ca0\",
     \"kloter_id\": \"c90237e9-ced5-3af6-88ea-84aeaa148878\",
     \"meningitis_vaccine_status\": \"belum_vaksin\",
     \"photo_status\": \"belum_ada\",
     \"total_package_cost\": 8,
-    \"status\": \"unpaid\",
+    \"status\": \"fully_paid\",
     \"equipments\": [
         {
-            \"equipment_name\": \"y\",
-            \"size\": \"vdljnikhwaykcmyu\",
-            \"is_received\": false
+            \"id\": \"d6fa562b-acd5-35ff-babb-d11194d3737b\",
+            \"equipment_name\": \"d\",
+            \"stock_id\": \"add3503c-ebff-3875-93af-b8c6a695762b\",
+            \"size\": \"nikhwaykcmyuwpwl\",
+            \"is_received\": true
         }
     ]
 }"
@@ -7763,21 +7797,23 @@ let body = {
     "passport_number": "n",
     "nik": "gzmiyvdljnikhway",
     "phone": "kcmyuwpwlvqwrsit",
-    "birth_date": "2022-10-04",
+    "birth_date": "2022-10-07",
     "gender": "P",
-    "registration_date": "2026-09-10T07:56:30",
-    "departure_date": "2026-09-10T07:56:30",
+    "registration_date": "2026-09-12T20:29:52",
+    "departure_date": "2026-09-12T20:29:52",
     "package_id": "a4855dc5-0acb-33c3-b921-f4291f719ca0",
     "kloter_id": "c90237e9-ced5-3af6-88ea-84aeaa148878",
     "meningitis_vaccine_status": "belum_vaksin",
     "photo_status": "belum_ada",
     "total_package_cost": 8,
-    "status": "unpaid",
+    "status": "fully_paid",
     "equipments": [
         {
-            "equipment_name": "y",
-            "size": "vdljnikhwaykcmyu",
-            "is_received": false
+            "id": "d6fa562b-acd5-35ff-babb-d11194d3737b",
+            "equipment_name": "d",
+            "stock_id": "add3503c-ebff-3875-93af-b8c6a695762b",
+            "size": "nikhwaykcmyuwpwl",
+            "is_received": true
         }
     ]
 };
@@ -7944,10 +7980,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="birth_date"                data-endpoint="PUTapi-registrations--registration_id-"
-               value="2022-10-04"
+               value="2022-10-07"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date before <code>today</code>. Example: <code>2022-10-04</code></p>
+<p>Must be a valid date. Must be a date before <code>today</code>. Example: <code>2022-10-07</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>gender</code></b>&nbsp;&nbsp;
@@ -7970,10 +8006,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="registration_date"                data-endpoint="PUTapi-registrations--registration_id-"
-               value="2026-09-10T07:56:30"
+               value="2026-09-12T20:29:52"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-10T07:56:30</code></p>
+<p>Must be a valid date. Example: <code>2026-09-12T20:29:52</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>departure_date</code></b>&nbsp;&nbsp;
@@ -7982,10 +8018,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="departure_date"                data-endpoint="PUTapi-registrations--registration_id-"
-               value="2026-09-10T07:56:30"
+               value="2026-09-12T20:29:52"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-10T07:56:30</code></p>
+<p>Must be a valid date. Example: <code>2026-09-12T20:29:52</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>package_id</code></b>&nbsp;&nbsp;
@@ -8058,10 +8094,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="status"                data-endpoint="PUTapi-registrations--registration_id-"
-               value="unpaid"
+               value="fully_paid"
                data-component="body">
     <br>
-<p>Example: <code>unpaid</code></p>
+<p>Example: <code>fully_paid</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>unpaid</code></li> <li><code>dp</code></li> <li><code>dp_paid</code></li> <li><code>paid</code></li> <li><code>fully_paid</code></li> <li><code>cancelled</code></li> <li><code>converted</code></li></ul>
         </div>
@@ -8076,16 +8112,40 @@ Must be one of:
 
             </summary>
                                                 <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="equipments.0.id"                data-endpoint="PUTapi-registrations--registration_id-"
+               value="d6fa562b-acd5-35ff-babb-d11194d3737b"
+               data-component="body">
+    <br>
+<p>Must be a valid UUID. Must match an existing stored value. Example: <code>d6fa562b-acd5-35ff-babb-d11194d3737b</code></p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
                         <b style="line-height: 2;"><code>equipment_name</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
 <i>optional</i> &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
                               name="equipments.0.equipment_name"                data-endpoint="PUTapi-registrations--registration_id-"
-               value="y"
+               value="d"
                data-component="body">
     <br>
-<p>This field is required when <code>equipments</code> is present. Must not be greater than 100 characters. Example: <code>y</code></p>
+<p>This field is required when <code>equipments</code> is present. Must not be greater than 100 characters. Example: <code>d</code></p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>stock_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="equipments.0.stock_id"                data-endpoint="PUTapi-registrations--registration_id-"
+               value="add3503c-ebff-3875-93af-b8c6a695762b"
+               data-component="body">
+    <br>
+<p>This field is required when <code>equipments</code> is present. Must be a valid UUID. Must match an existing stored value. Example: <code>add3503c-ebff-3875-93af-b8c6a695762b</code></p>
                     </div>
                                                                 <div style="margin-left: 14px; clear: unset;">
                         <b style="line-height: 2;"><code>size</code></b>&nbsp;&nbsp;
@@ -8094,10 +8154,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="equipments.0.size"                data-endpoint="PUTapi-registrations--registration_id-"
-               value="vdljnikhwaykcmyu"
+               value="nikhwaykcmyuwpwl"
                data-component="body">
     <br>
-<p>Must not be greater than 20 characters. Example: <code>vdljnikhwaykcmyu</code></p>
+<p>Must not be greater than 20 characters. Example: <code>nikhwaykcmyuwpwl</code></p>
                     </div>
                                                                 <div style="margin-left: 14px; clear: unset;">
                         <b style="line-height: 2;"><code>is_received</code></b>&nbsp;&nbsp;
@@ -8119,7 +8179,7 @@ Must be one of:
             <code>false</code>
         </label>
     <br>
-<p>This field is required when <code>equipments</code> is present. Example: <code>false</code></p>
+<p>This field is required when <code>equipments</code> is present. Example: <code>true</code></p>
                     </div>
                                     </details>
         </div>
@@ -8131,9 +8191,7 @@ Must be one of:
 <small class="badge badge-darkred">requires authentication</small>
 </p>
 
-<p>Catatan revisi [2026-09-02]: Guard 'converted' dihapus karena alur Jamaah
-kini terpisah — tidak ada lagi status 'converted' yang mengunci Pendaftaran.
-Data lama berstatus 'converted' di database tetap bisa dihapus oleh admin.</p>
+
 
 <span id="example-requests-DELETEapi-registrations--registration_id-">
 <blockquote>Example request:</blockquote>
@@ -8723,8 +8781,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"amount\": 4326.41688,
     \"payment_type\": \"full_payment\",
-    \"payment_method\": \"bca_transfer\",
-    \"payment_date\": \"2026-09-10T07:56:30\",
+    \"payment_method\": \"bsi_transfer\",
+    \"payment_date\": \"2026-09-12T20:29:52\",
     \"notes\": \"m\"
 }"
 </code></pre></div>
@@ -8744,8 +8802,8 @@ const headers = {
 let body = {
     "amount": 4326.41688,
     "payment_type": "full_payment",
-    "payment_method": "bca_transfer",
-    "payment_date": "2026-09-10T07:56:30",
+    "payment_method": "bsi_transfer",
+    "payment_date": "2026-09-12T20:29:52",
     "notes": "m"
 };
 
@@ -8889,10 +8947,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="payment_method"                data-endpoint="POSTapi-registrations--registration_id--payments"
-               value="bca_transfer"
+               value="bsi_transfer"
                data-component="body">
     <br>
-<p>Example: <code>bca_transfer</code></p>
+<p>Example: <code>bsi_transfer</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>bca_transfer</code></li> <li><code>mandiri_transfer</code></li> <li><code>bsi_transfer</code></li> <li><code>cash</code></li> <li><code>edc_qris</code></li></ul>
         </div>
@@ -8903,10 +8961,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="payment_date"                data-endpoint="POSTapi-registrations--registration_id--payments"
-               value="2026-09-10T07:56:30"
+               value="2026-09-12T20:29:52"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-10T07:56:30</code></p>
+<p>Must be a valid date. Example: <code>2026-09-12T20:29:52</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>notes</code></b>&nbsp;&nbsp;
@@ -9084,10 +9142,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"vendor\": \"b\",
-    \"category\": \"akomodasi_tiket\",
+    \"category\": \"operasional_bus\",
     \"amount\": 4326.41688,
-    \"payment_method\": \"mandiri_transfer\",
-    \"expense_date\": \"2026-09-10T07:56:30\",
+    \"payment_method\": \"bsi_transfer\",
+    \"expense_date\": \"2026-09-12T20:29:52\",
     \"reference_number\": \"m\",
     \"notes\": \"i\"
 }"
@@ -9107,10 +9165,10 @@ const headers = {
 
 let body = {
     "vendor": "b",
-    "category": "akomodasi_tiket",
+    "category": "operasional_bus",
     "amount": 4326.41688,
-    "payment_method": "mandiri_transfer",
-    "expense_date": "2026-09-10T07:56:30",
+    "payment_method": "bsi_transfer",
+    "expense_date": "2026-09-12T20:29:52",
     "reference_number": "m",
     "notes": "i"
 };
@@ -9228,10 +9286,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="category"                data-endpoint="POSTapi-expenses"
-               value="akomodasi_tiket"
+               value="operasional_bus"
                data-component="body">
     <br>
-<p>Example: <code>akomodasi_tiket</code></p>
+<p>Example: <code>operasional_bus</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>akomodasi_tiket</code></li> <li><code>perlengkapan</code></li> <li><code>operasional_bus</code></li></ul>
         </div>
@@ -9254,10 +9312,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="payment_method"                data-endpoint="POSTapi-expenses"
-               value="mandiri_transfer"
+               value="bsi_transfer"
                data-component="body">
     <br>
-<p>Example: <code>mandiri_transfer</code></p>
+<p>Example: <code>bsi_transfer</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>bca_transfer</code></li> <li><code>mandiri_transfer</code></li> <li><code>bsi_transfer</code></li> <li><code>cash</code></li> <li><code>edc_qris</code></li></ul>
         </div>
@@ -9268,10 +9326,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="expense_date"                data-endpoint="POSTapi-expenses"
-               value="2026-09-10T07:56:30"
+               value="2026-09-12T20:29:52"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-10T07:56:30</code></p>
+<p>Must be a valid date. Example: <code>2026-09-12T20:29:52</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>reference_number</code></b>&nbsp;&nbsp;
@@ -9476,8 +9534,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"vendor\": \"b\",
     \"category\": \"perlengkapan\",
     \"amount\": 4326.41688,
-    \"payment_method\": \"edc_qris\",
-    \"expense_date\": \"2026-09-10T07:56:30\",
+    \"payment_method\": \"cash\",
+    \"expense_date\": \"2026-09-12T20:29:52\",
     \"reference_number\": \"m\",
     \"notes\": \"i\"
 }"
@@ -9499,8 +9557,8 @@ let body = {
     "vendor": "b",
     "category": "perlengkapan",
     "amount": 4326.41688,
-    "payment_method": "edc_qris",
-    "expense_date": "2026-09-10T07:56:30",
+    "payment_method": "cash",
+    "expense_date": "2026-09-12T20:29:52",
     "reference_number": "m",
     "notes": "i"
 };
@@ -9657,10 +9715,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="payment_method"                data-endpoint="PUTapi-expenses--expense_id-"
-               value="edc_qris"
+               value="cash"
                data-component="body">
     <br>
-<p>Example: <code>edc_qris</code></p>
+<p>Example: <code>cash</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>bca_transfer</code></li> <li><code>mandiri_transfer</code></li> <li><code>bsi_transfer</code></li> <li><code>cash</code></li> <li><code>edc_qris</code></li></ul>
         </div>
@@ -9671,10 +9729,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="expense_date"                data-endpoint="PUTapi-expenses--expense_id-"
-               value="2026-09-10T07:56:30"
+               value="2026-09-12T20:29:52"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-10T07:56:30</code></p>
+<p>Must be a valid date. Example: <code>2026-09-12T20:29:52</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>reference_number</code></b>&nbsp;&nbsp;
@@ -10148,8 +10206,8 @@ login_id kini wajib diisi manual oleh admin (max 10 karakter, unique).</p>
     \"login_id\": \"bngzmi\",
     \"nik\": \"yvdljnikhwaykcmy\",
     \"full_name\": \"u\",
-    \"birth_date\": \"2026-09-10T07:56:30\",
-    \"gender\": \"L\",
+    \"birth_date\": \"2026-09-12T20:29:52\",
+    \"gender\": \"P\",
     \"phone\": \"wpwlvqwrsitcpscq\",
     \"emergency_contact\": \"l\",
     \"passport_number\": \"d\",
@@ -10159,8 +10217,8 @@ login_id kini wajib diisi manual oleh admin (max 10 karakter, unique).</p>
     \"kloter_id\": \"1937113a-b0a2-3b03-925a-3163292463db\",
     \"hotel_makkah\": \"u\",
     \"hotel_madinah\": \"j\",
-    \"departure_date\": \"2026-09-10T07:56:30\",
-    \"return_date\": \"2052-10-03\",
+    \"departure_date\": \"2026-09-12T20:29:52\",
+    \"return_date\": \"2052-10-05\",
     \"tour_leader\": \"n\",
     \"mutawif_local\": \"g\",
     \"status\": \"active\"
@@ -10183,8 +10241,8 @@ let body = {
     "login_id": "bngzmi",
     "nik": "yvdljnikhwaykcmy",
     "full_name": "u",
-    "birth_date": "2026-09-10T07:56:30",
-    "gender": "L",
+    "birth_date": "2026-09-12T20:29:52",
+    "gender": "P",
     "phone": "wpwlvqwrsitcpscq",
     "emergency_contact": "l",
     "passport_number": "d",
@@ -10194,8 +10252,8 @@ let body = {
     "kloter_id": "1937113a-b0a2-3b03-925a-3163292463db",
     "hotel_makkah": "u",
     "hotel_madinah": "j",
-    "departure_date": "2026-09-10T07:56:30",
-    "return_date": "2052-10-03",
+    "departure_date": "2026-09-12T20:29:52",
+    "return_date": "2052-10-05",
     "tour_leader": "n",
     "mutawif_local": "g",
     "status": "active"
@@ -10338,10 +10396,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="birth_date"                data-endpoint="POSTapi-jamaah"
-               value="2026-09-10T07:56:30"
+               value="2026-09-12T20:29:52"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-10T07:56:30</code></p>
+<p>Must be a valid date. Example: <code>2026-09-12T20:29:52</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>gender</code></b>&nbsp;&nbsp;
@@ -10350,10 +10408,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="gender"                data-endpoint="POSTapi-jamaah"
-               value="L"
+               value="P"
                data-component="body">
     <br>
-<p>Example: <code>L</code></p>
+<p>Example: <code>P</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>L</code></li> <li><code>P</code></li></ul>
         </div>
@@ -10472,10 +10530,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="departure_date"                data-endpoint="POSTapi-jamaah"
-               value="2026-09-10T07:56:30"
+               value="2026-09-12T20:29:52"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-10T07:56:30</code></p>
+<p>Must be a valid date. Example: <code>2026-09-12T20:29:52</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>return_date</code></b>&nbsp;&nbsp;
@@ -10484,10 +10542,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="return_date"                data-endpoint="POSTapi-jamaah"
-               value="2052-10-03"
+               value="2052-10-05"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after or equal to <code>departure_date</code>. Example: <code>2052-10-03</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>departure_date</code>. Example: <code>2052-10-05</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>tour_leader</code></b>&nbsp;&nbsp;
@@ -10706,8 +10764,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"login_id\": \"bngzmi\",
     \"nik\": \"yvdljnikhwaykcmy\",
     \"full_name\": \"u\",
-    \"birth_date\": \"2026-09-10T07:56:30\",
-    \"gender\": \"P\",
+    \"birth_date\": \"2026-09-12T20:29:52\",
+    \"gender\": \"L\",
     \"phone\": \"wpwlvqwrsitcpscq\",
     \"emergency_contact\": \"l\",
     \"passport_number\": \"d\",
@@ -10717,11 +10775,11 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"kloter_id\": \"1937113a-b0a2-3b03-925a-3163292463db\",
     \"hotel_makkah\": \"u\",
     \"hotel_madinah\": \"j\",
-    \"departure_date\": \"2026-09-10T07:56:30\",
-    \"return_date\": \"2052-10-03\",
+    \"departure_date\": \"2026-09-12T20:29:52\",
+    \"return_date\": \"2052-10-05\",
     \"tour_leader\": \"n\",
     \"mutawif_local\": \"g\",
-    \"status\": \"archived\"
+    \"status\": \"active\"
 }"
 </code></pre></div>
 
@@ -10741,8 +10799,8 @@ let body = {
     "login_id": "bngzmi",
     "nik": "yvdljnikhwaykcmy",
     "full_name": "u",
-    "birth_date": "2026-09-10T07:56:30",
-    "gender": "P",
+    "birth_date": "2026-09-12T20:29:52",
+    "gender": "L",
     "phone": "wpwlvqwrsitcpscq",
     "emergency_contact": "l",
     "passport_number": "d",
@@ -10752,11 +10810,11 @@ let body = {
     "kloter_id": "1937113a-b0a2-3b03-925a-3163292463db",
     "hotel_makkah": "u",
     "hotel_madinah": "j",
-    "departure_date": "2026-09-10T07:56:30",
-    "return_date": "2052-10-03",
+    "departure_date": "2026-09-12T20:29:52",
+    "return_date": "2052-10-05",
     "tour_leader": "n",
     "mutawif_local": "g",
-    "status": "archived"
+    "status": "active"
 };
 
 fetch(url, {
@@ -10909,10 +10967,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="birth_date"                data-endpoint="PUTapi-jamaah--jamaah_id-"
-               value="2026-09-10T07:56:30"
+               value="2026-09-12T20:29:52"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-10T07:56:30</code></p>
+<p>Must be a valid date. Example: <code>2026-09-12T20:29:52</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>gender</code></b>&nbsp;&nbsp;
@@ -10921,10 +10979,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="gender"                data-endpoint="PUTapi-jamaah--jamaah_id-"
-               value="P"
+               value="L"
                data-component="body">
     <br>
-<p>Example: <code>P</code></p>
+<p>Example: <code>L</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>L</code></li> <li><code>P</code></li></ul>
         </div>
@@ -11043,10 +11101,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="departure_date"                data-endpoint="PUTapi-jamaah--jamaah_id-"
-               value="2026-09-10T07:56:30"
+               value="2026-09-12T20:29:52"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-09-10T07:56:30</code></p>
+<p>Must be a valid date. Example: <code>2026-09-12T20:29:52</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>return_date</code></b>&nbsp;&nbsp;
@@ -11055,10 +11113,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="return_date"                data-endpoint="PUTapi-jamaah--jamaah_id-"
-               value="2052-10-03"
+               value="2052-10-05"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after or equal to <code>departure_date</code>. Example: <code>2052-10-03</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>departure_date</code>. Example: <code>2052-10-05</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>tour_leader</code></b>&nbsp;&nbsp;
@@ -11091,10 +11149,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="status"                data-endpoint="PUTapi-jamaah--jamaah_id-"
-               value="archived"
+               value="active"
                data-component="body">
     <br>
-<p>Example: <code>archived</code></p>
+<p>Example: <code>active</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>active</code></li> <li><code>archived</code></li></ul>
         </div>
@@ -11406,7 +11464,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"phone\": \"kcmyuwpwlvqwrsit\",
     \"experience\": \"architecto\",
     \"performance\": \"architecto\",
-    \"status\": \"standby\"
+    \"status\": \"inactive\"
 }"
 </code></pre></div>
 
@@ -11429,7 +11487,7 @@ let body = {
     "phone": "kcmyuwpwlvqwrsit",
     "experience": "architecto",
     "performance": "architecto",
-    "status": "standby"
+    "status": "inactive"
 };
 
 fetch(url, {
@@ -11605,10 +11663,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="status"                data-endpoint="POSTapi-tour-leaders"
-               value="standby"
+               value="inactive"
                data-component="body">
     <br>
-<p>Example: <code>standby</code></p>
+<p>Example: <code>inactive</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>active</code></li> <li><code>resting</code></li> <li><code>standby</code></li> <li><code>inactive</code></li></ul>
         </div>
@@ -12985,7 +13043,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"name\": \"a\",
     \"language\": \"y\",
     \"experience\": \"k\",
-    \"status\": \"standby\"
+    \"status\": \"active\"
 }"
 </code></pre></div>
 
@@ -13006,7 +13064,7 @@ let body = {
     "name": "a",
     "language": "y",
     "experience": "k",
-    "status": "standby"
+    "status": "active"
 };
 
 fetch(url, {
@@ -13175,10 +13233,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="status"                data-endpoint="PUTapi-mutawifs--id-"
-               value="standby"
+               value="active"
                data-component="body">
     <br>
-<p>Example: <code>standby</code></p>
+<p>Example: <code>active</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>active</code></li> <li><code>standby</code></li></ul>
         </div>
@@ -13622,6 +13680,1168 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="url">
     <br>
 <p>The ID of the kloter. Example: <code>019fff5a-e6a2-72d5-8f7d-8814ad6f0c89</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="endpoints-GETapi-stocks">GET api/stocks</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-GETapi-stocks">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/stocks" \
+    --header "Authorization: Bearer {token}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/stocks"
+);
+
+const headers = {
+    "Authorization": "Bearer {token}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-stocks">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+access-control-allow-origin: *
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-stocks" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-stocks"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-stocks"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-stocks" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-stocks">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-stocks" data-method="GET"
+      data-path="api/stocks"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-stocks', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-stocks"
+                    onclick="tryItOut('GETapi-stocks');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-stocks"
+                    onclick="cancelTryOut('GETapi-stocks');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-stocks"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/stocks</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-stocks"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-stocks"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-stocks"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
+                    <h2 id="endpoints-POSTapi-stocks">POST api/stocks</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-POSTapi-stocks">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8000/api/stocks" \
+    --header "Authorization: Bearer {token}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"name\": \"b\",
+    \"category\": \"n\",
+    \"quantity\": 84,
+    \"min_stock\": 12,
+    \"unit\": \"m\",
+    \"location\": \"i\",
+    \"notes\": \"architecto\",
+    \"sizes\": [
+        {
+            \"size\": \"ngzmiyvdljnikhwa\",
+            \"quantity\": 50
+        }
+    ]
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/stocks"
+);
+
+const headers = {
+    "Authorization": "Bearer {token}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "name": "b",
+    "category": "n",
+    "quantity": 84,
+    "min_stock": 12,
+    "unit": "m",
+    "location": "i",
+    "notes": "architecto",
+    "sizes": [
+        {
+            "size": "ngzmiyvdljnikhwa",
+            "quantity": 50
+        }
+    ]
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-stocks">
+</span>
+<span id="execution-results-POSTapi-stocks" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-stocks"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-stocks"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-stocks" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-stocks">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-stocks" data-method="POST"
+      data-path="api/stocks"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-stocks', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-stocks"
+                    onclick="tryItOut('POSTapi-stocks');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-stocks"
+                    onclick="cancelTryOut('POSTapi-stocks');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-stocks"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/stocks</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-stocks"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-stocks"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-stocks"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="name"                data-endpoint="POSTapi-stocks"
+               value="b"
+               data-component="body">
+    <br>
+<p>Must not be greater than 200 characters. Example: <code>b</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>category</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="category"                data-endpoint="POSTapi-stocks"
+               value="n"
+               data-component="body">
+    <br>
+<p>Must not be greater than 50 characters. Example: <code>n</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>quantity</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="quantity"                data-endpoint="POSTapi-stocks"
+               value="84"
+               data-component="body">
+    <br>
+<p>Must be at least 0. Example: <code>84</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>min_stock</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="min_stock"                data-endpoint="POSTapi-stocks"
+               value="12"
+               data-component="body">
+    <br>
+<p>Must be at least 0. Example: <code>12</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>unit</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="unit"                data-endpoint="POSTapi-stocks"
+               value="m"
+               data-component="body">
+    <br>
+<p>Must not be greater than 30 characters. Example: <code>m</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>location</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="location"                data-endpoint="POSTapi-stocks"
+               value="i"
+               data-component="body">
+    <br>
+<p>Must not be greater than 255 characters. Example: <code>i</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>notes</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="notes"                data-endpoint="POSTapi-stocks"
+               value="architecto"
+               data-component="body">
+    <br>
+<p>Example: <code>architecto</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>sizes</code></b>&nbsp;&nbsp;
+<small>object[]</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+<br>
+<p>Must have at least 1 items.</p>
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>size</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="sizes.0.size"                data-endpoint="POSTapi-stocks"
+               value="ngzmiyvdljnikhwa"
+               data-component="body">
+    <br>
+<p>This field is required when <code>sizes</code> is present. Must not be greater than 20 characters. Example: <code>ngzmiyvdljnikhwa</code></p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>quantity</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="sizes.0.quantity"                data-endpoint="POSTapi-stocks"
+               value="50"
+               data-component="body">
+    <br>
+<p>This field is required when <code>sizes</code> is present. Must be at least 0. Example: <code>50</code></p>
+                    </div>
+                                    </details>
+        </div>
+        </form>
+
+                    <h2 id="endpoints-GETapi-stocks--stock_id-">GET api/stocks/{stock_id}</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-GETapi-stocks--stock_id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/stocks/01a090b6-6761-72f5-8884-b0b5e6ce19a9" \
+    --header "Authorization: Bearer {token}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/stocks/01a090b6-6761-72f5-8884-b0b5e6ce19a9"
+);
+
+const headers = {
+    "Authorization": "Bearer {token}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-stocks--stock_id-">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+access-control-allow-origin: *
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-stocks--stock_id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-stocks--stock_id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-stocks--stock_id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-stocks--stock_id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-stocks--stock_id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-stocks--stock_id-" data-method="GET"
+      data-path="api/stocks/{stock_id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-stocks--stock_id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-stocks--stock_id-"
+                    onclick="tryItOut('GETapi-stocks--stock_id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-stocks--stock_id-"
+                    onclick="cancelTryOut('GETapi-stocks--stock_id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-stocks--stock_id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/stocks/{stock_id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-stocks--stock_id-"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-stocks--stock_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-stocks--stock_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>stock_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="stock_id"                data-endpoint="GETapi-stocks--stock_id-"
+               value="01a090b6-6761-72f5-8884-b0b5e6ce19a9"
+               data-component="url">
+    <br>
+<p>The ID of the stock. Example: <code>01a090b6-6761-72f5-8884-b0b5e6ce19a9</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="endpoints-PUTapi-stocks--stock_id-">PUT api/stocks/{stock_id}</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-PUTapi-stocks--stock_id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request PUT \
+    "http://localhost:8000/api/stocks/01a090b6-6761-72f5-8884-b0b5e6ce19a9" \
+    --header "Authorization: Bearer {token}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"name\": \"b\",
+    \"category\": \"n\",
+    \"quantity\": 84,
+    \"min_stock\": 12,
+    \"unit\": \"m\",
+    \"location\": \"i\",
+    \"notes\": \"architecto\",
+    \"sizes\": [
+        {
+            \"size\": \"ngzmiyvdljnikhwa\",
+            \"quantity\": 50
+        }
+    ]
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/stocks/01a090b6-6761-72f5-8884-b0b5e6ce19a9"
+);
+
+const headers = {
+    "Authorization": "Bearer {token}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "name": "b",
+    "category": "n",
+    "quantity": 84,
+    "min_stock": 12,
+    "unit": "m",
+    "location": "i",
+    "notes": "architecto",
+    "sizes": [
+        {
+            "size": "ngzmiyvdljnikhwa",
+            "quantity": 50
+        }
+    ]
+};
+
+fetch(url, {
+    method: "PUT",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-PUTapi-stocks--stock_id-">
+</span>
+<span id="execution-results-PUTapi-stocks--stock_id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-PUTapi-stocks--stock_id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-PUTapi-stocks--stock_id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-PUTapi-stocks--stock_id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-PUTapi-stocks--stock_id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-PUTapi-stocks--stock_id-" data-method="PUT"
+      data-path="api/stocks/{stock_id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('PUTapi-stocks--stock_id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-PUTapi-stocks--stock_id-"
+                    onclick="tryItOut('PUTapi-stocks--stock_id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-PUTapi-stocks--stock_id-"
+                    onclick="cancelTryOut('PUTapi-stocks--stock_id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-PUTapi-stocks--stock_id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-darkblue">PUT</small>
+            <b><code>api/stocks/{stock_id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="PUTapi-stocks--stock_id-"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="PUTapi-stocks--stock_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="PUTapi-stocks--stock_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>stock_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="stock_id"                data-endpoint="PUTapi-stocks--stock_id-"
+               value="01a090b6-6761-72f5-8884-b0b5e6ce19a9"
+               data-component="url">
+    <br>
+<p>The ID of the stock. Example: <code>01a090b6-6761-72f5-8884-b0b5e6ce19a9</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="name"                data-endpoint="PUTapi-stocks--stock_id-"
+               value="b"
+               data-component="body">
+    <br>
+<p>Must not be greater than 200 characters. Example: <code>b</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>category</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="category"                data-endpoint="PUTapi-stocks--stock_id-"
+               value="n"
+               data-component="body">
+    <br>
+<p>Must not be greater than 50 characters. Example: <code>n</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>quantity</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="quantity"                data-endpoint="PUTapi-stocks--stock_id-"
+               value="84"
+               data-component="body">
+    <br>
+<p>Must be at least 0. Example: <code>84</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>min_stock</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="min_stock"                data-endpoint="PUTapi-stocks--stock_id-"
+               value="12"
+               data-component="body">
+    <br>
+<p>Must be at least 0. Example: <code>12</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>unit</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="unit"                data-endpoint="PUTapi-stocks--stock_id-"
+               value="m"
+               data-component="body">
+    <br>
+<p>Must not be greater than 30 characters. Example: <code>m</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>location</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="location"                data-endpoint="PUTapi-stocks--stock_id-"
+               value="i"
+               data-component="body">
+    <br>
+<p>Must not be greater than 255 characters. Example: <code>i</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>notes</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="notes"                data-endpoint="PUTapi-stocks--stock_id-"
+               value="architecto"
+               data-component="body">
+    <br>
+<p>Example: <code>architecto</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>sizes</code></b>&nbsp;&nbsp;
+<small>object[]</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+<br>
+<p>Must have at least 1 items.</p>
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>size</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="sizes.0.size"                data-endpoint="PUTapi-stocks--stock_id-"
+               value="ngzmiyvdljnikhwa"
+               data-component="body">
+    <br>
+<p>Must not be greater than 20 characters. Example: <code>ngzmiyvdljnikhwa</code></p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>quantity</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="sizes.0.quantity"                data-endpoint="PUTapi-stocks--stock_id-"
+               value="50"
+               data-component="body">
+    <br>
+<p>Must be at least 0. Example: <code>50</code></p>
+                    </div>
+                                    </details>
+        </div>
+        </form>
+
+                    <h2 id="endpoints-DELETEapi-stocks--stock_id-">DELETE api/stocks/{stock_id}</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-DELETEapi-stocks--stock_id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request DELETE \
+    "http://localhost:8000/api/stocks/01a090b6-6761-72f5-8884-b0b5e6ce19a9" \
+    --header "Authorization: Bearer {token}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/stocks/01a090b6-6761-72f5-8884-b0b5e6ce19a9"
+);
+
+const headers = {
+    "Authorization": "Bearer {token}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "DELETE",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-DELETEapi-stocks--stock_id-">
+</span>
+<span id="execution-results-DELETEapi-stocks--stock_id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-DELETEapi-stocks--stock_id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-DELETEapi-stocks--stock_id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-DELETEapi-stocks--stock_id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-DELETEapi-stocks--stock_id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-DELETEapi-stocks--stock_id-" data-method="DELETE"
+      data-path="api/stocks/{stock_id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('DELETEapi-stocks--stock_id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-DELETEapi-stocks--stock_id-"
+                    onclick="tryItOut('DELETEapi-stocks--stock_id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-DELETEapi-stocks--stock_id-"
+                    onclick="cancelTryOut('DELETEapi-stocks--stock_id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-DELETEapi-stocks--stock_id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-red">DELETE</small>
+            <b><code>api/stocks/{stock_id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="DELETEapi-stocks--stock_id-"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="DELETEapi-stocks--stock_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="DELETEapi-stocks--stock_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>stock_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="stock_id"                data-endpoint="DELETEapi-stocks--stock_id-"
+               value="01a090b6-6761-72f5-8884-b0b5e6ce19a9"
+               data-component="url">
+    <br>
+<p>The ID of the stock. Example: <code>01a090b6-6761-72f5-8884-b0b5e6ce19a9</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="endpoints-GETapi-stocks--stock_id--transactions">GET api/stocks/{stock_id}/transactions</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-GETapi-stocks--stock_id--transactions">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/stocks/01a090b6-6761-72f5-8884-b0b5e6ce19a9/transactions" \
+    --header "Authorization: Bearer {token}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/stocks/01a090b6-6761-72f5-8884-b0b5e6ce19a9/transactions"
+);
+
+const headers = {
+    "Authorization": "Bearer {token}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-stocks--stock_id--transactions">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+access-control-allow-origin: *
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-stocks--stock_id--transactions" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-stocks--stock_id--transactions"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-stocks--stock_id--transactions"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-stocks--stock_id--transactions" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-stocks--stock_id--transactions">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-stocks--stock_id--transactions" data-method="GET"
+      data-path="api/stocks/{stock_id}/transactions"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-stocks--stock_id--transactions', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-stocks--stock_id--transactions"
+                    onclick="tryItOut('GETapi-stocks--stock_id--transactions');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-stocks--stock_id--transactions"
+                    onclick="cancelTryOut('GETapi-stocks--stock_id--transactions');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-stocks--stock_id--transactions"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/stocks/{stock_id}/transactions</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-stocks--stock_id--transactions"
+               value="Bearer {token}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {token}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-stocks--stock_id--transactions"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-stocks--stock_id--transactions"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>stock_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="stock_id"                data-endpoint="GETapi-stocks--stock_id--transactions"
+               value="01a090b6-6761-72f5-8884-b0b5e6ce19a9"
+               data-component="url">
+    <br>
+<p>The ID of the stock. Example: <code>01a090b6-6761-72f5-8884-b0b5e6ce19a9</code></p>
             </div>
                     </form>
 

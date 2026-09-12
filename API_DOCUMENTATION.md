@@ -23,7 +23,7 @@ Dokumentasi ini dibuat berdasarkan kondisi source code TERKINI tanpa mengubah bu
 
 ---
 
-### Ringkasan Modul & Endpoint (Total 64 Endpoints)
+### Ringkasan Modul & Endpoint (Total 70 Endpoints)
 
 | Modul | Method | Endpoint | Auth Required | Status |
 | :--- | :--- | :--- | :---: | :---: |
@@ -103,6 +103,12 @@ Dokumentasi ini dibuat berdasarkan kondisi source code TERKINI tanpa mengubah bu
 | **Muttawif** | `DELETE` | `/api/mutawifs/{mutawif}` | Yes | Active |
 | **Muttawif Assignment** | `POST` | `/api/mutawifs/{mutawif}/kloters/{kloter}` | Yes | Active |
 | **Muttawif Assignment** | `DELETE` | `/api/mutawifs/{mutawif}/kloters/{kloter}` | Yes | Active |
+| **Stock / Inventory** | `GET` | `/api/stocks` | Yes | Active |
+| **Stock / Inventory** | `POST` | `/api/stocks` | Yes | Active |
+| **Stock / Inventory** | `GET` | `/api/stocks/{stock}` | Yes | Active |
+| **Stock / Inventory** | `PUT` | `/api/stocks/{stock}` | Yes | Active |
+| **Stock / Inventory** | `DELETE` | `/api/stocks/{stock}` | Yes | Active |
+| **Stock Transaction** | `GET` | `/api/stocks/{stock}/transactions` | Yes | Active |
 
 ---
 
@@ -408,7 +414,12 @@ Dokumentasi ini dibuat berdasarkan kondisi source code TERKINI tanpa mengubah bu
   * `photo_status` (in:belum_ada,sudah_menyerahkan, required)
   * `total_package_cost` (numeric, required, min:0)
   * `initial_payment` (object, optional): `{ amount, payment_type, payment_method, payment_date }`
-  * `equipments` (array, optional): `[{ equipment_name, size, is_received }]`
+  * `equipments` (array, optional): `[{ equipment_name, stock_id, size, is_received }]`
+    * `equipments.*.equipment_name`: string, required_with:equipments, max:100
+    * `equipments.*.stock_id`: uuid, required_with:equipments, exists:stocks,id
+    * `equipments.*.size`: string, nullable, max:20
+    * `equipments.*.is_received`: boolean, required_with:equipments
+    * `equipments.*.id` (pada update): uuid, sometimes, exists:registration_equipments,id
 #### `GET /api/registrations/{registration}`
 #### `PUT /api/registrations/{registration}`
 #### `DELETE /api/registrations/{registration}`
@@ -774,6 +785,220 @@ Modul ini mengelola data Muttawif dan penugasannya (assignment) ke Kloter Kebera
 
 ---
 
+### 16. Modul Stock / Inventory (`/api/stocks`)
+
+Modul ini mengelola data Master Stok Inventaris Perlengkapan dan Riwayat Mutasi Transaksi Stok (`stock_transactions`). Terintegrasi langsung secara otomatis dengan modul Pendaftaran Jamaah (`registrations`).
+
+#### Field Utama Stock:
+* `id` (uuid, primary key)
+* `code` (string, auto-generated format `STK-001`, `STK-002`, dst.)
+* `name` (string, required, max:200)
+* `category` (string, required, max:50)
+* `quantity` (integer, required, min:0)
+* `min_stock` (integer, required, min:0)
+* `unit` (string, required, max:30)
+* `location` (string, optional, max:255)
+* `notes` (string, optional)
+* `status` (string, calculated: `Aman`, `Menipis`, `Habis`)
+* `sizes` (array of objects, optional): Rincian quantity per ukuran
+
+#### Endpoints Stock:
+
+#### `GET /api/stocks`
+* **Auth**: Yes
+* **Deskripsi**: Menampilkan semua data stok inventaris beserta rincian ukurannya (`sizes`).
+* **Response Contoh (200 OK)**:
+  ```json
+  [
+    {
+      "id": "01a090b0-31fa-7108-a0eb-0c7f07096d2a",
+      "code": "STK-001",
+      "name": "Batik Male",
+      "category": "Perlengkapan",
+      "quantity": 50,
+      "min_stock": 5,
+      "unit": "Pcs",
+      "location": "Gudang A",
+      "notes": "Seragam batik jamaah pria",
+      "status": "Aman",
+      "sizes": [
+        {
+          "id": "01a090b0-3a1b-72c1-8d2e-1a2b3c4d5e6f",
+          "size": "L",
+          "quantity": 10
+        },
+        {
+          "id": "01a090b0-3a1c-73d2-9e3f-2b3c4d5e6f7a",
+          "size": "M",
+          "quantity": 20
+        },
+        {
+          "id": "01a090b0-3a1d-74e3-a04f-3c4d5e6f7a8b",
+          "size": "XL",
+          "quantity": 20
+        }
+      ],
+      "created_at": "2026-09-11T20:45:00.000000Z",
+      "updated_at": "2026-09-11T20:45:00.000000Z"
+    }
+  ]
+  ```
+
+#### `POST /api/stocks`
+* **Auth**: Yes
+* **Request Body**:
+  * `name` (string, required, max:200)
+  * `category` (string, required, max:50)
+  * `quantity` (integer, required, min:0)
+  * `min_stock` (integer, required, min:0)
+  * `unit` (string, required, max:30)
+  * `location` (string, optional, max:255)
+  * `notes` (string, optional)
+  * `sizes` (array, optional, min:1)
+  * `sizes.*.size` (string, required_with:sizes, max:20)
+  * `sizes.*.quantity` (integer, required_with:sizes, min:0)
+* **Contoh Request Body (Tanpa Size)**:
+  ```json
+  {
+    "name": "Koper Besar",
+    "category": "Perlengkapan",
+    "quantity": 20,
+    "min_stock": 5,
+    "unit": "Pcs",
+    "location": "Gudang A",
+    "notes": "Koper bagasi utama"
+  }
+  ```
+* **Contoh Request Body (Dengan Size)**:
+  ```json
+  {
+    "name": "Sabuk",
+    "category": "Perlengkapan",
+    "quantity": 15,
+    "min_stock": 5,
+    "unit": "Pcs",
+    "location": "Gudang A",
+    "sizes": [
+      {
+        "size": "M",
+        "quantity": 10
+      },
+      {
+        "size": "L",
+        "quantity": 5
+      }
+    ]
+  }
+  ```
+* **Response Contoh (201 Created)**:
+  ```json
+  {
+    "data": {
+      "id": "01a090bb-d323-709c-8a33-cd373bba0e09",
+      "code": "STK-003",
+      "name": "Sabuk",
+      "category": "Perlengkapan",
+      "quantity": 15,
+      "min_stock": 5,
+      "unit": "Pcs",
+      "location": "Gudang A",
+      "notes": null,
+      "status": "Aman",
+      "sizes": [
+        {
+          "id": "01a090bb-d81a-71e2-9f34-112233445566",
+          "size": "M",
+          "quantity": 10
+        },
+        {
+          "id": "01a090bb-d81b-72f3-a045-223344556677",
+          "size": "L",
+          "quantity": 5
+        }
+      ],
+      "created_at": "2026-09-11T20:50:00.000000Z",
+      "updated_at": "2026-09-11T20:50:00.000000Z"
+    }
+  }
+  ```
+
+#### `GET /api/stocks/{stock}`
+* **Auth**: Yes
+* **Path Parameter**: `stock` (UUID)
+* **Response**: Mengembalikan detail satu item stok beserta relasi `sizes`.
+
+#### `PUT /api/stocks/{stock}`
+* **Auth**: Yes
+* **Path Parameter**: `stock` (UUID)
+* **Request Body**:
+  * `name` (string, sometimes, max:200)
+  * `category` (string, sometimes, max:50)
+  * `quantity` (integer, sometimes, min:0) — *Hanya untuk stok tanpa ukuran*
+  * `min_stock` (integer, sometimes, min:0)
+  * `unit` (string, sometimes, max:30)
+  * `location` (string, sometimes, nullable, max:255)
+  * `notes` (string, sometimes, nullable)
+  * `sizes` (array, sometimes, min:1)
+  * `sizes.*.size` (string, required)
+  * `sizes.*.quantity` (integer, required, min:0)
+* **Catatan Penting Update Stok**:
+  * Untuk stok yang memiliki varian ukuran (`sizes`), jumlah `quantity` total otomatis dihitung dari akumulasi `sizes`. Mengirim field `quantity` pada stok yang memiliki ukuran akan memicu error `422 Unprocessable Entity` (`InvalidArgumentException`).
+  * Saat mengupdate ukuran stok, **semua ukuran yang sudah terdaftar sebelumnya harus dikirim kembali lengkap dalam array `sizes`**.
+
+#### `DELETE /api/stocks/{stock}`
+* **Auth**: Yes
+* **Path Parameter**: `stock` (UUID)
+* **Deskripsi**: Melakukan Soft Delete pada record stok.
+* **Response Contoh (200 OK)**:
+  ```json
+  {
+    "message": "Stok berhasil dihapus."
+  }
+  ```
+
+#### `GET /api/stocks/{stock}/transactions`
+* **Auth**: Yes
+* **Path Parameter**: `stock` (UUID)
+* **Deskripsi**: Menampilkan riwayat transaksi mutasi stok (`in`, `out`, `adjustment`) diurutkan secara `created_at` terbaru.
+* **Response Contoh (200 OK)**:
+  ```json
+  [
+    {
+      "id": "01a0973a-78eb-72eb-bd4c-8a1a004e0495",
+      "stock_id": "01a090bb-d323-709c-8a33-cd373bba0e09",
+      "type": "out",
+      "quantity": 1,
+      "size": "M",
+      "reference_type": "registration",
+      "reference_id": "019fff5c-eeea-70af-9d06-fa11db58b991",
+      "created_at": "2026-09-13T03:06:27.000000Z"
+    }
+  ]
+  ```
+
+---
+
+### 17. Aturan Bisnis Integrasi Registration ↔ Stock Inventory
+
+Modul `registrations` terintegrasi langsung dengan modul `stocks` melalui `RegistrationEquipmentService`.
+
+#### Alur Bisnis Pemotongan / Pengembalian Stok:
+1. **Penyerahan Barang Baru (`is_received: false → true`)**:
+   * Kuantitas `stocks.quantity` dan varian ukuran (`stock_sizes.quantity`) berkurang `1`.
+   * Waktu `received_at` terisi otomatis (`now()`).
+   * Record `stock_transactions` tercatat: `type = "out"`, `quantity = 1`, `reference_type = "registration"`, `reference_id = {registration_id}`.
+2. **Pengembalian Barang (`is_received: true → false`)**:
+   * Kuantitas `stocks.quantity` dan varian ukuran bertambah kembali `1`.
+   * Waktu `received_at` diubah menjadi `null`.
+   * Record `stock_transactions` tercatat: `type = "in"`, `quantity = 1`.
+3. **Perubahan Item Stok / Ukuran Saat Sudah Received (`is_received: true → true` + Ganti Stock/Size)**:
+   * Stok item/ukuran lama dikembalikan `1` (`type = "in"`).
+   * Stok item/ukuran baru dikurangi `1` (`type = "out"`).
+4. **Hapus Equipment / Registration**:
+   * Jika item perlengkapan yang sudah diterima (`is_received = true`) dihapus dari pendaftaran atau data pendaftaran dihapus (`DELETE`), stok dikembalikan terlebih dahulu ke inventaris gudang (`type = "in"`).
+
+---
+
 ## Deprecated Endpoints
 
 | Method | Endpoint | Reason |
@@ -783,6 +1008,5 @@ Modul ini mengelola data Muttawif dan penugasannya (assignment) ke Kloter Kebera
 
 ## Catatan Verifikasi & Integritas
 * Seluruh endpoint telah diverifikasi langsung terhadap `routes/api.php` (`php artisan route:list --path=api`), Eloquent Models, Form Requests, dan API Resources.
-* Modul **Tour Leader** dan **Muttawif** beserta relasi Many-to-Many ke Kloter telah terdokumentasi dengan lengkap.
-* Response Kloter telah dikonfirmasi memuat array relation `tour_leaders` dan `mutawifs` tanpa menghapus field legacy `tour_leader` dan `mutawif_local`.
+* Modul **Stock** dan **Integrasi Registration Equipment** telah didokumentasikan secara lengkap sesuai source code backend terbaru.
 * Tidak ada perubahan pada business logic, schema database, maupun controller application.
