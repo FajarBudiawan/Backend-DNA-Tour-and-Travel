@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class StoreExpenseRequest extends FormRequest
+class UpdateOtherIncomeRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -13,42 +14,54 @@ class StoreExpenseRequest extends FormRequest
 
     public function rules(): array
     {
+        $incomeId = $this->route('other_income')
+            ? ($this->route('other_income')->id ?? $this->route('other_income'))
+            : null;
+
         return [
-            'vendor' => [
+            'source' => [
+                'sometimes',
                 'required',
                 'string',
                 'max:150',
             ],
 
             'category' => [
+                'sometimes',
                 'required',
-                'in:akomodasi_tiket,perlengkapan,operasional_bus,lainnya',
+                'in:commission,equipment_sales,administration,other',
             ],
 
             'amount' => [
+                'sometimes',
                 'required',
                 'numeric',
                 'gt:0',
             ],
 
             'payment_method' => [
+                'sometimes',
                 'required',
                 'in:bca_transfer,mandiri_transfer,bsi_transfer,cash,edc_qris',
             ],
 
-            'expense_date' => [
+            'income_date' => [
+                'sometimes',
                 'required',
                 'date',
             ],
 
             'reference_number' => [
+                'sometimes',
                 'nullable',
                 'string',
                 'max:50',
-                'unique:expenses,reference_number',
+                Rule::unique('other_incomes', 'reference_number')
+                    ->ignore($incomeId),
             ],
 
             'notes' => [
+                'sometimes',
                 'nullable',
                 'string',
                 'max:255',
@@ -59,22 +72,22 @@ class StoreExpenseRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'vendor.required' => 'Nama vendor/penerima wajib diisi.',
-            'vendor.string' => 'Nama vendor/penerima harus berupa teks.',
-            'vendor.max' => 'Nama vendor/penerima maksimal 150 karakter.',
+            'source.required' => 'Sumber pemasukan wajib diisi.',
+            'source.string' => 'Sumber pemasukan harus berupa teks.',
+            'source.max' => 'Sumber pemasukan maksimal 150 karakter.',
 
-            'category.required' => 'Kategori pengeluaran wajib dipilih.',
-            'category.in' => 'Kategori pengeluaran tidak valid. Pilih: akomodasi_tiket, perlengkapan, atau operasional_bus, lainnya.',
+            'category.required' => 'Kategori pemasukan wajib dipilih.',
+            'category.in' => 'Kategori pemasukan tidak valid.',
 
-            'amount.required' => 'Nominal pengeluaran wajib diisi.',
-            'amount.numeric' => 'Nominal pengeluaran harus berupa angka.',
-            'amount.gt' => 'Nominal pengeluaran harus lebih besar dari 0.',
+            'amount.required' => 'Nominal pemasukan wajib diisi.',
+            'amount.numeric' => 'Nominal pemasukan harus berupa angka.',
+            'amount.gt' => 'Nominal pemasukan harus lebih besar dari 0.',
 
             'payment_method.required' => 'Metode pembayaran wajib dipilih.',
             'payment_method.in' => 'Metode pembayaran tidak valid.',
 
-            'expense_date.required' => 'Tanggal pengeluaran wajib diisi.',
-            'expense_date.date' => 'Format tanggal pengeluaran tidak valid.',
+            'income_date.required' => 'Tanggal pemasukan wajib diisi.',
+            'income_date.date' => 'Format tanggal pemasukan tidak valid.',
 
             'reference_number.max' => 'Nomor referensi maksimal 50 karakter.',
             'reference_number.unique' => 'Nomor referensi sudah digunakan.',

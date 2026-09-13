@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRegistrationPaymentRequest;
+use App\Http\Requests\UpdateRegistrationPaymentRequest;
 use App\Models\Registration;
 use App\Models\RegistrationPayment;
 use Illuminate\Http\JsonResponse;
@@ -103,7 +104,7 @@ class RegistrationPaymentController extends Controller
             $registration->updateFinancialStatus();
 
             return $payment;
-        });
+        }); 
 
         // Unset relation agar relasi registration dimuat ulang dengan status terbaru dari database
         $payment->unsetRelation('registration');
@@ -115,5 +116,60 @@ class RegistrationPaymentController extends Controller
                 'recordedBy',
             ]),
         ], 201);
+    }
+
+        /**
+     * Memperbarui pembayaran pendaftaran.
+     */
+    public function update(
+        UpdateRegistrationPaymentRequest $request,
+        RegistrationPayment $payment
+    ): JsonResponse {
+        DB::transaction(function () use ($request, $payment) {
+            $payment->update(
+                $request->only([
+                    'amount',
+                    'payment_type',
+                    'payment_method',
+                    'payment_date',
+                    'notes',
+                ])
+            );
+
+            $registration = $payment->registration;
+
+            $registration->unsetRelation('payments');
+            $registration->updateFinancialStatus();
+        });
+
+        return response()->json([
+            'message' => 'Pembayaran pendaftaran berhasil diperbarui.',
+            'data' => $payment->fresh()->load([
+                'registration',
+                'recordedBy',
+            ]),
+        ]);
+    }
+
+    /**
+     * Menghapus pembayaran pendaftaran secara soft delete.
+     */
+    public function destroy(RegistrationPayment $payment): JsonResponse
+    {
+        DB::transaction(function () use ($payment) {
+            // Ambil registration yang terkait dengan payment
+            $registration = $payment->registration;
+
+            // Soft delete payment
+            $payment->delete();
+
+            // Hitung ulang status keuangan registration
+            $registration->unsetRelation('payments');
+            $registration->updateFinancialStatus();
+        });
+
+        return response()->json([
+            'message' => 'Pembayaran pendaftaran berhasil dihapus.',
+        ]);
     }
 }

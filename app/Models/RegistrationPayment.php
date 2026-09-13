@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class RegistrationPayment extends Model
 {
-    use HasUuids;
+    use HasUuids, SoftDeletes;
 
     protected $table = 'registration_payments';
 
@@ -16,6 +18,7 @@ class RegistrationPayment extends Model
 
     protected $fillable = [
         'registration_id',
+        'reference_number',
         'amount',
         'payment_type',
         'payment_method',
@@ -28,6 +31,7 @@ class RegistrationPayment extends Model
         'amount' => 'decimal:2',
         'payment_date' => 'date',
         'created_at' => 'datetime',
+        'deleted_at' => 'datetime',
     ];
 
     /*

@@ -27,7 +27,7 @@ class UpdateExpenseRequest extends FormRequest
             'category' => [
                 'sometimes',
                 'required',
-                'in:akomodasi_tiket,perlengkapan,operasional_bus',
+                'in:akomodasi_tiket,perlengkapan,operasional_bus,lainnya',
             ],
 
             'amount' => [
@@ -73,7 +73,7 @@ class UpdateExpenseRequest extends FormRequest
             'vendor.max' => 'Nama vendor/penerima maksimal 150 karakter.',
 
             'category.required' => 'Kategori pengeluaran wajib dipilih.',
-            'category.in' => 'Kategori pengeluaran tidak valid. Pilih: akomodasi_tiket, perlengkapan, atau operasional_bus.',
+            'category.in' => 'Kategori pengeluaran tidak valid. Pilih: akomodasi_tiket, perlengkapan, atau operasional_bus, lainnya.',
 
             'amount.required' => 'Nominal pengeluaran wajib diisi.',
             'amount.numeric' => 'Nominal pengeluaran harus berupa angka.',

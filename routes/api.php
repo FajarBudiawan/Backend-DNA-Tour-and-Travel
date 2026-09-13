@@ -18,6 +18,7 @@ use App\Http\Controllers\Api\ScheduleController;
 use App\Http\Controllers\Api\TourLeaderController;
 use App\Http\Controllers\Api\MutawifController;
 use App\Http\Controllers\StockController;
+use App\Http\Controllers\Api\OtherIncomeController;
 
 // ====================
 // AUTH
@@ -150,6 +151,16 @@ Route::middleware('auth:sanctum')->group(function () {
         [RegistrationPaymentController::class, 'store']
     );
 
+    Route::delete(
+        '/payments/{payment}',
+        [RegistrationPaymentController::class, 'destroy']
+    );
+
+    Route::put(
+        '/payments/{payment}',
+        [RegistrationPaymentController::class, 'update']
+    );
+
     // Module Expenses (Pengeluaran Kas)
     Route::get('/expenses', [ExpenseController::class, 'index']);
     Route::post('/expenses', [ExpenseController::class, 'store']);
@@ -159,6 +170,13 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Summary Keuangan Global
     Route::get('/finance/summary', [FinanceSummaryController::class, 'summary']);
+
+    // OTHER INCOME / PEMASUKAN LAIN
+    Route::get('/other-incomes', [OtherIncomeController::class, 'index']);
+    Route::post('/other-incomes', [OtherIncomeController::class, 'store']);
+    Route::get('/other-incomes/{otherIncome}', [OtherIncomeController::class, 'show']);
+    Route::put('/other-incomes/{otherIncome}', [OtherIncomeController::class, 'update']);
+    Route::delete('/other-incomes/{otherIncome}', [OtherIncomeController::class, 'destroy']);
 
     // ====================
     // MANAJEMEN JAMAAH (CRUD)

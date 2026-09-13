@@ -46,10 +46,24 @@ class ExpenseController extends Controller
         $summaryBase = clone $query;
 
         $summary = [
-            'akomodasi_tiket' => (float) (clone $summaryBase)->where('category', 'akomodasi_tiket')->sum('amount'),
-            'perlengkapan' => (float) (clone $summaryBase)->where('category', 'perlengkapan')->sum('amount'),
-            'operasional_bus' => (float) (clone $summaryBase)->where('category', 'operasional_bus')->sum('amount'),
-            'total_expense' => (float) (clone $summaryBase)->sum('amount'),
+            'akomodasi_tiket' => (float) (clone $summaryBase)
+                ->where('category', 'akomodasi_tiket')
+                ->sum('amount'),
+
+            'perlengkapan' => (float) (clone $summaryBase)
+                ->where('category', 'perlengkapan')
+                ->sum('amount'),
+
+            'operasional_bus' => (float) (clone $summaryBase)
+                ->where('category', 'operasional_bus')
+                ->sum('amount'),
+
+            'lainnya' => (float) (clone $summaryBase)
+                ->where('category', 'lainnya')
+                ->sum('amount'),
+
+            'total_expense' => (float) (clone $summaryBase)
+                ->sum('amount'),
         ];
 
         // Filter berdasarkan kategori jika ada

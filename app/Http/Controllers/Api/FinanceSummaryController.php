@@ -8,6 +8,7 @@ use App\Models\Registration;
 use App\Models\RegistrationPayment;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use App\Models\OtherIncome;
 
 class FinanceSummaryController extends Controller
 {
@@ -16,8 +17,12 @@ class FinanceSummaryController extends Controller
      */
     public function summary(Request $request): JsonResponse
     {
-        // 1. Total Pemasukan (SUM amount dari registration_payments)
-        $totalPemasukan = (float) RegistrationPayment::sum('amount');
+        // 1. Total Pemasukan
+        // Pembayaran jamaah + pemasukan lain
+        $totalPayment = (float) RegistrationPayment::sum('amount');
+        $totalOtherIncome = (float) OtherIncome::sum('amount');
+
+        $totalPemasukan = $totalPayment + $totalOtherIncome;
 
         // 2. Total Pengeluaran (SUM amount dari expenses)
         $totalPengeluaran = (float) Expense::sum('amount');
