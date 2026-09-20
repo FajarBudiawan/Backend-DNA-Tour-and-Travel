@@ -22,7 +22,7 @@ public function login(Request $request)
         ], 401);
     }
 
-    $token = $jamaah->createToken('jamaah-mobile')->plainTextToken;
+    $token = $jamaah->createToken('jamaah-mobile', ['jamaah'])->plainTextToken;
 
     return response()->json([
         'message' => 'Login berhasil.',

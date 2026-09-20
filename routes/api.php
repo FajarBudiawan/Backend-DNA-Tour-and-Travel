@@ -30,16 +30,18 @@ Route::post('/login', [AuthController::class, 'login']);
 // Login Jamaah (Mobile App) tidak memerlukan token
 Route::post('/jamaah/login', [JamaahAuthController::class, 'login']);
 
+// AUTH JAMAAH
+Route::middleware(['auth:sanctum', 'abilities:jamaah'])->group(function () {
+    route :: get('/jamaah/me', [JamaahAuthController::class, 'me']);
+    route :: post('/jamaah/logout',[JamaahAuthController::class, 'logout']);
+});
+
 // Route yang memerlukan login
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum', 'abilities:admin'])->group(function () {
 
     // AUTH ADMIN
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/me', [AuthController::class, 'me']);
-
-    // AUTH JAMAAH
-    route :: get('/jamaah/me', [JamaahAuthController::class, 'me']);
-    route :: post('/jamaah/logout',[JamaahAuthController::class, 'logout']);
 
     // ====================
     // MASTER DATA HOTEL
