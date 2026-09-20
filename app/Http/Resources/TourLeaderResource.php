@@ -25,6 +25,7 @@ class TourLeaderResource extends JsonResource
                         'id' => $kloter->id,
                         'name' => $kloter->name,
                         'code' => $kloter->code,
+                        'assigned_at'=> $kloter->pivot->created_at,
                     ];
                 });
             }),

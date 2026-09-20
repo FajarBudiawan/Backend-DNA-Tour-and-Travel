@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateRegistrationRequest extends FormRequest
 {
@@ -13,34 +14,169 @@ class UpdateRegistrationRequest extends FormRequest
 
     public function rules(): array
     {
-        $registrationId = $this->route('registration')?->id;
-
         return [
-            'full_name' => ['sometimes', 'string', 'max:150'],
-            'passport_number' => ['nullable', 'string', 'max:50'],
+            'pilgrim_id' => [
+                'sometimes',
+                'nullable',
+                'string',
+                'max:100',
+            ],
+
+            'full_name' => [
+                'sometimes',
+                'string',
+                'max:255',
+            ],
+
+            'passport_number' => [
+                'sometimes',
+                'nullable',
+                'string',
+                'max:255',
+            ],
+
             'nik' => [
                 'sometimes',
                 'string',
-                'size:16',
-                'unique:registrations,nik,' . $registrationId,
+                'max:50',
             ],
-            'phone' => ['sometimes', 'string', 'max:20'],
-            'birth_date' => ['sometimes', 'date', 'before:today'],
-            'gender' => ['sometimes', 'in:L,P'],
-            'registration_date' => ['sometimes', 'date'],
-            'departure_date' => ['nullable', 'date'],
-            'package_id' => ['sometimes', 'uuid', 'exists:packages,id'],
-            'kloter_id' => ['nullable', 'uuid', 'exists:kloters,id'],
-            'meningitis_vaccine_status' => ['sometimes', 'in:belum_vaksin,sudah_vaksin'],
-            'photo_status' => ['sometimes', 'in:belum_ada,sudah_menyerahkan'],
-            'total_package_cost' => ['sometimes', 'numeric', 'min:0'],
-            'status' => ['sometimes', 'in:unpaid,dp,dp_paid,paid,fully_paid,cancelled,converted'],
-            'equipments' => ['nullable', 'array'],
-            'equipments.*.id' => ['sometimes','uuid','exists:registration_equipments,id',],
-            'equipments.*.equipment_name' => ['required_with:equipments', 'string', 'max:100'],
-            'equipments.*.stock_id' => ['required_with:equipments','uuid','exists:stocks,id',],
-            'equipments.*.size' => ['nullable', 'string', 'max:20'],
-            'equipments.*.is_received' => ['required_with:equipments', 'boolean'],
+
+            'phone' => [
+                'sometimes',
+                'string',
+                'max:50',
+            ],
+
+            'birth_date' => [
+                'sometimes',
+                'date',
+            ],
+
+            'gender' => [
+                'sometimes',
+                Rule::in(['L', 'P']),
+            ],
+
+            'registration_date' => [
+                'sometimes',
+                'date',
+            ],
+
+            'departure_date' => [
+                'sometimes',
+                'nullable',
+                'date',
+            ],
+
+            'package_id' => [
+                'sometimes',
+                'exists:packages,id',
+            ],
+
+            'kloter_id' => [
+                'sometimes',
+                'nullable',
+                'exists:kloters,id',
+            ],
+
+            'meningitis_vaccine_status' => [
+                'sometimes',
+                'string',
+                'max:50',
+            ],
+
+            'photo_status' => [
+                'sometimes',
+                'string',
+                'max:50',
+            ],
+
+            'total_package_cost' => [
+                'sometimes',
+                'numeric',
+                'min:0',
+            ],
+
+            'status' => [
+                'sometimes',
+                Rule::in([
+                    'unpaid',
+                    'dp_paid',
+                    'fully_paid',
+                    'cancelled',
+                    'converted',
+                ]),
+            ],
+
+            'equipments' => [
+                'sometimes',
+                'array',
+            ],
+
+            'equipments.*.id' => [
+                'sometimes',
+                'nullable',
+                'uuid',
+            ],
+
+            'equipments.*.equipment_name' => [
+                'required_with:equipments',
+                'string',
+                'max:255',
+            ],
+
+            'equipments.*.stock_id' => [
+                'required_with:equipments',
+                'uuid',
+                'exists:stocks,id',
+            ],
+
+            'equipments.*.is_received' => [
+                'required_with:equipments',
+                'boolean',
+            ],
+
+            'equipments.*.size' => [
+                'sometimes',
+                'nullable',
+                'string',
+                'max:50',
+            ],
+
+            'initial_payment' => [
+                'sometimes',
+                'nullable',
+                'array',
+            ],
+
+            'initial_payment.amount' => [
+                'required_with:initial_payment',
+                'numeric',
+                'min:0',
+            ],
+
+            'initial_payment.payment_type' => [
+                'sometimes',
+                'string',
+                'max:50',
+            ],
+
+            'initial_payment.payment_method' => [
+                'sometimes',
+                'string',
+                'max:50',
+            ],
+
+            'initial_payment.payment_date' => [
+                'sometimes',
+                'date',
+            ],
+
+            'initial_payment.notes' => [
+                'sometimes',
+                'nullable',
+                'string',
+            ],
         ];
     }
 }
