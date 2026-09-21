@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Jamaah;
 use Illuminate\Http\Request;
+use App\Http\Resources\JamaahMobileResource;
 
 class JamaahAuthController extends Controller
 {
@@ -31,10 +32,18 @@ public function login(Request $request)
     ]);
 }
 
-public function me(request $request)
+public function me(Request $request)
 {
+    $jamaah = $request->user()->load([
+        'package',
+        'kloter.tourLeaders',
+        'kloter.mutawifs',
+        'kloter.hotelMakkah',
+        'kloter.hotelMadinah',
+    ]);
+
     return response()->json([
-        'jamaah' => $request->user(),
+        'jamaah' => new JamaahMobileResource($jamaah),
     ]);
 }
 

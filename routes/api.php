@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\RegistrationPaymentController;
 use App\Http\Controllers\Api\RoomController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\JamaahAuthController;
+use App\Http\Controllers\Api\FamilyAuthController;
 use App\Http\Controllers\Api\ScheduleController;
 use App\Http\Controllers\Api\TourLeaderController;
 use App\Http\Controllers\Api\MutawifController;
@@ -30,10 +31,19 @@ Route::post('/login', [AuthController::class, 'login']);
 // Login Jamaah (Mobile App) tidak memerlukan token
 Route::post('/jamaah/login', [JamaahAuthController::class, 'login']);
 
+// Login Family (Mobile App) tidak memerlukan token
+Route::post('/family/login', [FamilyAuthController::class, 'login']);
+
 // AUTH JAMAAH
 Route::middleware(['auth:sanctum', 'abilities:jamaah'])->group(function () {
     route :: get('/jamaah/me', [JamaahAuthController::class, 'me']);
     route :: post('/jamaah/logout',[JamaahAuthController::class, 'logout']);
+});
+
+// AUTH FAMILY
+Route::middleware(['auth:sanctum', 'abilities:family'])->group(function () {
+    Route::get('/family/me', [FamilyAuthController::class, 'me']);
+    Route::post('/family/logout', [FamilyAuthController::class, 'logout']);
 });
 
 // Route yang memerlukan login

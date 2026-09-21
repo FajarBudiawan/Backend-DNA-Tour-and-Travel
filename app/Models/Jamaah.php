@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Laravel\Sanctum\HasApiTokens;
 
 class Jamaah extends Authenticatable
@@ -82,5 +83,13 @@ class Jamaah extends Authenticatable
     public function kloter(): BelongsTo
     {
         return $this->belongsTo(Kloter::class, 'kloter_id');
+    }
+
+    /**
+     * Daftar anggota keluarga yang terikat dengan Jamaah ini.
+     */
+    public function familyRelations(): HasMany
+    {
+        return $this->hasMany(FamilyRelation::class, 'jamaah_id');
     }
 }
