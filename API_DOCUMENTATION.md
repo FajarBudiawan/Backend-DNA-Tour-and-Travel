@@ -23,7 +23,7 @@ Dokumentasi ini dibuat berdasarkan kondisi source code TERKINI tanpa mengubah bu
 
 ---
 
-### Ringkasan Modul & Endpoint (Total 70 Endpoints)
+### Ringkasan Modul & Endpoint (Total 76 Endpoints)
 
 | Modul | Method | Endpoint | Auth Required | Status |
 | :--- | :--- | :--- | :---: | :---: |
@@ -31,8 +31,14 @@ Dokumentasi ini dibuat berdasarkan kondisi source code TERKINI tanpa mengubah bu
 | **Authentication** | `POST` | `/api/logout` | Yes | Active |
 | **Authentication** | `GET` | `/api/me` | Yes | Active |
 | **Jamaah Authentication** | `POST` | `/api/jamaah/login` | No | Active |
-| **Jamaah Authentication** | `POST` | `/api/jamaah/logout` | Yes | Active |
-| **Jamaah Authentication** | `GET` | `/api/jamaah/me` | Yes | Active |
+| **Jamaah Authentication** | `POST` | `/api/jamaah/logout` | Yes (`jamaah`) | Active |
+| **Jamaah Authentication** | `GET` | `/api/jamaah/me` | Yes (`jamaah`) | Active |
+| **Family Authentication** | `POST` | `/api/family/login` | No | Active |
+| **Family Authentication** | `POST` | `/api/family/logout` | Yes (`family`) | Active |
+| **Family Authentication** | `GET` | `/api/family/me` | Yes (`family`) | Active |
+| **Tour Leader Authentication** | `POST` | `/api/tour-leader/login` | No | Active |
+| **Tour Leader Authentication** | `POST` | `/api/tour-leader/logout` | Yes (`tour_leader`) | Active |
+| **Tour Leader Authentication** | `GET` | `/api/tour-leader/me` | Yes (`tour_leader`) | Active |
 | **Master Hotel** | `GET` | `/api/hotels` | Yes | Active |
 | **Master Hotel** | `POST` | `/api/hotels/find-or-create` | Yes | Active |
 | **Master Paket Umrah** | `GET` | `/api/packages` | Yes | Active |
@@ -114,7 +120,7 @@ Dokumentasi ini dibuat berdasarkan kondisi source code TERKINI tanpa mengubah bu
 
 ## Detail Rincian Endpoint per Modul
 
-### 1. Authentication & Jamaah Auth
+### 1. Authentication, Jamaah Auth & Mobile Auth
 
 #### `POST /api/login`
 * **Auth**: No
@@ -159,17 +165,301 @@ Dokumentasi ini dibuat berdasarkan kondisi source code TERKINI tanpa mengubah bu
   }
   ```
 
+---
+
+### 1a. Mobile Authentication (Sanctum Ability-Based)
+
+Sistem autentikasi Mobile App menggunakan **Laravel Sanctum** dengan ability token berbasis role. Setiap role memiliki ability sendiri dan **tidak bisa mengakses endpoint role lain**.
+
+#### Ringkasan Mobile Auth
+
+| Role | Login Endpoint | Ability | Token Scope |
+|---|---|---|---|
+| Jamaah | `POST /api/jamaah/login` | `jamaah` | Hanya `/api/jamaah/*` |
+| Family | `POST /api/family/login` | `family` | Hanya `/api/family/*` |
+| Tour Leader | `POST /api/tour-leader/login` | `tour_leader` | Hanya `/api/tour-leader/*` |
+
+#### Authorization Behavior
+
+Berdasarkan hasil testing:
+
+```
+Tour Leader → GET /api/tour-leader/me   → 200 OK
+Tour Leader → GET /api/jamaah/me        → 403 Forbidden
+Tour Leader → GET /api/me               → 403 Forbidden
+
+Jamaah      → GET /api/tour-leader/me   → 403 Forbidden
+Family      → GET /api/tour-leader/me   → 403 Forbidden
+```
+
+---
+
 #### `POST /api/jamaah/login`
 * **Auth**: No
-* **Deskripsi**: Login akun Jamaah (Mobile App).
-
-#### `POST /api/jamaah/logout`
-* **Auth**: Yes (Bearer Token)
-* **Deskripsi**: Revoke current access token Jamaah.
+* **Deskripsi**: Login sebagai Jamaah (Mobile App). Menghasilkan Sanctum Bearer Token dengan ability `jamaah`.
+* **Header**:
+  ```http
+  Content-Type: application/json
+  Accept: application/json
+  ```
+* **Request Body**:
+  * `login_id` (string, required, max:10): ID unik Jamaah (contoh: `JM-001`). Tidak memerlukan password.
+* **Contoh Request**:
+  ```json
+  {
+    "login_id": "JM-001"
+  }
+  ```
+* **Response Contoh (200 OK)**:
+  ```json
+  {
+    "message": "Login berhasil.",
+    "token": "2|abc123sanctumTokenExample",
+    "jamaah": {
+      "id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+      "login_id": "JM-001",
+      "full_name": "Ahmad Fauzi",
+      "status": "active"
+    }
+  }
+  ```
+* **Error Responses**:
+  * `401 Unauthorized` — Jamaah tidak ditemukan atau status bukan `active`:
+    ```json
+    { "message": "Jamaah tidak ditemukan atau tidak aktif." }
+    ```
+  * `422 Unprocessable Content` — `login_id` tidak disertakan:
+    ```json
+    { "message": "The login id field is required.", "errors": { "login_id": ["The login id field is required."] } }
+    ```
 
 #### `GET /api/jamaah/me`
-* **Auth**: Yes (Bearer Token)
-* **Deskripsi**: Mengambil profil jamaah terautentikasi.
+* **Auth**: Yes (Bearer Token, ability: `jamaah`)
+* **Deskripsi**: Mengambil profil Jamaah terautentikasi beserta informasi kloter, hotel, tour leader, dan mutawif.
+* **Header**:
+  ```http
+  Authorization: Bearer {token}
+  Accept: application/json
+  ```
+* **Response Contoh (200 OK)**:
+  ```json
+  {
+    "jamaah": {
+      "id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+      "login_id": "JM-001",
+      "full_name": "Ahmad Fauzi",
+      "status": "active",
+      "package": { "id": "...", "name": "Paket Executive" },
+      "kloter": {
+        "id": "...",
+        "name": "Kloter Reguler Syawal 1447H",
+        "departure_date": "2026-10-01",
+        "return_date": "2026-10-12",
+        "hotel_makkah": { "name": "Hotel Safwah Tower" },
+        "hotel_madinah": { "name": "Pullman Zamzam" },
+        "tour_leaders": [{ "name": "Ustadz Abdullah" }],
+        "mutawifs": [{ "name": "Syeikh Ahmad" }]
+      }
+    }
+  }
+  ```
+* **Error Responses**:
+  * `401 Unauthorized` — Token tidak disertakan atau kadaluarsa.
+  * `403 Forbidden` — Token tidak memiliki ability `jamaah`.
+
+#### `POST /api/jamaah/logout`
+* **Auth**: Yes (Bearer Token, ability: `jamaah`)
+* **Deskripsi**: Menghapus (revoke/invalidate) token Sanctum Jamaah yang aktif. Token yang di-revoke **tidak dapat digunakan kembali**.
+* **Header**:
+  ```http
+  Authorization: Bearer {token}
+  Accept: application/json
+  ```
+* **Response Contoh (200 OK)**:
+  ```json
+  {
+    "message": "Logout berhasil."
+  }
+  ```
+* **Error Responses**:
+  * `401 Unauthorized` — Token tidak disertakan atau kadaluarsa.
+
+---
+
+#### `POST /api/family/login`
+* **Auth**: No
+* **Deskripsi**: Login sebagai anggota keluarga Jamaah (Family mode, Mobile App). Menghasilkan Sanctum Bearer Token dengan ability `family`.
+* **Header**:
+  ```http
+  Content-Type: application/json
+  Accept: application/json
+  ```
+* **Request Body**:
+  * `login_id` (string, required, max:50): ID unik Jamaah yang dimonitor (contoh: `JM-001`). Tidak memerlukan password.
+* **Contoh Request**:
+  ```json
+  {
+    "login_id": "JM-001"
+  }
+  ```
+* **Response Contoh (200 OK)**:
+  ```json
+  {
+    "message": "Login Family berhasil.",
+    "token": "3|xyz456sanctumTokenExample",
+    "jamaah": {
+      "id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+      "login_id": "JM-001",
+      "full_name": "Ahmad Fauzi",
+      "status": "active"
+    }
+  }
+  ```
+* **Error Responses**:
+  * `401 Unauthorized` — Jamaah tidak ditemukan atau status bukan `active`:
+    ```json
+    { "message": "Jamaah tidak ditemukan atau tidak aktif." }
+    ```
+  * `422 Unprocessable Content` — `login_id` tidak disertakan.
+
+#### `GET /api/family/me`
+* **Auth**: Yes (Bearer Token, ability: `family`)
+* **Deskripsi**: Mengambil profil Jamaah untuk tampilan Family mode, beserta informasi kloter, hotel, tour leader, dan mutawif.
+* **Header**:
+  ```http
+  Authorization: Bearer {token}
+  Accept: application/json
+  ```
+* **Response Contoh (200 OK)**:
+  ```json
+  {
+    "jamaah": {
+      "id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+      "login_id": "JM-001",
+      "full_name": "Ahmad Fauzi",
+      "status": "active",
+      "package": { "name": "Paket Executive" },
+      "kloter": {
+        "name": "Kloter Reguler Syawal 1447H",
+        "departure_date": "2026-10-01",
+        "return_date": "2026-10-12",
+        "hotel_makkah": { "name": "Hotel Safwah Tower" },
+        "hotel_madinah": { "name": "Pullman Zamzam" },
+        "tour_leaders": [{ "name": "Ustadz Abdullah" }],
+        "mutawifs": [{ "name": "Syeikh Ahmad" }]
+      }
+    }
+  }
+  ```
+* **Error Responses**:
+  * `401 Unauthorized` — Token tidak disertakan atau kadaluarsa.
+  * `403 Forbidden` — Token tidak memiliki ability `family`.
+
+#### `POST /api/family/logout`
+* **Auth**: Yes (Bearer Token, ability: `family`)
+* **Deskripsi**: Menghapus (revoke/invalidate) token Sanctum Family yang aktif. Token yang di-revoke **tidak dapat digunakan kembali**.
+* **Header**:
+  ```http
+  Authorization: Bearer {token}
+  Accept: application/json
+  ```
+* **Response Contoh (200 OK)**:
+  ```json
+  {
+    "message": "Logout Family berhasil."
+  }
+  ```
+* **Error Responses**:
+  * `401 Unauthorized` — Token tidak disertakan atau kadaluarsa.
+
+---
+
+#### `POST /api/tour-leader/login`
+* **Auth**: No
+* **Deskripsi**: Login sebagai Tour Leader (Mobile App). Menghasilkan Sanctum Bearer Token dengan ability `tour_leader`. Tour Leader harus memiliki status selain `inactive`.
+* **Header**:
+  ```http
+  Content-Type: application/json
+  Accept: application/json
+  ```
+* **Request Body**:
+  * `login_id` (string, required, max:50): ID unik Tour Leader (contoh: `TL-001`). Tidak memerlukan password.
+* **Contoh Request**:
+  ```json
+  {
+    "login_id": "TL-001"
+  }
+  ```
+* **Response Contoh (200 OK)**:
+  ```json
+  {
+    "message": "Login Tour Leader berhasil.",
+    "token": "4|pqr789sanctumTokenExample",
+    "tour_leader": {
+      "id": "e1122334-5566-7788-9900-112233445568",
+      "login_id": "TL-001",
+      "full_name": "Ustadz Abdullah",
+      "status": "active"
+    }
+  }
+  ```
+* **Error Responses**:
+  * `401 Unauthorized` — Tour Leader tidak ditemukan atau status `inactive`:
+    ```json
+    { "message": "Tour Leader tidak ditemukan atau tidak aktif." }
+    ```
+  * `422 Unprocessable Content` — `login_id` tidak disertakan.
+
+#### `GET /api/tour-leader/me`
+* **Auth**: Yes (Bearer Token, ability: `tour_leader`)
+* **Deskripsi**: Mengambil profil Tour Leader terautentikasi beserta daftar kloter yang ditugaskan.
+* **Header**:
+  ```http
+  Authorization: Bearer {token}
+  Accept: application/json
+  ```
+* **Response Contoh (200 OK)**:
+  ```json
+  {
+    "tour_leader": {
+      "id": "e1122334-5566-7788-9900-112233445568",
+      "login_id": "TL-001",
+      "full_name": "Ustadz Abdullah",
+      "phone": "081234567890",
+      "certification_number": "CERT-12345",
+      "experience": "5 Tahun",
+      "performance": "Sangat Baik",
+      "status": "active",
+      "kloters": [
+        {
+          "id": "c1122334-5566-7788-9900-112233445566",
+          "name": "Kloter Reguler Syawal 1447H",
+          "code": "KLT-20260901-ABCD"
+        }
+      ]
+    }
+  }
+  ```
+* **Error Responses**:
+  * `401 Unauthorized` — Token tidak disertakan atau kadaluarsa.
+  * `403 Forbidden` — Token tidak memiliki ability `tour_leader`.
+
+#### `POST /api/tour-leader/logout`
+* **Auth**: Yes (Bearer Token, ability: `tour_leader`)
+* **Deskripsi**: Menghapus (revoke/invalidate) token Sanctum Tour Leader yang aktif. Token yang di-revoke **tidak dapat digunakan kembali**.
+* **Header**:
+  ```http
+  Authorization: Bearer {token}
+  Accept: application/json
+  ```
+* **Response Contoh (200 OK)**:
+  ```json
+  {
+    "message": "Logout Tour Leader berhasil."
+  }
+  ```
+* **Error Responses**:
+  * `401 Unauthorized` — Token tidak disertakan atau kadaluarsa.
 
 ---
 

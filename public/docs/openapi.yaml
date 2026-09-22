@@ -11,6 +11,9 @@ tags:
     name: Endpoints
     description: ''
   -
+    name: 'Mobile Authentication'
+    description: 'Autentikasi untuk pengguna Mobile App (Jamaah, Anggota Keluarga, dan Tour Leader) menggunakan Laravel Sanctum dengan ability token berbasis role.'
+  -
     name: 'Perjalanan / Schedule'
     description: "\nAPI untuk mengelola data jadwal perjalanan."
 components:
@@ -50,13 +53,85 @@ paths:
               required:
                 - email
                 - password
-  /api/jamaah/login:
+  /api/family/login:
     post:
-      summary: ''
-      operationId: postApiJamaahLogin
-      description: ''
+      summary: 'Login Family'
+      operationId: loginFamily
+      description: 'Login sebagai anggota keluarga Jamaah menggunakan `login_id` Jamaah yang terdaftar. Menghasilkan Sanctum Bearer Token dengan ability `family`. Token ini **hanya** berlaku untuk endpoint `/api/family/*`.'
       parameters: []
-      responses: {}
+      responses:
+        200:
+          description: 'Login berhasil. Token Sanctum dengan ability `family` dikembalikan.'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Login Family berhasil.'
+                  token: 3|abc123sanctumTokenExample
+                  jamaah:
+                    id: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
+                    login_id: JM-001
+                    full_name: 'Ahmad Fauzi'
+                    status: active
+                properties:
+                  message:
+                    type: string
+                    example: 'Login Family berhasil.'
+                  token:
+                    type: string
+                    example: 3|abc123sanctumTokenExample
+                  jamaah:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
+                      login_id:
+                        type: string
+                        example: JM-001
+                      full_name:
+                        type: string
+                        example: 'Ahmad Fauzi'
+                      status:
+                        type: string
+                        example: active
+        401:
+          description: 'Jamaah tidak ditemukan atau status tidak aktif.'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Jamaah tidak ditemukan atau tidak aktif.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Jamaah tidak ditemukan atau tidak aktif.'
+        422:
+          description: 'Validasi gagal — login_id tidak disertakan.'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'The login id field is required.'
+                  errors:
+                    login_id:
+                      - 'The login id field is required.'
+                properties:
+                  message:
+                    type: string
+                    example: 'The login id field is required.'
+                  errors:
+                    type: object
+                    properties:
+                      login_id:
+                        type: array
+                        example:
+                          - 'The login id field is required.'
+                        items:
+                          type: string
       tags:
         - Endpoints
       requestBody:
@@ -68,10 +143,415 @@ paths:
               properties:
                 login_id:
                   type: string
-                  description: ''
-                  example: architecto
+                  description: 'ID unik Jamaah (contoh: JM-001). Digunakan sebagai credential login. Tidak memerlukan password.'
+                  example: JM-001
               required:
                 - login_id
+      security: []
+  /api/family/me:
+    get:
+      summary: 'Profil Jamaah (Family Mode)'
+      operationId: profilJamaahFamilyMode
+      description: 'Mengambil data profil Jamaah beserta informasi kloter, hotel, tour leader, dan mutawif untuk ditampilkan di aplikasi mobile anggota keluarga. Memerlukan Bearer Token dengan ability `family`.'
+      parameters: []
+      responses:
+        200:
+          description: 'Data profil Jamaah berhasil diambil.'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  jamaah:
+                    id: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
+                    login_id: JM-001
+                    full_name: 'Ahmad Fauzi'
+                    status: active
+                    package:
+                      id: d1122334-5566-7788-9900-112233445567
+                      name: 'Paket Executive'
+                    kloter:
+                      id: c1122334-5566-7788-9900-112233445566
+                      name: 'Kloter Reguler Syawal 1447H'
+                      departure_date: '2026-10-01'
+                      return_date: '2026-10-12'
+                      hotel_makkah:
+                        name: 'Hotel Safwah Tower'
+                      hotel_madinah:
+                        name: 'Pullman Zamzam'
+                      tour_leaders:
+                        -
+                          name: 'Ustadz Abdullah'
+                      mutawifs:
+                        -
+                          name: 'Syeikh Ahmad'
+                properties:
+                  jamaah:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
+                      login_id:
+                        type: string
+                        example: JM-001
+                      full_name:
+                        type: string
+                        example: 'Ahmad Fauzi'
+                      status:
+                        type: string
+                        example: active
+                      package:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            example: d1122334-5566-7788-9900-112233445567
+                          name:
+                            type: string
+                            example: 'Paket Executive'
+                      kloter:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            example: c1122334-5566-7788-9900-112233445566
+                          name:
+                            type: string
+                            example: 'Kloter Reguler Syawal 1447H'
+                          departure_date:
+                            type: string
+                            example: '2026-10-01'
+                          return_date:
+                            type: string
+                            example: '2026-10-12'
+                          hotel_makkah:
+                            type: object
+                            properties:
+                              name:
+                                type: string
+                                example: 'Hotel Safwah Tower'
+                          hotel_madinah:
+                            type: object
+                            properties:
+                              name:
+                                type: string
+                                example: 'Pullman Zamzam'
+                          tour_leaders:
+                            type: array
+                            example:
+                              -
+                                name: 'Ustadz Abdullah'
+                            items:
+                              type: object
+                              properties:
+                                name:
+                                  type: string
+                                  example: 'Ustadz Abdullah'
+                          mutawifs:
+                            type: array
+                            example:
+                              -
+                                name: 'Syeikh Ahmad'
+                            items:
+                              type: object
+                              properties:
+                                name:
+                                  type: string
+                                  example: 'Syeikh Ahmad'
+        401:
+          description: 'Token tidak disertakan atau sudah kadaluarsa.'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+        403:
+          description: 'Token tidak memiliki ability `family` (mis. menggunakan token jamaah atau tour_leader).'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'This action is unauthorized.'
+                properties:
+                  message:
+                    type: string
+                    example: 'This action is unauthorized.'
+      tags:
+        - Endpoints
+  /api/family/logout:
+    post:
+      summary: 'Logout Family'
+      operationId: logoutFamily
+      description: 'Menghapus (revoke/invalidate) token Sanctum Family yang sedang aktif. Token yang sudah di-revoke tidak dapat digunakan kembali untuk request berikutnya.'
+      parameters: []
+      responses:
+        200:
+          description: 'Logout berhasil. Token dihapus.'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Logout Family berhasil.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Logout Family berhasil.'
+        401:
+          description: 'Token tidak disertakan atau sudah kadaluarsa.'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+  /api/tour-leader/login:
+    post:
+      summary: 'Login Tour Leader'
+      operationId: loginTourLeader
+      description: 'Login sebagai Tour Leader menggunakan `login_id` yang terdaftar. Menghasilkan Sanctum Bearer Token dengan ability `tour_leader`. Token ini **hanya** berlaku untuk endpoint `/api/tour-leader/*`. Status Tour Leader tidak boleh `inactive`.'
+      parameters: []
+      responses:
+        200:
+          description: 'Login berhasil. Token Sanctum dengan ability `tour_leader` dikembalikan.'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Login Tour Leader berhasil.'
+                  token: 4|xyz789sanctumTokenExample
+                  tour_leader:
+                    id: e1122334-5566-7788-9900-112233445568
+                    login_id: TL-001
+                    full_name: 'Ustadz Abdullah'
+                    status: active
+                properties:
+                  message:
+                    type: string
+                    example: 'Login Tour Leader berhasil.'
+                  token:
+                    type: string
+                    example: 4|xyz789sanctumTokenExample
+                  tour_leader:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: e1122334-5566-7788-9900-112233445568
+                      login_id:
+                        type: string
+                        example: TL-001
+                      full_name:
+                        type: string
+                        example: 'Ustadz Abdullah'
+                      status:
+                        type: string
+                        example: active
+        401:
+          description: 'Tour Leader tidak ditemukan atau status `inactive`.'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Tour Leader tidak ditemukan atau tidak aktif.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Tour Leader tidak ditemukan atau tidak aktif.'
+        422:
+          description: 'Validasi gagal — login_id tidak disertakan.'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'The login id field is required.'
+                  errors:
+                    login_id:
+                      - 'The login id field is required.'
+                properties:
+                  message:
+                    type: string
+                    example: 'The login id field is required.'
+                  errors:
+                    type: object
+                    properties:
+                      login_id:
+                        type: array
+                        example:
+                          - 'The login id field is required.'
+                        items:
+                          type: string
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                login_id:
+                  type: string
+                  description: 'ID unik Tour Leader (contoh: TL-001). Digunakan sebagai credential login. Tidak memerlukan password.'
+                  example: TL-001
+              required:
+                - login_id
+      security: []
+  /api/tour-leader/me:
+    get:
+      summary: 'Profil Tour Leader'
+      operationId: profilTourLeader
+      description: 'Mengambil data profil Tour Leader beserta daftar kloter yang ditugaskan. Memerlukan Bearer Token dengan ability `tour_leader`.'
+      parameters: []
+      responses:
+        200:
+          description: 'Data profil Tour Leader berhasil diambil.'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  tour_leader:
+                    id: e1122334-5566-7788-9900-112233445568
+                    login_id: TL-001
+                    full_name: 'Ustadz Abdullah'
+                    phone: '081234567890'
+                    certification_number: CERT-12345
+                    experience: '5 Tahun'
+                    performance: 'Sangat Baik'
+                    status: active
+                    kloters:
+                      -
+                        id: c1122334-5566-7788-9900-112233445566
+                        name: 'Kloter Reguler Syawal 1447H'
+                        code: KLT-20260901-ABCD
+                        departure_date: '2026-10-01'
+                properties:
+                  tour_leader:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: e1122334-5566-7788-9900-112233445568
+                      login_id:
+                        type: string
+                        example: TL-001
+                      full_name:
+                        type: string
+                        example: 'Ustadz Abdullah'
+                      phone:
+                        type: string
+                        example: '081234567890'
+                      certification_number:
+                        type: string
+                        example: CERT-12345
+                      experience:
+                        type: string
+                        example: '5 Tahun'
+                      performance:
+                        type: string
+                        example: 'Sangat Baik'
+                      status:
+                        type: string
+                        example: active
+                      kloters:
+                        type: array
+                        example:
+                          -
+                            id: c1122334-5566-7788-9900-112233445566
+                            name: 'Kloter Reguler Syawal 1447H'
+                            code: KLT-20260901-ABCD
+                            departure_date: '2026-10-01'
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              example: c1122334-5566-7788-9900-112233445566
+                            name:
+                              type: string
+                              example: 'Kloter Reguler Syawal 1447H'
+                            code:
+                              type: string
+                              example: KLT-20260901-ABCD
+                            departure_date:
+                              type: string
+                              example: '2026-10-01'
+        401:
+          description: 'Token tidak disertakan atau sudah kadaluarsa.'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+        403:
+          description: 'Token tidak memiliki ability `tour_leader` (mis. menggunakan token jamaah atau family).'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'This action is unauthorized.'
+                properties:
+                  message:
+                    type: string
+                    example: 'This action is unauthorized.'
+      tags:
+        - Endpoints
+  /api/tour-leader/logout:
+    post:
+      summary: 'Logout Tour Leader'
+      operationId: logoutTourLeader
+      description: 'Menghapus (revoke/invalidate) token Sanctum Tour Leader yang sedang aktif. Token yang sudah di-revoke tidak dapat digunakan kembali untuk request berikutnya.'
+      parameters: []
+      responses:
+        200:
+          description: 'Logout berhasil. Token dihapus.'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Logout Tour Leader berhasil.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Logout Tour Leader berhasil.'
+        401:
+          description: 'Token tidak disertakan atau sudah kadaluarsa.'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
   /api/logout:
     post:
       summary: ''
@@ -100,36 +580,6 @@ paths:
                   message:
                     type: string
                     example: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
-      tags:
-        - Endpoints
-  /api/jamaah/me:
-    get:
-      summary: ''
-      operationId: getApiJamaahMe
-      description: ''
-      parameters: []
-      responses:
-        401:
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  message: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
-                properties:
-                  message:
-                    type: string
-                    example: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
-      tags:
-        - Endpoints
-  /api/jamaah/logout:
-    post:
-      summary: ''
-      operationId: postApiJamaahLogout
-      description: ''
-      parameters: []
-      responses: {}
       tags:
         - Endpoints
   /api/hotels:
@@ -231,7 +681,7 @@ paths:
                 status:
                   type: string
                   description: ''
-                  example: draft
+                  example: inactive
                   enum:
                     - draft
                     - published
@@ -240,7 +690,7 @@ paths:
                 is_featured:
                   type: boolean
                   description: ''
-                  example: false
+                  example: true
                   nullable: true
               required:
                 - name
@@ -300,7 +750,7 @@ paths:
                 is_featured:
                   type: boolean
                   description: ''
-                  example: true
+                  example: false
     delete:
       summary: 'Hapus data paket Umrah.'
       operationId: hapusDataPaketUmrah
@@ -521,12 +971,12 @@ paths:
                 departure_date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-09-12T20:29:52'
+                  example: '2026-09-22T04:12:50'
                   nullable: true
                 return_date:
                   type: string
                   description: 'Must be a valid date. Must be a date after or equal to <code>departure_date</code>.'
-                  example: '2052-10-05'
+                  example: '2052-10-15'
                   nullable: true
                 hotel_makkah_id:
                   type: string
@@ -541,7 +991,7 @@ paths:
                 status:
                   type: string
                   description: ''
-                  example: cancelled
+                  example: completed
                   enum:
                     - draft
                     - active
@@ -619,12 +1069,12 @@ paths:
                 departure_date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-09-12T20:29:52'
+                  example: '2026-09-22T04:12:50'
                   nullable: true
                 return_date:
                   type: string
                   description: 'Must be a valid date. Must be a date after or equal to <code>departure_date</code>.'
-                  example: '2052-10-05'
+                  example: '2052-10-15'
                   nullable: true
                 hotel_makkah_id:
                   type: string
@@ -639,7 +1089,7 @@ paths:
                 status:
                   type: string
                   description: ''
-                  example: active
+                  example: cancelled
                   enum:
                     - draft
                     - active
@@ -669,7 +1119,7 @@ paths:
         in: path
         name: kloter_id
         description: 'The ID of the kloter.'
-        example: 019fff5a-e6a2-72d5-8f7d-8814ad6f0c89
+        example: 01a06167-ae4f-7187-9066-4dae12bc3d97
         required: true
         schema:
           type: string
@@ -717,7 +1167,7 @@ paths:
                 activity_date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-09-12T20:29:52'
+                  example: '2026-09-22T04:12:50'
                 activity_time:
                   type: string
                   description: ''
@@ -770,7 +1220,7 @@ paths:
         in: path
         name: kloter_id
         description: 'The ID of the kloter.'
-        example: 019fff5a-e6a2-72d5-8f7d-8814ad6f0c89
+        example: 01a06167-ae4f-7187-9066-4dae12bc3d97
         required: true
         schema:
           type: string
@@ -788,7 +1238,7 @@ paths:
         in: path
         name: kloter_id
         description: 'The ID of the kloter.'
-        example: 019fff5a-e6a2-72d5-8f7d-8814ad6f0c89
+        example: 01a06167-ae4f-7187-9066-4dae12bc3d97
         required: true
         schema:
           type: string
@@ -815,7 +1265,7 @@ paths:
                 activity_date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-09-12T20:29:52'
+                  example: '2026-09-22T04:12:50'
                 activity_time:
                   type: string
                   description: ''
@@ -873,7 +1323,7 @@ paths:
         in: path
         name: kloter_id
         description: 'The ID of the kloter.'
-        example: 019fff5a-e6a2-72d5-8f7d-8814ad6f0c89
+        example: 01a06167-ae4f-7187-9066-4dae12bc3d97
         required: true
         schema:
           type: string
@@ -911,7 +1361,7 @@ paths:
         in: path
         name: kloter_id
         description: 'The ID of the kloter.'
-        example: 019fff5a-e6a2-72d5-8f7d-8814ad6f0c89
+        example: 01a06167-ae4f-7187-9066-4dae12bc3d97
         required: true
         schema:
           type: string
@@ -934,7 +1384,7 @@ paths:
                 room_type:
                   type: string
                   description: ''
-                  example: quad
+                  example: triple
                   enum:
                     - quad
                     - triple
@@ -952,7 +1402,7 @@ paths:
         in: path
         name: kloter_id
         description: 'The ID of the kloter.'
-        example: 019fff5a-e6a2-72d5-8f7d-8814ad6f0c89
+        example: 01a06167-ae4f-7187-9066-4dae12bc3d97
         required: true
         schema:
           type: string
@@ -1004,7 +1454,7 @@ paths:
                 gender:
                   type: string
                   description: ''
-                  example: P
+                  example: L
                   enum:
                     - L
                     - P
@@ -1102,7 +1552,7 @@ paths:
         in: path
         name: room_id
         description: 'The ID of the room.'
-        example: 01a01e2a-d6b9-735a-b565-82e5752db78d
+        example: 01a0668d-b791-7099-a102-c1b24bd2cdfd
         required: true
         schema:
           type: string
@@ -1130,7 +1580,7 @@ paths:
                 title:
                   type: string
                   description: 'This field is required when <code>jamaah_id</code> is not present.'
-                  example: MISS
+                  example: MR
                   enum:
                     - MR
                     - MRS
@@ -1152,7 +1602,7 @@ paths:
         in: path
         name: room_id
         description: 'The ID of the room.'
-        example: 01a01e2a-d6b9-735a-b565-82e5752db78d
+        example: 01a0668d-b791-7099-a102-c1b24bd2cdfd
         required: true
         schema:
           type: string
@@ -1208,7 +1658,7 @@ paths:
         in: path
         name: room_id
         description: 'The ID of the room.'
-        example: 01a01e2a-d6b9-735a-b565-82e5752db78d
+        example: 01a0668d-b791-7099-a102-c1b24bd2cdfd
         required: true
         schema:
           type: string
@@ -1216,14 +1666,14 @@ paths:
         in: path
         name: roomMember_id
         description: 'The ID of the roomMember.'
-        example: 01a01e2a-d6bf-7388-be5c-3f7eebe7e2a6
+        example: 01a06698-bf7d-721f-8f09-ceee991e202e
         required: true
         schema:
           type: string
   /api/registrations:
     get:
-      summary: 'Menampilkan semua data pendaftaran (dengan pencarian & filter).'
-      operationId: menampilkanSemuaDataPendaftarandenganPencarianFilter
+      summary: "Menampilkan semua data pendaftaran\ndengan pencarian dan filter."
+      operationId: menampilkanSemuaDataPendaftaranDenganPencarianDanFilter
       description: ''
       parameters: []
       responses:
@@ -1286,22 +1736,22 @@ paths:
                 birth_date:
                   type: string
                   description: 'Must be a valid date. Must be a date before <code>today</code>.'
-                  example: '2022-10-07'
+                  example: '2022-10-16'
                 gender:
                   type: string
                   description: ''
-                  example: P
+                  example: L
                   enum:
                     - L
                     - P
                 registration_date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-09-12T20:29:52'
+                  example: '2026-09-22T04:12:51'
                 departure_date:
                   type: string
                   description: 'Must be a valid date. Must be a date after or equal to <code>registration_date</code>.'
-                  example: '2052-10-05'
+                  example: '2052-10-15'
                   nullable: true
                 package_id:
                   type: string
@@ -1315,7 +1765,7 @@ paths:
                 meningitis_vaccine_status:
                   type: string
                   description: ''
-                  example: belum_vaksin
+                  example: sudah_vaksin
                   enum:
                     - belum_vaksin
                     - sudah_vaksin
@@ -1333,7 +1783,7 @@ paths:
                 status:
                   type: string
                   description: ''
-                  example: dp
+                  example: cancelled
                   enum:
                     - unpaid
                     - dp
@@ -1355,7 +1805,7 @@ paths:
                     payment_type:
                       type: string
                       description: ''
-                      example: full_payment
+                      example: down_payment
                       enum:
                         - down_payment
                         - full_payment
@@ -1363,7 +1813,7 @@ paths:
                     payment_method:
                       type: string
                       description: ''
-                      example: mandiri_transfer
+                      example: bca_transfer
                       enum:
                         - bca_transfer
                         - mandiri_transfer
@@ -1374,7 +1824,7 @@ paths:
                     payment_date:
                       type: string
                       description: 'Must be a valid date.'
-                      example: '2026-09-12T20:29:52'
+                      example: '2026-09-22T04:12:51'
                       nullable: true
                   nullable: true
                 equipments:
@@ -1449,27 +1899,32 @@ paths:
             schema:
               type: object
               properties:
+                pilgrim_id:
+                  type: string
+                  description: 'Must not be greater than 100 characters.'
+                  example: b
+                  nullable: true
                 full_name:
                   type: string
-                  description: 'Must not be greater than 150 characters.'
-                  example: b
+                  description: 'Must not be greater than 255 characters.'
+                  example: 'n'
                 passport_number:
                   type: string
-                  description: 'Must not be greater than 50 characters.'
-                  example: 'n'
+                  description: 'Must not be greater than 255 characters.'
+                  example: g
                   nullable: true
                 nik:
                   type: string
-                  description: 'Must be 16 characters.'
-                  example: gzmiyvdljnikhway
+                  description: 'Must not be greater than 50 characters.'
+                  example: z
                 phone:
                   type: string
-                  description: 'Must not be greater than 20 characters.'
-                  example: kcmyuwpwlvqwrsit
+                  description: 'Must not be greater than 50 characters.'
+                  example: m
                 birth_date:
                   type: string
-                  description: 'Must be a valid date. Must be a date before <code>today</code>.'
-                  example: '2022-10-07'
+                  description: 'Must be a valid date.'
+                  example: '2026-09-22T04:12:51'
                 gender:
                   type: string
                   description: ''
@@ -1480,48 +1935,40 @@ paths:
                 registration_date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-09-12T20:29:52'
+                  example: '2026-09-22T04:12:51'
                 departure_date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-09-12T20:29:52'
+                  example: '2026-09-22T04:12:51'
                   nullable: true
                 package_id:
                   type: string
-                  description: 'Must be a valid UUID. Must match an existing stored value.'
-                  example: a4855dc5-0acb-33c3-b921-f4291f719ca0
+                  description: 'Must match an existing stored value.'
+                  example: null
                 kloter_id:
                   type: string
-                  description: 'Must be a valid UUID. Must match an existing stored value.'
-                  example: c90237e9-ced5-3af6-88ea-84aeaa148878
+                  description: 'Must match an existing stored value.'
+                  example: null
                   nullable: true
                 meningitis_vaccine_status:
                   type: string
-                  description: ''
-                  example: belum_vaksin
-                  enum:
-                    - belum_vaksin
-                    - sudah_vaksin
+                  description: 'Must not be greater than 50 characters.'
+                  example: i
                 photo_status:
                   type: string
-                  description: ''
-                  example: belum_ada
-                  enum:
-                    - belum_ada
-                    - sudah_menyerahkan
+                  description: 'Must not be greater than 50 characters.'
+                  example: 'y'
                 total_package_cost:
                   type: number
                   description: 'Must be at least 0.'
-                  example: 8
+                  example: 60
                 status:
                   type: string
                   description: ''
-                  example: fully_paid
+                  example: converted
                   enum:
                     - unpaid
-                    - dp
                     - dp_paid
-                    - paid
                     - fully_paid
                     - cancelled
                     - converted
@@ -1531,29 +1978,56 @@ paths:
                   example: null
                   items:
                     type: object
-                    nullable: true
                     properties:
                       id:
                         type: string
-                        description: 'Must be a valid UUID. Must match an existing stored value.'
-                        example: d6fa562b-acd5-35ff-babb-d11194d3737b
+                        description: 'Must be a valid UUID.'
+                        example: a4855dc5-0acb-33c3-b921-f4291f719ca0
+                        nullable: true
                       equipment_name:
                         type: string
-                        description: 'This field is required when <code>equipments</code> is present. Must not be greater than 100 characters.'
-                        example: d
+                        description: 'This field is required when <code>equipments</code> is present. Must not be greater than 255 characters.'
+                        example: z
                       stock_id:
                         type: string
                         description: 'This field is required when <code>equipments</code> is present. Must be a valid UUID. Must match an existing stored value.'
-                        example: add3503c-ebff-3875-93af-b8c6a695762b
-                      size:
-                        type: string
-                        description: 'Must not be greater than 20 characters.'
-                        example: nikhwaykcmyuwpwl
-                        nullable: true
+                        example: 977e5426-8d13-3824-86aa-b092f8ae52c5
                       is_received:
                         type: boolean
                         description: 'This field is required when <code>equipments</code> is present.'
                         example: true
+                      size:
+                        type: string
+                        description: 'Must not be greater than 50 characters.'
+                        example: 'y'
+                        nullable: true
+                initial_payment:
+                  type: object
+                  description: ''
+                  example: null
+                  properties:
+                    amount:
+                      type: number
+                      description: 'This field is required when <code>initial_payment</code> is present. Must be at least 0.'
+                      example: 42
+                    payment_type:
+                      type: string
+                      description: 'Must not be greater than 50 characters.'
+                      example: l
+                    payment_method:
+                      type: string
+                      description: 'Must not be greater than 50 characters.'
+                      example: j
+                    payment_date:
+                      type: string
+                      description: 'Must be a valid date.'
+                      example: '2026-09-22T04:12:51'
+                    notes:
+                      type: string
+                      description: ''
+                      example: architecto
+                      nullable: true
+                  nullable: true
     delete:
       summary: 'Hapus data pendaftaran.'
       operationId: hapusDataPendaftaran
@@ -1567,7 +2041,7 @@ paths:
         in: path
         name: registration_id
         description: 'The ID of the registration.'
-        example: 01a03d44-b220-7120-aed2-73ce5afc9517
+        example: 019fff5c-eeea-70af-9d06-fa11db58b991
         required: true
         schema:
           type: string
@@ -1585,7 +2059,7 @@ paths:
         in: path
         name: registration_id
         description: 'The ID of the registration.'
-        example: 01a03d44-b220-7120-aed2-73ce5afc9517
+        example: 019fff5c-eeea-70af-9d06-fa11db58b991
         required: true
         schema:
           type: string
@@ -1660,7 +2134,7 @@ paths:
                 payment_method:
                   type: string
                   description: ''
-                  example: bsi_transfer
+                  example: mandiri_transfer
                   enum:
                     - bca_transfer
                     - mandiri_transfer
@@ -1670,7 +2144,7 @@ paths:
                 payment_date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-09-12T20:29:52'
+                  example: '2026-09-22T04:12:51'
                 notes:
                   type: string
                   description: 'Must not be greater than 255 characters.'
@@ -1686,7 +2160,70 @@ paths:
         in: path
         name: registration_id
         description: 'The ID of the registration.'
-        example: 01a03d44-b220-7120-aed2-73ce5afc9517
+        example: 019fff5c-eeea-70af-9d06-fa11db58b991
+        required: true
+        schema:
+          type: string
+  '/api/payments/{payment_id}':
+    delete:
+      summary: 'Menghapus pembayaran pendaftaran secara soft delete.'
+      operationId: menghapusPembayaranPendaftaranSecaraSoftDelete
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+    put:
+      summary: 'Memperbarui pembayaran pendaftaran.'
+      operationId: memperbaruiPembayaranPendaftaran
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: number
+                  description: ''
+                  example: 4326.41688
+                payment_type:
+                  type: string
+                  description: ''
+                  example: full_payment
+                  enum:
+                    - down_payment
+                    - full_payment
+                payment_method:
+                  type: string
+                  description: ''
+                  example: bca_transfer
+                  enum:
+                    - bca_transfer
+                    - mandiri_transfer
+                    - bsi_transfer
+                    - cash
+                    - edc_qris
+                payment_date:
+                  type: string
+                  description: 'Must be a valid date.'
+                  example: '2026-09-22T04:12:51'
+                notes:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: m
+                  nullable: true
+    parameters:
+      -
+        in: path
+        name: payment_id
+        description: 'The ID of the payment.'
+        example: 01a01dcc-5c50-7289-ab5f-0bbf2bfb2e36
         required: true
         schema:
           type: string
@@ -1733,11 +2270,12 @@ paths:
                 category:
                   type: string
                   description: ''
-                  example: operasional_bus
+                  example: lainnya
                   enum:
                     - akomodasi_tiket
                     - perlengkapan
                     - operasional_bus
+                    - lainnya
                 amount:
                   type: number
                   description: ''
@@ -1745,7 +2283,7 @@ paths:
                 payment_method:
                   type: string
                   description: ''
-                  example: bsi_transfer
+                  example: bca_transfer
                   enum:
                     - bca_transfer
                     - mandiri_transfer
@@ -1755,7 +2293,7 @@ paths:
                 expense_date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-09-12T20:29:52'
+                  example: '2026-09-22T04:12:51'
                 reference_number:
                   type: string
                   description: 'Must not be greater than 50 characters.'
@@ -1820,6 +2358,7 @@ paths:
                     - akomodasi_tiket
                     - perlengkapan
                     - operasional_bus
+                    - lainnya
                 amount:
                   type: number
                   description: ''
@@ -1837,7 +2376,7 @@ paths:
                 expense_date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-09-12T20:29:52'
+                  example: '2026-09-22T04:12:51'
                 reference_number:
                   type: string
                   description: 'Must not be greater than 50 characters.'
@@ -1886,6 +2425,183 @@ paths:
                     example: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
       tags:
         - Endpoints
+  /api/other-incomes:
+    get:
+      summary: 'Menampilkan daftar pemasukan lain.'
+      operationId: menampilkanDaftarPemasukanLain
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+      tags:
+        - Endpoints
+    post:
+      summary: 'Menyimpan pemasukan lain baru.'
+      operationId: menyimpanPemasukanLainBaru
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                source:
+                  type: string
+                  description: 'Must not be greater than 150 characters.'
+                  example: b
+                category:
+                  type: string
+                  description: ''
+                  example: equipment_sales
+                  enum:
+                    - commission
+                    - equipment_sales
+                    - administration
+                    - other
+                amount:
+                  type: number
+                  description: ''
+                  example: 4326.41688
+                payment_method:
+                  type: string
+                  description: ''
+                  example: cash
+                  enum:
+                    - bca_transfer
+                    - mandiri_transfer
+                    - bsi_transfer
+                    - cash
+                    - edc_qris
+                income_date:
+                  type: string
+                  description: 'Must be a valid date.'
+                  example: '2026-09-22T04:12:51'
+                reference_number:
+                  type: string
+                  description: 'Must not be greater than 50 characters.'
+                  example: m
+                  nullable: true
+                notes:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: i
+                  nullable: true
+              required:
+                - source
+                - category
+                - amount
+                - payment_method
+                - income_date
+  '/api/other-incomes/{otherIncome_id}':
+    get:
+      summary: 'Menampilkan detail pemasukan lain.'
+      operationId: menampilkanDetailPemasukanLain
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+      tags:
+        - Endpoints
+    put:
+      summary: 'Memperbarui pemasukan lain.'
+      operationId: memperbaruiPemasukanLain
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                source:
+                  type: string
+                  description: 'Must not be greater than 150 characters.'
+                  example: b
+                category:
+                  type: string
+                  description: ''
+                  example: equipment_sales
+                  enum:
+                    - commission
+                    - equipment_sales
+                    - administration
+                    - other
+                amount:
+                  type: number
+                  description: ''
+                  example: 4326.41688
+                payment_method:
+                  type: string
+                  description: ''
+                  example: bca_transfer
+                  enum:
+                    - bca_transfer
+                    - mandiri_transfer
+                    - bsi_transfer
+                    - cash
+                    - edc_qris
+                income_date:
+                  type: string
+                  description: 'Must be a valid date.'
+                  example: '2026-09-22T04:12:51'
+                reference_number:
+                  type: string
+                  description: 'Must not be greater than 50 characters.'
+                  example: m
+                  nullable: true
+                notes:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: i
+                  nullable: true
+    delete:
+      summary: 'Menghapus pemasukan lain secara soft delete.'
+      operationId: menghapusPemasukanLainSecaraSoftDelete
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+    parameters:
+      -
+        in: path
+        name: otherIncome_id
+        description: 'The ID of the otherIncome.'
+        example: 01a09bcd-8b0b-7184-8293-4e13ef61c19e
+        required: true
+        schema:
+          type: string
   /api/jamaah:
     get:
       summary: 'Menampilkan semua data Jamaah resmi.'
@@ -1937,7 +2653,7 @@ paths:
                 birth_date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-09-12T20:29:52'
+                  example: '2026-09-22T04:12:51'
                   nullable: true
                 gender:
                   type: string
@@ -1995,12 +2711,12 @@ paths:
                 departure_date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-09-12T20:29:52'
+                  example: '2026-09-22T04:12:51'
                   nullable: true
                 return_date:
                   type: string
                   description: 'Must be a valid date. Must be a date after or equal to <code>departure_date</code>.'
-                  example: '2052-10-05'
+                  example: '2052-10-15'
                   nullable: true
                 tour_leader:
                   type: string
@@ -2075,12 +2791,12 @@ paths:
                 birth_date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-09-12T20:29:52'
+                  example: '2026-09-22T04:12:51'
                   nullable: true
                 gender:
                   type: string
                   description: ''
-                  example: L
+                  example: P
                   enum:
                     - L
                     - P
@@ -2133,12 +2849,12 @@ paths:
                 departure_date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-09-12T20:29:52'
+                  example: '2026-09-22T04:12:51'
                   nullable: true
                 return_date:
                   type: string
                   description: 'Must be a valid date. Must be a date after or equal to <code>departure_date</code>.'
-                  example: '2052-10-05'
+                  example: '2052-10-15'
                   nullable: true
                 tour_leader:
                   type: string
@@ -2241,7 +2957,7 @@ paths:
                 status:
                   type: string
                   description: ''
-                  example: inactive
+                  example: active
                   enum:
                     - active
                     - resting
@@ -2337,7 +3053,7 @@ paths:
         in: path
         name: id
         description: 'The ID of the tour leader.'
-        example: 01a0899c-754b-73bc-856a-d6fe4e37fec0
+        example: 01a0ae56-d4e2-7245-ac96-c1b5a4bddc03
         required: true
         schema:
           type: string
@@ -2363,7 +3079,7 @@ paths:
         in: path
         name: tour_leader_id
         description: 'The ID of the tour leader.'
-        example: 01a0899c-754b-73bc-856a-d6fe4e37fec0
+        example: 01a0ae56-d4e2-7245-ac96-c1b5a4bddc03
         required: true
         schema:
           type: string
@@ -2371,7 +3087,7 @@ paths:
         in: path
         name: kloter_id
         description: 'The ID of the kloter.'
-        example: 019fff5a-e6a2-72d5-8f7d-8814ad6f0c89
+        example: 01a06167-ae4f-7187-9066-4dae12bc3d97
         required: true
         schema:
           type: string
@@ -2431,7 +3147,7 @@ paths:
                 status:
                   type: string
                   description: ''
-                  example: active
+                  example: standby
                   enum:
                     - active
                     - standby
@@ -2552,7 +3268,7 @@ paths:
         in: path
         name: kloter_id
         description: 'The ID of the kloter.'
-        example: 019fff5a-e6a2-72d5-8f7d-8814ad6f0c89
+        example: 01a06167-ae4f-7187-9066-4dae12bc3d97
         required: true
         schema:
           type: string
@@ -2775,6 +3491,131 @@ paths:
         required: true
         schema:
           type: string
+  /api/jamaah/login:
+    post:
+      summary: 'Login Jamaah'
+      operationId: loginJamaah
+      description: 'Login sebagai Jamaah menggunakan `login_id` yang terdaftar. Menghasilkan Sanctum Bearer Token dengan ability `jamaah`. Token ini **hanya** berlaku untuk endpoint `/api/jamaah/*`. Jamaah harus berstatus `active`.'
+      parameters: []
+      responses:
+        200:
+          description: 'Login berhasil. Token Sanctum dengan ability `jamaah` dikembalikan.'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Login berhasil.'
+                  token: 2|abc123sanctumTokenExample
+                  jamaah:
+                    id: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
+                    login_id: JM-001
+                    full_name: 'Ahmad Fauzi'
+                    status: active
+                properties:
+                  message:
+                    type: string
+                    example: 'Login berhasil.'
+                  token:
+                    type: string
+                    example: 2|abc123sanctumTokenExample
+                  jamaah:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
+                      login_id:
+                        type: string
+                        example: JM-001
+                      full_name:
+                        type: string
+                        example: 'Ahmad Fauzi'
+                      status:
+                        type: string
+                        example: active
+        401:
+          description: 'Jamaah tidak ditemukan atau status tidak aktif.'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Jamaah tidak ditemukan atau tidak aktif.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Jamaah tidak ditemukan atau tidak aktif.'
+        422:
+          description: 'Validasi gagal — login_id tidak disertakan.'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'The login id field is required.'
+                  errors:
+                    login_id:
+                      - 'The login id field is required.'
+                properties:
+                  message:
+                    type: string
+                    example: 'The login id field is required.'
+                  errors:
+                    type: object
+                    properties:
+                      login_id:
+                        type: array
+                        example:
+                          - 'The login id field is required.'
+                        items:
+                          type: string
+      tags:
+        - 'Mobile Authentication'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                login_id:
+                  type: string
+                  description: 'ID unik Jamaah (contoh: JM-001). Digunakan sebagai credential login. Tidak memerlukan password.'
+                  example: JM-001
+              required:
+                - login_id
+      security: []
+  /api/jamaah/me:
+    get:
+      summary: 'Profil Jamaah'
+      operationId: profilJamaah
+      description: 'Mengambil data profil Jamaah beserta informasi kloter, hotel, tour leader, dan mutawif. Memerlukan Bearer Token dengan ability `jamaah`.'
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+      tags:
+        - 'Mobile Authentication'
+  /api/jamaah/logout:
+    post:
+      summary: 'Logout Jamaah'
+      operationId: logoutJamaah
+      description: 'Menghapus (revoke/invalidate) token Sanctum Jamaah yang sedang aktif. Token yang sudah di-revoke tidak dapat digunakan kembali.'
+      parameters: []
+      responses: {}
+      tags:
+        - 'Mobile Authentication'
   /api/schedules:
     get:
       summary: 'Mengambil daftar perjalanan'
@@ -2983,7 +3824,7 @@ paths:
         in: path
         name: schedule_id
         description: 'The ID of the schedule.'
-        example: 2
+        example: 4
         required: true
         schema:
           type: integer
@@ -3022,7 +3863,7 @@ paths:
         in: path
         name: schedule_id
         description: 'The ID of the schedule.'
-        example: 2
+        example: 4
         required: true
         schema:
           type: integer

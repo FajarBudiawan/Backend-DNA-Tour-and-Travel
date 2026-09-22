@@ -1,0 +1,308 @@
+# Custom endpoint definitions untuk Mobile Authentication (Family & Tour Leader)
+# Jamaah endpoints sudah ter-capture otomatis di 00.yaml oleh Scribe.
+
+- httpMethods:
+    - POST
+  uri: api/family/login
+  metadata:
+    groupName: 'Mobile Authentication'
+    groupDescription: 'Autentikasi untuk pengguna Mobile App (Jamaah, Anggota Keluarga, dan Tour Leader) menggunakan Laravel Sanctum dengan ability token berbasis role.'
+    subgroup: 'Family'
+    subgroupDescription: 'Login sebagai anggota keluarga Jamaah (mode Family) untuk memantau status perjalanan.'
+    title: 'Login Family'
+    description: 'Login sebagai anggota keluarga Jamaah menggunakan `login_id` Jamaah yang terdaftar. Menghasilkan Sanctum Bearer Token dengan ability `family`. Token ini **hanya** berlaku untuk endpoint `/api/family/*`.'
+    authenticated: false
+    deprecated: false
+  headers:
+    Content-Type: application/json
+    Accept: application/json
+  urlParameters: []
+  queryParameters: []
+  bodyParameters:
+    login_id:
+      name: login_id
+      description: 'ID unik Jamaah (contoh: JM-001). Digunakan sebagai credential login. Tidak memerlukan password.'
+      required: true
+      example: 'JM-001'
+      type: string
+      nullable: false
+  responses:
+    - status: 200
+      description: 'Login berhasil. Token Sanctum dengan ability `family` dikembalikan.'
+      content: |
+        {
+          "message": "Login Family berhasil.",
+          "token": "3|abc123sanctumTokenExample",
+          "jamaah": {
+            "id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+            "login_id": "JM-001",
+            "full_name": "Ahmad Fauzi",
+            "status": "active"
+          }
+        }
+    - status: 401
+      description: 'Jamaah tidak ditemukan atau status tidak aktif.'
+      content: |
+        {
+          "message": "Jamaah tidak ditemukan atau tidak aktif."
+        }
+    - status: 422
+      description: 'Validasi gagal — login_id tidak disertakan.'
+      content: |
+        {
+          "message": "The login id field is required.",
+          "errors": {
+            "login_id": ["The login id field is required."]
+          }
+        }
+
+- httpMethods:
+    - GET
+  uri: api/family/me
+  metadata:
+    groupName: 'Mobile Authentication'
+    groupDescription: ''
+    subgroup: 'Family'
+    subgroupDescription: ''
+    title: 'Profil Jamaah (Family Mode)'
+    description: 'Mengambil data profil Jamaah beserta informasi kloter, hotel, tour leader, dan mutawif untuk ditampilkan di aplikasi mobile anggota keluarga. Memerlukan Bearer Token dengan ability `family`.'
+    authenticated: true
+    deprecated: false
+  headers:
+    Authorization: 'Bearer {token}'
+    Content-Type: application/json
+    Accept: application/json
+  urlParameters: []
+  queryParameters: []
+  bodyParameters: []
+  responses:
+    - status: 200
+      description: 'Data profil Jamaah berhasil diambil.'
+      content: |
+        {
+          "jamaah": {
+            "id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+            "login_id": "JM-001",
+            "full_name": "Ahmad Fauzi",
+            "status": "active",
+            "package": {
+              "id": "d1122334-5566-7788-9900-112233445567",
+              "name": "Paket Executive"
+            },
+            "kloter": {
+              "id": "c1122334-5566-7788-9900-112233445566",
+              "name": "Kloter Reguler Syawal 1447H",
+              "departure_date": "2026-10-01",
+              "return_date": "2026-10-12",
+              "hotel_makkah": { "name": "Hotel Safwah Tower" },
+              "hotel_madinah": { "name": "Pullman Zamzam" },
+              "tour_leaders": [{ "name": "Ustadz Abdullah" }],
+              "mutawifs": [{ "name": "Syeikh Ahmad" }]
+            }
+          }
+        }
+    - status: 401
+      description: 'Token tidak disertakan atau sudah kadaluarsa.'
+      content: |
+        {
+          "message": "Unauthenticated."
+        }
+    - status: 403
+      description: 'Token tidak memiliki ability `family` (mis. menggunakan token jamaah atau tour_leader).'
+      content: |
+        {
+          "message": "This action is unauthorized."
+        }
+  auth:
+    - headers
+    - Authorization
+    - 'Bearer {token}'
+
+- httpMethods:
+    - POST
+  uri: api/family/logout
+  metadata:
+    groupName: 'Mobile Authentication'
+    groupDescription: ''
+    subgroup: 'Family'
+    subgroupDescription: ''
+    title: 'Logout Family'
+    description: 'Menghapus (revoke/invalidate) token Sanctum Family yang sedang aktif. Token yang sudah di-revoke tidak dapat digunakan kembali untuk request berikutnya.'
+    authenticated: true
+    deprecated: false
+  headers:
+    Authorization: 'Bearer {token}'
+    Content-Type: application/json
+    Accept: application/json
+  urlParameters: []
+  queryParameters: []
+  bodyParameters: []
+  responses:
+    - status: 200
+      description: 'Logout berhasil. Token dihapus.'
+      content: |
+        {
+          "message": "Logout Family berhasil."
+        }
+    - status: 401
+      description: 'Token tidak disertakan atau sudah kadaluarsa.'
+      content: |
+        {
+          "message": "Unauthenticated."
+        }
+  auth:
+    - headers
+    - Authorization
+    - 'Bearer {token}'
+
+- httpMethods:
+    - POST
+  uri: api/tour-leader/login
+  metadata:
+    groupName: 'Mobile Authentication'
+    groupDescription: ''
+    subgroup: 'Tour Leader'
+    subgroupDescription: 'Login sebagai Tour Leader untuk mengakses data kloter yang dipimpinnya.'
+    title: 'Login Tour Leader'
+    description: 'Login sebagai Tour Leader menggunakan `login_id` yang terdaftar. Menghasilkan Sanctum Bearer Token dengan ability `tour_leader`. Token ini **hanya** berlaku untuk endpoint `/api/tour-leader/*`. Status Tour Leader tidak boleh `inactive`.'
+    authenticated: false
+    deprecated: false
+  headers:
+    Content-Type: application/json
+    Accept: application/json
+  urlParameters: []
+  queryParameters: []
+  bodyParameters:
+    login_id:
+      name: login_id
+      description: 'ID unik Tour Leader (contoh: TL-001). Digunakan sebagai credential login. Tidak memerlukan password.'
+      required: true
+      example: 'TL-001'
+      type: string
+      nullable: false
+  responses:
+    - status: 200
+      description: 'Login berhasil. Token Sanctum dengan ability `tour_leader` dikembalikan.'
+      content: |
+        {
+          "message": "Login Tour Leader berhasil.",
+          "token": "4|xyz789sanctumTokenExample",
+          "tour_leader": {
+            "id": "e1122334-5566-7788-9900-112233445568",
+            "login_id": "TL-001",
+            "full_name": "Ustadz Abdullah",
+            "status": "active"
+          }
+        }
+    - status: 401
+      description: 'Tour Leader tidak ditemukan atau status `inactive`.'
+      content: |
+        {
+          "message": "Tour Leader tidak ditemukan atau tidak aktif."
+        }
+    - status: 422
+      description: 'Validasi gagal — login_id tidak disertakan.'
+      content: |
+        {
+          "message": "The login id field is required.",
+          "errors": {
+            "login_id": ["The login id field is required."]
+          }
+        }
+
+- httpMethods:
+    - GET
+  uri: api/tour-leader/me
+  metadata:
+    groupName: 'Mobile Authentication'
+    groupDescription: ''
+    subgroup: 'Tour Leader'
+    subgroupDescription: ''
+    title: 'Profil Tour Leader'
+    description: 'Mengambil data profil Tour Leader beserta daftar kloter yang ditugaskan. Memerlukan Bearer Token dengan ability `tour_leader`.'
+    authenticated: true
+    deprecated: false
+  headers:
+    Authorization: 'Bearer {token}'
+    Content-Type: application/json
+    Accept: application/json
+  urlParameters: []
+  queryParameters: []
+  bodyParameters: []
+  responses:
+    - status: 200
+      description: 'Data profil Tour Leader berhasil diambil.'
+      content: |
+        {
+          "tour_leader": {
+            "id": "e1122334-5566-7788-9900-112233445568",
+            "login_id": "TL-001",
+            "full_name": "Ustadz Abdullah",
+            "phone": "081234567890",
+            "certification_number": "CERT-12345",
+            "experience": "5 Tahun",
+            "performance": "Sangat Baik",
+            "status": "active",
+            "kloters": [
+              {
+                "id": "c1122334-5566-7788-9900-112233445566",
+                "name": "Kloter Reguler Syawal 1447H",
+                "code": "KLT-20260901-ABCD",
+                "departure_date": "2026-10-01"
+              }
+            ]
+          }
+        }
+    - status: 401
+      description: 'Token tidak disertakan atau sudah kadaluarsa.'
+      content: |
+        {
+          "message": "Unauthenticated."
+        }
+    - status: 403
+      description: 'Token tidak memiliki ability `tour_leader` (mis. menggunakan token jamaah atau family).'
+      content: |
+        {
+          "message": "This action is unauthorized."
+        }
+  auth:
+    - headers
+    - Authorization
+    - 'Bearer {token}'
+
+- httpMethods:
+    - POST
+  uri: api/tour-leader/logout
+  metadata:
+    groupName: 'Mobile Authentication'
+    groupDescription: ''
+    subgroup: 'Tour Leader'
+    subgroupDescription: ''
+    title: 'Logout Tour Leader'
+    description: 'Menghapus (revoke/invalidate) token Sanctum Tour Leader yang sedang aktif. Token yang sudah di-revoke tidak dapat digunakan kembali untuk request berikutnya.'
+    authenticated: true
+    deprecated: false
+  headers:
+    Authorization: 'Bearer {token}'
+    Content-Type: application/json
+    Accept: application/json
+  urlParameters: []
+  queryParameters: []
+  bodyParameters: []
+  responses:
+    - status: 200
+      description: 'Logout berhasil. Token dihapus.'
+      content: |
+        {
+          "message": "Logout Tour Leader berhasil."
+        }
+    - status: 401
+      description: 'Token tidak disertakan atau sudah kadaluarsa.'
+      content: |
+        {
+          "message": "Unauthenticated."
+        }
+  auth:
+    - headers
+    - Authorization
+    - 'Bearer {token}'
