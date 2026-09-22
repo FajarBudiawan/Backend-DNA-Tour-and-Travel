@@ -21,6 +21,7 @@ use App\Http\Controllers\Api\MutawifController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\Api\OtherIncomeController;
 use App\Http\Controllers\Api\TourLeaderAuthController;
+use App\Http\Controllers\Api\JamaahScheduleController;
 
 // ====================
 // AUTH
@@ -39,6 +40,7 @@ Route::post('/family/login', [FamilyAuthController::class, 'login']);
 Route::middleware(['auth:sanctum', 'abilities:jamaah'])->group(function () {
     route :: get('/jamaah/me', [JamaahAuthController::class, 'me']);
     route :: post('/jamaah/logout',[JamaahAuthController::class, 'logout']);
+    Route::get('/jamaah/schedules', [JamaahScheduleController::class, 'index']);
 });
 
 // AUTH FAMILY
