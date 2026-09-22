@@ -20,6 +20,7 @@ use App\Http\Controllers\Api\TourLeaderController;
 use App\Http\Controllers\Api\MutawifController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\Api\OtherIncomeController;
+use App\Http\Controllers\Api\TourLeaderAuthController;
 
 // ====================
 // AUTH
@@ -44,6 +45,13 @@ Route::middleware(['auth:sanctum', 'abilities:jamaah'])->group(function () {
 Route::middleware(['auth:sanctum', 'abilities:family'])->group(function () {
     Route::get('/family/me', [FamilyAuthController::class, 'me']);
     Route::post('/family/logout', [FamilyAuthController::class, 'logout']);
+});
+
+// AUTH TOUR LEADER
+Route::post('/tour-leader/login', [TourLeaderAuthController::class, 'login']);
+Route::middleware(['auth:sanctum', 'abilities:tour_leader'])->group(function () {
+    Route::get('/tour-leader/me', [TourLeaderAuthController::class, 'me']);
+    Route::post('/tour-leader/logout', [TourLeaderAuthController::class, 'logout']);
 });
 
 // Route yang memerlukan login
