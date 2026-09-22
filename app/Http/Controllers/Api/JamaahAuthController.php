@@ -23,12 +23,23 @@ public function login(Request $request)
         ], 401);
     }
 
-    $token = $jamaah->createToken('jamaah-mobile', ['jamaah'])->plainTextToken;
+    $jamaah->load([
+        'package',
+        'kloter.tourLeaders',
+        'kloter.mutawifs',
+        'kloter.hotelMakkah',
+        'kloter.hotelMadinah',
+    ]);
+
+    $token = $jamaah->createToken(
+        'jamaah-mobile',
+        ['jamaah']
+    )->plainTextToken;
 
     return response()->json([
         'message' => 'Login berhasil.',
         'token' => $token,
-        'jamaah' => $jamaah,
+        'jamaah' => new JamaahMobileResource($jamaah),
     ]);
 }
 
