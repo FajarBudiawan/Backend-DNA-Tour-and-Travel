@@ -572,16 +572,89 @@ class RegistrationController extends Controller
                     ])
                 );
 
-                // Jika total_package_cost berubah tanpa status manual,
-                // hitung ulang status keuangan.
+                // =====================================================
+                // UPDATE / PROCESS PAYMENT TRANSACTION
+                // =====================================================
                 if (
-                    $request->has(
-                        'total_package_cost'
-                    )
+                    $request->has('initial_payment')
+                    && is_array($request->initial_payment)
+                ) {
+                    $payData = $request->initial_payment;
+                    $amount = isset($payData['amount']) ? (float) $payData['amount'] : 0;
+
+                    $firstPayment = $registration
+                        ->payments()
+                        ->orderBy('created_at', 'asc')
+                        ->first();
+
+                    if ($firstPayment) {
+                        if ($amount > 0) {
+                            $firstPayment->update([
+                                'amount' => $amount,
+                                'payment_type' =>
+                                    $payData['payment_type']
+                                    ?? ($request->status === 'fully_paid'
+                                        ? 'full_payment'
+                                        : 'down_payment'),
+                                'payment_method' =>
+                                    $payData['payment_method']
+                                    ?? $firstPayment->payment_method
+                                    ?? 'bca_transfer',
+                                'payment_date' =>
+                                    $payData['payment_date']
+                                    ?? $firstPayment->payment_date
+                                    ?? now(),
+                                'notes' =>
+                                    $payData['notes']
+                                    ?? $firstPayment->notes
+                                    ?? 'Pembayaran pendaftaran',
+                            ]);
+                        } else {
+                            if ($request->status === 'unpaid') {
+                                $firstPayment->delete();
+                            } else {
+                                $firstPayment->update(['amount' => 0]);
+                            }
+                        }
+                    } elseif ($amount > 0) {
+                        $registration->payments()->create([
+                            'amount' => $amount,
+                            'payment_type' =>
+                                $payData['payment_type']
+                                ?? ($request->status === 'fully_paid'
+                                    ? 'full_payment'
+                                    : 'down_payment'),
+                            'payment_method' =>
+                                $payData['payment_method']
+                                ?? 'bca_transfer',
+                            'payment_date' =>
+                                $payData['payment_date']
+                                ?? now(),
+                            'recorded_by' =>
+                                auth()->id(),
+                            'notes' =>
+                                $payData['notes']
+                                ?? 'Pembayaran pendaftaran',
+                        ]);
+                    }
+
+                    $registration->updateFinancialStatus();
+                } elseif ($request->has('status') && $request->status === 'unpaid') {
+                    $firstPayment = $registration
+                        ->payments()
+                        ->orderBy('created_at', 'asc')
+                        ->first();
+
+                    if ($firstPayment) {
+                        $firstPayment->delete();
+                    }
+
+                    $registration->updateFinancialStatus();
+                } elseif (
+                    $request->has('total_package_cost')
                     && !$request->has('status')
                 ) {
-                    $registration
-                        ->updateFinancialStatus();
+                    $registration->updateFinancialStatus();
                 }
 
                 // =====================================================
