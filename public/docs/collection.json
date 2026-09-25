@@ -10,11 +10,578 @@
     ],
     "info": {
         "name": "DNA Tour & Travel API Documentation",
-        "_postman_id": "09aba514-050d-4037-8a3e-9aee694eb005",
+        "_postman_id": "c278e118-af12-4575-a7f9-cd6f2163b3a6",
         "description": "Dokumentasi resmi API Backend DNA Tour & Travel Umrah Management System.",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
     "item": [
+        {
+            "name": "Perjalanan \/ Schedule",
+            "description": "\nAPI untuk mengelola data jadwal perjalanan.",
+            "item": [
+                {
+                    "name": "Mengambil daftar perjalanan",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/schedules",
+                            "query": [
+                                {
+                                    "key": "q",
+                                    "value": "Ziarah",
+                                    "description": "Kata kunci pencarian pada title, location, keterangan, atau pic.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "category",
+                                    "value": "Ibadah",
+                                    "description": "Filter berdasarkan kategori kegiatan.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "date",
+                                    "value": "2026-09-10",
+                                    "description": "Filter berdasarkan tanggal (YYYY-MM-DD).",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "day_number",
+                                    "value": "1",
+                                    "description": "Filter berdasarkan nomor hari.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/schedules?q=Ziarah&category=Ibadah&date=2026-09-10&day_number=1"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Mendukung search dan filter berdasarkan query parameter."
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Menambahkan perjalanan baru",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/schedules",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/schedules"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"day_number\":1,\"date\":\"2026-09-10\",\"time\":\"08:00\",\"title\":\"Ziarah Kota Madinah\",\"category\":\"Ziarah\",\"location\":\"Masjid Nabawi\",\"keterangan\":\"Berkumpul di lobby hotel tepat waktu\",\"pic\":\"Ustadz Ahmad\",\"status_override\":\"upcoming\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Mengambil detail perjalanan",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/schedules\/:schedule_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/schedules\/:schedule_id",
+                            "variable": [
+                                {
+                                    "id": "schedule_id",
+                                    "key": "schedule_id",
+                                    "value": 4,
+                                    "description": "The ID of the schedule."
+                                },
+                                {
+                                    "id": "schedule",
+                                    "key": "schedule",
+                                    "value": 1,
+                                    "description": "ID Schedule."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Memperbarui data perjalanan",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/schedules\/:schedule_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/schedules\/:schedule_id",
+                            "variable": [
+                                {
+                                    "id": "schedule_id",
+                                    "key": "schedule_id",
+                                    "value": 4,
+                                    "description": "The ID of the schedule."
+                                },
+                                {
+                                    "id": "schedule",
+                                    "key": "schedule",
+                                    "value": 1,
+                                    "description": "ID Schedule."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"day_number\":1,\"date\":\"2026-09-10\",\"time\":\"09:00\",\"title\":\"Ziarah Kota Madinah (Updated)\",\"category\":\"Ziarah\",\"location\":\"Masjid Nabawi\",\"keterangan\":\"Berkumpul di lobby hotel\",\"pic\":\"Ustadz Ahmad\",\"status_override\":\"in_progress\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Memperbarui status override perjalanan",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/schedules\/:schedule_id\/status",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/schedules\/:schedule_id\/status",
+                            "variable": [
+                                {
+                                    "id": "schedule_id",
+                                    "key": "schedule_id",
+                                    "value": 4,
+                                    "description": "The ID of the schedule."
+                                },
+                                {
+                                    "id": "schedule",
+                                    "key": "schedule",
+                                    "value": 1,
+                                    "description": "ID Schedule."
+                                }
+                            ]
+                        },
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"status_override\":\"in_progress\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Menghapus perjalanan",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/schedules\/:schedule_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/schedules\/:schedule_id",
+                            "variable": [
+                                {
+                                    "id": "schedule_id",
+                                    "key": "schedule_id",
+                                    "value": 4,
+                                    "description": "The ID of the schedule."
+                                },
+                                {
+                                    "id": "schedule",
+                                    "key": "schedule",
+                                    "value": 1,
+                                    "description": "ID Schedule."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Modul Darurat \/ Emergency \/ SOS",
+            "description": "\nAPI untuk mengelola laporan kejadian darurat (SOS Incident) dari Jamaah dan penanganannya oleh Admin\/Tour Leader.",
+            "item": [
+                {
+                    "name": "Menampilkan daftar SOS Incident",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/sos-incidents",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/sos-incidents"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Menampilkan daftar laporan SOS yang dapat diakses oleh user sesuai ability token autentikasi.\n\n**Scope Akses Berdasarkan Role:**\n* **Admin (`admin`):** Memiliki akses penuh untuk melihat seluruh laporan SOS dari semua kloter.\n* **Tour Leader (`tour_leader`):** Hanya dapat melihat laporan SOS dari kloter yang ditugaskan kepadanya.\n* **Jamaah (`jamaah`):** Hanya dapat melihat laporan SOS miliknya sendiri.\n\nData diurutkan berdasarkan `triggered_at` terbaru dan menyertakan eager-load relasi `jamaah` (id, full_name, phone), `kloter` (id, name), serta jumlah tanggapan (`responses_count`)."
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Membuat laporan SOS baru",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/sos-incidents",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/sos-incidents"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"jamaah_id\":\"9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d\",\"type\":\"Darurat Medis\",\"description\":\"Jamaah mengalami pusing dan sesak napas.\",\"location_name\":\"Pelataran Tawaf Gate 1\",\"latitude\":21.4225,\"longitude\":39.8262}"
+                        },
+                        "description": "Membuat laporan kejadian darurat (SOS Incident) baru.\n\n**Aturan Autentikasi & Authorization:**\n* **Jamaah (`jamaah`):** Dapat membuat SOS untuk dirinya sendiri. Field `jamaah_id` **tidak perlu dikirim** oleh client karena diisi otomatis dari token Jamaah.\n* **Admin (`admin`):** Dapat membuat SOS atas nama Jamaah dan **wajib menentukan** `jamaah_id` di request body. Jika `jamaah_id` kosong\/tidak disertakan, mengembalikan response error `422 Unprocessable Entity`.\n* **Tour Leader (`tour_leader`):** **Tidak diperbolehkan** membuat SOS dan menghasilkan response error `403 Forbidden` (`Tour Leader tidak dapat membuat SOS.`).\n\n**Aturan Penentuan Field Otomatis oleh Backend:**\n* `kloter_id`: Diambil otomatis dari `jamaah.kloter_id`.\n* `status`: Bernilai awal `'triggered'`.\n* `triggered_at`: Diisi otomatis dengan timestamp `now()`.\n* Record awal pada `sos_status_histories` dibuat otomatis (`old_status: null`, `new_status: 'triggered'`)."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Menampilkan detail satu SOS Incident",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/sos-incidents\/:sosIncident_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/sos-incidents\/:sosIncident_id",
+                            "variable": [
+                                {
+                                    "id": "sosIncident_id",
+                                    "key": "sosIncident_id",
+                                    "value": "01a0d96c-1e72-7144-83eb-2a1d35530e00",
+                                    "description": "The ID of the sosIncident."
+                                },
+                                {
+                                    "id": "sosIncident",
+                                    "key": "sosIncident",
+                                    "value": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+                                    "description": "UUID laporan SOS Incident."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Menampilkan rincian informasi satu laporan kejadian SOS Incident beserta relasi Jamaah, Kloter, Responses, dan Status Histories.\n\n**Scope Akses Berdasarkan Role:**\n* **Admin (`admin`):** Dapat melihat detail laporan SOS manapun.\n* **Tour Leader (`tour_leader`):** Hanya dapat melihat detail SOS jika kloter incident sesuai dengan kloter assignment-nya.\n* **Jamaah (`jamaah`):** Hanya dapat melihat detail SOS miliknya sendiri."
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Mengubah status SOS Incident",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/sos-incidents\/:sosIncident_id\/status",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/sos-incidents\/:sosIncident_id\/status",
+                            "variable": [
+                                {
+                                    "id": "sosIncident_id",
+                                    "key": "sosIncident_id",
+                                    "value": "01a0d96c-1e72-7144-83eb-2a1d35530e00",
+                                    "description": "The ID of the sosIncident."
+                                },
+                                {
+                                    "id": "sosIncident",
+                                    "key": "sosIncident",
+                                    "value": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+                                    "description": "UUID laporan SOS Incident."
+                                }
+                            ]
+                        },
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"status\":\"acknowledged\"}"
+                        },
+                        "description": "Memperbarui status penanganan laporan SOS Incident dan mencatat riwayat perubahannya ke `sos_status_histories`.\n\n**Aturan Hak Akses:**\n* **Jamaah (`jamaah`):** **Tidak dapat** mengubah status SOS. Menghasilkan response `403 Forbidden` (`Jamaah tidak dapat mengubah status SOS.`).\n* **Admin (`admin`):** Dapat mengubah status SOS mana saja jika memiliki akses. Aktor pencatat pada `sos_status_histories` disimpan di kolom `changed_by`.\n* **Tour Leader (`tour_leader`):** Dapat mengubah status SOS jika memiliki akses terhadap incident (kloter assignment). Aktor pencatat pada `sos_status_histories` disimpan di kolom `tour_leader_id`.\n\n**Nilai Status yang Diperbolehkan:**\n* `triggered`: Laporan SOS baru terpicu.\n* `acknowledged`: Laporan telah diterima\/dikonfirmasi oleh Petugas\/TL.\n* `in_action`: Petugas\/TL sedang dalam penanganan di lapangan.\n* `resolved`: Kejadian darurat telah selesai ditangani.\n* `false_alarm`: Laporan palsu \/ tidak sengaja tertekan."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Menampilkan daftar response pada SOS Incident",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/sos-incidents\/:sosIncident_id\/responses",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/sos-incidents\/:sosIncident_id\/responses",
+                            "variable": [
+                                {
+                                    "id": "sosIncident_id",
+                                    "key": "sosIncident_id",
+                                    "value": "01a0d96c-1e72-7144-83eb-2a1d35530e00",
+                                    "description": "The ID of the sosIncident."
+                                },
+                                {
+                                    "id": "sosIncident",
+                                    "key": "sosIncident",
+                                    "value": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+                                    "description": "UUID laporan SOS Incident."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Menampilkan seluruh daftar tanggapan\/keterangan penanganan pada satu laporan SOS Incident diurutkan berdasarkan `created_at` dari terlama ke terbaru.\n\n**Scope Akses Berdasarkan Role:**\nAdmin, Tour Leader (kloter assigned), dan Jamaah (pemilik SOS) yang memiliki akses ke laporan SOS ini."
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Menambahkan response \/ keterangan baru pada SOS Incident",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/sos-incidents\/:sosIncident_id\/responses",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/sos-incidents\/:sosIncident_id\/responses",
+                            "variable": [
+                                {
+                                    "id": "sosIncident_id",
+                                    "key": "sosIncident_id",
+                                    "value": "01a0d96c-1e72-7144-83eb-2a1d35530e00",
+                                    "description": "The ID of the sosIncident."
+                                },
+                                {
+                                    "id": "sosIncident",
+                                    "key": "sosIncident",
+                                    "value": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+                                    "description": "UUID laporan SOS Incident."
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"message\":\"Tim medis sudah tiba di lokasi dan penanganan sedang berjalan.\"}"
+                        },
+                        "description": "Menambahkan tanggapan, pesan, atau catatan penanganan baru pada laporan SOS Incident.\n\n**Aturan Penentuan Aktor Otomatis:**\n* Aktor penanggap ditentukan otomatis berdasarkan token autentikasi yang sedang aktif (`jamaah_id`, `tour_leader_id`, atau `internal_user_id`).\n* Client **tidak boleh** dan **tidak perlu** mengirimkan actor ID di request body."
+                    },
+                    "response": []
+                }
+            ]
+        },
         {
             "name": "Endpoints",
             "description": "",
@@ -48,6 +615,34 @@
                     "response": []
                 },
                 {
+                    "name": "POST api\/jamaah\/login",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/jamaah\/login",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/jamaah\/login"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"login_id\":\"architecto\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": []
+                },
+                {
                     "name": "Login Family menggunakan ID Jamaah (login_id).",
                     "request": {
                         "url": {
@@ -72,6 +667,76 @@
                             "raw": "{\"login_id\":\"b\"}"
                         },
                         "description": "Menerbitkan Sanctum token dengan ability ['family']."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "GET api\/jamaah\/me",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/jamaah\/me",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/jamaah\/me"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "POST api\/jamaah\/logout",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/jamaah\/logout",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/jamaah\/logout"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
                     },
                     "response": []
                 },
@@ -542,7 +1207,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"b\",\"category\":\"n\",\"status\":\"inactive\",\"is_featured\":false}"
+                            "raw": "{\"name\":\"b\",\"category\":\"n\",\"status\":\"published\",\"is_featured\":false}"
                         },
                         "description": ""
                     },
@@ -818,7 +1483,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"b\",\"package_id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"code\":\"z\",\"flight_code\":\"m\",\"departure_date\":\"2026-09-22T04:12:50\",\"return_date\":\"2052-10-15\",\"hotel_makkah_id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"hotel_madinah_id\":\"c90237e9-ced5-3af6-88ea-84aeaa148878\",\"status\":\"completed\",\"tour_leader\":\"i\",\"mutawif_local\":\"y\"}"
+                            "raw": "{\"name\":\"b\",\"package_id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"code\":\"z\",\"flight_code\":\"m\",\"departure_date\":\"2026-09-25T20:00:43\",\"return_date\":\"2052-10-18\",\"hotel_makkah_id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"hotel_madinah_id\":\"c90237e9-ced5-3af6-88ea-84aeaa148878\",\"status\":\"active\",\"tour_leader\":\"i\",\"mutawif_local\":\"y\"}"
                         },
                         "description": "package_id, departure_date, return_date sekarang NULLABLE (keputusan klien)."
                     },
@@ -907,7 +1572,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"b\",\"package_id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"code\":\"z\",\"flight_code\":\"m\",\"departure_date\":\"2026-09-22T04:12:50\",\"return_date\":\"2052-10-15\",\"hotel_makkah_id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"hotel_madinah_id\":\"c90237e9-ced5-3af6-88ea-84aeaa148878\",\"status\":\"cancelled\",\"tour_leader\":\"i\",\"mutawif_local\":\"y\"}"
+                            "raw": "{\"name\":\"b\",\"package_id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"code\":\"z\",\"flight_code\":\"m\",\"departure_date\":\"2026-09-25T20:00:43\",\"return_date\":\"2052-10-18\",\"hotel_makkah_id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"hotel_madinah_id\":\"c90237e9-ced5-3af6-88ea-84aeaa148878\",\"status\":\"draft\",\"tour_leader\":\"i\",\"mutawif_local\":\"y\"}"
                         },
                         "description": ""
                     },
@@ -1029,7 +1694,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"day_number\":16,\"activity_date\":\"2026-09-22T04:12:50\",\"activity_time\":\"architecto\",\"hijri_date_ref\":\"n\",\"title\":\"g\",\"location\":\"z\",\"category\":\"m\",\"pic\":\"i\",\"status\":\"y\",\"description\":\"Eius et animi quos velit et.\",\"is_published\":false}"
+                            "raw": "{\"day_number\":16,\"activity_date\":\"2026-09-25T20:00:43\",\"activity_time\":\"architecto\",\"hijri_date_ref\":\"n\",\"title\":\"g\",\"location\":\"z\",\"category\":\"m\",\"pic\":\"i\",\"status\":\"y\",\"description\":\"Eius et animi quos velit et.\",\"is_published\":true}"
                         },
                         "description": ""
                     },
@@ -1086,7 +1751,7 @@
                                 {
                                     "id": "schedule_id",
                                     "key": "schedule_id",
-                                    "value": "01a06c86-0384-702f-b748-164626d2fd9f",
+                                    "value": "01a06c86-0387-71ab-a457-6b509ce35330",
                                     "description": "The ID of the schedule."
                                 }
                             ]
@@ -1104,7 +1769,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"day_number\":16,\"activity_date\":\"2026-09-22T04:12:50\",\"activity_time\":\"architecto\",\"hijri_date_ref\":\"n\",\"title\":\"g\",\"location\":\"z\",\"category\":\"m\",\"pic\":\"i\",\"status\":\"y\",\"description\":\"Eius et animi quos velit et.\",\"is_published\":false}"
+                            "raw": "{\"day_number\":16,\"activity_date\":\"2026-09-25T20:00:43\",\"activity_time\":\"architecto\",\"hijri_date_ref\":\"n\",\"title\":\"g\",\"location\":\"z\",\"category\":\"m\",\"pic\":\"i\",\"status\":\"y\",\"description\":\"Eius et animi quos velit et.\",\"is_published\":false}"
                         },
                         "description": "Note: Manual update automatically sets is_customized = true."
                     },
@@ -1128,7 +1793,7 @@
                                 {
                                     "id": "schedule_id",
                                     "key": "schedule_id",
-                                    "value": "01a06c86-0384-702f-b748-164626d2fd9f",
+                                    "value": "01a06c86-0387-71ab-a457-6b509ce35330",
                                     "description": "The ID of the schedule."
                                 }
                             ]
@@ -1232,7 +1897,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"room_type\":\"triple\",\"hotel_id\":\"6ff8f7f6-1eb3-3525-be4a-3932c805afed\"}"
+                            "raw": "{\"room_type\":\"single\",\"hotel_id\":\"6ff8f7f6-1eb3-3525-be4a-3932c805afed\"}"
                         },
                         "description": "\/\/ DEPRECATED sementara: endpoint ini bergantung pada registration_id dari tabel registrations."
                     },
@@ -1260,7 +1925,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"kloter_id\":\"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",\"hotel_id\":\"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9\",\"room_number\":\"m\",\"room_type\":\"double\",\"capacity\":35,\"gender\":\"L\",\"notes\":\"y\"}"
+                            "raw": "{\"kloter_id\":\"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",\"hotel_id\":\"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9\",\"room_number\":\"m\",\"room_type\":\"quint\",\"capacity\":35,\"gender\":\"L\",\"notes\":\"y\"}"
                         },
                         "description": ""
                     },
@@ -1349,7 +2014,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"hotel_id\":\"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",\"room_number\":\"g\",\"room_type\":\"triple\",\"capacity\":66,\"gender\":\"L\",\"notes\":\"m\"}"
+                            "raw": "{\"hotel_id\":\"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",\"room_number\":\"g\",\"room_type\":\"quad\",\"capacity\":66,\"gender\":\"P\",\"notes\":\"m\"}"
                         },
                         "description": ""
                     },
@@ -1418,7 +2083,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"jamaah_id\":\"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",\"title\":\"MR\",\"occupant_name\":\"g\",\"age\":16}"
+                            "raw": "{\"jamaah_id\":\"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",\"title\":\"MISS\",\"occupant_name\":\"g\",\"age\":16}"
                         },
                         "description": "Kamar campuran gender diperbolehkan (tidak ada batasan gender penghuni vs kamar).\nMencegah duplikasi jamaah_id dalam kloter_id & hotel_id yang sama."
                     },
@@ -1460,7 +2125,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"jamaah_id\":\"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",\"title\":\"MR\",\"occupant_name\":\"g\",\"age\":16}"
+                            "raw": "{\"jamaah_id\":\"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",\"title\":\"MSTR\",\"occupant_name\":\"g\",\"age\":16}"
                         },
                         "description": ""
                     },
@@ -1572,7 +2237,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"registration_number\":\"b\",\"pilgrim_id\":\"n\",\"full_name\":\"g\",\"passport_number\":\"z\",\"nik\":\"miyvdljnikhwaykc\",\"phone\":\"myuwpwlvqwrsitcp\",\"birth_date\":\"2022-10-16\",\"gender\":\"L\",\"registration_date\":\"2026-09-22T04:12:51\",\"departure_date\":\"2052-10-15\",\"package_id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"kloter_id\":\"c90237e9-ced5-3af6-88ea-84aeaa148878\",\"meningitis_vaccine_status\":\"sudah_vaksin\",\"photo_status\":\"sudah_menyerahkan\",\"total_package_cost\":8,\"status\":\"cancelled\",\"initial_payment\":{\"amount\":4326.41688,\"payment_type\":\"down_payment\",\"payment_method\":\"bca_transfer\",\"payment_date\":\"2026-09-22T04:12:51\"},\"equipments\":[{\"equipment_name\":\"m\",\"stock_id\":\"a1a0a47d-e8c3-3cf0-8e6e-c1ff9dca5d1f\",\"size\":\"vdljnikhwaykcmyu\",\"is_received\":false}]}"
+                            "raw": "{\"registration_number\":\"b\",\"pilgrim_id\":\"n\",\"full_name\":\"g\",\"passport_number\":\"z\",\"nik\":\"miyvdljnikhwaykc\",\"phone\":\"myuwpwlvqwrsitcp\",\"birth_date\":\"2022-10-20\",\"gender\":\"L\",\"registration_date\":\"2026-09-25T20:00:43\",\"departure_date\":\"2052-10-18\",\"package_id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"kloter_id\":\"c90237e9-ced5-3af6-88ea-84aeaa148878\",\"meningitis_vaccine_status\":\"sudah_vaksin\",\"photo_status\":\"sudah_menyerahkan\",\"total_package_cost\":8,\"status\":\"cancelled\",\"initial_payment\":{\"amount\":4326.41688,\"payment_type\":\"full_payment\",\"payment_method\":\"bsi_transfer\",\"payment_date\":\"2026-09-25T20:00:43\"},\"equipments\":[{\"equipment_name\":\"m\",\"stock_id\":\"a1a0a47d-e8c3-3cf0-8e6e-c1ff9dca5d1f\",\"size\":\"vdljnikhwaykcmyu\",\"is_received\":false}]}"
                         },
                         "description": ""
                     },
@@ -1590,7 +2255,7 @@
                                 {
                                     "id": "registration_id",
                                     "key": "registration_id",
-                                    "value": "019fff5c-eeea-70af-9d06-fa11db58b991",
+                                    "value": "01a0d1be-3c39-718a-894c-3fb9017e5bc4",
                                     "description": "The ID of the registration."
                                 }
                             ]
@@ -1643,7 +2308,7 @@
                                 {
                                     "id": "registration_id",
                                     "key": "registration_id",
-                                    "value": "019fff5c-eeea-70af-9d06-fa11db58b991",
+                                    "value": "01a0d1be-3c39-718a-894c-3fb9017e5bc4",
                                     "description": "The ID of the registration."
                                 }
                             ]
@@ -1661,7 +2326,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"pilgrim_id\":\"b\",\"full_name\":\"n\",\"passport_number\":\"g\",\"nik\":\"z\",\"phone\":\"m\",\"birth_date\":\"2026-09-22T04:12:51\",\"gender\":\"P\",\"registration_date\":\"2026-09-22T04:12:51\",\"departure_date\":\"2026-09-22T04:12:51\",\"meningitis_vaccine_status\":\"i\",\"photo_status\":\"y\",\"total_package_cost\":60,\"status\":\"converted\",\"initial_payment\":{\"amount\":42,\"payment_type\":\"l\",\"payment_method\":\"j\",\"payment_date\":\"2026-09-22T04:12:51\",\"notes\":\"architecto\"},\"equipments\":[{\"id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"equipment_name\":\"z\",\"stock_id\":\"977e5426-8d13-3824-86aa-b092f8ae52c5\",\"is_received\":true,\"size\":\"y\"}]}"
+                            "raw": "{\"pilgrim_id\":\"b\",\"full_name\":\"n\",\"passport_number\":\"g\",\"nik\":\"z\",\"phone\":\"m\",\"birth_date\":\"2026-09-25T20:00:43\",\"gender\":\"L\",\"registration_date\":\"2026-09-25T20:00:43\",\"departure_date\":\"2026-09-25T20:00:43\",\"meningitis_vaccine_status\":\"i\",\"photo_status\":\"y\",\"total_package_cost\":60,\"status\":\"fully_paid\",\"initial_payment\":{\"amount\":42,\"payment_type\":\"l\",\"payment_method\":\"j\",\"payment_date\":\"2026-09-25T20:00:43\",\"notes\":\"architecto\"},\"equipments\":[{\"id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"equipment_name\":\"z\",\"stock_id\":\"977e5426-8d13-3824-86aa-b092f8ae52c5\",\"is_received\":false,\"size\":\"y\"}]}"
                         },
                         "description": ""
                     },
@@ -1679,7 +2344,7 @@
                                 {
                                     "id": "registration_id",
                                     "key": "registration_id",
-                                    "value": "019fff5c-eeea-70af-9d06-fa11db58b991",
+                                    "value": "01a0d1be-3c39-718a-894c-3fb9017e5bc4",
                                     "description": "The ID of the registration."
                                 }
                             ]
@@ -1712,7 +2377,7 @@
                                 {
                                     "id": "registration_id",
                                     "key": "registration_id",
-                                    "value": "019fff5c-eeea-70af-9d06-fa11db58b991",
+                                    "value": "01a0d1be-3c39-718a-894c-3fb9017e5bc4",
                                     "description": "The ID of the registration."
                                 }
                             ]
@@ -1790,7 +2455,7 @@
                                 {
                                     "id": "registration_id",
                                     "key": "registration_id",
-                                    "value": "019fff5c-eeea-70af-9d06-fa11db58b991",
+                                    "value": "01a0d1be-3c39-718a-894c-3fb9017e5bc4",
                                     "description": "The ID of the registration."
                                 }
                             ]
@@ -1843,7 +2508,7 @@
                                 {
                                     "id": "registration_id",
                                     "key": "registration_id",
-                                    "value": "019fff5c-eeea-70af-9d06-fa11db58b991",
+                                    "value": "01a0d1be-3c39-718a-894c-3fb9017e5bc4",
                                     "description": "The ID of the registration."
                                 }
                             ]
@@ -1861,7 +2526,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"amount\":4326.41688,\"payment_type\":\"full_payment\",\"payment_method\":\"mandiri_transfer\",\"payment_date\":\"2026-09-22T04:12:51\",\"notes\":\"m\"}"
+                            "raw": "{\"amount\":4326.41688,\"payment_type\":\"down_payment\",\"payment_method\":\"mandiri_transfer\",\"payment_date\":\"2026-09-25T20:00:43\",\"notes\":\"m\"}"
                         },
                         "description": ""
                     },
@@ -1930,7 +2595,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"amount\":4326.41688,\"payment_type\":\"full_payment\",\"payment_method\":\"bca_transfer\",\"payment_date\":\"2026-09-22T04:12:51\",\"notes\":\"m\"}"
+                            "raw": "{\"amount\":4326.41688,\"payment_type\":\"full_payment\",\"payment_method\":\"mandiri_transfer\",\"payment_date\":\"2026-09-25T20:00:43\",\"notes\":\"m\"}"
                         },
                         "description": ""
                     },
@@ -2003,7 +2668,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"vendor\":\"b\",\"category\":\"lainnya\",\"amount\":4326.41688,\"payment_method\":\"bca_transfer\",\"expense_date\":\"2026-09-22T04:12:51\",\"reference_number\":\"m\",\"notes\":\"i\"}"
+                            "raw": "{\"vendor\":\"b\",\"category\":\"perlengkapan\",\"amount\":4326.41688,\"payment_method\":\"bsi_transfer\",\"expense_date\":\"2026-09-25T20:00:43\",\"reference_number\":\"m\",\"notes\":\"i\"}"
                         },
                         "description": ""
                     },
@@ -2092,7 +2757,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"vendor\":\"b\",\"category\":\"perlengkapan\",\"amount\":4326.41688,\"payment_method\":\"cash\",\"expense_date\":\"2026-09-22T04:12:51\",\"reference_number\":\"m\",\"notes\":\"i\"}"
+                            "raw": "{\"vendor\":\"b\",\"category\":\"operasional_bus\",\"amount\":4326.41688,\"payment_method\":\"bca_transfer\",\"expense_date\":\"2026-09-25T20:00:43\",\"reference_number\":\"m\",\"notes\":\"i\"}"
                         },
                         "description": ""
                     },
@@ -2243,7 +2908,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"source\":\"b\",\"category\":\"equipment_sales\",\"amount\":4326.41688,\"payment_method\":\"cash\",\"income_date\":\"2026-09-22T04:12:51\",\"reference_number\":\"m\",\"notes\":\"i\"}"
+                            "raw": "{\"source\":\"b\",\"category\":\"administration\",\"amount\":4326.41688,\"payment_method\":\"cash\",\"income_date\":\"2026-09-25T20:00:43\",\"reference_number\":\"m\",\"notes\":\"i\"}"
                         },
                         "description": ""
                     },
@@ -2332,7 +2997,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"source\":\"b\",\"category\":\"equipment_sales\",\"amount\":4326.41688,\"payment_method\":\"bca_transfer\",\"income_date\":\"2026-09-22T04:12:51\",\"reference_number\":\"m\",\"notes\":\"i\"}"
+                            "raw": "{\"source\":\"b\",\"category\":\"commission\",\"amount\":4326.41688,\"payment_method\":\"mandiri_transfer\",\"income_date\":\"2026-09-25T20:00:44\",\"reference_number\":\"m\",\"notes\":\"i\"}"
                         },
                         "description": ""
                     },
@@ -2438,7 +3103,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"login_id\":\"bngzmi\",\"nik\":\"yvdljnikhwaykcmy\",\"full_name\":\"u\",\"birth_date\":\"2026-09-22T04:12:51\",\"gender\":\"P\",\"phone\":\"wpwlvqwrsitcpscq\",\"emergency_contact\":\"l\",\"passport_number\":\"d\",\"visa_number\":\"z\",\"nationality\":\"s\",\"package_id\":\"59183559-65ff-3076-b8ca-d2d03d26a42a\",\"kloter_id\":\"1937113a-b0a2-3b03-925a-3163292463db\",\"hotel_makkah\":\"u\",\"hotel_madinah\":\"j\",\"departure_date\":\"2026-09-22T04:12:51\",\"return_date\":\"2052-10-15\",\"tour_leader\":\"n\",\"mutawif_local\":\"g\",\"status\":\"active\"}"
+                            "raw": "{\"login_id\":\"bngzmi\",\"nik\":\"yvdljnikhwaykcmy\",\"full_name\":\"u\",\"birth_date\":\"2026-09-25T20:00:44\",\"gender\":\"P\",\"phone\":\"wpwlvqwrsitcpscq\",\"emergency_contact\":\"l\",\"passport_number\":\"d\",\"visa_number\":\"z\",\"nationality\":\"s\",\"package_id\":\"59183559-65ff-3076-b8ca-d2d03d26a42a\",\"kloter_id\":\"1937113a-b0a2-3b03-925a-3163292463db\",\"hotel_makkah\":\"u\",\"hotel_madinah\":\"j\",\"departure_date\":\"2026-09-25T20:00:44\",\"return_date\":\"2052-10-18\",\"tour_leader\":\"n\",\"mutawif_local\":\"g\",\"status\":\"active\"}"
                         },
                         "description": "Revisi [2026-09-02]: Logic auto-generate \"JAMAAH001\" dihapus.\nlogin_id kini wajib diisi manual oleh admin (max 10 karakter, unique)."
                     },
@@ -2527,7 +3192,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"login_id\":\"bngzmi\",\"nik\":\"yvdljnikhwaykcmy\",\"full_name\":\"u\",\"birth_date\":\"2026-09-22T04:12:51\",\"gender\":\"P\",\"phone\":\"wpwlvqwrsitcpscq\",\"emergency_contact\":\"l\",\"passport_number\":\"d\",\"visa_number\":\"z\",\"nationality\":\"s\",\"package_id\":\"59183559-65ff-3076-b8ca-d2d03d26a42a\",\"kloter_id\":\"1937113a-b0a2-3b03-925a-3163292463db\",\"hotel_makkah\":\"u\",\"hotel_madinah\":\"j\",\"departure_date\":\"2026-09-22T04:12:51\",\"return_date\":\"2052-10-15\",\"tour_leader\":\"n\",\"mutawif_local\":\"g\",\"status\":\"active\"}"
+                            "raw": "{\"login_id\":\"bngzmi\",\"nik\":\"yvdljnikhwaykcmy\",\"full_name\":\"u\",\"birth_date\":\"2026-09-25T20:00:44\",\"gender\":\"P\",\"phone\":\"wpwlvqwrsitcpscq\",\"emergency_contact\":\"l\",\"passport_number\":\"d\",\"visa_number\":\"z\",\"nationality\":\"s\",\"package_id\":\"59183559-65ff-3076-b8ca-d2d03d26a42a\",\"kloter_id\":\"1937113a-b0a2-3b03-925a-3163292463db\",\"hotel_makkah\":\"u\",\"hotel_madinah\":\"j\",\"departure_date\":\"2026-09-25T20:00:44\",\"return_date\":\"2052-10-18\",\"tour_leader\":\"n\",\"mutawif_local\":\"g\",\"status\":\"archived\"}"
                         },
                         "description": "Semua field baru bisa di-update melalui validated() dari UpdateJamaahRequest."
                     },
@@ -2633,7 +3298,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"login_id\":\"bngzmiyvdljnikhw\",\"full_name\":\"a\",\"certification_number\":\"y\",\"phone\":\"kcmyuwpwlvqwrsit\",\"experience\":\"architecto\",\"performance\":\"architecto\",\"status\":\"active\"}"
+                            "raw": "{\"login_id\":\"bngzmiyvdljnikhw\",\"full_name\":\"a\",\"certification_number\":\"y\",\"phone\":\"kcmyuwpwlvqwrsit\",\"experience\":\"architecto\",\"performance\":\"architecto\",\"status\":\"resting\"}"
                         },
                         "description": ""
                     },
@@ -2722,7 +3387,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"login_id\":\"bngzmiyvdljnikhw\",\"full_name\":\"a\",\"certification_number\":\"y\",\"phone\":\"kcmyuwpwlvqwrsit\",\"experience\":\"architecto\",\"performance\":\"architecto\",\"status\":\"inactive\"}"
+                            "raw": "{\"login_id\":\"bngzmiyvdljnikhw\",\"full_name\":\"a\",\"certification_number\":\"y\",\"phone\":\"kcmyuwpwlvqwrsit\",\"experience\":\"architecto\",\"performance\":\"architecto\",\"status\":\"standby\"}"
                         },
                         "description": ""
                     },
@@ -2995,7 +3660,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"code\":\"bngzmiyvdljnikhw\",\"name\":\"a\",\"language\":\"y\",\"experience\":\"k\",\"status\":\"active\"}"
+                            "raw": "{\"code\":\"bngzmiyvdljnikhw\",\"name\":\"a\",\"language\":\"y\",\"experience\":\"k\",\"status\":\"standby\"}"
                         },
                         "description": ""
                     },
@@ -3367,147 +4032,6 @@
             "description": "Autentikasi untuk pengguna Mobile App (Jamaah, Anggota Keluarga, dan Tour Leader) menggunakan Laravel Sanctum dengan ability token berbasis role.",
             "item": [
                 {
-                    "name": "Jamaah",
-                    "description": "Login sebagai Jamaah untuk mengakses profil dan informasi perjalanan umrah.",
-                    "item": [
-                        {
-                            "name": "Login Jamaah",
-                            "request": {
-                                "url": {
-                                    "host": "{{baseUrl}}",
-                                    "path": "api\/jamaah\/login",
-                                    "query": [],
-                                    "raw": "{{baseUrl}}\/api\/jamaah\/login"
-                                },
-                                "method": "POST",
-                                "header": [
-                                    {
-                                        "key": "Content-Type",
-                                        "value": "application\/json"
-                                    },
-                                    {
-                                        "key": "Accept",
-                                        "value": "application\/json"
-                                    }
-                                ],
-                                "body": {
-                                    "mode": "raw",
-                                    "raw": "{\"login_id\":\"JM-001\"}"
-                                },
-                                "description": "Login sebagai Jamaah menggunakan `login_id` yang terdaftar. Menghasilkan Sanctum Bearer Token dengan ability `jamaah`. Token ini **hanya** berlaku untuk endpoint `\/api\/jamaah\/*`. Jamaah harus berstatus `active`.",
-                                "auth": {
-                                    "type": "noauth"
-                                }
-                            },
-                            "response": [
-                                {
-                                    "header": [
-                                        {
-                                            "key": "content-type",
-                                            "value": "application\/json"
-                                        }
-                                    ],
-                                    "code": 200,
-                                    "body": "{\"message\":\"Login berhasil.\",\"token\":\"2|abc123sanctumTokenExample\",\"jamaah\":{\"id\":\"9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d\",\"login_id\":\"JM-001\",\"full_name\":\"Ahmad Fauzi\",\"status\":\"active\"}}",
-                                    "name": "Login berhasil. Token Sanctum dengan ability `jamaah` dikembalikan."
-                                },
-                                {
-                                    "header": [
-                                        {
-                                            "key": "content-type",
-                                            "value": "application\/json"
-                                        }
-                                    ],
-                                    "code": 401,
-                                    "body": "{\"message\":\"Jamaah tidak ditemukan atau tidak aktif.\"}",
-                                    "name": "Jamaah tidak ditemukan atau status tidak aktif."
-                                },
-                                {
-                                    "header": [
-                                        {
-                                            "key": "content-type",
-                                            "value": "application\/json"
-                                        }
-                                    ],
-                                    "code": 422,
-                                    "body": "{\"message\":\"The login id field is required.\",\"errors\":{\"login_id\":[\"The login id field is required.\"]}}",
-                                    "name": "Validasi gagal \u2014 login_id tidak disertakan."
-                                }
-                            ]
-                        },
-                        {
-                            "name": "Profil Jamaah",
-                            "request": {
-                                "url": {
-                                    "host": "{{baseUrl}}",
-                                    "path": "api\/jamaah\/me",
-                                    "query": [],
-                                    "raw": "{{baseUrl}}\/api\/jamaah\/me"
-                                },
-                                "method": "GET",
-                                "header": [
-                                    {
-                                        "key": "Content-Type",
-                                        "value": "application\/json"
-                                    },
-                                    {
-                                        "key": "Accept",
-                                        "value": "application\/json"
-                                    }
-                                ],
-                                "body": null,
-                                "description": "Mengambil data profil Jamaah beserta informasi kloter, hotel, tour leader, dan mutawif. Memerlukan Bearer Token dengan ability `jamaah`."
-                            },
-                            "response": [
-                                {
-                                    "header": [
-                                        {
-                                            "key": "cache-control",
-                                            "value": "no-cache, private"
-                                        },
-                                        {
-                                            "key": "content-type",
-                                            "value": "application\/json"
-                                        },
-                                        {
-                                            "key": "access-control-allow-origin",
-                                            "value": "*"
-                                        }
-                                    ],
-                                    "code": 401,
-                                    "body": "{\"message\":\"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.\"}",
-                                    "name": ""
-                                }
-                            ]
-                        },
-                        {
-                            "name": "Logout Jamaah",
-                            "request": {
-                                "url": {
-                                    "host": "{{baseUrl}}",
-                                    "path": "api\/jamaah\/logout",
-                                    "query": [],
-                                    "raw": "{{baseUrl}}\/api\/jamaah\/logout"
-                                },
-                                "method": "POST",
-                                "header": [
-                                    {
-                                        "key": "Content-Type",
-                                        "value": "application\/json"
-                                    },
-                                    {
-                                        "key": "Accept",
-                                        "value": "application\/json"
-                                    }
-                                ],
-                                "body": null,
-                                "description": "Menghapus (revoke\/invalidate) token Sanctum Jamaah yang sedang aktif. Token yang sudah di-revoke tidak dapat digunakan kembali."
-                            },
-                            "response": []
-                        }
-                    ]
-                },
-                {
                     "name": "Family",
                     "description": "Login sebagai anggota keluarga Jamaah (mode Family) untuk memantau status perjalanan.",
                     "item": [
@@ -3782,292 +4306,6 @@
                             ]
                         }
                     ]
-                }
-            ]
-        },
-        {
-            "name": "Perjalanan \/ Schedule",
-            "description": "\nAPI untuk mengelola data jadwal perjalanan.",
-            "item": [
-                {
-                    "name": "Mengambil daftar perjalanan",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/schedules",
-                            "query": [
-                                {
-                                    "key": "q",
-                                    "value": "Ziarah",
-                                    "description": "Kata kunci pencarian pada title, location, keterangan, atau pic.",
-                                    "disabled": false
-                                },
-                                {
-                                    "key": "category",
-                                    "value": "Ibadah",
-                                    "description": "Filter berdasarkan kategori kegiatan.",
-                                    "disabled": false
-                                },
-                                {
-                                    "key": "date",
-                                    "value": "2026-09-10",
-                                    "description": "Filter berdasarkan tanggal (YYYY-MM-DD).",
-                                    "disabled": false
-                                },
-                                {
-                                    "key": "day_number",
-                                    "value": "1",
-                                    "description": "Filter berdasarkan nomor hari.",
-                                    "disabled": false
-                                }
-                            ],
-                            "raw": "{{baseUrl}}\/api\/schedules?q=Ziarah&category=Ibadah&date=2026-09-10&day_number=1"
-                        },
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": "Mendukung search dan filter berdasarkan query parameter."
-                    },
-                    "response": [
-                        {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
-                            "code": 401,
-                            "body": "{\"message\":\"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.\"}",
-                            "name": ""
-                        }
-                    ]
-                },
-                {
-                    "name": "Menambahkan perjalanan baru",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/schedules",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/schedules"
-                        },
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\"day_number\":1,\"date\":\"2026-09-10\",\"time\":\"08:00\",\"title\":\"Ziarah Kota Madinah\",\"category\":\"Ziarah\",\"location\":\"Masjid Nabawi\",\"keterangan\":\"Berkumpul di lobby hotel tepat waktu\",\"pic\":\"Ustadz Ahmad\",\"status_override\":\"upcoming\"}"
-                        },
-                        "description": ""
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Mengambil detail perjalanan",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/schedules\/:schedule_id",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/schedules\/:schedule_id",
-                            "variable": [
-                                {
-                                    "id": "schedule_id",
-                                    "key": "schedule_id",
-                                    "value": 4,
-                                    "description": "The ID of the schedule."
-                                },
-                                {
-                                    "id": "schedule",
-                                    "key": "schedule",
-                                    "value": 1,
-                                    "description": "ID Schedule."
-                                }
-                            ]
-                        },
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": ""
-                    },
-                    "response": [
-                        {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
-                            "code": 401,
-                            "body": "{\"message\":\"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.\"}",
-                            "name": ""
-                        }
-                    ]
-                },
-                {
-                    "name": "Memperbarui data perjalanan",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/schedules\/:schedule_id",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/schedules\/:schedule_id",
-                            "variable": [
-                                {
-                                    "id": "schedule_id",
-                                    "key": "schedule_id",
-                                    "value": 4,
-                                    "description": "The ID of the schedule."
-                                },
-                                {
-                                    "id": "schedule",
-                                    "key": "schedule",
-                                    "value": 1,
-                                    "description": "ID Schedule."
-                                }
-                            ]
-                        },
-                        "method": "PUT",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\"day_number\":1,\"date\":\"2026-09-10\",\"time\":\"09:00\",\"title\":\"Ziarah Kota Madinah (Updated)\",\"category\":\"Ziarah\",\"location\":\"Masjid Nabawi\",\"keterangan\":\"Berkumpul di lobby hotel\",\"pic\":\"Ustadz Ahmad\",\"status_override\":\"in_progress\"}"
-                        },
-                        "description": ""
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Memperbarui status override perjalanan",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/schedules\/:schedule_id\/status",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/schedules\/:schedule_id\/status",
-                            "variable": [
-                                {
-                                    "id": "schedule_id",
-                                    "key": "schedule_id",
-                                    "value": 4,
-                                    "description": "The ID of the schedule."
-                                },
-                                {
-                                    "id": "schedule",
-                                    "key": "schedule",
-                                    "value": 1,
-                                    "description": "ID Schedule."
-                                }
-                            ]
-                        },
-                        "method": "PATCH",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\"status_override\":\"in_progress\"}"
-                        },
-                        "description": ""
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Menghapus perjalanan",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/schedules\/:schedule_id",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/schedules\/:schedule_id",
-                            "variable": [
-                                {
-                                    "id": "schedule_id",
-                                    "key": "schedule_id",
-                                    "value": 4,
-                                    "description": "The ID of the schedule."
-                                },
-                                {
-                                    "id": "schedule",
-                                    "key": "schedule",
-                                    "value": 1,
-                                    "description": "ID Schedule."
-                                }
-                            ]
-                        },
-                        "method": "DELETE",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": ""
-                    },
-                    "response": []
                 }
             ]
         }

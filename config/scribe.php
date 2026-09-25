@@ -192,6 +192,11 @@ return [
             'Pengeluaran Kas',
             'Ringkasan Keuangan',
             'Manajemen Jamaah',
+            'Perjalanan / Schedule',
+            'Tour Leader',
+            'Muttawif',
+            'Stock Inventory',
+            'Modul Darurat / Emergency / SOS',
         ],
     ],
 

@@ -1,23 +1,31 @@
-name: 'Perjalanan / Schedule'
+name: 'Modul Darurat / Emergency / SOS'
 description: |-
 
-  API untuk mengelola data jadwal perjalanan.
+  API untuk mengelola laporan kejadian darurat (SOS Incident) dari Jamaah dan penanganannya oleh Admin/Tour Leader.
 endpoints:
   -
     custom: []
     httpMethods:
       - GET
-    uri: api/schedules
+    uri: api/sos-incidents
     metadata:
       custom: []
-      groupName: 'Perjalanan / Schedule'
+      groupName: 'Modul Darurat / Emergency / SOS'
       groupDescription: |-
 
-        API untuk mengelola data jadwal perjalanan.
+        API untuk mengelola laporan kejadian darurat (SOS Incident) dari Jamaah dan penanganannya oleh Admin/Tour Leader.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Mengambil daftar perjalanan'
-      description: 'Mendukung search dan filter berdasarkan query parameter.'
+      title: 'Menampilkan daftar SOS Incident'
+      description: |-
+        Menampilkan daftar laporan SOS yang dapat diakses oleh user sesuai ability token autentikasi.
+
+        **Scope Akses Berdasarkan Role:**
+        * **Admin (`admin`):** Memiliki akses penuh untuk melihat seluruh laporan SOS dari semua kloter.
+        * **Tour Leader (`tour_leader`):** Hanya dapat melihat laporan SOS dari kloter yang ditugaskan kepadanya.
+        * **Jamaah (`jamaah`):** Hanya dapat melihat laporan SOS miliknya sendiri.
+
+        Data diurutkan berdasarkan `triggered_at` terbaru dan menyertakan eager-load relasi `jamaah` (id, full_name, phone), `kloter` (id, name), serta jumlah tanggapan (`responses_count`).
       authenticated: true
       deprecated: false
     headers:
@@ -26,56 +34,8 @@ endpoints:
       Accept: application/json
     urlParameters: []
     cleanUrlParameters: []
-    queryParameters:
-      q:
-        custom: []
-        name: q
-        description: 'Kata kunci pencarian pada title, location, keterangan, atau pic.'
-        required: false
-        example: Ziarah
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      category:
-        custom: []
-        name: category
-        description: 'Filter berdasarkan kategori kegiatan.'
-        required: false
-        example: Ibadah
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      date:
-        custom: []
-        name: date
-        description: 'Filter berdasarkan tanggal (YYYY-MM-DD).'
-        required: false
-        example: '2026-09-10'
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      day_number:
-        custom: []
-        name: day_number
-        description: 'Filter berdasarkan nomor hari.'
-        required: false
-        example: 1
-        type: integer
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanQueryParameters:
-      q: Ziarah
-      category: Ibadah
-      date: '2026-09-10'
-      day_number: 1
+    queryParameters: []
+    cleanQueryParameters: []
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -101,17 +61,29 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/schedules
+    uri: api/sos-incidents
     metadata:
       custom: []
-      groupName: 'Perjalanan / Schedule'
+      groupName: 'Modul Darurat / Emergency / SOS'
       groupDescription: |-
 
-        API untuk mengelola data jadwal perjalanan.
+        API untuk mengelola laporan kejadian darurat (SOS Incident) dari Jamaah dan penanganannya oleh Admin/Tour Leader.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Menambahkan perjalanan baru'
-      description: ''
+      title: 'Membuat laporan SOS baru'
+      description: |-
+        Membuat laporan kejadian darurat (SOS Incident) baru.
+
+        **Aturan Autentikasi & Authorization:**
+        * **Jamaah (`jamaah`):** Dapat membuat SOS untuk dirinya sendiri. Field `jamaah_id` **tidak perlu dikirim** oleh client karena diisi otomatis dari token Jamaah.
+        * **Admin (`admin`):** Dapat membuat SOS atas nama Jamaah dan **wajib menentukan** `jamaah_id` di request body. Jika `jamaah_id` kosong/tidak disertakan, mengembalikan response error `422 Unprocessable Entity`.
+        * **Tour Leader (`tour_leader`):** **Tidak diperbolehkan** membuat SOS dan menghasilkan response error `403 Forbidden` (`Tour Leader tidak dapat membuat SOS.`).
+
+        **Aturan Penentuan Field Otomatis oleh Backend:**
+        * `kloter_id`: Diambil otomatis dari `jamaah.kloter_id`.
+        * `status`: Bernilai awal `'triggered'`.
+        * `triggered_at`: Diisi otomatis dengan timestamp `now()`.
+        * Record awal pada `sos_status_histories` dibuat otomatis (`old_status: null`, `new_status: 'triggered'`).
       authenticated: true
       deprecated: false
     headers:
@@ -123,115 +95,79 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      day_number:
+      jamaah_id:
         custom: []
-        name: day_number
-        description: 'Nomor hari ke berapa.'
+        name: jamaah_id
+        description: 'UUID Jamaah yang mengalami darurat. Wajib dikirim oleh Admin, diabaikan/diisi otomatis jika login sebagai Jamaah.'
         required: false
-        example: 1
-        type: integer
+        example: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
+        type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: true
         deprecated: false
-      date:
+      type:
         custom: []
-        name: date
-        description: 'Format tanggal YYYY-MM-DD.'
-        required: false
-        example: '2026-09-10'
+        name: type
+        description: 'Jenis kejadian darurat (misal: "Darurat Medis", "Tersesat", "Kecelakaan").'
+        required: true
+        example: 'Darurat Medis'
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-      time:
+      description:
         custom: []
-        name: time
-        description: 'Format waktu HH:MM.'
+        name: description
+        description: 'Rincian deskripsi kondisi darurat yang dialami.'
         required: false
-        example: '08:00'
+        example: 'Jamaah mengalami pusing dan sesak napas.'
         type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      location_name:
+        custom: []
+        name: location_name
+        description: 'Nama lokasi atau deskripsi landmark tempat kejadian.'
+        required: false
+        example: 'Pelataran Tawaf Gate 1'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      latitude:
+        custom: []
+        name: latitude
+        description: 'Koordinat latitude lokasi kejadian (-90 s/d 90).'
+        required: true
+        example: 21.4225
+        type: number
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-      title:
+      longitude:
         custom: []
-        name: title
-        description: 'Judul kegiatan perjalanan.'
-        required: false
-        example: 'Ziarah Kota Madinah'
-        type: string
+        name: longitude
+        description: 'Koordinat longitude lokasi kejadian (-180 s/d 180).'
+        required: true
+        example: 39.8262
+        type: number
         enumValues: []
         exampleWasSpecified: true
         nullable: false
-        deprecated: false
-      category:
-        custom: []
-        name: category
-        description: 'Kategori kegiatan.'
-        required: false
-        example: Ziarah
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
-      location:
-        custom: []
-        name: location
-        description: 'Lokasi kegiatan.'
-        required: false
-        example: 'Masjid Nabawi'
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
-      keterangan:
-        custom: []
-        name: keterangan
-        description: 'Keterangan/deskripsi kegiatan.'
-        required: false
-        example: 'Berkumpul di lobby hotel tepat waktu'
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
-      pic:
-        custom: []
-        name: pic
-        description: 'Person in charge / penanggung jawab.'
-        required: false
-        example: 'Ustadz Ahmad'
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
-      status_override:
-        custom: []
-        name: status_override
-        description: 'Status override jika ingin menentukan status secara manual (upcoming, in_progress, completed).'
-        required: false
-        example: upcoming
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
         deprecated: false
     cleanBodyParameters:
-      day_number: 1
-      date: '2026-09-10'
-      time: '08:00'
-      title: 'Ziarah Kota Madinah'
-      category: Ziarah
-      location: 'Masjid Nabawi'
-      keterangan: 'Berkumpul di lobby hotel tepat waktu'
-      pic: 'Ustadz Ahmad'
-      status_override: upcoming
+      jamaah_id: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
+      type: 'Darurat Medis'
+      description: 'Jamaah mengalami pusing dan sesak napas.'
+      location_name: 'Pelataran Tawaf Gate 1'
+      latitude: 21.4225
+      longitude: 39.8262
     fileParameters: []
     responses: []
     responseFields: []
@@ -246,17 +182,23 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/schedules/{schedule_id}'
+    uri: 'api/sos-incidents/{sosIncident_id}'
     metadata:
       custom: []
-      groupName: 'Perjalanan / Schedule'
+      groupName: 'Modul Darurat / Emergency / SOS'
       groupDescription: |-
 
-        API untuk mengelola data jadwal perjalanan.
+        API untuk mengelola laporan kejadian darurat (SOS Incident) dari Jamaah dan penanganannya oleh Admin/Tour Leader.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Mengambil detail perjalanan'
-      description: ''
+      title: 'Menampilkan detail satu SOS Incident'
+      description: |-
+        Menampilkan rincian informasi satu laporan kejadian SOS Incident beserta relasi Jamaah, Kloter, Responses, dan Status Histories.
+
+        **Scope Akses Berdasarkan Role:**
+        * **Admin (`admin`):** Dapat melihat detail laporan SOS manapun.
+        * **Tour Leader (`tour_leader`):** Hanya dapat melihat detail SOS jika kloter incident sesuai dengan kloter assignment-nya.
+        * **Jamaah (`jamaah`):** Hanya dapat melihat detail SOS miliknya sendiri.
       authenticated: true
       deprecated: false
     headers:
@@ -264,31 +206,31 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      schedule_id:
+      sosIncident_id:
         custom: []
-        name: schedule_id
-        description: 'The ID of the schedule.'
+        name: sosIncident_id
+        description: 'The ID of the sosIncident.'
         required: true
-        example: 4
-        type: integer
+        example: 01a0d96c-1e72-7144-83eb-2a1d35530e00
+        type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      schedule:
+      sosIncident:
         custom: []
-        name: schedule
-        description: 'ID Schedule.'
+        name: sosIncident
+        description: 'UUID laporan SOS Incident.'
         required: true
-        example: 1
-        type: integer
+        example: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
+        type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      schedule_id: 4
-      schedule: 1
+      sosIncident_id: 01a0d96c-1e72-7144-83eb-2a1d35530e00
+      sosIncident: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -315,187 +257,31 @@ endpoints:
   -
     custom: []
     httpMethods:
-      - PUT
-    uri: 'api/schedules/{schedule_id}'
-    metadata:
-      custom: []
-      groupName: 'Perjalanan / Schedule'
-      groupDescription: |-
-
-        API untuk mengelola data jadwal perjalanan.
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Memperbarui data perjalanan'
-      description: ''
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {token}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      schedule_id:
-        custom: []
-        name: schedule_id
-        description: 'The ID of the schedule.'
-        required: true
-        example: 4
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      schedule:
-        custom: []
-        name: schedule
-        description: 'ID Schedule.'
-        required: true
-        example: 1
-        type: integer
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      schedule_id: 4
-      schedule: 1
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      day_number:
-        custom: []
-        name: day_number
-        description: 'Nomor hari ke berapa.'
-        required: false
-        example: 1
-        type: integer
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      date:
-        custom: []
-        name: date
-        description: 'Format tanggal YYYY-MM-DD.'
-        required: false
-        example: '2026-09-10'
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      time:
-        custom: []
-        name: time
-        description: 'Format waktu HH:MM.'
-        required: false
-        example: '09:00'
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      title:
-        custom: []
-        name: title
-        description: 'Judul kegiatan perjalanan.'
-        required: false
-        example: 'Ziarah Kota Madinah (Updated)'
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      category:
-        custom: []
-        name: category
-        description: 'Kategori kegiatan.'
-        required: false
-        example: Ziarah
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
-      location:
-        custom: []
-        name: location
-        description: 'Lokasi kegiatan.'
-        required: false
-        example: 'Masjid Nabawi'
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
-      keterangan:
-        custom: []
-        name: keterangan
-        description: 'Keterangan/deskripsi kegiatan.'
-        required: false
-        example: 'Berkumpul di lobby hotel'
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
-      pic:
-        custom: []
-        name: pic
-        description: 'Person in charge / penanggung jawab.'
-        required: false
-        example: 'Ustadz Ahmad'
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
-      status_override:
-        custom: []
-        name: status_override
-        description: 'Status override (upcoming, in_progress, completed).'
-        required: false
-        example: in_progress
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
-    cleanBodyParameters:
-      day_number: 1
-      date: '2026-09-10'
-      time: '09:00'
-      title: 'Ziarah Kota Madinah (Updated)'
-      category: Ziarah
-      location: 'Masjid Nabawi'
-      keterangan: 'Berkumpul di lobby hotel'
-      pic: 'Ustadz Ahmad'
-      status_override: in_progress
-    fileParameters: []
-    responses: []
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
       - PATCH
-    uri: 'api/schedules/{schedule_id}/status'
+    uri: 'api/sos-incidents/{sosIncident_id}/status'
     metadata:
       custom: []
-      groupName: 'Perjalanan / Schedule'
+      groupName: 'Modul Darurat / Emergency / SOS'
       groupDescription: |-
 
-        API untuk mengelola data jadwal perjalanan.
+        API untuk mengelola laporan kejadian darurat (SOS Incident) dari Jamaah dan penanganannya oleh Admin/Tour Leader.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Memperbarui status override perjalanan'
-      description: ''
+      title: 'Mengubah status SOS Incident'
+      description: |-
+        Memperbarui status penanganan laporan SOS Incident dan mencatat riwayat perubahannya ke `sos_status_histories`.
+
+        **Aturan Hak Akses:**
+        * **Jamaah (`jamaah`):** **Tidak dapat** mengubah status SOS. Menghasilkan response `403 Forbidden` (`Jamaah tidak dapat mengubah status SOS.`).
+        * **Admin (`admin`):** Dapat mengubah status SOS mana saja jika memiliki akses. Aktor pencatat pada `sos_status_histories` disimpan di kolom `changed_by`.
+        * **Tour Leader (`tour_leader`):** Dapat mengubah status SOS jika memiliki akses terhadap incident (kloter assignment). Aktor pencatat pada `sos_status_histories` disimpan di kolom `tour_leader_id`.
+
+        **Nilai Status yang Diperbolehkan:**
+        * `triggered`: Laporan SOS baru terpicu.
+        * `acknowledged`: Laporan telah diterima/dikonfirmasi oleh Petugas/TL.
+        * `in_action`: Petugas/TL sedang dalam penanganan di lapangan.
+        * `resolved`: Kejadian darurat telah selesai ditangani.
+        * `false_alarm`: Laporan palsu / tidak sengaja tertekan.
       authenticated: true
       deprecated: false
     headers:
@@ -503,47 +289,47 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      schedule_id:
+      sosIncident_id:
         custom: []
-        name: schedule_id
-        description: 'The ID of the schedule.'
+        name: sosIncident_id
+        description: 'The ID of the sosIncident.'
         required: true
-        example: 4
-        type: integer
+        example: 01a0d96c-1e72-7144-83eb-2a1d35530e00
+        type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      schedule:
+      sosIncident:
         custom: []
-        name: schedule
-        description: 'ID Schedule.'
+        name: sosIncident
+        description: 'UUID laporan SOS Incident.'
         required: true
-        example: 1
-        type: integer
+        example: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
+        type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      schedule_id: 4
-      schedule: 1
+      sosIncident_id: 01a0d96c-1e72-7144-83eb-2a1d35530e00
+      sosIncident: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      status_override:
+      status:
         custom: []
-        name: status_override
-        description: 'Status override baru (upcoming, in_progress, completed).'
+        name: status
+        description: 'Status baru yang valid (`triggered`, `acknowledged`, `in_action`, `resolved`, `false_alarm`).'
         required: true
-        example: in_progress
+        example: acknowledged
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      status_override: in_progress
+      status: acknowledged
     fileParameters: []
     responses: []
     responseFields: []
@@ -557,18 +343,22 @@ endpoints:
   -
     custom: []
     httpMethods:
-      - DELETE
-    uri: 'api/schedules/{schedule_id}'
+      - GET
+    uri: 'api/sos-incidents/{sosIncident_id}/responses'
     metadata:
       custom: []
-      groupName: 'Perjalanan / Schedule'
+      groupName: 'Modul Darurat / Emergency / SOS'
       groupDescription: |-
 
-        API untuk mengelola data jadwal perjalanan.
+        API untuk mengelola response / catatan tanggapan penanganan kejadian darurat (SOS Response).
       subgroup: ''
       subgroupDescription: ''
-      title: 'Menghapus perjalanan'
-      description: ''
+      title: 'Menampilkan daftar response pada SOS Incident'
+      description: |-
+        Menampilkan seluruh daftar tanggapan/keterangan penanganan pada satu laporan SOS Incident diurutkan berdasarkan `created_at` dari terlama ke terbaru.
+
+        **Scope Akses Berdasarkan Role:**
+        Admin, Tour Leader (kloter assigned), dan Jamaah (pemilik SOS) yang memiliki akses ke laporan SOS ini.
       authenticated: true
       deprecated: false
     headers:
@@ -576,35 +366,122 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      schedule_id:
+      sosIncident_id:
         custom: []
-        name: schedule_id
-        description: 'The ID of the schedule.'
+        name: sosIncident_id
+        description: 'The ID of the sosIncident.'
         required: true
-        example: 4
-        type: integer
+        example: 01a0d96c-1e72-7144-83eb-2a1d35530e00
+        type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      schedule:
+      sosIncident:
         custom: []
-        name: schedule
-        description: 'ID Schedule.'
+        name: sosIncident
+        description: 'UUID laporan SOS Incident.'
         required: true
-        example: 1
-        type: integer
+        example: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
+        type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      schedule_id: 4
-      schedule: 1
+      sosIncident_id: 01a0d96c-1e72-7144-83eb-2a1d35530e00
+      sosIncident: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
     cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/sos-incidents/{sosIncident_id}/responses'
+    metadata:
+      custom: []
+      groupName: 'Modul Darurat / Emergency / SOS'
+      groupDescription: |-
+
+        API untuk mengelola response / catatan tanggapan penanganan kejadian darurat (SOS Response).
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Menambahkan response / keterangan baru pada SOS Incident'
+      description: |-
+        Menambahkan tanggapan, pesan, atau catatan penanganan baru pada laporan SOS Incident.
+
+        **Aturan Penentuan Aktor Otomatis:**
+        * Aktor penanggap ditentukan otomatis berdasarkan token autentikasi yang sedang aktif (`jamaah_id`, `tour_leader_id`, atau `internal_user_id`).
+        * Client **tidak boleh** dan **tidak perlu** mengirimkan actor ID di request body.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {token}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      sosIncident_id:
+        custom: []
+        name: sosIncident_id
+        description: 'The ID of the sosIncident.'
+        required: true
+        example: 01a0d96c-1e72-7144-83eb-2a1d35530e00
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      sosIncident:
+        custom: []
+        name: sosIncident
+        description: 'UUID laporan SOS Incident.'
+        required: true
+        example: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      sosIncident_id: 01a0d96c-1e72-7144-83eb-2a1d35530e00
+      sosIncident: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      message:
+        custom: []
+        name: message
+        description: 'Pesan atau catatan tanggapan penanganan SOS (maksimal 5000 karakter).'
+        required: true
+        example: 'Tim medis sudah tiba di lokasi dan penanganan sedang berjalan.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      message: 'Tim medis sudah tiba di lokasi dan penanganan sedang berjalan.'
     fileParameters: []
     responses: []
     responseFields: []

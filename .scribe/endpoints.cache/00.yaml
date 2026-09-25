@@ -66,6 +66,53 @@ endpoints:
     custom: []
     httpMethods:
       - POST
+    uri: api/jamaah/login
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {token}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      login_id:
+        custom: []
+        name: login_id
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      login_id: architecto
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
     uri: api/family/login
     metadata:
       custom: []
@@ -99,6 +146,85 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       login_id: b
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/jamaah/me
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {token}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/jamaah/logout
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {token}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
     fileParameters: []
     responses: []
     responseFields: []
@@ -749,7 +875,7 @@ endpoints:
         name: status
         description: ''
         required: false
-        example: inactive
+        example: published
         type: string
         enumValues:
           - draft
@@ -772,7 +898,7 @@ endpoints:
     cleanBodyParameters:
       name: b
       category: 'n'
-      status: inactive
+      status: published
       is_featured: false
     fileParameters: []
     responses: []
@@ -1313,7 +1439,7 @@ endpoints:
         name: departure_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-22T04:12:50'
+        example: '2026-09-25T20:00:43'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1324,7 +1450,7 @@ endpoints:
         name: return_date
         description: 'Must be a valid date. Must be a date after or equal to <code>departure_date</code>.'
         required: false
-        example: '2052-10-15'
+        example: '2052-10-18'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1357,7 +1483,7 @@ endpoints:
         name: status
         description: ''
         required: false
-        example: completed
+        example: active
         type: string
         enumValues:
           - draft
@@ -1395,11 +1521,11 @@ endpoints:
       package_id: a4855dc5-0acb-33c3-b921-f4291f719ca0
       code: z
       flight_code: m
-      departure_date: '2026-09-22T04:12:50'
-      return_date: '2052-10-15'
+      departure_date: '2026-09-25T20:00:43'
+      return_date: '2052-10-18'
       hotel_makkah_id: a4855dc5-0acb-33c3-b921-f4291f719ca0
       hotel_madinah_id: c90237e9-ced5-3af6-88ea-84aeaa148878
-      status: completed
+      status: active
       tour_leader: i
       mutawif_local: 'y'
     fileParameters: []
@@ -1553,7 +1679,7 @@ endpoints:
         name: departure_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-22T04:12:50'
+        example: '2026-09-25T20:00:43'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1564,7 +1690,7 @@ endpoints:
         name: return_date
         description: 'Must be a valid date. Must be a date after or equal to <code>departure_date</code>.'
         required: false
-        example: '2052-10-15'
+        example: '2052-10-18'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1597,7 +1723,7 @@ endpoints:
         name: status
         description: ''
         required: false
-        example: cancelled
+        example: draft
         type: string
         enumValues:
           - draft
@@ -1635,11 +1761,11 @@ endpoints:
       package_id: a4855dc5-0acb-33c3-b921-f4291f719ca0
       code: z
       flight_code: m
-      departure_date: '2026-09-22T04:12:50'
-      return_date: '2052-10-15'
+      departure_date: '2026-09-25T20:00:43'
+      return_date: '2052-10-18'
       hotel_makkah_id: a4855dc5-0acb-33c3-b921-f4291f719ca0
       hotel_madinah_id: c90237e9-ced5-3af6-88ea-84aeaa148878
-      status: cancelled
+      status: draft
       tour_leader: i
       mutawif_local: 'y'
     fileParameters: []
@@ -1809,7 +1935,7 @@ endpoints:
         name: activity_date
         description: 'Must be a valid date.'
         required: true
-        example: '2026-09-22T04:12:50'
+        example: '2026-09-25T20:00:43'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1908,7 +2034,7 @@ endpoints:
         name: is_published
         description: ''
         required: false
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -1916,7 +2042,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       day_number: 16
-      activity_date: '2026-09-22T04:12:50'
+      activity_date: '2026-09-25T20:00:43'
       activity_time: architecto
       hijri_date_ref: 'n'
       title: g
@@ -1925,7 +2051,7 @@ endpoints:
       pic: i
       status: 'y'
       description: 'Eius et animi quos velit et.'
-      is_published: false
+      is_published: true
     fileParameters: []
     responses: []
     responseFields: []
@@ -2019,7 +2145,7 @@ endpoints:
         name: schedule_id
         description: 'The ID of the schedule.'
         required: true
-        example: 01a06c86-0384-702f-b748-164626d2fd9f
+        example: 01a06c86-0387-71ab-a457-6b509ce35330
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2027,7 +2153,7 @@ endpoints:
         deprecated: false
     cleanUrlParameters:
       kloter_id: 01a06167-ae4f-7187-9066-4dae12bc3d97
-      schedule_id: 01a06c86-0384-702f-b748-164626d2fd9f
+      schedule_id: 01a06c86-0387-71ab-a457-6b509ce35330
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -2047,7 +2173,7 @@ endpoints:
         name: activity_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-22T04:12:50'
+        example: '2026-09-25T20:00:43'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2154,7 +2280,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       day_number: 16
-      activity_date: '2026-09-22T04:12:50'
+      activity_date: '2026-09-25T20:00:43'
       activity_time: architecto
       hijri_date_ref: 'n'
       title: g
@@ -2210,7 +2336,7 @@ endpoints:
         name: schedule_id
         description: 'The ID of the schedule.'
         required: true
-        example: 01a06c86-0384-702f-b748-164626d2fd9f
+        example: 01a06c86-0387-71ab-a457-6b509ce35330
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2218,7 +2344,7 @@ endpoints:
         deprecated: false
     cleanUrlParameters:
       kloter_id: 01a06167-ae4f-7187-9066-4dae12bc3d97
-      schedule_id: 01a06c86-0384-702f-b748-164626d2fd9f
+      schedule_id: 01a06c86-0387-71ab-a457-6b509ce35330
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -2330,7 +2456,7 @@ endpoints:
         name: room_type
         description: ''
         required: false
-        example: triple
+        example: single
         type: string
         enumValues:
           - quad
@@ -2353,7 +2479,7 @@ endpoints:
         nullable: true
         deprecated: false
     cleanBodyParameters:
-      room_type: triple
+      room_type: single
       hotel_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
     fileParameters: []
     responses: []
@@ -2427,7 +2553,7 @@ endpoints:
         name: room_type
         description: ''
         required: true
-        example: double
+        example: quint
         type: string
         enumValues:
           - quad
@@ -2477,7 +2603,7 @@ endpoints:
       kloter_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
       hotel_id: 6b72fe4a-5b40-307c-bc24-f79acf9a1bb9
       room_number: m
-      room_type: double
+      room_type: quint
       capacity: 35
       gender: L
       notes: 'y'
@@ -2610,7 +2736,7 @@ endpoints:
         name: room_type
         description: ''
         required: false
-        example: triple
+        example: quad
         type: string
         enumValues:
           - quad
@@ -2637,7 +2763,7 @@ endpoints:
         name: gender
         description: ''
         required: false
-        example: L
+        example: P
         type: string
         enumValues:
           - L
@@ -2659,9 +2785,9 @@ endpoints:
     cleanBodyParameters:
       hotel_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
       room_number: g
-      room_type: triple
+      room_type: quad
       capacity: 66
-      gender: L
+      gender: P
       notes: m
     fileParameters: []
     responses: []
@@ -2774,7 +2900,7 @@ endpoints:
         name: title
         description: 'This field is required when <code>jamaah_id</code> is not present.'
         required: false
-        example: MR
+        example: MISS
         type: string
         enumValues:
           - MR
@@ -2808,7 +2934,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       jamaah_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
-      title: MR
+      title: MISS
       occupant_name: g
       age: 16
     fileParameters: []
@@ -2885,7 +3011,7 @@ endpoints:
         name: title
         description: ''
         required: false
-        example: MR
+        example: MSTR
         type: string
         enumValues:
           - MR
@@ -2919,7 +3045,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       jamaah_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
-      title: MR
+      title: MSTR
       occupant_name: g
       age: 16
     fileParameters: []
@@ -3132,7 +3258,7 @@ endpoints:
         name: birth_date
         description: 'Must be a valid date. Must be a date before <code>today</code>.'
         required: true
-        example: '2022-10-16'
+        example: '2022-10-20'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3156,7 +3282,7 @@ endpoints:
         name: registration_date
         description: 'Must be a valid date.'
         required: true
-        example: '2026-09-22T04:12:51'
+        example: '2026-09-25T20:00:43'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3167,7 +3293,7 @@ endpoints:
         name: departure_date
         description: 'Must be a valid date. Must be a date after or equal to <code>registration_date</code>.'
         required: false
-        example: '2052-10-15'
+        example: '2052-10-18'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3277,7 +3403,7 @@ endpoints:
         name: initial_payment.payment_type
         description: ''
         required: false
-        example: down_payment
+        example: full_payment
         type: string
         enumValues:
           - down_payment
@@ -3290,7 +3416,7 @@ endpoints:
         name: initial_payment.payment_method
         description: ''
         required: false
-        example: bca_transfer
+        example: bsi_transfer
         type: string
         enumValues:
           - bca_transfer
@@ -3306,7 +3432,7 @@ endpoints:
         name: initial_payment.payment_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-22T04:12:51'
+        example: '2026-09-25T20:00:43'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3374,10 +3500,10 @@ endpoints:
       passport_number: z
       nik: miyvdljnikhwaykc
       phone: myuwpwlvqwrsitcp
-      birth_date: '2022-10-16'
+      birth_date: '2022-10-20'
       gender: L
-      registration_date: '2026-09-22T04:12:51'
-      departure_date: '2052-10-15'
+      registration_date: '2026-09-25T20:00:43'
+      departure_date: '2052-10-18'
       package_id: a4855dc5-0acb-33c3-b921-f4291f719ca0
       kloter_id: c90237e9-ced5-3af6-88ea-84aeaa148878
       meningitis_vaccine_status: sudah_vaksin
@@ -3386,9 +3512,9 @@ endpoints:
       status: cancelled
       initial_payment:
         amount: 4326.41688
-        payment_type: down_payment
-        payment_method: bca_transfer
-        payment_date: '2026-09-22T04:12:51'
+        payment_type: full_payment
+        payment_method: bsi_transfer
+        payment_date: '2026-09-25T20:00:43'
       equipments:
         -
           equipment_name: m
@@ -3430,14 +3556,14 @@ endpoints:
         name: registration_id
         description: 'The ID of the registration.'
         required: true
-        example: 019fff5c-eeea-70af-9d06-fa11db58b991
+        example: 01a0d1be-3c39-718a-894c-3fb9017e5bc4
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      registration_id: 019fff5c-eeea-70af-9d06-fa11db58b991
+      registration_id: 01a0d1be-3c39-718a-894c-3fb9017e5bc4
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -3486,14 +3612,14 @@ endpoints:
         name: registration_id
         description: 'The ID of the registration.'
         required: true
-        example: 019fff5c-eeea-70af-9d06-fa11db58b991
+        example: 01a0d1be-3c39-718a-894c-3fb9017e5bc4
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      registration_id: 019fff5c-eeea-70af-9d06-fa11db58b991
+      registration_id: 01a0d1be-3c39-718a-894c-3fb9017e5bc4
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -3557,7 +3683,7 @@ endpoints:
         name: birth_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-22T04:12:51'
+        example: '2026-09-25T20:00:43'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3568,7 +3694,7 @@ endpoints:
         name: gender
         description: ''
         required: false
-        example: P
+        example: L
         type: string
         enumValues:
           - L
@@ -3581,7 +3707,7 @@ endpoints:
         name: registration_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-22T04:12:51'
+        example: '2026-09-25T20:00:43'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3592,7 +3718,7 @@ endpoints:
         name: departure_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-22T04:12:51'
+        example: '2026-09-25T20:00:43'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3658,7 +3784,7 @@ endpoints:
         name: status
         description: ''
         required: false
-        example: converted
+        example: fully_paid
         type: string
         enumValues:
           - unpaid
@@ -3729,7 +3855,7 @@ endpoints:
         name: initial_payment.payment_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-22T04:12:51'
+        example: '2026-09-25T20:00:43'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3784,7 +3910,7 @@ endpoints:
         name: 'equipments[].is_received'
         description: 'This field is required when <code>equipments</code> is present.'
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -3807,26 +3933,26 @@ endpoints:
       passport_number: g
       nik: z
       phone: m
-      birth_date: '2026-09-22T04:12:51'
-      gender: P
-      registration_date: '2026-09-22T04:12:51'
-      departure_date: '2026-09-22T04:12:51'
+      birth_date: '2026-09-25T20:00:43'
+      gender: L
+      registration_date: '2026-09-25T20:00:43'
+      departure_date: '2026-09-25T20:00:43'
       meningitis_vaccine_status: i
       photo_status: 'y'
       total_package_cost: 60
-      status: converted
+      status: fully_paid
       initial_payment:
         amount: 42
         payment_type: l
         payment_method: j
-        payment_date: '2026-09-22T04:12:51'
+        payment_date: '2026-09-25T20:00:43'
         notes: architecto
       equipments:
         -
           id: a4855dc5-0acb-33c3-b921-f4291f719ca0
           equipment_name: z
           stock_id: 977e5426-8d13-3824-86aa-b092f8ae52c5
-          is_received: true
+          is_received: false
           size: 'y'
     fileParameters: []
     responses: []
@@ -3863,14 +3989,14 @@ endpoints:
         name: registration_id
         description: 'The ID of the registration.'
         required: true
-        example: 019fff5c-eeea-70af-9d06-fa11db58b991
+        example: 01a0d1be-3c39-718a-894c-3fb9017e5bc4
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      registration_id: 019fff5c-eeea-70af-9d06-fa11db58b991
+      registration_id: 01a0d1be-3c39-718a-894c-3fb9017e5bc4
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -3910,14 +4036,14 @@ endpoints:
         name: registration_id
         description: 'The ID of the registration.'
         required: true
-        example: 019fff5c-eeea-70af-9d06-fa11db58b991
+        example: 01a0d1be-3c39-718a-894c-3fb9017e5bc4
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      registration_id: 019fff5c-eeea-70af-9d06-fa11db58b991
+      registration_id: 01a0d1be-3c39-718a-894c-3fb9017e5bc4
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -4001,14 +4127,14 @@ endpoints:
         name: registration_id
         description: 'The ID of the registration.'
         required: true
-        example: 019fff5c-eeea-70af-9d06-fa11db58b991
+        example: 01a0d1be-3c39-718a-894c-3fb9017e5bc4
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      registration_id: 019fff5c-eeea-70af-9d06-fa11db58b991
+      registration_id: 01a0d1be-3c39-718a-894c-3fb9017e5bc4
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -4057,14 +4183,14 @@ endpoints:
         name: registration_id
         description: 'The ID of the registration.'
         required: true
-        example: 019fff5c-eeea-70af-9d06-fa11db58b991
+        example: 01a0d1be-3c39-718a-894c-3fb9017e5bc4
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      registration_id: 019fff5c-eeea-70af-9d06-fa11db58b991
+      registration_id: 01a0d1be-3c39-718a-894c-3fb9017e5bc4
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -4084,7 +4210,7 @@ endpoints:
         name: payment_type
         description: ''
         required: true
-        example: full_payment
+        example: down_payment
         type: string
         enumValues:
           - down_payment
@@ -4113,7 +4239,7 @@ endpoints:
         name: payment_date
         description: 'Must be a valid date.'
         required: true
-        example: '2026-09-22T04:12:51'
+        example: '2026-09-25T20:00:43'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -4132,9 +4258,9 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       amount: 4326.41688
-      payment_type: full_payment
+      payment_type: down_payment
       payment_method: mandiri_transfer
-      payment_date: '2026-09-22T04:12:51'
+      payment_date: '2026-09-25T20:00:43'
       notes: m
     fileParameters: []
     responses: []
@@ -4258,7 +4384,7 @@ endpoints:
         name: payment_method
         description: ''
         required: false
-        example: bca_transfer
+        example: mandiri_transfer
         type: string
         enumValues:
           - bca_transfer
@@ -4274,7 +4400,7 @@ endpoints:
         name: payment_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-22T04:12:51'
+        example: '2026-09-25T20:00:43'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -4294,8 +4420,8 @@ endpoints:
     cleanBodyParameters:
       amount: 4326.41688
       payment_type: full_payment
-      payment_method: bca_transfer
-      payment_date: '2026-09-22T04:12:51'
+      payment_method: mandiri_transfer
+      payment_date: '2026-09-25T20:00:43'
       notes: m
     fileParameters: []
     responses: []
@@ -4391,7 +4517,7 @@ endpoints:
         name: category
         description: ''
         required: true
-        example: lainnya
+        example: perlengkapan
         type: string
         enumValues:
           - akomodasi_tiket
@@ -4417,7 +4543,7 @@ endpoints:
         name: payment_method
         description: ''
         required: true
-        example: bca_transfer
+        example: bsi_transfer
         type: string
         enumValues:
           - bca_transfer
@@ -4433,7 +4559,7 @@ endpoints:
         name: expense_date
         description: 'Must be a valid date.'
         required: true
-        example: '2026-09-22T04:12:51'
+        example: '2026-09-25T20:00:43'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -4463,10 +4589,10 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       vendor: b
-      category: lainnya
+      category: perlengkapan
       amount: 4326.41688
-      payment_method: bca_transfer
-      expense_date: '2026-09-22T04:12:51'
+      payment_method: bsi_transfer
+      expense_date: '2026-09-25T20:00:43'
       reference_number: m
       notes: i
     fileParameters: []
@@ -4587,7 +4713,7 @@ endpoints:
         name: category
         description: ''
         required: false
-        example: perlengkapan
+        example: operasional_bus
         type: string
         enumValues:
           - akomodasi_tiket
@@ -4613,7 +4739,7 @@ endpoints:
         name: payment_method
         description: ''
         required: false
-        example: cash
+        example: bca_transfer
         type: string
         enumValues:
           - bca_transfer
@@ -4629,7 +4755,7 @@ endpoints:
         name: expense_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-22T04:12:51'
+        example: '2026-09-25T20:00:43'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -4659,10 +4785,10 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       vendor: b
-      category: perlengkapan
+      category: operasional_bus
       amount: 4326.41688
-      payment_method: cash
-      expense_date: '2026-09-22T04:12:51'
+      payment_method: bca_transfer
+      expense_date: '2026-09-25T20:00:43'
       reference_number: m
       notes: i
     fileParameters: []
@@ -4850,7 +4976,7 @@ endpoints:
         name: category
         description: ''
         required: true
-        example: equipment_sales
+        example: administration
         type: string
         enumValues:
           - commission
@@ -4892,7 +5018,7 @@ endpoints:
         name: income_date
         description: 'Must be a valid date.'
         required: true
-        example: '2026-09-22T04:12:51'
+        example: '2026-09-25T20:00:43'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -4922,10 +5048,10 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       source: b
-      category: equipment_sales
+      category: administration
       amount: 4326.41688
       payment_method: cash
-      income_date: '2026-09-22T04:12:51'
+      income_date: '2026-09-25T20:00:43'
       reference_number: m
       notes: i
     fileParameters: []
@@ -5046,7 +5172,7 @@ endpoints:
         name: category
         description: ''
         required: false
-        example: equipment_sales
+        example: commission
         type: string
         enumValues:
           - commission
@@ -5072,7 +5198,7 @@ endpoints:
         name: payment_method
         description: ''
         required: false
-        example: bca_transfer
+        example: mandiri_transfer
         type: string
         enumValues:
           - bca_transfer
@@ -5088,7 +5214,7 @@ endpoints:
         name: income_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-22T04:12:51'
+        example: '2026-09-25T20:00:44'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -5118,10 +5244,10 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       source: b
-      category: equipment_sales
+      category: commission
       amount: 4326.41688
-      payment_method: bca_transfer
-      income_date: '2026-09-22T04:12:51'
+      payment_method: mandiri_transfer
+      income_date: '2026-09-25T20:00:44'
       reference_number: m
       notes: i
     fileParameters: []
@@ -5289,7 +5415,7 @@ endpoints:
         name: birth_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-22T04:12:51'
+        example: '2026-09-25T20:00:44'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -5412,7 +5538,7 @@ endpoints:
         name: departure_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-22T04:12:51'
+        example: '2026-09-25T20:00:44'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -5423,7 +5549,7 @@ endpoints:
         name: return_date
         description: 'Must be a valid date. Must be a date after or equal to <code>departure_date</code>.'
         required: false
-        example: '2052-10-15'
+        example: '2052-10-18'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -5468,7 +5594,7 @@ endpoints:
       login_id: bngzmi
       nik: yvdljnikhwaykcmy
       full_name: u
-      birth_date: '2026-09-22T04:12:51'
+      birth_date: '2026-09-25T20:00:44'
       gender: P
       phone: wpwlvqwrsitcpscq
       emergency_contact: l
@@ -5479,8 +5605,8 @@ endpoints:
       kloter_id: 1937113a-b0a2-3b03-925a-3163292463db
       hotel_makkah: u
       hotel_madinah: j
-      departure_date: '2026-09-22T04:12:51'
-      return_date: '2052-10-15'
+      departure_date: '2026-09-25T20:00:44'
+      return_date: '2052-10-18'
       tour_leader: 'n'
       mutawif_local: g
       status: active
@@ -5624,7 +5750,7 @@ endpoints:
         name: birth_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-22T04:12:51'
+        example: '2026-09-25T20:00:44'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -5747,7 +5873,7 @@ endpoints:
         name: departure_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-22T04:12:51'
+        example: '2026-09-25T20:00:44'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -5758,7 +5884,7 @@ endpoints:
         name: return_date
         description: 'Must be a valid date. Must be a date after or equal to <code>departure_date</code>.'
         required: false
-        example: '2052-10-15'
+        example: '2052-10-18'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -5791,7 +5917,7 @@ endpoints:
         name: status
         description: ''
         required: false
-        example: active
+        example: archived
         type: string
         enumValues:
           - active
@@ -5803,7 +5929,7 @@ endpoints:
       login_id: bngzmi
       nik: yvdljnikhwaykcmy
       full_name: u
-      birth_date: '2026-09-22T04:12:51'
+      birth_date: '2026-09-25T20:00:44'
       gender: P
       phone: wpwlvqwrsitcpscq
       emergency_contact: l
@@ -5814,11 +5940,11 @@ endpoints:
       kloter_id: 1937113a-b0a2-3b03-925a-3163292463db
       hotel_makkah: u
       hotel_madinah: j
-      departure_date: '2026-09-22T04:12:51'
-      return_date: '2052-10-15'
+      departure_date: '2026-09-25T20:00:44'
+      return_date: '2052-10-18'
       tour_leader: 'n'
       mutawif_local: g
-      status: active
+      status: archived
     fileParameters: []
     responses: []
     responseFields: []
@@ -6015,7 +6141,7 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: active
+        example: resting
         type: string
         enumValues:
           - active
@@ -6032,7 +6158,7 @@ endpoints:
       phone: kcmyuwpwlvqwrsit
       experience: architecto
       performance: architecto
-      status: active
+      status: resting
     fileParameters: []
     responses: []
     responseFields: []
@@ -6207,7 +6333,7 @@ endpoints:
         name: status
         description: ''
         required: false
-        example: inactive
+        example: standby
         type: string
         enumValues:
           - active
@@ -6224,7 +6350,7 @@ endpoints:
       phone: kcmyuwpwlvqwrsit
       experience: architecto
       performance: architecto
-      status: inactive
+      status: standby
     fileParameters: []
     responses: []
     responseFields: []
@@ -6683,7 +6809,7 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: active
+        example: standby
         type: string
         enumValues:
           - active
@@ -6696,7 +6822,7 @@ endpoints:
       name: a
       language: 'y'
       experience: k
-      status: active
+      status: standby
     fileParameters: []
     responses: []
     responseFields: []

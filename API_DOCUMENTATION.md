@@ -23,7 +23,7 @@ Dokumentasi ini dibuat berdasarkan kondisi source code TERKINI tanpa mengubah bu
 
 ---
 
-### Ringkasan Modul & Endpoint (Total 76 Endpoints)
+### Ringkasan Modul & Endpoint (Total 82 Endpoints)
 
 | Modul | Method | Endpoint | Auth Required | Status |
 | :--- | :--- | :--- | :---: | :---: |
@@ -115,6 +115,12 @@ Dokumentasi ini dibuat berdasarkan kondisi source code TERKINI tanpa mengubah bu
 | **Stock / Inventory** | `PUT` | `/api/stocks/{stock}` | Yes | Active |
 | **Stock / Inventory** | `DELETE` | `/api/stocks/{stock}` | Yes | Active |
 | **Stock Transaction** | `GET` | `/api/stocks/{stock}/transactions` | Yes | Active |
+| **Modul Darurat / Emergency / SOS** | `GET` | `/api/sos-incidents` | Yes | Active |
+| **Modul Darurat / Emergency / SOS** | `POST` | `/api/sos-incidents` | Yes | Active |
+| **Modul Darurat / Emergency / SOS** | `GET` | `/api/sos-incidents/{sosIncident}` | Yes | Active |
+| **Modul Darurat / Emergency / SOS** | `PATCH` | `/api/sos-incidents/{sosIncident}/status` | Yes | Active |
+| **Modul Darurat / Emergency / SOS** | `GET` | `/api/sos-incidents/{sosIncident}/responses` | Yes | Active |
+| **Modul Darurat / Emergency / SOS** | `POST` | `/api/sos-incidents/{sosIncident}/responses` | Yes | Active |
 
 ---
 
@@ -1289,6 +1295,246 @@ Modul `registrations` terintegrasi langsung dengan modul `stocks` melalui `Regis
 
 ---
 
+### 18. Modul Darurat / Emergency / SOS
+
+API untuk mengelola laporan kejadian darurat (SOS Incident) dari Jamaah, penanganan status oleh Admin/Tour Leader, serta catatan tanggapan (responses).
+
+#### `GET /api/sos-incidents`
+* **Auth**: Yes (Sanctum Bearer Token)
+* **Scope Hak Akses Berdasarkan Role**:
+  * **Admin (`admin`)**: Melihat seluruh laporan SOS dari semua kloter.
+  * **Tour Leader (`tour_leader`)**: Hanya melihat laporan SOS dari kloter yang ditugaskan kepadanya (`kloters`).
+  * **Jamaah (`jamaah`)**: Hanya melihat laporan SOS miliknya sendiri.
+* **Fitur & Eager Loading**: Relasi `jamaah:id,full_name,phone`, `kloter:id,name`, serta agregasi `responses_count`. Diurutkan berdasarkan `triggered_at` terbaru.
+* **Response Contoh (200 OK)**:
+  ```json
+  {
+    "data": [
+      {
+        "id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+        "jamaah_id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+        "kloter_id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+        "type": "Darurat Medis",
+        "description": "Jamaah mengalami pusing dan kelelahan berat.",
+        "location_name": "Area Safa Marwah Gate 18",
+        "latitude": 21.4225000,
+        "longitude": 39.8262000,
+        "status": "triggered",
+        "triggered_at": "2026-09-26T02:00:00.000000Z",
+        "responses_count": 1,
+        "jamaah": {
+          "id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+          "full_name": "Ahmad Fauzi",
+          "phone": "081234567890"
+        },
+        "kloter": {
+          "id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+          "name": "Kloter 01 KNO"
+        }
+      }
+    ]
+  }
+  ```
+
+#### `POST /api/sos-incidents`
+* **Auth**: Yes (Sanctum Bearer Token)
+* **Aturan Autentikasi & Authorization**:
+  * **Jamaah (`jamaah`)**: Dapat membuat SOS untuk dirinya sendiri. Field `jamaah_id` **tidak perlu dikirim** oleh client (otomatis diisi oleh backend dari user ID authenticated).
+  * **Admin (`admin`)**: Dapat membuat SOS atas nama Jamaah dan **wajib mengirimkan** `jamaah_id` (UUID). Jika tidak diisi, mengembalikan `422 Unprocessable Entity` (`{"message": "jamaah_id is required for admin."}`).
+  * **Tour Leader (`tour_leader`)**: **Tidak diperbolehkan** membuat SOS dan menghasilkan response `403 Forbidden` (`{"message": "Tour Leader tidak dapat membuat SOS."}`).
+* **Request Body (`StoreSosIncidentRequest`)**:
+  * `jamaah_id` (string, uuid, optional for Jamaah / required for Admin, exists:jamaah,id)
+  * `type` (string, required, max:50) — Contoh: "Darurat Medis", "Tersesat", "Kecelakaan"
+  * `description` (string, optional, nullable)
+  * `location_name` (string, optional, nullable, max:255)
+  * `latitude` (numeric, required, between:-90,90)
+  * `longitude` (numeric, required, between:-180,180)
+* **Logic Otomatis Backend**:
+  * `kloter_id`: Diambil otomatis dari `jamaah.kloter_id`.
+  * `status`: Bernilai awal `'triggered'`.
+  * `triggered_at`: Timestamp `now()`.
+  * Record awal `sos_status_histories` dibuat otomatis (`old_status: null`, `new_status: 'triggered'`).
+* **Response Contoh (201 Created)**:
+  ```json
+  {
+    "message": "SOS berhasil dibuat.",
+    "data": {
+      "id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+      "jamaah_id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+      "kloter_id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+      "type": "Darurat Medis",
+      "description": "Jamaah mengalami pusing dan sesak napas.",
+      "location_name": "Pelataran Tawaf Gate 1",
+      "latitude": 21.4225000,
+      "longitude": 39.8262000,
+      "status": "triggered",
+      "triggered_at": "2026-09-26T02:10:00.000000Z",
+      "jamaah": {
+        "id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+        "full_name": "Ahmad Fauzi",
+        "phone": "081234567890"
+      },
+      "kloter": {
+        "id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+        "name": "Kloter 01 KNO"
+      }
+    }
+  }
+  ```
+
+#### `GET /api/sos-incidents/{sosIncident}`
+* **Auth**: Yes (Sanctum Bearer Token)
+* **Path Parameter**: `sosIncident` (UUID)
+* **Scope Access**: Admin, Tour Leader (kloter assigned), atau Jamaah (pemilik SOS). Mengembalikan `403 Forbidden` jika tidak berhak.
+* **Eager Loaded Relations**:
+  * `jamaah:id,full_name,phone`
+  * `kloter:id,name`
+  * `responses.jamaah:id,full_name`
+  * `responses.tourLeader:id,full_name`
+  * `responses.internalUser:id,full_name`
+  * `statusHistories.internalUser:id,full_name`
+  * `statusHistories.tourLeader:id,full_name`
+* **Response Contoh (200 OK)**:
+  ```json
+  {
+    "data": {
+      "id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+      "jamaah_id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+      "kloter_id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+      "type": "Darurat Medis",
+      "description": "Jamaah pusing dan kelelahan berat.",
+      "location_name": "Area Safa Marwah Gate 18",
+      "latitude": 21.4225000,
+      "longitude": 39.8262000,
+      "status": "acknowledged",
+      "triggered_at": "2026-09-26T02:00:00.000000Z",
+      "jamaah": {
+        "id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+        "full_name": "Ahmad Fauzi",
+        "phone": "081234567890"
+      },
+      "kloter": {
+        "id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+        "name": "Kloter 01 KNO"
+      },
+      "responses": [
+        {
+          "id": "9b1e0011-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+          "sos_incident_id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+          "message": "Tim medis sedang meluncur ke lokasi Gate 18.",
+          "created_at": "2026-09-26T02:05:00.000000Z",
+          "tour_leader": {
+            "id": "9b1e0022-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+            "full_name": "Ustadz Budi (TL)"
+          }
+        }
+      ],
+      "status_histories": [
+        {
+          "id": "9b1e0033-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+          "sos_incident_id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+          "old_status": "triggered",
+          "new_status": "acknowledged",
+          "changed_at": "2026-09-26T02:04:00.000000Z",
+          "tour_leader": {
+            "id": "9b1e0022-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+            "full_name": "Ustadz Budi (TL)"
+          }
+        }
+      ]
+    }
+  }
+  ```
+
+#### `PATCH /api/sos-incidents/{sosIncident}/status`
+* **Auth**: Yes (Sanctum Bearer Token)
+* **Path Parameter**: `sosIncident` (UUID)
+* **Aturan Hak Akses**:
+  * **Jamaah (`jamaah`)**: **Tidak dapat** mengubah status. Mengembalikan `403 Forbidden` (`{"message": "Jamaah tidak dapat mengubah status SOS."}`).
+  * **Admin (`admin`)**: Memperbarui status dan mencatat actor pada `sos_status_histories.changed_by`.
+  * **Tour Leader (`tour_leader`)**: Memperbarui status dan mencatat actor pada `sos_status_histories.tour_leader_id`.
+* **Request Body (`UpdateSosIncidentStatusRequest`)**:
+  * `status` (string, required, in:`triggered`,`acknowledged`,`in_action`,`resolved`,`false_alarm`)
+* **Logic Perubahan Status**:
+  * Jika status baru sama dengan status lama (`oldStatus === newStatus`), backend mengembalikan pesan `"Status SOS sudah berada pada status tersebut."`.
+  * Backend membuat record history baru di `sos_status_histories`.
+* **Response Contoh (200 OK)**:
+  ```json
+  {
+    "message": "Status SOS berhasil diperbarui.",
+    "data": {
+      "id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+      "jamaah_id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+      "kloter_id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+      "type": "Darurat Medis",
+      "description": "Jamaah pusing dan kelelahan berat.",
+      "location_name": "Area Safa Marwah Gate 18",
+      "latitude": 21.4225000,
+      "longitude": 39.8262000,
+      "status": "acknowledged",
+      "triggered_at": "2026-09-26T02:00:00.000000Z"
+    }
+  }
+  ```
+
+#### `GET /api/sos-incidents/{sosIncident}/responses`
+* **Auth**: Yes (Sanctum Bearer Token)
+* **Path Parameter**: `sosIncident` (UUID)
+* **Deskripsi**: Menampilkan seluruh daftar tanggapan/keterangan penanganan pada laporan SOS diurutkan dari `created_at` terlama ke terbaru.
+* **Response Contoh (200 OK)**:
+  ```json
+  {
+    "data": [
+      {
+        "id": "9b1e0011-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+        "sos_incident_id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+        "jamaah_id": null,
+        "tour_leader_id": "9b1e0022-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+        "internal_user_id": null,
+        "message": "Tim medis sedang meluncur ke lokasi Gate 18.",
+        "created_at": "2026-09-26T02:05:00.000000Z",
+        "jamaah": null,
+        "tour_leader": {
+          "id": "9b1e0022-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+          "full_name": "Ustadz Budi (TL)"
+        },
+        "internal_user": null
+      }
+    ]
+  }
+  ```
+
+#### `POST /api/sos-incidents/{sosIncident}/responses`
+* **Auth**: Yes (Sanctum Bearer Token)
+* **Path Parameter**: `sosIncident` (UUID)
+* **Aturan Penentuan Aktor**:
+  * Aktor ditentukan otomatis dari token autentikasi (`jamaah_id`, `tour_leader_id`, atau `internal_user_id`). Client **tidak perlu dan tidak boleh** mengirimkan actor ID.
+* **Request Body (`StoreSosResponseRequest`)**:
+  * `message` (string, required, max:5000)
+* **Response Contoh (201 Created)**:
+  ```json
+  {
+    "message": "Response SOS berhasil ditambahkan.",
+    "data": {
+      "id": "9b1e0044-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+      "sos_incident_id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+      "jamaah_id": null,
+      "tour_leader_id": "9b1e0022-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+      "internal_user_id": null,
+      "message": "Saya sudah berada bersama jamaah di lokasi, kondisi stabil.",
+      "created_at": "2026-09-26T02:15:00.000000Z",
+      "jamaah": null,
+      "tour_leader": {
+        "id": "9b1e0022-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+        "full_name": "Ustadz Budi (TL)"
+      },
+      "internal_user": null
+    }
+  }
+  ```
+
+---
+
 ## Deprecated Endpoints
 
 | Method | Endpoint | Reason |
@@ -1297,6 +1543,6 @@ Modul `registrations` terintegrasi langsung dengan modul `stocks` melalui `Regis
 
 
 ## Catatan Verifikasi & Integritas
-* Seluruh endpoint telah diverifikasi langsung terhadap `routes/api.php` (`php artisan route:list --path=api`), Eloquent Models, Form Requests, dan API Resources.
-* Modul **Stock** dan **Integrasi Registration Equipment** telah didokumentasikan secara lengkap sesuai source code backend terbaru.
+* Seluruh 82 endpoint (termasuk 6 endpoint **Modul Darurat / Emergency / SOS**) telah diverifikasi langsung terhadap `routes/api.php` (`php artisan route:list --path=api`), Controllers, Form Requests, Models, dan Scribe Config.
+* Dokumentasi Scribe (`.scribe/` dan `public/docs/`) serta `API_DOCUMENTATION.md` telah diperbarui secara konsisten.
 * Tidak ada perubahan pada business logic, schema database, maupun controller application.
