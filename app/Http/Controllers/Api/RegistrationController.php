@@ -585,6 +585,28 @@ class RegistrationController extends Controller
                 }
 
                 // =====================================================
+                // CREATE NEW PAYMENT
+                // =====================================================
+                if (
+                    $request->has('initial_payment')
+                    && is_array($request->initial_payment)
+                ) {
+                    $payData = $request->initial_payment;
+
+                    $registration->payments()->create([
+                        'amount' => $payData['amount'],
+                        'payment_type' => $payData['payment_type'] ?? 'down_payment',
+                        'payment_method' => $payData['payment_method'] ?? 'bca_transfer',
+                        'payment_date' => $payData['payment_date'] ?? now(),
+                        'recorded_by' => auth()->id(),
+                        'notes' => $payData['notes'] ?? 'Pembayaran tambahan',
+                    ]);
+
+                    $registration->unsetRelation('payments');
+                    $registration->updateFinancialStatus();
+                }
+
+                // =====================================================
                 // UPDATE EQUIPMENT
                 // =====================================================
 
