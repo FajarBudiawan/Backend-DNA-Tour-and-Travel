@@ -23,8 +23,7 @@ class StoreSosIncidentRequest extends FormRequest
 
             'type' => [
                 'required',
-                'string',
-                'max:50',
+                'in:critical,health,accident,lost',
             ],
 
             'description' => [

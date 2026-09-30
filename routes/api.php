@@ -469,7 +469,7 @@ Route::middleware(['auth:sanctum', 'abilities:admin'])->group(function () {
 // hak akses berdasarkan ability token.
 //
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum', 'throttle:5,1'])->group(function () {
 
     Route::get(
         '/sos-incidents',

@@ -58,9 +58,9 @@ class SosIncidentController extends Controller
             ], 403);
         }
 
-        return response()->json([
-            'data' => $query->get(),
-        ]);
+        return response()->json(
+            $query->paginate(50)
+        );
     }
 
     /**
@@ -281,7 +281,9 @@ class SosIncidentController extends Controller
             $newStatus,
             $user
         ) {
-            $sosIncident->update([
+            $lockedIncident = \App\Models\SosIncident::where('id', $sosIncident->id)->lockForUpdate()->first();
+
+            $lockedIncident->update([
                 'status' => $newStatus,
             ]);
 
