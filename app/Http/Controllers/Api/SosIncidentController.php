@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\SosCreated;
+use App\Events\SosStatusUpdated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreSosIncidentRequest;
 use App\Http\Requests\UpdateSosIncidentStatusRequest;
@@ -205,6 +207,11 @@ class SosIncidentController extends Controller
             return $incident;
         });
 
+        // DISPATCH EVENT OUTSIDE TRANSACTION
+        DB::afterCommit(function () use ($incident) {
+            event(new SosCreated($incident, auth()->user()));
+        });
+
         $incident->load([
             'jamaah:id,full_name,phone',
             'kloter:id,name',
@@ -268,24 +275,22 @@ class SosIncidentController extends Controller
             ]);
         }
 
-        /*
-         * Saat ini kita izinkan perubahan status selama user
-         * memiliki akses terhadap incident.
-         *
-         * Validasi urutan status dapat diperketat setelah
-         * seluruh flow Emergency selesai diintegrasikan.
-         */
+        $statusChanged = false;
+
         DB::transaction(function () use (
             $sosIncident,
             $oldStatus,
             $newStatus,
-            $user
+            $user,
+            &$statusChanged
         ) {
             $lockedIncident = \App\Models\SosIncident::where('id', $sosIncident->id)->lockForUpdate()->first();
 
             $lockedIncident->update([
                 'status' => $newStatus,
             ]);
+            
+            $statusChanged = true;  // ✅ TAMBAH INI
 
             $historyData = [
                 'sos_incident_id' => $sosIncident->id,
@@ -304,6 +309,18 @@ class SosIncidentController extends Controller
 
             SosStatusHistory::create($historyData);
         });
+
+        // ✅ TAMBAH INI - DISPATCH EVENT OUTSIDE TRANSACTION (jika status berubah)
+        if ($statusChanged) {
+            DB::afterCommit(function () use ($sosIncident, $oldStatus) {
+                event(new SosStatusUpdated(
+                    $sosIncident->fresh(),
+                    $oldStatus,
+                    $sosIncident->fresh()->status,
+                    auth()->user()
+                ));
+            });
+        }
 
         return response()->json([
             'message' => 'Status SOS berhasil diperbarui.',

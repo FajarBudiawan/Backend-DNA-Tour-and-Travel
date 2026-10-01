@@ -92,4 +92,9 @@ class Jamaah extends Authenticatable
     {
         return $this->hasMany(FamilyRelation::class, 'jamaah_id');
     }
+
+    public function notifications()
+    {
+        return $this->morphMany(Notification::class, 'recipient');
+    }
 }

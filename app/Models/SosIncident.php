@@ -52,4 +52,9 @@ class SosIncident extends Model
     {
         return $this->hasMany(SosResponse::class, 'sos_incident_id');
     }
+
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class, 'sos_incident_id');
+    }
 }

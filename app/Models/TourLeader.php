@@ -30,4 +30,9 @@ class TourLeader extends Authenticatable
             'kloter_id'
         )->withPivot('assigned_at');
     }
+
+    public function notifications()
+    {
+        return $this->morphMany(Notification::class, 'recipient');
+    }
 }

@@ -38,4 +38,9 @@ class InternalUser extends Authenticatable
     {
         return $this->hasMany(Registration::class, 'created_by');
     }
+
+    public function notifications()
+    {
+        return $this->morphMany(Notification::class, 'recipient');
+    }
 }
