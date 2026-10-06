@@ -31,11 +31,13 @@ class SendSosStatusUpdatedNotification implements ShouldQueue
     {
         try {
             // Refresh incident
-            $incident = $event->incident->fresh(['jamaah']);  // ✅ TAMBAH INI
-            $jamaahName = $incident->jamaah?->nama ?? 'Unknown';
+            $incident = $event->incident->fresh(['jamaah']);
+            $jamaahName = $incident->jamaah?->full_name ?? 'Unknown';
 
-            // Only notify untuk certain status
-            $statusesToNotify = ['acknowledged', 'resolved'];
+            // ✅ FIX #4: Add 'in_action' ke statusesToNotify
+            // Sebelum: hanya notify untuk 'acknowledged' dan 'resolved'
+            // Sesudah: tambahkan 'in_action' agar Jamaah tahu penanganan sudah dimulai
+            $statusesToNotify = ['acknowledged', 'in_action', 'resolved'];
 
             if (!in_array($event->newStatus, $statusesToNotify)) {
                 Log::info('SOS status update - notification skipped', [
@@ -72,7 +74,7 @@ class SendSosStatusUpdatedNotification implements ShouldQueue
         } catch (\Exception $e) {
             Log::error('SendSosStatusUpdatedNotification failed', [
                 'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),  // ✅ Log full trace
+                'trace' => $e->getTraceAsString(),
             ]);
             throw $e;
         }

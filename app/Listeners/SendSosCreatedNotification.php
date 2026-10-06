@@ -32,10 +32,13 @@ class SendSosCreatedNotification implements ShouldQueue
     {
         try {
             // Refresh incident dengan relationships
-            $incident = $event->incident->fresh(['jamaah']);  // ✅ TAMBAH INI
+            $incident = $event->incident->fresh(['jamaah']);
+
+            // ✅ FIX: Extract jamaahName SEBELUM LOOPS (scope issue)
+            $jamaahName = $incident->jamaah?->full_name ?? 'Unknown';
             
-            // 1. Ambil semua Admin
-            $admins = InternalUser::all();
+            // ✅ FIX #3: Filter active users saja (performance + accuracy)
+            $admins = InternalUser::where('status', 'active')->get();
 
             // 2. Ambil semua Tour Leader
             $tourLeaders = TourLeader::whereHas('kloters', function ($query) use ($incident) {
@@ -50,14 +53,13 @@ class SendSosCreatedNotification implements ShouldQueue
             // 3. Create notifications untuk admin
             foreach ($admins as $admin) {
                 try {
-                    $jamaahName = $incident->jamaah?->nama ?? 'Unknown';
                     Notification::create([
                         'sos_incident_id' => $incident->id,
                         'recipient_type' => InternalUser::class,
                         'recipient_id' => $admin->id,
                         'type' => 'sos_created',
                         'title' => 'Laporan Darurat Baru',
-                        'message' => "SOS baru dari {$jamaahName}",  // ✅ ADD NULL CHECK
+                        'message' => "SOS baru dari {$jamaahName}",
                         'delivery_status' => 'pending',
                     ]);
                 } catch (\Exception $e) {
@@ -71,13 +73,16 @@ class SendSosCreatedNotification implements ShouldQueue
             // 4. Create notifications untuk tour leader
             foreach ($tourLeaders as $tourLeader) {
                 try {
+                    // ✅ FIX #2: Add null-check untuk location_name
+                    $location = $incident->location_name ?? 'lokasi tidak diketahui';
+                    
                     Notification::create([
                         'sos_incident_id' => $incident->id,
                         'recipient_type' => TourLeader::class,
                         'recipient_id' => $tourLeader->id,
                         'type' => 'sos_created',
                         'title' => 'Laporan Darurat dari Jamaah',
-                        'message' => "{$jamaahName} melaporkan darurat di {$incident->location_name}",  // ✅ ADD NULL CHECK
+                        'message' => "{$jamaahName} melaporkan darurat di {$location}",
                         'delivery_status' => 'pending',
                     ]);
                 } catch (\Exception $e) {
@@ -99,7 +104,7 @@ class SendSosCreatedNotification implements ShouldQueue
         } catch (\Exception $e) {
             Log::error('SendSosCreatedNotification failed', [
                 'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),  // ✅ Log full trace
+                'trace' => $e->getTraceAsString(),
             ]);
             throw $e;
         }

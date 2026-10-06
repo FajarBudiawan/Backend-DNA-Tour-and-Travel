@@ -60,9 +60,11 @@ class SosIncidentController extends Controller
             ], 403);
         }
 
-        return response()->json(
-            $query->paginate(50)
-        );
+        // ✅ FIX #5: Wrap response dengan { message, data } untuk consistency API
+        return response()->json([
+            'message' => 'SOS incidents retrieved successfully',
+            'data' => $query->paginate(50)
+        ]);
     }
 
     /**
@@ -290,7 +292,7 @@ class SosIncidentController extends Controller
                 'status' => $newStatus,
             ]);
             
-            $statusChanged = true;  // ✅ TAMBAH INI
+            $statusChanged = true;
 
             $historyData = [
                 'sos_incident_id' => $sosIncident->id,
@@ -310,7 +312,6 @@ class SosIncidentController extends Controller
             SosStatusHistory::create($historyData);
         });
 
-        // ✅ TAMBAH INI - DISPATCH EVENT OUTSIDE TRANSACTION (jika status berubah)
         if ($statusChanged) {
             DB::afterCommit(function () use ($sosIncident, $oldStatus) {
                 event(new SosStatusUpdated(
