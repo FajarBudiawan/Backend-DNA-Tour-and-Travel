@@ -46,6 +46,15 @@ class SendSosStatusUpdatedNotification implements ShouldQueue
                 return;
             }
 
+            // ✅ PHASE 2G: Custom message per status
+            $messages = [
+                'acknowledged' => "Laporan darurat Anda telah diterima dan sedang ditangani.",
+                'in_action' => "Tim kami sedang melakukan penanganan darurat Anda. Mohon tetap di lokasi yang aman.",
+                'resolved' => "Laporan darurat Anda telah selesai ditangani.",
+            ];
+
+            $message = $messages[$event->newStatus] ?? "Status laporan darurat Anda berubah menjadi {$event->newStatus}";
+
             try {
                 Notification::create([
                     'sos_incident_id' => $incident->id,
@@ -53,7 +62,7 @@ class SendSosStatusUpdatedNotification implements ShouldQueue
                     'recipient_id' => $incident->jamaah_id,
                     'type' => 'sos_status_updated',
                     'title' => "Status Laporan: {$event->newStatus}",
-                    'message' => "Laporan darurat Anda berubah menjadi {$event->newStatus}",
+                    'message' => $message,
                     'delivery_status' => 'pending',
                 ]);
             } catch (\Exception $e) {

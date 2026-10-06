@@ -192,6 +192,21 @@ class SosIncidentController extends Controller
             ], 422);
         }
 
+        // Cek duplicate: Jamaah sudah punya SOS aktif?
+        $existingActiveSos = SosIncident::where('jamaah_id', $data['jamaah_id'])
+            ->whereNotIn('status', ['resolved', 'false_alarm'])
+            ->first();
+
+        if ($existingActiveSos) {
+            return response()->json([
+                'message' => 'Jamaah sudah memiliki laporan SOS aktif.',
+                'data' => [
+                    'existing_incident_id' => $existingActiveSos->id,
+                    'existing_status' => $existingActiveSos->status,
+                ]
+            ], 409);  // Conflict
+        }
+
         $data['kloter_id'] = $jamaah->kloter_id;
         $data['status'] = 'triggered';
         $data['triggered_at'] = now();
@@ -267,6 +282,15 @@ class SosIncidentController extends Controller
             ], 403);
         }
 
+        // ✅ PHASE 2E: Check auth untuk resolved
+        if ($request->validated('status') === 'resolved') {
+            if (!$user->currentAccessToken()->can('admin') && !$user->currentAccessToken()->can('tour_leader')) {
+                return response()->json([
+                    'message' => 'Hanya Admin dan Tour Leader yang dapat menyelesaikan SOS.',
+                ], 403);
+            }
+        }
+
         $newStatus = $request->validated('status');
         $oldStatus = $sosIncident->status;
 
@@ -288,10 +312,17 @@ class SosIncidentController extends Controller
         ) {
             $lockedIncident = \App\Models\SosIncident::where('id', $sosIncident->id)->lockForUpdate()->first();
 
-            $lockedIncident->update([
-                'status' => $newStatus,
-            ]);
-            
+            // ✅ PHASE 2B: Update timestamp berdasarkan status
+            $updateData = ['status' => $newStatus];
+
+            if ($newStatus === 'acknowledged') {
+                $updateData['acknowledged_at'] = now();
+            } elseif ($newStatus === 'resolved') {
+                $updateData['resolved_at'] = now();
+            }
+
+            $lockedIncident->update($updateData);
+
             $statusChanged = true;
 
             $historyData = [

@@ -23,6 +23,7 @@ class Notification extends Model
         'read_at',
         'sent_at',
         'delivery_status',
+        'read_at',
     ];
     
     // Cast columns ke tipe yang tepat
@@ -63,5 +64,21 @@ class Notification extends Model
     public function scopeByIncident($query, string $incidentId)
     {
         return $query->where('sos_incident_id', $incidentId);
+    }
+
+    /**
+    * Cek apakah notifikasi sudah dibaca
+    */
+    public function isRead(): bool
+    {
+        return $this->read_at !== null;
+    }
+
+    /**
+     * Mark notifikasi sebagai read
+     */
+    public function markAsRead(): bool
+    {
+        return $this->update(['read_at' => now()]);
     }
 }

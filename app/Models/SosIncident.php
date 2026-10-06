@@ -25,12 +25,17 @@ class SosIncident extends Model
         'longitude',
         'status',
         'triggered_at',
+        'acknowledged_at',
+        'resolved_at', 
     ];
 
     protected $casts = [
         'latitude' => 'decimal:7',
         'longitude' => 'decimal:7',
         'triggered_at' => 'datetime',
+        'acknowledged_at' => 'datetime',
+        'resolved_at' => 'datetime',  
+
     ];
 
     public function jamaah(): BelongsTo
