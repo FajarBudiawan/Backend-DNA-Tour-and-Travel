@@ -32,7 +32,7 @@ class FamilyAuthController extends Controller
         return response()->json([
             'message' => 'Login Family berhasil.',
             'token' => $token,
-            'jamaah' => $jamaah,
+            'jamaah' => new JamaahMobileResource($jamaah),
         ]);
     }
 
