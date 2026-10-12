@@ -261,104 +261,144 @@ class SosIncidentController extends Controller
      * @urlParam sosIncident string required UUID laporan SOS Incident. Example: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
      * @bodyParam status string required Status baru yang valid (`triggered`, `acknowledged`, `in_action`, `resolved`, `false_alarm`). Example: acknowledged
      */
-    public function updateStatus(
-        UpdateSosIncidentStatusRequest $request,
-        SosIncident $sosIncident
-    ): JsonResponse {
-        if (! $this->canAccessIncident($request, $sosIncident)) {
-            return response()->json([
-                'message' => 'Forbidden.',
-            ], 403);
-        }
 
-        $user = $request->user();
-
-        if (
-            ! $user->currentAccessToken()->can('admin') &&
-            ! $user->currentAccessToken()->can('tour_leader')
-        ) {
-            return response()->json([
-                'message' => 'Jamaah tidak dapat mengubah status SOS.',
-            ], 403);
-        }
-
-        // ✅ PHASE 2E: Check auth untuk resolved
-        if ($request->validated('status') === 'resolved') {
-            if (!$user->currentAccessToken()->can('admin') && !$user->currentAccessToken()->can('tour_leader')) {
-                return response()->json([
-                    'message' => 'Hanya Admin dan Tour Leader yang dapat menyelesaikan SOS.',
-                ], 403);
-            }
-        }
-
-        $newStatus = $request->validated('status');
-        $oldStatus = $sosIncident->status;
-
-        if ($oldStatus === $newStatus) {
-            return response()->json([
-                'message' => 'Status SOS sudah berada pada status tersebut.',
-                'data' => $sosIncident,
-            ]);
-        }
-
-        $statusChanged = false;
-
-        DB::transaction(function () use (
-            $sosIncident,
-            $oldStatus,
-            $newStatus,
-            $user,
-            &$statusChanged
-        ) {
-            $lockedIncident = \App\Models\SosIncident::where('id', $sosIncident->id)->lockForUpdate()->first();
-
-            // ✅ PHASE 2B: Update timestamp berdasarkan status
-            $updateData = ['status' => $newStatus];
-
-            if ($newStatus === 'acknowledged') {
-                $updateData['acknowledged_at'] = now();
-            } elseif ($newStatus === 'resolved') {
-                $updateData['resolved_at'] = now();
-            }
-
-            $lockedIncident->update($updateData);
-
-            $statusChanged = true;
-
-            $historyData = [
-                'sos_incident_id' => $sosIncident->id,
-                'old_status' => $oldStatus,
-                'new_status' => $newStatus,
-                'changed_at' => now(),
-            ];
-
-            if ($user->currentAccessToken()->can('tour_leader')) {
-                $historyData['tour_leader_id'] = $user->id;
-            }
-
-            if ($user->currentAccessToken()->can('admin')) {
-                $historyData['changed_by'] = $user->id;
-            }
-
-            SosStatusHistory::create($historyData);
-        });
-
-        if ($statusChanged) {
-            DB::afterCommit(function () use ($sosIncident, $oldStatus) {
-                event(new SosStatusUpdated(
-                    $sosIncident->fresh(),
-                    $oldStatus,
-                    $sosIncident->fresh()->status,
-                    auth()->user()
-                ));
-            });
-        }
-
+public function updateStatus(
+    UpdateSosIncidentStatusRequest $request,
+    SosIncident $sosIncident
+): JsonResponse {
+    if (! $this->canAccessIncident($request, $sosIncident)) {
         return response()->json([
-            'message' => 'Status SOS berhasil diperbarui.',
-            'data' => $sosIncident->fresh(),
-        ]);
+            'message' => 'Forbidden.',
+        ], 403);
     }
+
+    $user = $request->user();
+    $token = $user->currentAccessToken();
+
+    // Hanya Admin dan Tour Leader yang boleh mengubah status.
+    if (
+        ! $token->can('admin') &&
+        ! $token->can('tour_leader')
+    ) {
+        return response()->json([
+            'message' => 'Jamaah tidak dapat mengubah status SOS.',
+        ], 403);
+    }
+
+    $newStatus = $request->validated('status');
+
+    // Definisi transisi status yang diperbolehkan.
+    $allowedTransitions = [
+        'triggered' => ['acknowledged', 'false_alarm'],
+        'acknowledged' => ['in_action', 'false_alarm'],
+        'in_action' => ['resolved', 'false_alarm'],
+        'resolved' => [],
+        'false_alarm' => [],
+    ];
+
+    // Validasi dilakukan di dalam transaksi terhadap status terbaru.
+    $result = DB::transaction(function () use (
+        $sosIncident,
+        $newStatus,
+        $user,
+        $allowedTransitions
+    ) {
+        $incident = SosIncident::query()
+            ->whereKey($sosIncident->getKey())
+            ->lockForUpdate()
+            ->firstOrFail();
+
+        $oldStatus = $incident->status;
+
+        // Permintaan status yang sama tidak membuat riwayat baru.
+        if ($oldStatus === $newStatus) {
+            return [
+                'changed' => false,
+                'invalid_transition' => false,
+                'incident' => $incident,
+                'old_status' => $oldStatus,
+            ];
+        }
+
+        // Tolak transisi yang tidak diizinkan.
+        if (! in_array(
+            $newStatus,
+            $allowedTransitions[$oldStatus] ?? [],
+            true
+        )) {
+            return [
+                'changed' => false,
+                'invalid_transition' => true,
+                'incident' => $incident,
+                'old_status' => $oldStatus,
+            ];
+        }
+
+        // Perbarui status dan timestamp terkait.
+        $incident->status = $newStatus;
+
+        if ($newStatus === 'acknowledged') {
+            $incident->acknowledged_at ??= now();
+        }
+
+        if ($newStatus === 'resolved') {
+            $incident->resolved_at ??= now();
+        }
+
+        $incident->save();
+
+        // Simpan riwayat dalam transaksi yang sama.
+        $historyData = [
+            'sos_incident_id' => $incident->id,
+            'old_status' => $oldStatus,
+            'new_status' => $newStatus,
+            'changed_at' => now(),
+        ];
+
+        if ($user->currentAccessToken()->can('tour_leader')) {
+            $historyData['tour_leader_id'] = $user->id;
+        } elseif ($user->currentAccessToken()->can('admin')) {
+            $historyData['changed_by'] = $user->id;
+        }
+
+        SosStatusHistory::create($historyData);
+
+        return [
+            'changed' => true,
+            'invalid_transition' => false,
+            'incident' => $incident,
+            'old_status' => $oldStatus,
+        ];
+    });
+
+    // Respons khusus jika transisi status tidak valid.
+    if ($result['invalid_transition']) {
+        return response()->json([
+            'message' => 'Transisi status SOS tidak diizinkan.',
+            'current_status' => $result['old_status'],
+            'requested_status' => $newStatus,
+        ], 422);
+    }
+
+    $incident = $result['incident'];
+
+    // Kirim event setelah transaksi database selesai.
+    if ($result['changed']) {
+        event(new SosStatusUpdated(
+            $incident->fresh(),
+            $result['old_status'],
+            $newStatus,
+            $user
+        ));
+    }
+
+    return response()->json([
+        'message' => $result['changed']
+            ? 'Status SOS berhasil diperbarui.'
+            : 'Status SOS sudah berada pada status tersebut.',
+        'data' => $incident->fresh(),
+    ]);
+}
 
     /**
      * Memeriksa apakah user memiliki akses terhadap incident.
