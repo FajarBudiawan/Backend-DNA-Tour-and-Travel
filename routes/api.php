@@ -24,6 +24,8 @@ use App\Http\Controllers\Api\TourLeaderAuthController;
 use App\Http\Controllers\Api\SosIncidentController;
 use App\Http\Controllers\Api\SosResponseController;
 use App\Http\Controllers\Api\NotificationController;  // ← TAMBAH INI
+use App\Http\Controllers\Api\DeviceTokenController;
+
 
 // ====================
 // AUTH
@@ -470,15 +472,17 @@ Route::middleware(['auth:sanctum', 'abilities:admin'])->group(function () {
 // hak akses berdasarkan ability token.
 //
 
-Route::middleware(['auth:sanctum', 'throttle:5,1'])->group(function () {
-    // SOS strict throttle (create + update status)
-    Route::post('/sos-incidents', [SosIncidentController::class, 'store']);
-    Route::patch('/sos-incidents/{sosIncident}/status', [SosIncidentController::class, 'updateStatus']);
-    
-    // SOS read OK dengan throttle ini
+// SOS Read routes: rate limit lebih tinggi (60 req/min) untuk mobile navigation dan polling
+Route::middleware(['auth:sanctum', 'throttle:60,1'])->group(function () {
     Route::get('/sos-incidents', [SosIncidentController::class, 'index']);
     Route::get('/sos-incidents/{sosIncident}', [SosIncidentController::class, 'show']);
     Route::get('/sos-incidents/{sosIncident}/responses', [SosResponseController::class, 'index']);
+});
+
+// SOS Write routes: rate limit ketat (5 req/min) terhadap spam
+Route::middleware(['auth:sanctum', 'throttle:5,1'])->group(function () {
+    Route::post('/sos-incidents', [SosIncidentController::class, 'store']);
+    Route::patch('/sos-incidents/{sosIncident}/status', [SosIncidentController::class, 'updateStatus']);
     Route::post('/sos-incidents/{sosIncident}/responses', [SosResponseController::class, 'store']);
 });
 
@@ -486,4 +490,13 @@ Route::middleware(['auth:sanctum', 'throttle:5,1'])->group(function () {
 Route::middleware(['auth:sanctum', 'throttle:30,1'])->group(function () {
     Route::get('/notifications', [NotificationController::class, 'index']);
     Route::patch('/notifications/{id}/read', [NotificationController::class, 'markAsRead']);
+});
+
+// ====================
+// FCM DEVICE TOKENS
+// ====================
+
+Route::middleware(['auth:sanctum', 'throttle:30,1'])->group(function () {
+    Route::post('/device-tokens', [DeviceTokenController::class, 'store']);
+    Route::delete('/device-tokens', [DeviceTokenController::class, 'destroy']);
 });

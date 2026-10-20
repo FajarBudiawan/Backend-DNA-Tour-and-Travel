@@ -34,10 +34,7 @@ class SendSosStatusUpdatedNotification implements ShouldQueue
             $incident = $event->incident->fresh(['jamaah']);
             $jamaahName = $incident->jamaah?->full_name ?? 'Unknown';
 
-            // ✅ FIX #4: Add 'in_action' ke statusesToNotify
-            // Sebelum: hanya notify untuk 'acknowledged' dan 'resolved'
-            // Sesudah: tambahkan 'in_action' agar Jamaah tahu penanganan sudah dimulai
-            $statusesToNotify = ['acknowledged', 'in_action', 'resolved'];
+            $statusesToNotify = ['acknowledged', 'in_action', 'resolved', 'false_alarm'];
 
             if (!in_array($event->newStatus, $statusesToNotify)) {
                 Log::info('SOS status update - notification skipped', [
@@ -46,17 +43,20 @@ class SendSosStatusUpdatedNotification implements ShouldQueue
                 return;
             }
 
-            // ✅ PHASE 2G: Custom message per status
+            // Custom message per status
             $messages = [
                 'acknowledged' => "Laporan darurat Anda telah diterima dan sedang ditangani.",
                 'in_action' => "Tim kami sedang melakukan penanganan darurat Anda. Mohon tetap di lokasi yang aman.",
                 'resolved' => "Laporan darurat Anda telah selesai ditangani.",
+                'false_alarm' => $event->reason
+                    ? "Laporan SOS ditandai sebagai alarm palsu: {$event->reason}"
+                    : "Laporan darurat Anda telah ditandai sebagai alarm palsu / tidak sengaja tertekan.",
             ];
 
             $message = $messages[$event->newStatus] ?? "Status laporan darurat Anda berubah menjadi {$event->newStatus}";
 
             try {
-                Notification::create([
+                $notification = Notification::create([
                     'sos_incident_id' => $incident->id,
                     'recipient_type' => Jamaah::class,
                     'recipient_id' => $incident->jamaah_id,
@@ -73,12 +73,13 @@ class SendSosStatusUpdatedNotification implements ShouldQueue
                 throw $e;
             }
 
-            // Dispatch job
-            dispatch(new ProcessSosNotificationJob($incident));
+            // Dispatch job dengan ID notifikasi yang baru dibuat
+            dispatch(new ProcessSosNotificationJob($incident, [$notification->id]));
 
             Log::info('SOS status updated notification queued', [
                 'incident_id' => $incident->id,
                 'new_status' => $event->newStatus,
+                'notification_id' => $notification->id,
             ]);
         } catch (\Exception $e) {
             Log::error('SendSosStatusUpdatedNotification failed', [

@@ -301,7 +301,8 @@ public function updateStatus(
         $sosIncident,
         $newStatus,
         $user,
-        $allowedTransitions
+        $allowedTransitions,
+        $request
     ) {
         $incident = SosIncident::query()
             ->whereKey($sosIncident->getKey())
@@ -352,6 +353,7 @@ public function updateStatus(
             'sos_incident_id' => $incident->id,
             'old_status' => $oldStatus,
             'new_status' => $newStatus,
+            'reason' => $request->validated('reason'),
             'changed_at' => now(),
         ];
 
@@ -388,7 +390,8 @@ public function updateStatus(
             $incident->fresh(),
             $result['old_status'],
             $newStatus,
-            $user
+            $user,
+            $request->validated('reason')
         ));
     }
 

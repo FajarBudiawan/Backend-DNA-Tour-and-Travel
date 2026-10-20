@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Notification extends Model
 {
@@ -80,5 +81,13 @@ class Notification extends Model
     public function markAsRead(): bool
     {
         return $this->update(['read_at' => now()]);
+    }
+
+    /**
+     * Relasi ke catatan pengiriman per perangkat.
+     */
+    public function deviceDeliveries(): HasMany
+    {
+        return $this->hasMany(NotificationDeviceDelivery::class);
     }
 }

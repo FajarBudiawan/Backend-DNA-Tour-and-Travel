@@ -26,6 +26,12 @@ class UpdateSosIncidentStatusRequest extends FormRequest
                     'false_alarm',
                 ]),
             ],
+            'reason' => [
+                Rule::requiredIf($this->input('status') === 'false_alarm'),
+                'nullable',
+                'string',
+                'max:500',
+            ],
         ];
     }
 }

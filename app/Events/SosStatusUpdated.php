@@ -22,7 +22,8 @@ class SosStatusUpdated
         public SosIncident $incident,
         public string $oldStatus,
         public string $newStatus,
-        public mixed $actor  // InternalUser atau TourLeader yang update
+        public mixed $actor,  // InternalUser atau TourLeader yang update
+        public ?string $reason = null
     ) {}
 
     /**

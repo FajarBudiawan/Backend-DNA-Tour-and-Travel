@@ -4,10 +4,14 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreSosResponseRequest;
+use App\Jobs\ProcessSosNotificationJob;
+use App\Models\Jamaah;
+use App\Models\Notification;
 use App\Models\SosIncident;
 use App\Models\SosResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @group Modul Darurat / Emergency / SOS
@@ -98,7 +102,38 @@ class SosResponseController extends Controller
             ], 403);
         }
 
-        $response = SosResponse::create($responseData);
+        $isStaffResponse = $user->currentAccessToken()->can('admin') || $user->currentAccessToken()->can('tour_leader');
+
+        $result = DB::transaction(function () use ($responseData, $sosIncident, $isStaffResponse) {
+            $response = SosResponse::create($responseData);
+
+            $notification = null;
+            if ($isStaffResponse && !empty($sosIncident->jamaah_id)) {
+                $notification = \App\Models\Notification::create([
+                    'sos_incident_id' => $sosIncident->id,
+                    'recipient_type' => \App\Models\Jamaah::class,
+                    'recipient_id' => $sosIncident->jamaah_id,
+                    'type' => 'sos_response_created',
+                    'title' => 'Tanggapan Baru untuk Laporan SOS',
+                    'message' => 'Petugas telah memberikan tanggapan baru pada laporan darurat Anda.',
+                    'delivery_status' => 'pending',
+                ]);
+            }
+
+            return [
+                'response' => $response,
+                'notification' => $notification,
+            ];
+        });
+
+        $response = $result['response'];
+        $notification = $result['notification'];
+
+        if ($notification) {
+            DB::afterCommit(function () use ($sosIncident, $notification) {
+                dispatch(new \App\Jobs\ProcessSosNotificationJob($sosIncident, [$notification->id]));
+            });
+        }
 
         $response->load([
             'jamaah:id,full_name',

@@ -40,20 +40,23 @@ class SendSosCreatedNotification implements ShouldQueue
             // ✅ FIX #3: Filter active users saja (performance + accuracy)
             $admins = InternalUser::where('status', 'active')->get();
 
-            // 2. Ambil semua Tour Leader
-            $tourLeaders = TourLeader::whereHas('kloters', function ($query) use ($incident) {
-                $query->where('kloter_id', $incident->kloter_id);
-            })->get();
+            // 2. Ambil semua Tour Leader yang aktif dan terhubung dengan kloter insiden
+            $tourLeaders = TourLeader::where('status', 'active')
+                ->whereHas('kloters', function ($query) use ($incident) {
+                    $query->where('kloter_id', $incident->kloter_id);
+                })->get();
 
             Log::info('Notification recipients identified', [
                 'admins_count' => $admins->count(),
                 'tour_leaders_count' => $tourLeaders->count(),
             ]);
 
+            $notificationIds = [];
+
             // 3. Create notifications untuk admin
             foreach ($admins as $admin) {
                 try {
-                    Notification::create([
+                    $notif = Notification::create([
                         'sos_incident_id' => $incident->id,
                         'recipient_type' => InternalUser::class,
                         'recipient_id' => $admin->id,
@@ -62,6 +65,7 @@ class SendSosCreatedNotification implements ShouldQueue
                         'message' => "SOS baru dari {$jamaahName}",
                         'delivery_status' => 'pending',
                     ]);
+                    $notificationIds[] = $notif->id;
                 } catch (\Exception $e) {
                     Log::error('Failed to create notification for admin', [
                         'admin_id' => $admin->id,
@@ -76,7 +80,7 @@ class SendSosCreatedNotification implements ShouldQueue
                     // ✅ FIX #2: Add null-check untuk location_name
                     $location = $incident->location_name ?? 'lokasi tidak diketahui';
                     
-                    Notification::create([
+                    $notif = Notification::create([
                         'sos_incident_id' => $incident->id,
                         'recipient_type' => TourLeader::class,
                         'recipient_id' => $tourLeader->id,
@@ -85,6 +89,7 @@ class SendSosCreatedNotification implements ShouldQueue
                         'message' => "{$jamaahName} melaporkan darurat di {$location}",
                         'delivery_status' => 'pending',
                     ]);
+                    $notificationIds[] = $notif->id;
                 } catch (\Exception $e) {
                     Log::error('Failed to create notification for tour leader', [
                         'tour_leader_id' => $tourLeader->id,
@@ -93,13 +98,20 @@ class SendSosCreatedNotification implements ShouldQueue
                 }
             }
 
-            // 5. Dispatch job
-            dispatch(new ProcessSosNotificationJob($incident));
+            // 5. Dispatch job hanya jika ada notifikasi yang dibuat
+            if (!empty($notificationIds)) {
+                dispatch(new ProcessSosNotificationJob($incident, $notificationIds));
+            } else {
+                Log::warning('No notifications created for SOS incident, skipping job dispatch', [
+                    'incident_id' => $incident->id,
+                ]);
+            }
 
             Log::info('SOS created notifications queued', [
                 'incident_id' => $incident->id,
                 'admins_notified' => $admins->count(),
                 'tour_leaders_notified' => $tourLeaders->count(),
+                'notification_ids_count' => count($notificationIds),
             ]);
         } catch (\Exception $e) {
             Log::error('SendSosCreatedNotification failed', [

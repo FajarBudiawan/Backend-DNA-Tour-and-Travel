@@ -18,6 +18,7 @@ class SosStatusHistory extends Model
         'sos_incident_id',
         'old_status',
         'new_status',
+        'reason',
         'changed_by',
         'tour_leader_id',
         'changed_at',
