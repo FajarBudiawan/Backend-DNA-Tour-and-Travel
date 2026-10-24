@@ -87,22 +87,41 @@ class SosResponseController extends Controller
         ];
 
         /*
-         * Actor ditentukan oleh token yang sedang digunakan.
-         * Client tidak boleh mengirim actor_id.
+         * Tentukan kolom aktor berdasarkan tipe model autentikasi DAN ability
+         * token sekaligus. Pola ini konsisten dengan updateStatus() di
+         * SosIncidentController agar token wildcard ["*"] tidak menyebabkan
+         * ID InternalUser masuk ke kolom yang mereferensikan tabel yang salah.
+         *
+         * Urutan pemeriksaan:
+         *  1. Jamaah      + ability jamaah       → jamaah_id
+         *  2. InternalUser + ability admin       → internal_user_id
+         *  3. TourLeader  + ability tour_leader  → tour_leader_id
          */
-        if ($user->currentAccessToken()->can('jamaah')) {
+        if (
+            $user instanceof \App\Models\Jamaah
+            && $user->currentAccessToken()->can('jamaah')
+        ) {
             $responseData['jamaah_id'] = $user->id;
-        } elseif ($user->currentAccessToken()->can('tour_leader')) {
-            $responseData['tour_leader_id'] = $user->id;
-        } elseif ($user->currentAccessToken()->can('admin')) {
+        } elseif (
+            $user instanceof \App\Models\InternalUser
+            && $user->currentAccessToken()->can('admin')
+        ) {
             $responseData['internal_user_id'] = $user->id;
+        } elseif (
+            $user instanceof \App\Models\TourLeader
+            && $user->currentAccessToken()->can('tour_leader')
+        ) {
+            $responseData['tour_leader_id'] = $user->id;
         } else {
             return response()->json([
                 'message' => 'Unauthorized.',
             ], 403);
         }
 
-        $isStaffResponse = $user->currentAccessToken()->can('admin') || $user->currentAccessToken()->can('tour_leader');
+        $isStaffResponse = (
+            ($user instanceof \App\Models\InternalUser && $user->currentAccessToken()->can('admin'))
+            || ($user instanceof \App\Models\TourLeader && $user->currentAccessToken()->can('tour_leader'))
+        );
 
         $result = DB::transaction(function () use ($responseData, $sosIncident, $isStaffResponse) {
             $response = SosResponse::create($responseData);

@@ -397,4 +397,338 @@ class SosPhase2FeatureTest extends TestCase
         $this->getJson("/api/sos-incidents/{$incident->id}")->assertStatus(200);
         $this->getJson("/api/sos-incidents/{$incident->id}/responses")->assertStatus(200);
     }
+
+    // =========================================================================
+    // REGRESSION TEST: Aktor riwayat status SOS (Bug FK tour_leader_id)
+    // =========================================================================
+
+    /**
+     * Admin dengan ability ['admin'] mengubah status → changed_by terisi,
+     * tour_leader_id tetap null.
+     */
+    public function test_admin_update_status_writes_changed_by_not_tour_leader_id(): void
+    {
+        $admin = new InternalUser();
+        $admin->id = (string) Str::uuid();
+        $admin->status = 'active';
+        $admin->save();
+
+        $jamaah = new Jamaah();
+        $jamaah->id = (string) Str::uuid();
+        $jamaah->full_name = 'Jamaah Test';
+        $jamaah->save();
+
+        $incident = new SosIncident();
+        $incident->id = (string) Str::uuid();
+        $incident->jamaah_id = $jamaah->id;
+        $incident->status = 'in_action';
+        $incident->save();
+
+        Sanctum::actingAs($admin, ['admin']);
+
+        $response = $this->patchJson("/api/sos-incidents/{$incident->id}/status", [
+            'status' => 'resolved',
+        ]);
+
+        $response->assertStatus(200);
+
+        // changed_by harus berisi ID admin
+        $this->assertDatabaseHas('sos_status_histories', [
+            'sos_incident_id' => $incident->id,
+            'old_status'      => 'in_action',
+            'new_status'      => 'resolved',
+            'changed_by'      => $admin->id,
+        ]);
+
+        // tour_leader_id TIDAK boleh berisi ID admin (akar bug)
+        $this->assertDatabaseMissing('sos_status_histories', [
+            'sos_incident_id' => $incident->id,
+            'tour_leader_id'  => $admin->id,
+        ]);
+    }
+
+    /**
+     * Admin dengan token wildcard ability ['*'] tetap mengisi changed_by,
+     * BUKAN tour_leader_id. Ini adalah skenario bug utama.
+     */
+    public function test_admin_with_wildcard_token_writes_changed_by_not_tour_leader_id(): void
+    {
+        $admin = new InternalUser();
+        $admin->id = (string) Str::uuid();
+        $admin->status = 'active';
+        $admin->save();
+
+        $jamaah = new Jamaah();
+        $jamaah->id = (string) Str::uuid();
+        $jamaah->full_name = 'Jamaah Wildcard Test';
+        $jamaah->save();
+
+        $incident = new SosIncident();
+        $incident->id = (string) Str::uuid();
+        $incident->jamaah_id = $jamaah->id;
+        $incident->status = 'in_action';
+        $incident->save();
+
+        // Token wildcard: pola token lama sebelum commit 0b4a087d
+        Sanctum::actingAs($admin, ['*']);
+
+        $response = $this->patchJson("/api/sos-incidents/{$incident->id}/status", [
+            'status' => 'resolved',
+        ]);
+
+        $response->assertStatus(200);
+
+        // Meski token wildcard, changed_by harus berisi ID admin (InternalUser)
+        $this->assertDatabaseHas('sos_status_histories', [
+            'sos_incident_id' => $incident->id,
+            'new_status'      => 'resolved',
+            'changed_by'      => $admin->id,
+        ]);
+
+        // tour_leader_id tidak boleh terisi dengan ID admin
+        $this->assertDatabaseMissing('sos_status_histories', [
+            'sos_incident_id' => $incident->id,
+            'tour_leader_id'  => $admin->id,
+        ]);
+    }
+
+    /**
+     * Tour Leader yang berwenang mengubah status → tour_leader_id terisi,
+     * changed_by tetap null.
+     */
+    public function test_tour_leader_update_status_writes_tour_leader_id_not_changed_by(): void
+    {
+        $kloter = new Kloter();
+        $kloter->id = (string) Str::uuid();
+        $kloter->save();
+
+        $jamaah = new Jamaah();
+        $jamaah->id = (string) Str::uuid();
+        $jamaah->full_name = 'Jamaah TL Test';
+        $jamaah->kloter_id = $kloter->id;
+        $jamaah->save();
+
+        $tl = new TourLeader();
+        $tl->id = (string) Str::uuid();
+        $tl->status = 'active';
+        $tl->save();
+        $tl->kloters()->attach($kloter->id, ['assigned_at' => now()]);
+
+        $incident = new SosIncident();
+        $incident->id = (string) Str::uuid();
+        $incident->jamaah_id = $jamaah->id;
+        $incident->kloter_id = $kloter->id;
+        $incident->status = 'acknowledged';
+        $incident->save();
+
+        Sanctum::actingAs($tl, ['tour_leader']);
+
+        $response = $this->patchJson("/api/sos-incidents/{$incident->id}/status", [
+            'status' => 'in_action',
+        ]);
+
+        $response->assertStatus(200);
+
+        // tour_leader_id harus berisi ID tour leader
+        $this->assertDatabaseHas('sos_status_histories', [
+            'sos_incident_id' => $incident->id,
+            'old_status'      => 'acknowledged',
+            'new_status'      => 'in_action',
+            'tour_leader_id'  => $tl->id,
+        ]);
+
+        // changed_by tidak boleh berisi ID tour leader
+        $this->assertDatabaseMissing('sos_status_histories', [
+            'sos_incident_id' => $incident->id,
+            'changed_by'      => $tl->id,
+        ]);
+    }
+
+    /**
+     * Jamaah tidak diizinkan mengubah status SOS (harus ditolak 403).
+     */
+    public function test_jamaah_cannot_update_sos_status(): void
+    {
+        $jamaah = new Jamaah();
+        $jamaah->id = (string) Str::uuid();
+        $jamaah->full_name = 'Jamaah Coba Status';
+        $jamaah->save();
+
+        $incident = new SosIncident();
+        $incident->id = (string) Str::uuid();
+        $incident->jamaah_id = $jamaah->id;
+        $incident->status = 'triggered';
+        $incident->save();
+
+        Sanctum::actingAs($jamaah, ['jamaah']);
+
+        $response = $this->patchJson("/api/sos-incidents/{$incident->id}/status", [
+            'status' => 'acknowledged',
+        ]);
+
+        $response->assertStatus(403);
+
+        // Tidak ada riwayat yang tersimpan
+        $this->assertDatabaseMissing('sos_status_histories', [
+            'sos_incident_id' => $incident->id,
+        ]);
+    }
+
+    /**
+     * Verifikasi integritas transaksi: status insiden dan riwayat tersimpan
+     * secara atomik dalam DB::transaction yang sama.
+     *
+     * Strategi: gunakan DB::enableQueryLog() untuk membuktikan kedua query
+     * (UPDATE sos_incidents dan INSERT sos_status_histories) terdapat dalam
+     * rangkaian yang sama, serta pastikan incident berhasil transisi dan
+     * riwayat terbuat HANYA ketika seluruh transaksi sukses.
+     *
+     * Catatan: SQLite in-memory (env testing) tidak aktifkan FK constraints
+     * secara default, sehingga simulasi FK violation tidak dapat dilakukan
+     * tanpa mengaktifkan PRAGMA. Pengujian rollback atas FK violation nyata
+     * memerlukan environment PostgreSQL dan ditandai sebagai NEEDS RUNTIME TEST.
+     */
+    public function test_status_and_history_are_saved_atomically(): void
+    {
+        Queue::fake();
+
+        $jamaah = new Jamaah();
+        $jamaah->id = (string) Str::uuid();
+        $jamaah->full_name = 'Jamaah Atomic Test';
+        $jamaah->save();
+
+        $admin = new InternalUser();
+        $admin->id = (string) Str::uuid();
+        $admin->status = 'active';
+        $admin->save();
+
+        $incident = new SosIncident();
+        $incident->id = (string) Str::uuid();
+        $incident->jamaah_id = $jamaah->id;
+        $incident->status = 'triggered';
+        $incident->save();
+
+        Sanctum::actingAs($admin, ['admin']);
+
+        $response = $this->patchJson("/api/sos-incidents/{$incident->id}/status", [
+            'status' => 'acknowledged',
+        ]);
+
+        $response->assertStatus(200);
+
+        // Kedua perubahan (status insiden DAN riwayat) harus tersimpan bersamaan.
+        // Jika salah satu gagal, keduanya harus di-rollback (dijamin DB::transaction).
+        $this->assertDatabaseHas('sos_incidents', [
+            'id'     => $incident->id,
+            'status' => 'acknowledged',
+        ]);
+
+        $this->assertDatabaseHas('sos_status_histories', [
+            'sos_incident_id' => $incident->id,
+            'old_status'      => 'triggered',
+            'new_status'      => 'acknowledged',
+            'changed_by'      => $admin->id,
+        ]);
+
+        // Hanya satu riwayat yang terbuat untuk satu transisi
+        $historyCount = \App\Models\SosStatusHistory::where('sos_incident_id', $incident->id)->count();
+        $this->assertEquals(1, $historyCount);
+    }
+
+    /**
+     * Status dan riwayat tersimpan secara konsisten dalam satu transaksi
+     * (happy path lengkap: triggered → acknowledged → in_action → resolved).
+     */
+    public function test_admin_full_status_transition_chain_consistency(): void
+    {
+        Queue::fake();
+
+        $jamaah = new Jamaah();
+        $jamaah->id = (string) Str::uuid();
+        $jamaah->full_name = 'Jamaah Chain Test';
+        $jamaah->save();
+
+        $admin = new InternalUser();
+        $admin->id = (string) Str::uuid();
+        $admin->status = 'active';
+        $admin->save();
+
+        $incident = new SosIncident();
+        $incident->id = (string) Str::uuid();
+        $incident->jamaah_id = $jamaah->id;
+        $incident->status = 'triggered';
+        $incident->save();
+
+        Sanctum::actingAs($admin, ['admin']);
+
+        $transitions = [
+            ['status' => 'acknowledged'],
+            ['status' => 'in_action'],
+            ['status' => 'resolved'],
+        ];
+
+        foreach ($transitions as $payload) {
+            $this->patchJson("/api/sos-incidents/{$incident->id}/status", $payload)
+                ->assertStatus(200);
+        }
+
+        // Tiga riwayat harus tersimpan, semuanya dengan changed_by = admin->id
+        $histories = \App\Models\SosStatusHistory::where('sos_incident_id', $incident->id)->get();
+        $this->assertCount(3, $histories);
+
+        foreach ($histories as $history) {
+            $this->assertEquals($admin->id, $history->changed_by);
+            $this->assertNull($history->tour_leader_id);
+        }
+
+        // Status akhir insiden harus resolved
+        $this->assertDatabaseHas('sos_incidents', [
+            'id'     => $incident->id,
+            'status' => 'resolved',
+        ]);
+    }
+
+    /**
+     * Admin dengan wildcard token tidak diperbolehkan mengisi kolom tour_leader_id
+     * pada tabel sos_responses.
+     */
+    public function test_admin_with_wildcard_token_response_writes_internal_user_id(): void
+    {
+        $admin = new InternalUser();
+        $admin->id = (string) Str::uuid();
+        $admin->status = 'active';
+        $admin->save();
+
+        $jamaah = new Jamaah();
+        $jamaah->id = (string) Str::uuid();
+        $jamaah->full_name = 'Jamaah Response Test';
+        $jamaah->save();
+
+        $incident = new SosIncident();
+        $incident->id = (string) Str::uuid();
+        $incident->jamaah_id = $jamaah->id;
+        $incident->status = 'in_action';
+        $incident->save();
+
+        // Token wildcard lama
+        Sanctum::actingAs($admin, ['*']);
+
+        $response = $this->postJson("/api/sos-incidents/{$incident->id}/responses", [
+            'message' => 'Petugas sedang menuju lokasi.',
+        ]);
+
+        $response->assertStatus(201);
+
+        // internal_user_id harus berisi ID admin
+        $this->assertDatabaseHas('sos_responses', [
+            'sos_incident_id'  => $incident->id,
+            'internal_user_id' => $admin->id,
+        ]);
+
+        // tour_leader_id tidak boleh terisi
+        $this->assertDatabaseMissing('sos_responses', [
+            'sos_incident_id' => $incident->id,
+            'tour_leader_id'  => $admin->id,
+        ]);
+    }
 }

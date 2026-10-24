@@ -357,10 +357,29 @@ public function updateStatus(
             'changed_at' => now(),
         ];
 
-        if ($user->currentAccessToken()->can('tour_leader')) {
-            $historyData['tour_leader_id'] = $user->id;
-        } elseif ($user->currentAccessToken()->can('admin')) {
+        /*
+         * Tentukan kolom aktor berdasarkan tipe model autentikasi, BUKAN
+         * hanya dari ability token. Ini mencegah token wildcard ["*"] atau
+         * token dengan ability ganda menyebabkan ID InternalUser masuk ke
+         * kolom tour_leader_id (yang mereferensikan tabel tour_leaders).
+         *
+         * Urutan pemeriksaan:
+         *  1. InternalUser + ability admin  → changed_by
+         *  2. TourLeader   + ability tour_leader → tour_leader_id
+         *
+         * Jika tidak cocok dengan keduanya, kolom aktor dibiarkan null agar
+         * database constraint tidak dilanggar.
+         */
+        if (
+            $user instanceof \App\Models\InternalUser
+            && $user->currentAccessToken()->can('admin')
+        ) {
             $historyData['changed_by'] = $user->id;
+        } elseif (
+            $user instanceof \App\Models\TourLeader
+            && $user->currentAccessToken()->can('tour_leader')
+        ) {
+            $historyData['tour_leader_id'] = $user->id;
         }
 
         SosStatusHistory::create($historyData);

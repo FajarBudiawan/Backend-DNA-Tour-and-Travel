@@ -129,7 +129,9 @@ class ProcessSosNotificationJob implements ShouldQueue
             'body'  => $notification->message,
             'data'  => [
                 'notification_id' => $notification->id,
-                'incident_id'     => $notification->sos_incident_id,
+                'incident_id'     => (string) $notification->sos_incident_id,
+                'status'          => (string) $this->incident->status,
+                'type'            => (string) $notification->type,
             ],
         ];
 
