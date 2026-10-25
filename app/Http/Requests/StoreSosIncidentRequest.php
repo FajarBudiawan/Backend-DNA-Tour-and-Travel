@@ -38,15 +38,17 @@ class StoreSosIncidentRequest extends FormRequest
             ],
 
             'latitude' => [
-                'required',
+                'nullable',
                 'numeric',
                 'between:-90,90',
+                'required_with:longitude',
             ],
 
             'longitude' => [
-                'required',
+                'nullable',
                 'numeric',
                 'between:-180,180',
+                'required_with:latitude',
             ],
         ];
     }

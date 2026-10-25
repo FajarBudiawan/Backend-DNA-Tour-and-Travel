@@ -731,4 +731,100 @@ class SosPhase2FeatureTest extends TestCase
             'tour_leader_id'  => $admin->id,
         ]);
     }
+
+    public function test_create_sos_incident_succeeds_with_null_coordinates(): void
+    {
+        Queue::fake();
+
+        $kloter = new Kloter();
+        $kloter->id = (string) Str::uuid();
+        $kloter->name = 'Kloter Test 1';
+        $kloter->save();
+
+        $jamaah = new Jamaah();
+        $jamaah->id = (string) Str::uuid();
+        $jamaah->full_name = 'Jamaah No GPS';
+        $jamaah->phone = '08123456789';
+        $jamaah->kloter_id = $kloter->id;
+        $jamaah->save();
+
+        Sanctum::actingAs($jamaah, ['jamaah']);
+
+        $response = $this->postJson('/api/sos-incidents', [
+            'type' => 'critical',
+            'description' => 'Tersesat tanpa GPS',
+            'latitude' => null,
+            'longitude' => null,
+            'location_name' => null,
+        ]);
+
+        $response->assertStatus(201);
+        $this->assertDatabaseHas('sos_incidents', [
+            'jamaah_id' => $jamaah->id,
+            'type' => 'critical',
+            'latitude' => null,
+            'longitude' => null,
+            'location_name' => null,
+        ]);
+    }
+
+    public function test_create_sos_incident_fails_with_only_one_coordinate(): void
+    {
+        $kloter = new Kloter();
+        $kloter->id = (string) Str::uuid();
+        $kloter->name = 'Kloter Test 1';
+        $kloter->save();
+
+        $jamaah = new Jamaah();
+        $jamaah->id = (string) Str::uuid();
+        $jamaah->full_name = 'Jamaah Single Coord';
+        $jamaah->phone = '08123456789';
+        $jamaah->kloter_id = $kloter->id;
+        $jamaah->save();
+
+        Sanctum::actingAs($jamaah, ['jamaah']);
+
+        // Only latitude provided
+        $response1 = $this->postJson('/api/sos-incidents', [
+            'type' => 'critical',
+            'latitude' => 21.4225,
+            'longitude' => null,
+        ]);
+        $response1->assertStatus(422);
+        $response1->assertJsonValidationErrors(['longitude']);
+
+        // Only longitude provided
+        $response2 = $this->postJson('/api/sos-incidents', [
+            'type' => 'critical',
+            'latitude' => null,
+            'longitude' => 39.8262,
+        ]);
+        $response2->assertStatus(422);
+        $response2->assertJsonValidationErrors(['latitude']);
+    }
+
+    public function test_create_sos_incident_fails_with_out_of_range_coordinates(): void
+    {
+        $kloter = new Kloter();
+        $kloter->id = (string) Str::uuid();
+        $kloter->name = 'Kloter Test 1';
+        $kloter->save();
+
+        $jamaah = new Jamaah();
+        $jamaah->id = (string) Str::uuid();
+        $jamaah->full_name = 'Jamaah Invalid Range';
+        $jamaah->phone = '08123456789';
+        $jamaah->kloter_id = $kloter->id;
+        $jamaah->save();
+
+        Sanctum::actingAs($jamaah, ['jamaah']);
+
+        $response = $this->postJson('/api/sos-incidents', [
+            'type' => 'critical',
+            'latitude' => 95.0,
+            'longitude' => 200.0,
+        ]);
+        $response->assertStatus(422);
+        $response->assertJsonValidationErrors(['latitude', 'longitude']);
+    }
 }
