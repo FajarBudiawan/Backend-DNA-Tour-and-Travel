@@ -377,29 +377,6 @@ Route::middleware(['auth:sanctum', 'abilities:admin'])->group(function () {
 
 
     // ====================
-    // PERJALANAN / SCHEDULE (CRUD)
-    // ====================
-
-    Route::get('/schedules', [ScheduleController::class, 'index']);
-
-    Route::post('/schedules', [ScheduleController::class, 'store']);
-
-    Route::get('/schedules/{schedule}', [ScheduleController::class, 'show']);
-
-    Route::put('/schedules/{schedule}', [ScheduleController::class, 'update']);
-
-    Route::patch(
-        '/schedules/{schedule}/status',
-        [ScheduleController::class, 'updateStatus']
-    );
-
-    Route::delete(
-        '/schedules/{schedule}',
-        [ScheduleController::class, 'destroy']
-    );
-
-
-    // ====================
     // TOUR LEADER (CRUD)
     // ====================
 
@@ -499,4 +476,25 @@ Route::middleware(['auth:sanctum', 'throttle:30,1'])->group(function () {
 Route::middleware(['auth:sanctum', 'throttle:30,1'])->group(function () {
     Route::post('/device-tokens', [DeviceTokenController::class, 'store']);
     Route::delete('/device-tokens', [DeviceTokenController::class, 'destroy']);
+});
+
+// ====================
+// PERJALANAN / SCHEDULE / TIMELINE
+// ====================
+//
+// Dapat diakses bersama oleh Admin, Tour Leader, Jamaah, dan Family.
+// ScheduleController memeriksa token ability internal untuk otorisasi spesifik.
+//
+
+Route::middleware(['auth:sanctum', 'throttle:60,1'])->group(function () {
+    Route::get('/schedules', [ScheduleController::class, 'index']);
+    Route::get('/schedules/{schedule}', [ScheduleController::class, 'show']);
+});
+
+Route::middleware(['auth:sanctum', 'throttle:30,1'])->group(function () {
+    Route::post('/schedules', [ScheduleController::class, 'store']);
+    Route::put('/schedules/{schedule}', [ScheduleController::class, 'update']);
+    Route::patch('/schedules/{schedule}/status', [ScheduleController::class, 'updateStatus']);
+    Route::post('/schedules/{schedule}/broadcast', [ScheduleController::class, 'broadcast']);
+    Route::delete('/schedules/{schedule}', [ScheduleController::class, 'destroy']);
 });

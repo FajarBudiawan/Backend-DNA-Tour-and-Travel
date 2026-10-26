@@ -781,14 +781,14 @@ endpoints:
         name: package_id
         description: 'The ID of the package.'
         required: true
-        example: 019fff58-a57b-7024-9105-8669a2b8faeb
+        example: 01a0eafc-9574-739f-b57a-9ba96d3a738d
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      package_id: 019fff58-a57b-7024-9105-8669a2b8faeb
+      package_id: 01a0eafc-9574-739f-b57a-9ba96d3a738d
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -837,14 +837,14 @@ endpoints:
         name: package_id
         description: 'The ID of the package.'
         required: true
-        example: 019fff58-a57b-7024-9105-8669a2b8faeb
+        example: 01a0eafc-9574-739f-b57a-9ba96d3a738d
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      package_id: 019fff58-a57b-7024-9105-8669a2b8faeb
+      package_id: 01a0eafc-9574-739f-b57a-9ba96d3a738d
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -935,14 +935,14 @@ endpoints:
         name: package_id
         description: 'The ID of the package.'
         required: true
-        example: 019fff58-a57b-7024-9105-8669a2b8faeb
+        example: 01a0eafc-9574-739f-b57a-9ba96d3a738d
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      package_id: 019fff58-a57b-7024-9105-8669a2b8faeb
+      package_id: 01a0eafc-9574-739f-b57a-9ba96d3a738d
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -982,14 +982,14 @@ endpoints:
         name: package_id
         description: 'The ID of the package.'
         required: true
-        example: 019fff58-a57b-7024-9105-8669a2b8faeb
+        example: 01a0eafc-9574-739f-b57a-9ba96d3a738d
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      package_id: 019fff58-a57b-7024-9105-8669a2b8faeb
+      package_id: 01a0eafc-9574-739f-b57a-9ba96d3a738d
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1038,14 +1038,14 @@ endpoints:
         name: package_id
         description: 'The ID of the package.'
         required: true
-        example: 019fff58-a57b-7024-9105-8669a2b8faeb
+        example: 01a0eafc-9574-739f-b57a-9ba96d3a738d
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      package_id: 019fff58-a57b-7024-9105-8669a2b8faeb
+      package_id: 01a0eafc-9574-739f-b57a-9ba96d3a738d
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -1157,7 +1157,7 @@ endpoints:
         name: package_id
         description: 'The ID of the package.'
         required: true
-        example: 019fff58-a57b-7024-9105-8669a2b8faeb
+        example: 01a0eafc-9574-739f-b57a-9ba96d3a738d
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1168,15 +1168,15 @@ endpoints:
         name: itinerary_id
         description: 'The ID of the itinerary.'
         required: true
-        example: 01a06c85-f2ba-713e-8952-deab62b1c219
+        example: architecto
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      package_id: 019fff58-a57b-7024-9105-8669a2b8faeb
-      itinerary_id: 01a06c85-f2ba-713e-8952-deab62b1c219
+      package_id: 01a0eafc-9574-739f-b57a-9ba96d3a738d
+      itinerary_id: architecto
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -1288,7 +1288,7 @@ endpoints:
         name: package_id
         description: 'The ID of the package.'
         required: true
-        example: 019fff58-a57b-7024-9105-8669a2b8faeb
+        example: 01a0eafc-9574-739f-b57a-9ba96d3a738d
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1299,15 +1299,15 @@ endpoints:
         name: itinerary_id
         description: 'The ID of the itinerary.'
         required: true
-        example: 01a06c85-f2ba-713e-8952-deab62b1c219
+        example: architecto
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      package_id: 019fff58-a57b-7024-9105-8669a2b8faeb
-      itinerary_id: 01a06c85-f2ba-713e-8952-deab62b1c219
+      package_id: 01a0eafc-9574-739f-b57a-9ba96d3a738d
+      itinerary_id: architecto
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1439,7 +1439,7 @@ endpoints:
         name: departure_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-25T20:00:43'
+        example: '2026-10-25T16:43:58'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1450,7 +1450,7 @@ endpoints:
         name: return_date
         description: 'Must be a valid date. Must be a date after or equal to <code>departure_date</code>.'
         required: false
-        example: '2052-10-18'
+        example: '2052-11-17'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1483,7 +1483,7 @@ endpoints:
         name: status
         description: ''
         required: false
-        example: active
+        example: cancelled
         type: string
         enumValues:
           - draft
@@ -1521,11 +1521,11 @@ endpoints:
       package_id: a4855dc5-0acb-33c3-b921-f4291f719ca0
       code: z
       flight_code: m
-      departure_date: '2026-09-25T20:00:43'
-      return_date: '2052-10-18'
+      departure_date: '2026-10-25T16:43:58'
+      return_date: '2052-11-17'
       hotel_makkah_id: a4855dc5-0acb-33c3-b921-f4291f719ca0
       hotel_madinah_id: c90237e9-ced5-3af6-88ea-84aeaa148878
-      status: active
+      status: cancelled
       tour_leader: i
       mutawif_local: 'y'
     fileParameters: []
@@ -1563,14 +1563,14 @@ endpoints:
         name: kloter_id
         description: 'The ID of the kloter.'
         required: true
-        example: 01a06167-ae4f-7187-9066-4dae12bc3d97
+        example: 01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      kloter_id: 01a06167-ae4f-7187-9066-4dae12bc3d97
+      kloter_id: 01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1619,14 +1619,14 @@ endpoints:
         name: kloter_id
         description: 'The ID of the kloter.'
         required: true
-        example: 01a06167-ae4f-7187-9066-4dae12bc3d97
+        example: 01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      kloter_id: 01a06167-ae4f-7187-9066-4dae12bc3d97
+      kloter_id: 01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -1679,7 +1679,7 @@ endpoints:
         name: departure_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-25T20:00:43'
+        example: '2026-10-25T16:43:58'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1690,7 +1690,7 @@ endpoints:
         name: return_date
         description: 'Must be a valid date. Must be a date after or equal to <code>departure_date</code>.'
         required: false
-        example: '2052-10-18'
+        example: '2052-11-17'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1761,8 +1761,8 @@ endpoints:
       package_id: a4855dc5-0acb-33c3-b921-f4291f719ca0
       code: z
       flight_code: m
-      departure_date: '2026-09-25T20:00:43'
-      return_date: '2052-10-18'
+      departure_date: '2026-10-25T16:43:58'
+      return_date: '2052-11-17'
       hotel_makkah_id: a4855dc5-0acb-33c3-b921-f4291f719ca0
       hotel_madinah_id: c90237e9-ced5-3af6-88ea-84aeaa148878
       status: draft
@@ -1805,14 +1805,14 @@ endpoints:
         name: kloter_id
         description: 'The ID of the kloter.'
         required: true
-        example: 01a06167-ae4f-7187-9066-4dae12bc3d97
+        example: 01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      kloter_id: 01a06167-ae4f-7187-9066-4dae12bc3d97
+      kloter_id: 01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1852,14 +1852,14 @@ endpoints:
         name: kloter_id
         description: 'The ID of the kloter.'
         required: true
-        example: 01a06167-ae4f-7187-9066-4dae12bc3d97
+        example: 01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      kloter_id: 01a06167-ae4f-7187-9066-4dae12bc3d97
+      kloter_id: 01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1908,14 +1908,14 @@ endpoints:
         name: kloter_id
         description: 'The ID of the kloter.'
         required: true
-        example: 01a06167-ae4f-7187-9066-4dae12bc3d97
+        example: 01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      kloter_id: 01a06167-ae4f-7187-9066-4dae12bc3d97
+      kloter_id: 01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -1935,7 +1935,7 @@ endpoints:
         name: activity_date
         description: 'Must be a valid date.'
         required: true
-        example: '2026-09-25T20:00:43'
+        example: '2026-10-25T16:43:59'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2034,7 +2034,7 @@ endpoints:
         name: is_published
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -2042,7 +2042,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       day_number: 16
-      activity_date: '2026-09-25T20:00:43'
+      activity_date: '2026-10-25T16:43:59'
       activity_time: architecto
       hijri_date_ref: 'n'
       title: g
@@ -2051,7 +2051,7 @@ endpoints:
       pic: i
       status: 'y'
       description: 'Eius et animi quos velit et.'
-      is_published: true
+      is_published: false
     fileParameters: []
     responses: []
     responseFields: []
@@ -2087,14 +2087,14 @@ endpoints:
         name: kloter_id
         description: 'The ID of the kloter.'
         required: true
-        example: 01a06167-ae4f-7187-9066-4dae12bc3d97
+        example: 01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      kloter_id: 01a06167-ae4f-7187-9066-4dae12bc3d97
+      kloter_id: 01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -2134,7 +2134,7 @@ endpoints:
         name: kloter_id
         description: 'The ID of the kloter.'
         required: true
-        example: 01a06167-ae4f-7187-9066-4dae12bc3d97
+        example: 01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2145,15 +2145,15 @@ endpoints:
         name: schedule_id
         description: 'The ID of the schedule.'
         required: true
-        example: 01a06c86-0387-71ab-a457-6b509ce35330
+        example: architecto
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      kloter_id: 01a06167-ae4f-7187-9066-4dae12bc3d97
-      schedule_id: 01a06c86-0387-71ab-a457-6b509ce35330
+      kloter_id: 01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5
+      schedule_id: architecto
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -2173,7 +2173,7 @@ endpoints:
         name: activity_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-25T20:00:43'
+        example: '2026-10-25T16:43:59'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2280,7 +2280,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       day_number: 16
-      activity_date: '2026-09-25T20:00:43'
+      activity_date: '2026-10-25T16:43:59'
       activity_time: architecto
       hijri_date_ref: 'n'
       title: g
@@ -2325,7 +2325,7 @@ endpoints:
         name: kloter_id
         description: 'The ID of the kloter.'
         required: true
-        example: 01a06167-ae4f-7187-9066-4dae12bc3d97
+        example: 01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2336,15 +2336,15 @@ endpoints:
         name: schedule_id
         description: 'The ID of the schedule.'
         required: true
-        example: 01a06c86-0387-71ab-a457-6b509ce35330
+        example: architecto
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      kloter_id: 01a06167-ae4f-7187-9066-4dae12bc3d97
-      schedule_id: 01a06c86-0387-71ab-a457-6b509ce35330
+      kloter_id: 01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5
+      schedule_id: architecto
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -2384,14 +2384,14 @@ endpoints:
         name: kloter_id
         description: 'The ID of the kloter.'
         required: true
-        example: 01a06167-ae4f-7187-9066-4dae12bc3d97
+        example: 01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      kloter_id: 01a06167-ae4f-7187-9066-4dae12bc3d97
+      kloter_id: 01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -2440,14 +2440,14 @@ endpoints:
         name: kloter_id
         description: 'The ID of the kloter.'
         required: true
-        example: 01a06167-ae4f-7187-9066-4dae12bc3d97
+        example: 01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      kloter_id: 01a06167-ae4f-7187-9066-4dae12bc3d97
+      kloter_id: 01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -2456,7 +2456,7 @@ endpoints:
         name: room_type
         description: ''
         required: false
-        example: single
+        example: quad
         type: string
         enumValues:
           - quad
@@ -2479,7 +2479,7 @@ endpoints:
         nullable: true
         deprecated: false
     cleanBodyParameters:
-      room_type: single
+      room_type: quad
       hotel_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
     fileParameters: []
     responses: []
@@ -2553,7 +2553,7 @@ endpoints:
         name: room_type
         description: ''
         required: true
-        example: quint
+        example: triple
         type: string
         enumValues:
           - quad
@@ -2580,7 +2580,7 @@ endpoints:
         name: gender
         description: ''
         required: true
-        example: L
+        example: P
         type: string
         enumValues:
           - L
@@ -2603,9 +2603,9 @@ endpoints:
       kloter_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
       hotel_id: 6b72fe4a-5b40-307c-bc24-f79acf9a1bb9
       room_number: m
-      room_type: quint
+      room_type: triple
       capacity: 35
-      gender: L
+      gender: P
       notes: 'y'
     fileParameters: []
     responses: []
@@ -2642,14 +2642,14 @@ endpoints:
         name: room_id
         description: 'The ID of the room.'
         required: true
-        example: 01a0668d-b791-7099-a102-c1b24bd2cdfd
+        example: 01a12ba2-b7ef-7371-a60a-bb0374644250
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      room_id: 01a0668d-b791-7099-a102-c1b24bd2cdfd
+      room_id: 01a12ba2-b7ef-7371-a60a-bb0374644250
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -2698,14 +2698,14 @@ endpoints:
         name: room_id
         description: 'The ID of the room.'
         required: true
-        example: 01a0668d-b791-7099-a102-c1b24bd2cdfd
+        example: 01a12ba2-b7ef-7371-a60a-bb0374644250
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      room_id: 01a0668d-b791-7099-a102-c1b24bd2cdfd
+      room_id: 01a12ba2-b7ef-7371-a60a-bb0374644250
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -2736,7 +2736,7 @@ endpoints:
         name: room_type
         description: ''
         required: false
-        example: quad
+        example: double
         type: string
         enumValues:
           - quad
@@ -2763,7 +2763,7 @@ endpoints:
         name: gender
         description: ''
         required: false
-        example: P
+        example: L
         type: string
         enumValues:
           - L
@@ -2785,9 +2785,9 @@ endpoints:
     cleanBodyParameters:
       hotel_id: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
       room_number: g
-      room_type: quad
+      room_type: double
       capacity: 66
-      gender: P
+      gender: L
       notes: m
     fileParameters: []
     responses: []
@@ -2824,14 +2824,14 @@ endpoints:
         name: room_id
         description: 'The ID of the room.'
         required: true
-        example: 01a0668d-b791-7099-a102-c1b24bd2cdfd
+        example: 01a12ba2-b7ef-7371-a60a-bb0374644250
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      room_id: 01a0668d-b791-7099-a102-c1b24bd2cdfd
+      room_id: 01a12ba2-b7ef-7371-a60a-bb0374644250
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -2873,14 +2873,14 @@ endpoints:
         name: room_id
         description: 'The ID of the room.'
         required: true
-        example: 01a0668d-b791-7099-a102-c1b24bd2cdfd
+        example: 01a12ba2-b7ef-7371-a60a-bb0374644250
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      room_id: 01a0668d-b791-7099-a102-c1b24bd2cdfd
+      room_id: 01a12ba2-b7ef-7371-a60a-bb0374644250
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -2972,7 +2972,7 @@ endpoints:
         name: room_id
         description: 'The ID of the room.'
         required: true
-        example: 01a0668d-b791-7099-a102-c1b24bd2cdfd
+        example: 01a12ba2-b7ef-7371-a60a-bb0374644250
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2983,15 +2983,15 @@ endpoints:
         name: roomMember_id
         description: 'The ID of the roomMember.'
         required: true
-        example: 01a06698-bf7d-721f-8f09-ceee991e202e
+        example: 01a15819-3b57-7184-b9f2-a6edd516406f
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      room_id: 01a0668d-b791-7099-a102-c1b24bd2cdfd
-      roomMember_id: 01a06698-bf7d-721f-8f09-ceee991e202e
+      room_id: 01a12ba2-b7ef-7371-a60a-bb0374644250
+      roomMember_id: 01a15819-3b57-7184-b9f2-a6edd516406f
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -3083,7 +3083,7 @@ endpoints:
         name: room_id
         description: 'The ID of the room.'
         required: true
-        example: 01a0668d-b791-7099-a102-c1b24bd2cdfd
+        example: 01a12ba2-b7ef-7371-a60a-bb0374644250
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3094,15 +3094,15 @@ endpoints:
         name: roomMember_id
         description: 'The ID of the roomMember.'
         required: true
-        example: 01a06698-bf7d-721f-8f09-ceee991e202e
+        example: 01a15819-3b57-7184-b9f2-a6edd516406f
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      room_id: 01a0668d-b791-7099-a102-c1b24bd2cdfd
-      roomMember_id: 01a06698-bf7d-721f-8f09-ceee991e202e
+      room_id: 01a12ba2-b7ef-7371-a60a-bb0374644250
+      roomMember_id: 01a15819-3b57-7184-b9f2-a6edd516406f
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -3258,7 +3258,7 @@ endpoints:
         name: birth_date
         description: 'Must be a valid date. Must be a date before <code>today</code>.'
         required: true
-        example: '2022-10-20'
+        example: '2022-11-19'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3282,7 +3282,7 @@ endpoints:
         name: registration_date
         description: 'Must be a valid date.'
         required: true
-        example: '2026-09-25T20:00:43'
+        example: '2026-10-25T16:43:59'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3293,7 +3293,7 @@ endpoints:
         name: departure_date
         description: 'Must be a valid date. Must be a date after or equal to <code>registration_date</code>.'
         required: false
-        example: '2052-10-18'
+        example: '2052-11-17'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3363,7 +3363,7 @@ endpoints:
         name: status
         description: ''
         required: false
-        example: cancelled
+        example: unpaid
         type: string
         enumValues:
           - unpaid
@@ -3403,7 +3403,7 @@ endpoints:
         name: initial_payment.payment_type
         description: ''
         required: false
-        example: full_payment
+        example: down_payment
         type: string
         enumValues:
           - down_payment
@@ -3432,7 +3432,7 @@ endpoints:
         name: initial_payment.payment_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-25T20:00:43'
+        example: '2026-10-25T16:43:59'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3487,7 +3487,7 @@ endpoints:
         name: 'equipments[].is_received'
         description: 'This field is required when <code>equipments</code> is present.'
         required: false
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -3500,27 +3500,27 @@ endpoints:
       passport_number: z
       nik: miyvdljnikhwaykc
       phone: myuwpwlvqwrsitcp
-      birth_date: '2022-10-20'
+      birth_date: '2022-11-19'
       gender: L
-      registration_date: '2026-09-25T20:00:43'
-      departure_date: '2052-10-18'
+      registration_date: '2026-10-25T16:43:59'
+      departure_date: '2052-11-17'
       package_id: a4855dc5-0acb-33c3-b921-f4291f719ca0
       kloter_id: c90237e9-ced5-3af6-88ea-84aeaa148878
       meningitis_vaccine_status: sudah_vaksin
       photo_status: sudah_menyerahkan
       total_package_cost: 8
-      status: cancelled
+      status: unpaid
       initial_payment:
         amount: 4326.41688
-        payment_type: full_payment
+        payment_type: down_payment
         payment_method: bsi_transfer
-        payment_date: '2026-09-25T20:00:43'
+        payment_date: '2026-10-25T16:43:59'
       equipments:
         -
           equipment_name: m
           stock_id: a1a0a47d-e8c3-3cf0-8e6e-c1ff9dca5d1f
           size: vdljnikhwaykcmyu
-          is_received: false
+          is_received: true
     fileParameters: []
     responses: []
     responseFields: []
@@ -3556,14 +3556,14 @@ endpoints:
         name: registration_id
         description: 'The ID of the registration.'
         required: true
-        example: 01a0d1be-3c39-718a-894c-3fb9017e5bc4
+        example: 01a11769-6b51-7258-bdf7-4a6dce352ab3
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      registration_id: 01a0d1be-3c39-718a-894c-3fb9017e5bc4
+      registration_id: 01a11769-6b51-7258-bdf7-4a6dce352ab3
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -3612,14 +3612,14 @@ endpoints:
         name: registration_id
         description: 'The ID of the registration.'
         required: true
-        example: 01a0d1be-3c39-718a-894c-3fb9017e5bc4
+        example: 01a11769-6b51-7258-bdf7-4a6dce352ab3
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      registration_id: 01a0d1be-3c39-718a-894c-3fb9017e5bc4
+      registration_id: 01a11769-6b51-7258-bdf7-4a6dce352ab3
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -3683,7 +3683,7 @@ endpoints:
         name: birth_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-25T20:00:43'
+        example: '2026-10-25T16:43:59'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3694,7 +3694,7 @@ endpoints:
         name: gender
         description: ''
         required: false
-        example: L
+        example: P
         type: string
         enumValues:
           - L
@@ -3707,7 +3707,7 @@ endpoints:
         name: registration_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-25T20:00:43'
+        example: '2026-10-25T16:43:59'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3718,7 +3718,7 @@ endpoints:
         name: departure_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-25T20:00:43'
+        example: '2026-10-25T16:43:59'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3784,7 +3784,7 @@ endpoints:
         name: status
         description: ''
         required: false
-        example: fully_paid
+        example: dp_paid
         type: string
         enumValues:
           - unpaid
@@ -3855,7 +3855,7 @@ endpoints:
         name: initial_payment.payment_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-25T20:00:43'
+        example: '2026-10-25T16:43:59'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3910,7 +3910,7 @@ endpoints:
         name: 'equipments[].is_received'
         description: 'This field is required when <code>equipments</code> is present.'
         required: false
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -3933,26 +3933,26 @@ endpoints:
       passport_number: g
       nik: z
       phone: m
-      birth_date: '2026-09-25T20:00:43'
-      gender: L
-      registration_date: '2026-09-25T20:00:43'
-      departure_date: '2026-09-25T20:00:43'
+      birth_date: '2026-10-25T16:43:59'
+      gender: P
+      registration_date: '2026-10-25T16:43:59'
+      departure_date: '2026-10-25T16:43:59'
       meningitis_vaccine_status: i
       photo_status: 'y'
       total_package_cost: 60
-      status: fully_paid
+      status: dp_paid
       initial_payment:
         amount: 42
         payment_type: l
         payment_method: j
-        payment_date: '2026-09-25T20:00:43'
+        payment_date: '2026-10-25T16:43:59'
         notes: architecto
       equipments:
         -
           id: a4855dc5-0acb-33c3-b921-f4291f719ca0
           equipment_name: z
           stock_id: 977e5426-8d13-3824-86aa-b092f8ae52c5
-          is_received: false
+          is_received: true
           size: 'y'
     fileParameters: []
     responses: []
@@ -3989,14 +3989,14 @@ endpoints:
         name: registration_id
         description: 'The ID of the registration.'
         required: true
-        example: 01a0d1be-3c39-718a-894c-3fb9017e5bc4
+        example: 01a11769-6b51-7258-bdf7-4a6dce352ab3
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      registration_id: 01a0d1be-3c39-718a-894c-3fb9017e5bc4
+      registration_id: 01a11769-6b51-7258-bdf7-4a6dce352ab3
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -4036,14 +4036,14 @@ endpoints:
         name: registration_id
         description: 'The ID of the registration.'
         required: true
-        example: 01a0d1be-3c39-718a-894c-3fb9017e5bc4
+        example: 01a11769-6b51-7258-bdf7-4a6dce352ab3
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      registration_id: 01a0d1be-3c39-718a-894c-3fb9017e5bc4
+      registration_id: 01a11769-6b51-7258-bdf7-4a6dce352ab3
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -4127,14 +4127,14 @@ endpoints:
         name: registration_id
         description: 'The ID of the registration.'
         required: true
-        example: 01a0d1be-3c39-718a-894c-3fb9017e5bc4
+        example: 01a11769-6b51-7258-bdf7-4a6dce352ab3
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      registration_id: 01a0d1be-3c39-718a-894c-3fb9017e5bc4
+      registration_id: 01a11769-6b51-7258-bdf7-4a6dce352ab3
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -4183,14 +4183,14 @@ endpoints:
         name: registration_id
         description: 'The ID of the registration.'
         required: true
-        example: 01a0d1be-3c39-718a-894c-3fb9017e5bc4
+        example: 01a11769-6b51-7258-bdf7-4a6dce352ab3
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      registration_id: 01a0d1be-3c39-718a-894c-3fb9017e5bc4
+      registration_id: 01a11769-6b51-7258-bdf7-4a6dce352ab3
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -4223,7 +4223,7 @@ endpoints:
         name: payment_method
         description: ''
         required: true
-        example: mandiri_transfer
+        example: bca_transfer
         type: string
         enumValues:
           - bca_transfer
@@ -4239,7 +4239,7 @@ endpoints:
         name: payment_date
         description: 'Must be a valid date.'
         required: true
-        example: '2026-09-25T20:00:43'
+        example: '2026-10-25T16:43:59'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -4259,8 +4259,8 @@ endpoints:
     cleanBodyParameters:
       amount: 4326.41688
       payment_type: down_payment
-      payment_method: mandiri_transfer
-      payment_date: '2026-09-25T20:00:43'
+      payment_method: bca_transfer
+      payment_date: '2026-10-25T16:43:59'
       notes: m
     fileParameters: []
     responses: []
@@ -4297,14 +4297,14 @@ endpoints:
         name: payment_id
         description: 'The ID of the payment.'
         required: true
-        example: 01a01dcc-5c50-7289-ab5f-0bbf2bfb2e36
+        example: 01a117ca-f8fd-702a-9f81-9405f8a12750
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      payment_id: 01a01dcc-5c50-7289-ab5f-0bbf2bfb2e36
+      payment_id: 01a117ca-f8fd-702a-9f81-9405f8a12750
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -4344,14 +4344,14 @@ endpoints:
         name: payment_id
         description: 'The ID of the payment.'
         required: true
-        example: 01a01dcc-5c50-7289-ab5f-0bbf2bfb2e36
+        example: 01a117ca-f8fd-702a-9f81-9405f8a12750
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      payment_id: 01a01dcc-5c50-7289-ab5f-0bbf2bfb2e36
+      payment_id: 01a117ca-f8fd-702a-9f81-9405f8a12750
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -4384,7 +4384,7 @@ endpoints:
         name: payment_method
         description: ''
         required: false
-        example: mandiri_transfer
+        example: bca_transfer
         type: string
         enumValues:
           - bca_transfer
@@ -4400,7 +4400,7 @@ endpoints:
         name: payment_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-25T20:00:43'
+        example: '2026-10-25T16:43:59'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -4420,8 +4420,8 @@ endpoints:
     cleanBodyParameters:
       amount: 4326.41688
       payment_type: full_payment
-      payment_method: mandiri_transfer
-      payment_date: '2026-09-25T20:00:43'
+      payment_method: bca_transfer
+      payment_date: '2026-10-25T16:43:59'
       notes: m
     fileParameters: []
     responses: []
@@ -4517,7 +4517,7 @@ endpoints:
         name: category
         description: ''
         required: true
-        example: perlengkapan
+        example: akomodasi_tiket
         type: string
         enumValues:
           - akomodasi_tiket
@@ -4543,7 +4543,7 @@ endpoints:
         name: payment_method
         description: ''
         required: true
-        example: bsi_transfer
+        example: bca_transfer
         type: string
         enumValues:
           - bca_transfer
@@ -4559,7 +4559,7 @@ endpoints:
         name: expense_date
         description: 'Must be a valid date.'
         required: true
-        example: '2026-09-25T20:00:43'
+        example: '2026-10-25T16:43:59'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -4589,10 +4589,10 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       vendor: b
-      category: perlengkapan
+      category: akomodasi_tiket
       amount: 4326.41688
-      payment_method: bsi_transfer
-      expense_date: '2026-09-25T20:00:43'
+      payment_method: bca_transfer
+      expense_date: '2026-10-25T16:43:59'
       reference_number: m
       notes: i
     fileParameters: []
@@ -4630,14 +4630,14 @@ endpoints:
         name: expense_id
         description: 'The ID of the expense.'
         required: true
-        example: 01a03c1d-d876-7340-911d-b8bd3b43254d
+        example: architecto
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      expense_id: 01a03c1d-d876-7340-911d-b8bd3b43254d
+      expense_id: architecto
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -4686,14 +4686,14 @@ endpoints:
         name: expense_id
         description: 'The ID of the expense.'
         required: true
-        example: 01a03c1d-d876-7340-911d-b8bd3b43254d
+        example: architecto
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      expense_id: 01a03c1d-d876-7340-911d-b8bd3b43254d
+      expense_id: architecto
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -4713,7 +4713,7 @@ endpoints:
         name: category
         description: ''
         required: false
-        example: operasional_bus
+        example: akomodasi_tiket
         type: string
         enumValues:
           - akomodasi_tiket
@@ -4739,7 +4739,7 @@ endpoints:
         name: payment_method
         description: ''
         required: false
-        example: bca_transfer
+        example: edc_qris
         type: string
         enumValues:
           - bca_transfer
@@ -4755,7 +4755,7 @@ endpoints:
         name: expense_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-25T20:00:43'
+        example: '2026-10-25T16:43:59'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -4785,10 +4785,10 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       vendor: b
-      category: operasional_bus
+      category: akomodasi_tiket
       amount: 4326.41688
-      payment_method: bca_transfer
-      expense_date: '2026-09-25T20:00:43'
+      payment_method: edc_qris
+      expense_date: '2026-10-25T16:43:59'
       reference_number: m
       notes: i
     fileParameters: []
@@ -4826,14 +4826,14 @@ endpoints:
         name: expense_id
         description: 'The ID of the expense.'
         required: true
-        example: 01a03c1d-d876-7340-911d-b8bd3b43254d
+        example: architecto
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      expense_id: 01a03c1d-d876-7340-911d-b8bd3b43254d
+      expense_id: architecto
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -5002,7 +5002,7 @@ endpoints:
         name: payment_method
         description: ''
         required: true
-        example: cash
+        example: mandiri_transfer
         type: string
         enumValues:
           - bca_transfer
@@ -5018,7 +5018,7 @@ endpoints:
         name: income_date
         description: 'Must be a valid date.'
         required: true
-        example: '2026-09-25T20:00:43'
+        example: '2026-10-25T16:43:59'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -5050,8 +5050,8 @@ endpoints:
       source: b
       category: administration
       amount: 4326.41688
-      payment_method: cash
-      income_date: '2026-09-25T20:00:43'
+      payment_method: mandiri_transfer
+      income_date: '2026-10-25T16:43:59'
       reference_number: m
       notes: i
     fileParameters: []
@@ -5089,14 +5089,14 @@ endpoints:
         name: otherIncome_id
         description: 'The ID of the otherIncome.'
         required: true
-        example: 01a09bcd-8b0b-7184-8293-4e13ef61c19e
+        example: architecto
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      otherIncome_id: 01a09bcd-8b0b-7184-8293-4e13ef61c19e
+      otherIncome_id: architecto
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -5145,14 +5145,14 @@ endpoints:
         name: otherIncome_id
         description: 'The ID of the otherIncome.'
         required: true
-        example: 01a09bcd-8b0b-7184-8293-4e13ef61c19e
+        example: architecto
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      otherIncome_id: 01a09bcd-8b0b-7184-8293-4e13ef61c19e
+      otherIncome_id: architecto
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -5198,7 +5198,7 @@ endpoints:
         name: payment_method
         description: ''
         required: false
-        example: mandiri_transfer
+        example: cash
         type: string
         enumValues:
           - bca_transfer
@@ -5214,7 +5214,7 @@ endpoints:
         name: income_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-25T20:00:44'
+        example: '2026-10-25T16:43:59'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -5246,8 +5246,8 @@ endpoints:
       source: b
       category: commission
       amount: 4326.41688
-      payment_method: mandiri_transfer
-      income_date: '2026-09-25T20:00:44'
+      payment_method: cash
+      income_date: '2026-10-25T16:43:59'
       reference_number: m
       notes: i
     fileParameters: []
@@ -5285,14 +5285,14 @@ endpoints:
         name: otherIncome_id
         description: 'The ID of the otherIncome.'
         required: true
-        example: 01a09bcd-8b0b-7184-8293-4e13ef61c19e
+        example: architecto
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      otherIncome_id: 01a09bcd-8b0b-7184-8293-4e13ef61c19e
+      otherIncome_id: architecto
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -5415,7 +5415,7 @@ endpoints:
         name: birth_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-25T20:00:44'
+        example: '2026-10-25T16:43:59'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -5538,7 +5538,7 @@ endpoints:
         name: departure_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-25T20:00:44'
+        example: '2026-10-25T16:43:59'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -5549,7 +5549,7 @@ endpoints:
         name: return_date
         description: 'Must be a valid date. Must be a date after or equal to <code>departure_date</code>.'
         required: false
-        example: '2052-10-18'
+        example: '2052-11-17'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -5594,7 +5594,7 @@ endpoints:
       login_id: bngzmi
       nik: yvdljnikhwaykcmy
       full_name: u
-      birth_date: '2026-09-25T20:00:44'
+      birth_date: '2026-10-25T16:43:59'
       gender: P
       phone: wpwlvqwrsitcpscq
       emergency_contact: l
@@ -5605,8 +5605,8 @@ endpoints:
       kloter_id: 1937113a-b0a2-3b03-925a-3163292463db
       hotel_makkah: u
       hotel_madinah: j
-      departure_date: '2026-09-25T20:00:44'
-      return_date: '2052-10-18'
+      departure_date: '2026-10-25T16:43:59'
+      return_date: '2052-11-17'
       tour_leader: 'n'
       mutawif_local: g
       status: active
@@ -5645,14 +5645,14 @@ endpoints:
         name: jamaah_id
         description: 'The ID of the jamaah.'
         required: true
-        example: 01a00fd9-404c-73f8-ac03-7d250410e565
+        example: 01a11776-98cd-72c9-b3a5-9af5b2d0d81d
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      jamaah_id: 01a00fd9-404c-73f8-ac03-7d250410e565
+      jamaah_id: 01a11776-98cd-72c9-b3a5-9af5b2d0d81d
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -5701,14 +5701,14 @@ endpoints:
         name: jamaah_id
         description: 'The ID of the jamaah.'
         required: true
-        example: 01a00fd9-404c-73f8-ac03-7d250410e565
+        example: 01a11776-98cd-72c9-b3a5-9af5b2d0d81d
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      jamaah_id: 01a00fd9-404c-73f8-ac03-7d250410e565
+      jamaah_id: 01a11776-98cd-72c9-b3a5-9af5b2d0d81d
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -5750,7 +5750,7 @@ endpoints:
         name: birth_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-25T20:00:44'
+        example: '2026-10-25T16:43:59'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -5873,7 +5873,7 @@ endpoints:
         name: departure_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-09-25T20:00:44'
+        example: '2026-10-25T16:43:59'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -5884,7 +5884,7 @@ endpoints:
         name: return_date
         description: 'Must be a valid date. Must be a date after or equal to <code>departure_date</code>.'
         required: false
-        example: '2052-10-18'
+        example: '2052-11-17'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -5917,7 +5917,7 @@ endpoints:
         name: status
         description: ''
         required: false
-        example: archived
+        example: active
         type: string
         enumValues:
           - active
@@ -5929,7 +5929,7 @@ endpoints:
       login_id: bngzmi
       nik: yvdljnikhwaykcmy
       full_name: u
-      birth_date: '2026-09-25T20:00:44'
+      birth_date: '2026-10-25T16:43:59'
       gender: P
       phone: wpwlvqwrsitcpscq
       emergency_contact: l
@@ -5940,11 +5940,11 @@ endpoints:
       kloter_id: 1937113a-b0a2-3b03-925a-3163292463db
       hotel_makkah: u
       hotel_madinah: j
-      departure_date: '2026-09-25T20:00:44'
-      return_date: '2052-10-18'
+      departure_date: '2026-10-25T16:43:59'
+      return_date: '2052-11-17'
       tour_leader: 'n'
       mutawif_local: g
-      status: archived
+      status: active
     fileParameters: []
     responses: []
     responseFields: []
@@ -5980,14 +5980,14 @@ endpoints:
         name: jamaah_id
         description: 'The ID of the jamaah.'
         required: true
-        example: 01a00fd9-404c-73f8-ac03-7d250410e565
+        example: 01a11776-98cd-72c9-b3a5-9af5b2d0d81d
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      jamaah_id: 01a00fd9-404c-73f8-ac03-7d250410e565
+      jamaah_id: 01a11776-98cd-72c9-b3a5-9af5b2d0d81d
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -6141,6 +6141,198 @@ endpoints:
         name: status
         description: ''
         required: true
+        example: active
+        type: string
+        enumValues:
+          - active
+          - resting
+          - standby
+          - inactive
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      login_id: bngzmiyvdljnikhw
+      full_name: a
+      certification_number: 'y'
+      phone: kcmyuwpwlvqwrsit
+      experience: architecto
+      performance: architecto
+      status: active
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/tour-leaders/{id}'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {token}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the tour leader.'
+        required: true
+        example: 01a14ece-3b01-7346-aa5d-9106edcabd08
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 01a14ece-3b01-7346-aa5d-9106edcabd08
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+      - PATCH
+    uri: 'api/tour-leaders/{id}'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {token}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the tour leader.'
+        required: true
+        example: 01a14ece-3b01-7346-aa5d-9106edcabd08
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 01a14ece-3b01-7346-aa5d-9106edcabd08
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      login_id:
+        custom: []
+        name: login_id
+        description: 'Must not be greater than 20 characters.'
+        required: false
+        example: bngzmiyvdljnikhw
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      full_name:
+        custom: []
+        name: full_name
+        description: 'Must not be greater than 150 characters.'
+        required: false
+        example: a
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      certification_number:
+        custom: []
+        name: certification_number
+        description: 'Must not be greater than 50 characters.'
+        required: false
+        example: 'y'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      phone:
+        custom: []
+        name: phone
+        description: 'Must not be greater than 20 characters.'
+        required: false
+        example: kcmyuwpwlvqwrsit
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      experience:
+        custom: []
+        name: experience
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      performance:
+        custom: []
+        name: performance
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: ''
+        required: false
         example: resting
         type: string
         enumValues:
@@ -6172,198 +6364,6 @@ endpoints:
   -
     custom: []
     httpMethods:
-      - GET
-    uri: 'api/tour-leaders/{id}'
-    metadata:
-      custom: []
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: ''
-      description: ''
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {token}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      id:
-        custom: []
-        name: id
-        description: 'The ID of the tour leader.'
-        required: true
-        example: 01a0ae56-d4e2-7245-ac96-c1b5a4bddc03
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      id: 01a0ae56-d4e2-7245-ac96-c1b5a4bddc03
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 401
-        content: '{"message":"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa."}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-        description: null
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - PUT
-      - PATCH
-    uri: 'api/tour-leaders/{id}'
-    metadata:
-      custom: []
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: ''
-      description: ''
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {token}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      id:
-        custom: []
-        name: id
-        description: 'The ID of the tour leader.'
-        required: true
-        example: 01a0ae56-d4e2-7245-ac96-c1b5a4bddc03
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      id: 01a0ae56-d4e2-7245-ac96-c1b5a4bddc03
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      login_id:
-        custom: []
-        name: login_id
-        description: 'Must not be greater than 20 characters.'
-        required: false
-        example: bngzmiyvdljnikhw
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      full_name:
-        custom: []
-        name: full_name
-        description: 'Must not be greater than 150 characters.'
-        required: false
-        example: a
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      certification_number:
-        custom: []
-        name: certification_number
-        description: 'Must not be greater than 50 characters.'
-        required: false
-        example: 'y'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      phone:
-        custom: []
-        name: phone
-        description: 'Must not be greater than 20 characters.'
-        required: false
-        example: kcmyuwpwlvqwrsit
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      experience:
-        custom: []
-        name: experience
-        description: ''
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      performance:
-        custom: []
-        name: performance
-        description: ''
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      status:
-        custom: []
-        name: status
-        description: ''
-        required: false
-        example: standby
-        type: string
-        enumValues:
-          - active
-          - resting
-          - standby
-          - inactive
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanBodyParameters:
-      login_id: bngzmiyvdljnikhw
-      full_name: a
-      certification_number: 'y'
-      phone: kcmyuwpwlvqwrsit
-      experience: architecto
-      performance: architecto
-      status: standby
-    fileParameters: []
-    responses: []
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
       - DELETE
     uri: 'api/tour-leaders/{id}'
     metadata:
@@ -6386,14 +6386,14 @@ endpoints:
         name: id
         description: 'The ID of the tour leader.'
         required: true
-        example: 01a0ae56-d4e2-7245-ac96-c1b5a4bddc03
+        example: 01a14ece-3b01-7346-aa5d-9106edcabd08
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      id: 01a0ae56-d4e2-7245-ac96-c1b5a4bddc03
+      id: 01a14ece-3b01-7346-aa5d-9106edcabd08
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -6433,7 +6433,7 @@ endpoints:
         name: tour_leader_id
         description: 'The ID of the tour leader.'
         required: true
-        example: 01a0ae56-d4e2-7245-ac96-c1b5a4bddc03
+        example: 01a14ece-3b01-7346-aa5d-9106edcabd08
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -6444,15 +6444,15 @@ endpoints:
         name: kloter_id
         description: 'The ID of the kloter.'
         required: true
-        example: 01a06167-ae4f-7187-9066-4dae12bc3d97
+        example: 01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      tour_leader_id: 01a0ae56-d4e2-7245-ac96-c1b5a4bddc03
-      kloter_id: 01a06167-ae4f-7187-9066-4dae12bc3d97
+      tour_leader_id: 01a14ece-3b01-7346-aa5d-9106edcabd08
+      kloter_id: 01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -6492,7 +6492,7 @@ endpoints:
         name: tour_leader_id
         description: 'The ID of the tour leader.'
         required: true
-        example: 01a0ae56-d4e2-7245-ac96-c1b5a4bddc03
+        example: 01a14ece-3b01-7346-aa5d-9106edcabd08
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -6503,15 +6503,15 @@ endpoints:
         name: kloter_id
         description: 'The ID of the kloter.'
         required: true
-        example: 01a06167-ae4f-7187-9066-4dae12bc3d97
+        example: 01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      tour_leader_id: 01a0ae56-d4e2-7245-ac96-c1b5a4bddc03
-      kloter_id: 01a06167-ae4f-7187-9066-4dae12bc3d97
+      tour_leader_id: 01a14ece-3b01-7346-aa5d-9106edcabd08
+      kloter_id: 01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -6916,7 +6916,7 @@ endpoints:
         name: kloter_id
         description: 'The ID of the kloter.'
         required: true
-        example: 01a06167-ae4f-7187-9066-4dae12bc3d97
+        example: 01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -6924,7 +6924,7 @@ endpoints:
         deprecated: false
     cleanUrlParameters:
       mutawif_id: 01a08a42-5371-72b0-8dcc-91f59f39845e
-      kloter_id: 01a06167-ae4f-7187-9066-4dae12bc3d97
+      kloter_id: 01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -6975,7 +6975,7 @@ endpoints:
         name: kloter_id
         description: 'The ID of the kloter.'
         required: true
-        example: 01a06167-ae4f-7187-9066-4dae12bc3d97
+        example: 01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -6983,7 +6983,7 @@ endpoints:
         deprecated: false
     cleanUrlParameters:
       mutawif_id: 01a08a42-5371-72b0-8dcc-91f59f39845e
-      kloter_id: 01a06167-ae4f-7187-9066-4dae12bc3d97
+      kloter_id: 01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -7223,14 +7223,14 @@ endpoints:
         name: stock_id
         description: 'The ID of the stock.'
         required: true
-        example: 01a090b6-6761-72f5-8884-b0b5e6ce19a9
+        example: 01a090bb-d323-709c-8a33-cd373bba0e09
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      stock_id: 01a090b6-6761-72f5-8884-b0b5e6ce19a9
+      stock_id: 01a090bb-d323-709c-8a33-cd373bba0e09
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -7279,14 +7279,14 @@ endpoints:
         name: stock_id
         description: 'The ID of the stock.'
         required: true
-        example: 01a090b6-6761-72f5-8884-b0b5e6ce19a9
+        example: 01a090bb-d323-709c-8a33-cd373bba0e09
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      stock_id: 01a090b6-6761-72f5-8884-b0b5e6ce19a9
+      stock_id: 01a090bb-d323-709c-8a33-cd373bba0e09
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -7447,14 +7447,14 @@ endpoints:
         name: stock_id
         description: 'The ID of the stock.'
         required: true
-        example: 01a090b6-6761-72f5-8884-b0b5e6ce19a9
+        example: 01a090bb-d323-709c-8a33-cd373bba0e09
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      stock_id: 01a090b6-6761-72f5-8884-b0b5e6ce19a9
+      stock_id: 01a090bb-d323-709c-8a33-cd373bba0e09
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -7494,14 +7494,14 @@ endpoints:
         name: stock_id
         description: 'The ID of the stock.'
         required: true
-        example: 01a090b6-6761-72f5-8884-b0b5e6ce19a9
+        example: 01a090bb-d323-709c-8a33-cd373bba0e09
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      stock_id: 01a090b6-6761-72f5-8884-b0b5e6ce19a9
+      stock_id: 01a090bb-d323-709c-8a33-cd373bba0e09
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -7517,6 +7517,101 @@ endpoints:
           content-type: application/json
           access-control-allow-origin: '*'
         description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/notifications
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: |-
+        GET /api/notifications
+        Tampilkan list notifikasi user yang login
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {token}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PATCH
+    uri: 'api/notifications/{id}/read'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: |-
+        PATCH /api/notifications/{id}/read
+        Mark notifikasi sebagai sudah dibaca
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {token}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the notification.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
     responseFields: []
     auth:
       - headers

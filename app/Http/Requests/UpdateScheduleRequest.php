@@ -8,7 +8,12 @@ class UpdateScheduleRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
+        $token = $this->user()?->currentAccessToken();
+        if (!$token) {
+            return false;
+        }
+
+        return $token->can('admin');
     }
 
     public function rules(): array
@@ -17,6 +22,7 @@ class UpdateScheduleRequest extends FormRequest
             'day_number' => ['sometimes', 'integer', 'min:1'],
             'date' => ['sometimes', 'date_format:Y-m-d'],
             'time' => ['sometimes', 'date_format:H:i'],
+            'end_time' => ['sometimes', 'nullable', 'date_format:H:i'],
             'title' => ['sometimes', 'string', 'max:255'],
             'category' => ['sometimes', 'nullable', 'string', 'max:50'],
             'location' => ['sometimes', 'nullable', 'string', 'max:255'],
@@ -26,6 +32,10 @@ class UpdateScheduleRequest extends FormRequest
                 'sometimes',
                 'nullable',
                 'in:completed,in_progress,upcoming',
+            ],
+            'status_mode' => [
+                'sometimes',
+                'in:auto,manual',
             ],
         ];
     }

@@ -1,89 +1,36 @@
-name: 'Modul Darurat / Emergency / SOS'
+name: 'Device Token FCM'
 description: |-
 
-  API untuk mengelola laporan kejadian darurat (SOS Incident) dari Jamaah dan penanganannya oleh Admin/Tour Leader.
+  API untuk mendaftarkan dan menonaktifkan FCM device token perangkat mobile.
+  Token digunakan sebagai tujuan pengiriman push notification Firebase Cloud Messaging.
+
+  Endpoint ini digunakan oleh Jamaah, Family (login sebagai Jamaah), InternalUser (admin), dan TourLeader.
 endpoints:
   -
     custom: []
     httpMethods:
-      - GET
-    uri: api/sos-incidents
-    metadata:
-      custom: []
-      groupName: 'Modul Darurat / Emergency / SOS'
-      groupDescription: |-
-
-        API untuk mengelola laporan kejadian darurat (SOS Incident) dari Jamaah dan penanganannya oleh Admin/Tour Leader.
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Menampilkan daftar SOS Incident'
-      description: |-
-        Menampilkan daftar laporan SOS yang dapat diakses oleh user sesuai ability token autentikasi.
-
-        **Scope Akses Berdasarkan Role:**
-        * **Admin (`admin`):** Memiliki akses penuh untuk melihat seluruh laporan SOS dari semua kloter.
-        * **Tour Leader (`tour_leader`):** Hanya dapat melihat laporan SOS dari kloter yang ditugaskan kepadanya.
-        * **Jamaah (`jamaah`):** Hanya dapat melihat laporan SOS miliknya sendiri.
-
-        Data diurutkan berdasarkan `triggered_at` terbaru dan menyertakan eager-load relasi `jamaah` (id, full_name, phone), `kloter` (id, name), serta jumlah tanggapan (`responses_count`).
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {token}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 401
-        content: '{"message":"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa."}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-        description: null
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
       - POST
-    uri: api/sos-incidents
+    uri: api/device-tokens
     metadata:
       custom: []
-      groupName: 'Modul Darurat / Emergency / SOS'
+      groupName: 'Device Token FCM'
       groupDescription: |-
 
-        API untuk mengelola laporan kejadian darurat (SOS Incident) dari Jamaah dan penanganannya oleh Admin/Tour Leader.
+        API untuk mendaftarkan dan menonaktifkan FCM device token perangkat mobile.
+        Token digunakan sebagai tujuan pengiriman push notification Firebase Cloud Messaging.
+
+        Endpoint ini digunakan oleh Jamaah, Family (login sebagai Jamaah), InternalUser (admin), dan TourLeader.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Membuat laporan SOS baru'
+      title: 'Daftarkan atau perbarui FCM device token'
       description: |-
-        Membuat laporan kejadian darurat (SOS Incident) baru.
+        Mendaftarkan FCM token perangkat ke akun yang sedang login.
+        Jika token yang sama sudah pernah terdaftar (atas akun siapa pun), kepemilikannya
+        akan dipindahkan secara aman ke akun yang sedang aktif saat ini (pola Upsert).
+        Hal ini mencegah kebocoran notifikasi ketika perangkat berganti akun (misalnya logout → login akun berbeda).
 
-        **Aturan Autentikasi & Authorization:**
-        * **Jamaah (`jamaah`):** Dapat membuat SOS untuk dirinya sendiri. Field `jamaah_id` **tidak perlu dikirim** oleh client karena diisi otomatis dari token Jamaah.
-        * **Admin (`admin`):** Dapat membuat SOS atas nama Jamaah dan **wajib menentukan** `jamaah_id` di request body. Jika `jamaah_id` kosong/tidak disertakan, mengembalikan response error `422 Unprocessable Entity`.
-        * **Tour Leader (`tour_leader`):** **Tidak diperbolehkan** membuat SOS dan menghasilkan response error `403 Forbidden` (`Tour Leader tidak dapat membuat SOS.`).
-
-        **Aturan Penentuan Field Otomatis oleh Backend:**
-        * `kloter_id`: Diambil otomatis dari `jamaah.kloter_id`.
-        * `status`: Bernilai awal `'triggered'`.
-        * `triggered_at`: Diisi otomatis dengan timestamp `now()`.
-        * Record awal pada `sos_status_histories` dibuat otomatis (`old_status: null`, `new_status: 'triggered'`).
+        Field `tokenable_type`, `tokenable_id`, dan `is_active` **tidak dapat dikirim oleh client**
+        dan selalu diisi secara otomatis oleh server.
       authenticated: true
       deprecated: false
     headers:
@@ -95,79 +42,43 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      jamaah_id:
+      fcm_token:
         custom: []
-        name: jamaah_id
-        description: 'UUID Jamaah yang mengalami darurat. Wajib dikirim oleh Admin, diabaikan/diisi otomatis jika login sebagai Jamaah.'
-        required: false
-        example: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
-      type:
-        custom: []
-        name: type
-        description: 'Jenis kejadian darurat (misal: "Darurat Medis", "Tersesat", "Kecelakaan").'
+        name: fcm_token
+        description: 'Token registrasi FCM dari Firebase SDK.'
         required: true
-        example: 'Darurat Medis'
+        example: fTHHz7u8TQyI6...
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-      description:
+      platform:
         custom: []
-        name: description
-        description: 'Rincian deskripsi kondisi darurat yang dialami.'
-        required: false
-        example: 'Jamaah mengalami pusing dan sesak napas.'
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
-      location_name:
-        custom: []
-        name: location_name
-        description: 'Nama lokasi atau deskripsi landmark tempat kejadian.'
-        required: false
-        example: 'Pelataran Tawaf Gate 1'
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
-      latitude:
-        custom: []
-        name: latitude
-        description: 'Koordinat latitude lokasi kejadian (-90 s/d 90).'
+        name: platform
+        description: 'Platform perangkat. Nilai: `android` atau `ios`.'
         required: true
-        example: 21.4225
-        type: number
+        example: android
+        type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-      longitude:
+      device_id:
         custom: []
-        name: longitude
-        description: 'Koordinat longitude lokasi kejadian (-180 s/d 180).'
-        required: true
-        example: 39.8262
-        type: number
+        name: device_id
+        description: 'Identifier unik perangkat (opsional, misalnya Android ID atau iOS identifierForVendor).'
+        required: false
+        example: a1b2c3d4e5f6
+        type: string
         enumValues: []
         exampleWasSpecified: true
-        nullable: false
+        nullable: true
         deprecated: false
     cleanBodyParameters:
-      jamaah_id: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
-      type: 'Darurat Medis'
-      description: 'Jamaah mengalami pusing dan sesak napas.'
-      location_name: 'Pelataran Tawaf Gate 1'
-      latitude: 21.4225
-      longitude: 39.8262
+      fcm_token: fTHHz7u8TQyI6...
+      platform: android
+      device_id: a1b2c3d4e5f6
     fileParameters: []
     responses: []
     responseFields: []
@@ -181,307 +92,52 @@ endpoints:
   -
     custom: []
     httpMethods:
-      - GET
-    uri: 'api/sos-incidents/{sosIncident_id}'
+      - DELETE
+    uri: api/device-tokens
     metadata:
       custom: []
-      groupName: 'Modul Darurat / Emergency / SOS'
+      groupName: 'Device Token FCM'
       groupDescription: |-
 
-        API untuk mengelola laporan kejadian darurat (SOS Incident) dari Jamaah dan penanganannya oleh Admin/Tour Leader.
+        API untuk mendaftarkan dan menonaktifkan FCM device token perangkat mobile.
+        Token digunakan sebagai tujuan pengiriman push notification Firebase Cloud Messaging.
+
+        Endpoint ini digunakan oleh Jamaah, Family (login sebagai Jamaah), InternalUser (admin), dan TourLeader.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Menampilkan detail satu SOS Incident'
+      title: 'Nonaktifkan FCM device token perangkat ini'
       description: |-
-        Menampilkan rincian informasi satu laporan kejadian SOS Incident beserta relasi Jamaah, Kloter, Responses, dan Status Histories.
+        Menonaktifkan satu token FCM yang ditentukan dalam request.
+        Hanya token milik akun yang sedang login yang dapat dinonaktifkan.
+        Token milik akun lain tidak dapat dinonaktifkan melalui endpoint ini.
 
-        **Scope Akses Berdasarkan Role:**
-        * **Admin (`admin`):** Dapat melihat detail laporan SOS manapun.
-        * **Tour Leader (`tour_leader`):** Hanya dapat melihat detail SOS jika kloter incident sesuai dengan kloter assignment-nya.
-        * **Jamaah (`jamaah`):** Hanya dapat melihat detail SOS miliknya sendiri.
+        Endpoint ini **tidak** menghapus seluruh token milik akun.
+        Endpoint ini dirancang untuk dipanggil saat pengguna logout **dari satu perangkat tertentu**,
+        sedangkan sesi/token Sanctum logout ditangani oleh endpoint `/logout` masing-masing auth controller.
       authenticated: true
       deprecated: false
     headers:
       Authorization: 'Bearer {token}'
       Content-Type: application/json
       Accept: application/json
-    urlParameters:
-      sosIncident_id:
-        custom: []
-        name: sosIncident_id
-        description: 'The ID of the sosIncident.'
-        required: true
-        example: 01a0d96c-1e72-7144-83eb-2a1d35530e00
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      sosIncident:
-        custom: []
-        name: sosIncident
-        description: 'UUID laporan SOS Incident.'
-        required: true
-        example: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      sosIncident_id: 01a0d96c-1e72-7144-83eb-2a1d35530e00
-      sosIncident: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 401
-        content: '{"message":"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa."}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-        description: null
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - PATCH
-    uri: 'api/sos-incidents/{sosIncident_id}/status'
-    metadata:
-      custom: []
-      groupName: 'Modul Darurat / Emergency / SOS'
-      groupDescription: |-
-
-        API untuk mengelola laporan kejadian darurat (SOS Incident) dari Jamaah dan penanganannya oleh Admin/Tour Leader.
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Mengubah status SOS Incident'
-      description: |-
-        Memperbarui status penanganan laporan SOS Incident dan mencatat riwayat perubahannya ke `sos_status_histories`.
-
-        **Aturan Hak Akses:**
-        * **Jamaah (`jamaah`):** **Tidak dapat** mengubah status SOS. Menghasilkan response `403 Forbidden` (`Jamaah tidak dapat mengubah status SOS.`).
-        * **Admin (`admin`):** Dapat mengubah status SOS mana saja jika memiliki akses. Aktor pencatat pada `sos_status_histories` disimpan di kolom `changed_by`.
-        * **Tour Leader (`tour_leader`):** Dapat mengubah status SOS jika memiliki akses terhadap incident (kloter assignment). Aktor pencatat pada `sos_status_histories` disimpan di kolom `tour_leader_id`.
-
-        **Nilai Status yang Diperbolehkan:**
-        * `triggered`: Laporan SOS baru terpicu.
-        * `acknowledged`: Laporan telah diterima/dikonfirmasi oleh Petugas/TL.
-        * `in_action`: Petugas/TL sedang dalam penanganan di lapangan.
-        * `resolved`: Kejadian darurat telah selesai ditangani.
-        * `false_alarm`: Laporan palsu / tidak sengaja tertekan.
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {token}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      sosIncident_id:
-        custom: []
-        name: sosIncident_id
-        description: 'The ID of the sosIncident.'
-        required: true
-        example: 01a0d96c-1e72-7144-83eb-2a1d35530e00
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      sosIncident:
-        custom: []
-        name: sosIncident
-        description: 'UUID laporan SOS Incident.'
-        required: true
-        example: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      sosIncident_id: 01a0d96c-1e72-7144-83eb-2a1d35530e00
-      sosIncident: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
+    urlParameters: []
+    cleanUrlParameters: []
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      status:
+      fcm_token:
         custom: []
-        name: status
-        description: 'Status baru yang valid (`triggered`, `acknowledged`, `in_action`, `resolved`, `false_alarm`).'
+        name: fcm_token
+        description: 'Token FCM perangkat yang ingin dinonaktifkan.'
         required: true
-        example: acknowledged
+        example: fTHHz7u8TQyI6...
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      status: acknowledged
-    fileParameters: []
-    responses: []
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - GET
-    uri: 'api/sos-incidents/{sosIncident_id}/responses'
-    metadata:
-      custom: []
-      groupName: 'Modul Darurat / Emergency / SOS'
-      groupDescription: |-
-
-        API untuk mengelola response / catatan tanggapan penanganan kejadian darurat (SOS Response).
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Menampilkan daftar response pada SOS Incident'
-      description: |-
-        Menampilkan seluruh daftar tanggapan/keterangan penanganan pada satu laporan SOS Incident diurutkan berdasarkan `created_at` dari terlama ke terbaru.
-
-        **Scope Akses Berdasarkan Role:**
-        Admin, Tour Leader (kloter assigned), dan Jamaah (pemilik SOS) yang memiliki akses ke laporan SOS ini.
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {token}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      sosIncident_id:
-        custom: []
-        name: sosIncident_id
-        description: 'The ID of the sosIncident.'
-        required: true
-        example: 01a0d96c-1e72-7144-83eb-2a1d35530e00
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      sosIncident:
-        custom: []
-        name: sosIncident
-        description: 'UUID laporan SOS Incident.'
-        required: true
-        example: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      sosIncident_id: 01a0d96c-1e72-7144-83eb-2a1d35530e00
-      sosIncident: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 401
-        content: '{"message":"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa."}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-        description: null
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - POST
-    uri: 'api/sos-incidents/{sosIncident_id}/responses'
-    metadata:
-      custom: []
-      groupName: 'Modul Darurat / Emergency / SOS'
-      groupDescription: |-
-
-        API untuk mengelola response / catatan tanggapan penanganan kejadian darurat (SOS Response).
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Menambahkan response / keterangan baru pada SOS Incident'
-      description: |-
-        Menambahkan tanggapan, pesan, atau catatan penanganan baru pada laporan SOS Incident.
-
-        **Aturan Penentuan Aktor Otomatis:**
-        * Aktor penanggap ditentukan otomatis berdasarkan token autentikasi yang sedang aktif (`jamaah_id`, `tour_leader_id`, atau `internal_user_id`).
-        * Client **tidak boleh** dan **tidak perlu** mengirimkan actor ID di request body.
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {token}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      sosIncident_id:
-        custom: []
-        name: sosIncident_id
-        description: 'The ID of the sosIncident.'
-        required: true
-        example: 01a0d96c-1e72-7144-83eb-2a1d35530e00
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      sosIncident:
-        custom: []
-        name: sosIncident
-        description: 'UUID laporan SOS Incident.'
-        required: true
-        example: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      sosIncident_id: 01a0d96c-1e72-7144-83eb-2a1d35530e00
-      sosIncident: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      message:
-        custom: []
-        name: message
-        description: 'Pesan atau catatan tanggapan penanganan SOS (maksimal 5000 karakter).'
-        required: true
-        example: 'Tim medis sudah tiba di lokasi dan penanganan sedang berjalan.'
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanBodyParameters:
-      message: 'Tim medis sudah tiba di lokasi dan penanganan sedang berjalan.'
+      fcm_token: fTHHz7u8TQyI6...
     fileParameters: []
     responses: []
     responseFields: []

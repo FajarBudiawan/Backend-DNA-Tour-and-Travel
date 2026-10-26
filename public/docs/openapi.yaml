@@ -9,10 +9,13 @@ servers:
 tags:
   -
     name: 'Perjalanan / Schedule'
-    description: "\nAPI untuk mengelola data jadwal perjalanan."
+    description: "\nAPI untuk mengelola data jadwal perjalanan (Timeline) dan pengingat (Reminder).\nDigunakan oleh Web Admin, Mobile Tour Leader, Mobile Jamaah, dan Mobile Keluarga."
   -
     name: 'Modul Darurat / Emergency / SOS'
     description: "\nAPI untuk mengelola laporan kejadian darurat (SOS Incident) dari Jamaah dan penanganannya oleh Admin/Tour Leader."
+  -
+    name: 'Device Token FCM'
+    description: "\nAPI untuk mendaftarkan dan menonaktifkan FCM device token perangkat mobile.\nToken digunakan sebagai tujuan pengiriman push notification Firebase Cloud Messaging.\n\nEndpoint ini digunakan oleh Jamaah, Family (login sebagai Jamaah), InternalUser (admin), dan TourLeader."
   -
     name: Endpoints
     description: ''
@@ -31,9 +34,9 @@ security:
 paths:
   /api/schedules:
     get:
-      summary: 'Mengambil daftar perjalanan'
-      operationId: mengambilDaftarPerjalanan
-      description: 'Mendukung search dan filter berdasarkan query parameter.'
+      summary: 'Mengambil daftar perjalanan (Timeline)'
+      operationId: mengambilDaftarPerjalananTimeline
+      description: "Akses: Admin, Tour Leader, Jamaah, Family.\nMengembalikan daftar jadwal yang diurutkan secara kronologis dengan status pelaksanaan\ndan batas waktu selesai (efektif / diinferensikan)."
       parameters:
         -
           in: query
@@ -93,13 +96,13 @@ paths:
     post:
       summary: 'Menambahkan perjalanan baru'
       operationId: menambahkanPerjalananBaru
-      description: ''
+      description: 'Akses: Admin, Tour Leader.'
       parameters: []
       responses: {}
       tags:
         - 'Perjalanan / Schedule'
       requestBody:
-        required: false
+        required: true
         content:
           application/json:
             schema:
@@ -116,8 +119,13 @@ paths:
                   example: '2026-09-10'
                 time:
                   type: string
-                  description: 'Format waktu HH:MM.'
+                  description: 'Format waktu mulai HH:MM.'
                   example: '08:00'
+                end_time:
+                  type: string
+                  description: 'Format waktu selesai HH:MM (opsional).'
+                  example: '10:00'
+                  nullable: true
                 title:
                   type: string
                   description: 'Judul kegiatan perjalanan.'
@@ -139,19 +147,21 @@ paths:
                   nullable: true
                 pic:
                   type: string
-                  description: 'Person in charge / penanggung jawab.'
+                  description: 'Penanggung jawab kegiatan.'
                   example: 'Ustadz Ahmad'
                   nullable: true
                 status_override:
                   type: string
-                  description: 'Status override jika ingin menentukan status secara manual (upcoming, in_progress, completed).'
+                  description: 'Status override (upcoming, in_progress, completed).'
                   example: upcoming
                   nullable: true
+              required:
+                - title
   '/api/schedules/{schedule_id}':
     get:
       summary: 'Mengambil detail perjalanan'
       operationId: mengambilDetailPerjalanan
-      description: ''
+      description: 'Akses: Admin, Tour Leader, Jamaah, Family.'
       parameters: []
       responses:
         401:
@@ -171,7 +181,7 @@ paths:
     put:
       summary: 'Memperbarui data perjalanan'
       operationId: memperbaruiDataPerjalanan
-      description: ''
+      description: 'Akses: Admin.'
       parameters: []
       responses: {}
       tags:
@@ -193,8 +203,13 @@ paths:
                   example: '2026-09-10'
                 time:
                   type: string
-                  description: 'Format waktu HH:MM.'
+                  description: 'Format waktu mulai HH:MM.'
                   example: '09:00'
+                end_time:
+                  type: string
+                  description: 'Format waktu selesai HH:MM.'
+                  example: '11:00'
+                  nullable: true
                 title:
                   type: string
                   description: 'Judul kegiatan perjalanan.'
@@ -216,7 +231,7 @@ paths:
                   nullable: true
                 pic:
                   type: string
-                  description: 'Person in charge / penanggung jawab.'
+                  description: 'Penanggung jawab kegiatan.'
                   example: 'Ustadz Ahmad'
                   nullable: true
                 status_override:
@@ -224,10 +239,14 @@ paths:
                   description: 'Status override (upcoming, in_progress, completed).'
                   example: in_progress
                   nullable: true
+                status_mode:
+                  type: string
+                  description: 'Mode status (auto, manual).'
+                  example: manual
     delete:
       summary: 'Menghapus perjalanan'
       operationId: menghapusPerjalanan
-      description: ''
+      description: 'Akses: Admin.'
       parameters: []
       responses: {}
       tags:
@@ -237,7 +256,7 @@ paths:
         in: path
         name: schedule_id
         description: 'The ID of the schedule.'
-        example: 4
+        example: 10
         required: true
         schema:
           type: integer
@@ -251,15 +270,15 @@ paths:
           type: integer
   '/api/schedules/{schedule_id}/status':
     patch:
-      summary: 'Memperbarui status override perjalanan'
-      operationId: memperbaruiStatusOverridePerjalanan
-      description: ''
+      summary: 'Memperbarui status pelaksanaan perjalanan'
+      operationId: memperbaruiStatusPelaksanaanPerjalanan
+      description: "Akses: Admin, Tour Leader.\nMengubah status pelaksanaan secara manual atau mengembalikannya ke mode otomatis."
       parameters: []
       responses: {}
       tags:
         - 'Perjalanan / Schedule'
       requestBody:
-        required: true
+        required: false
         content:
           application/json:
             schema:
@@ -267,16 +286,46 @@ paths:
               properties:
                 status_override:
                   type: string
-                  description: 'Status override baru (upcoming, in_progress, completed).'
+                  description: 'Status override (upcoming, in_progress, completed). Kosongkan jika ingin kembali ke auto.'
                   example: in_progress
-              required:
-                - status_override
+                  nullable: true
+                mode:
+                  type: string
+                  description: "Mode pengelolaan status: 'manual' atau 'auto'. Default: 'manual' jika status_override diisi."
+                  example: manual
+                  nullable: true
     parameters:
       -
         in: path
         name: schedule_id
         description: 'The ID of the schedule.'
-        example: 4
+        example: 10
+        required: true
+        schema:
+          type: integer
+      -
+        in: path
+        name: schedule
+        description: 'ID Schedule.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+  '/api/schedules/{schedule_id}/broadcast':
+    post:
+      summary: 'Menyiarkan jadwal perjalanan (Broadcast Reminder)'
+      operationId: menyiarkanJadwalPerjalananBroadcastReminder
+      description: "Akses: Tour Leader, Admin.\nMencatat aksi siaran dan mengirim pengingat ke penerima yang berhak (Admin, Tour Leader, Jamaah aktif, dan Keluarga aktif)."
+      parameters: []
+      responses: {}
+      tags:
+        - 'Perjalanan / Schedule'
+    parameters:
+      -
+        in: path
+        name: schedule_id
+        description: 'The ID of the schedule.'
+        example: 10
         required: true
         schema:
           type: integer
@@ -347,10 +396,12 @@ paths:
                   type: number
                   description: 'Koordinat latitude lokasi kejadian (-90 s/d 90).'
                   example: 21.4225
+                  nullable: true
                 longitude:
                   type: number
                   description: 'Koordinat longitude lokasi kejadian (-180 s/d 180).'
                   example: 39.8262
+                  nullable: true
               required:
                 - type
                 - latitude
@@ -381,46 +432,7 @@ paths:
         in: path
         name: sosIncident_id
         description: 'The ID of the sosIncident.'
-        example: 01a0d96c-1e72-7144-83eb-2a1d35530e00
-        required: true
-        schema:
-          type: string
-      -
-        in: path
-        name: sosIncident
-        description: 'UUID laporan SOS Incident.'
-        example: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
-        required: true
-        schema:
-          type: string
-  '/api/sos-incidents/{sosIncident_id}/status':
-    patch:
-      summary: 'Mengubah status SOS Incident'
-      operationId: mengubahStatusSOSIncident
-      description: "Memperbarui status penanganan laporan SOS Incident dan mencatat riwayat perubahannya ke `sos_status_histories`.\n\n**Aturan Hak Akses:**\n* **Jamaah (`jamaah`):** **Tidak dapat** mengubah status SOS. Menghasilkan response `403 Forbidden` (`Jamaah tidak dapat mengubah status SOS.`).\n* **Admin (`admin`):** Dapat mengubah status SOS mana saja jika memiliki akses. Aktor pencatat pada `sos_status_histories` disimpan di kolom `changed_by`.\n* **Tour Leader (`tour_leader`):** Dapat mengubah status SOS jika memiliki akses terhadap incident (kloter assignment). Aktor pencatat pada `sos_status_histories` disimpan di kolom `tour_leader_id`.\n\n**Nilai Status yang Diperbolehkan:**\n* `triggered`: Laporan SOS baru terpicu.\n* `acknowledged`: Laporan telah diterima/dikonfirmasi oleh Petugas/TL.\n* `in_action`: Petugas/TL sedang dalam penanganan di lapangan.\n* `resolved`: Kejadian darurat telah selesai ditangani.\n* `false_alarm`: Laporan palsu / tidak sengaja tertekan."
-      parameters: []
-      responses: {}
-      tags:
-        - 'Modul Darurat / Emergency / SOS'
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                status:
-                  type: string
-                  description: 'Status baru yang valid (`triggered`, `acknowledged`, `in_action`, `resolved`, `false_alarm`).'
-                  example: acknowledged
-              required:
-                - status
-    parameters:
-      -
-        in: path
-        name: sosIncident_id
-        description: 'The ID of the sosIncident.'
-        example: 01a0d96c-1e72-7144-83eb-2a1d35530e00
+        example: 01a0f63e-6353-708e-90fa-f17bc1c59faf
         required: true
         schema:
           type: string
@@ -479,7 +491,7 @@ paths:
         in: path
         name: sosIncident_id
         description: 'The ID of the sosIncident.'
-        example: 01a0d96c-1e72-7144-83eb-2a1d35530e00
+        example: 01a0f63e-6353-708e-90fa-f17bc1c59faf
         required: true
         schema:
           type: string
@@ -491,6 +503,103 @@ paths:
         required: true
         schema:
           type: string
+  '/api/sos-incidents/{sosIncident_id}/status':
+    patch:
+      summary: 'Mengubah status SOS Incident'
+      operationId: mengubahStatusSOSIncident
+      description: "Memperbarui status penanganan laporan SOS Incident dan mencatat riwayat perubahannya ke `sos_status_histories`.\n\n**Aturan Hak Akses:**\n* **Jamaah (`jamaah`):** **Tidak dapat** mengubah status SOS. Menghasilkan response `403 Forbidden` (`Jamaah tidak dapat mengubah status SOS.`).\n* **Admin (`admin`):** Dapat mengubah status SOS mana saja jika memiliki akses. Aktor pencatat pada `sos_status_histories` disimpan di kolom `changed_by`.\n* **Tour Leader (`tour_leader`):** Dapat mengubah status SOS jika memiliki akses terhadap incident (kloter assignment). Aktor pencatat pada `sos_status_histories` disimpan di kolom `tour_leader_id`.\n\n**Nilai Status yang Diperbolehkan:**\n* `triggered`: Laporan SOS baru terpicu.\n* `acknowledged`: Laporan telah diterima/dikonfirmasi oleh Petugas/TL.\n* `in_action`: Petugas/TL sedang dalam penanganan di lapangan.\n* `resolved`: Kejadian darurat telah selesai ditangani.\n* `false_alarm`: Laporan palsu / tidak sengaja tertekan."
+      parameters: []
+      responses: {}
+      tags:
+        - 'Modul Darurat / Emergency / SOS'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: 'Status baru yang valid (`triggered`, `acknowledged`, `in_action`, `resolved`, `false_alarm`).'
+                  example: acknowledged
+                reason:
+                  type: string
+                  description: 'Must not be greater than 500 characters.'
+                  example: b
+                  nullable: true
+              required:
+                - status
+    parameters:
+      -
+        in: path
+        name: sosIncident_id
+        description: 'The ID of the sosIncident.'
+        example: 01a0f63e-6353-708e-90fa-f17bc1c59faf
+        required: true
+        schema:
+          type: string
+      -
+        in: path
+        name: sosIncident
+        description: 'UUID laporan SOS Incident.'
+        example: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
+        required: true
+        schema:
+          type: string
+  /api/device-tokens:
+    post:
+      summary: 'Daftarkan atau perbarui FCM device token'
+      operationId: daftarkanAtauPerbaruiFCMDeviceToken
+      description: "Mendaftarkan FCM token perangkat ke akun yang sedang login.\nJika token yang sama sudah pernah terdaftar (atas akun siapa pun), kepemilikannya\nakan dipindahkan secara aman ke akun yang sedang aktif saat ini (pola Upsert).\nHal ini mencegah kebocoran notifikasi ketika perangkat berganti akun (misalnya logout → login akun berbeda).\n\nField `tokenable_type`, `tokenable_id`, dan `is_active` **tidak dapat dikirim oleh client**\ndan selalu diisi secara otomatis oleh server."
+      parameters: []
+      responses: {}
+      tags:
+        - 'Device Token FCM'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fcm_token:
+                  type: string
+                  description: 'Token registrasi FCM dari Firebase SDK.'
+                  example: fTHHz7u8TQyI6...
+                platform:
+                  type: string
+                  description: 'Platform perangkat. Nilai: `android` atau `ios`.'
+                  example: android
+                device_id:
+                  type: string
+                  description: 'Identifier unik perangkat (opsional, misalnya Android ID atau iOS identifierForVendor).'
+                  example: a1b2c3d4e5f6
+                  nullable: true
+              required:
+                - fcm_token
+                - platform
+    delete:
+      summary: 'Nonaktifkan FCM device token perangkat ini'
+      operationId: nonaktifkanFCMDeviceTokenPerangkatIni
+      description: "Menonaktifkan satu token FCM yang ditentukan dalam request.\nHanya token milik akun yang sedang login yang dapat dinonaktifkan.\nToken milik akun lain tidak dapat dinonaktifkan melalui endpoint ini.\n\nEndpoint ini **tidak** menghapus seluruh token milik akun.\nEndpoint ini dirancang untuk dipanggil saat pengguna logout **dari satu perangkat tertentu**,\nsedangkan sesi/token Sanctum logout ditangani oleh endpoint `/logout` masing-masing auth controller."
+      parameters: []
+      responses: {}
+      tags:
+        - 'Device Token FCM'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fcm_token:
+                  type: string
+                  description: 'Token FCM perangkat yang ingin dinonaktifkan.'
+                  example: fTHHz7u8TQyI6...
+              required:
+                - fcm_token
   /api/login:
     post:
       summary: ''
@@ -1281,7 +1390,7 @@ paths:
         in: path
         name: package_id
         description: 'The ID of the package.'
-        example: 019fff58-a57b-7024-9105-8669a2b8faeb
+        example: 01a0eafc-9574-739f-b57a-9ba96d3a738d
         required: true
         schema:
           type: string
@@ -1357,7 +1466,7 @@ paths:
         in: path
         name: package_id
         description: 'The ID of the package.'
-        example: 019fff58-a57b-7024-9105-8669a2b8faeb
+        example: 01a0eafc-9574-739f-b57a-9ba96d3a738d
         required: true
         schema:
           type: string
@@ -1418,7 +1527,7 @@ paths:
         in: path
         name: package_id
         description: 'The ID of the package.'
-        example: 019fff58-a57b-7024-9105-8669a2b8faeb
+        example: 01a0eafc-9574-739f-b57a-9ba96d3a738d
         required: true
         schema:
           type: string
@@ -1426,7 +1535,7 @@ paths:
         in: path
         name: itinerary_id
         description: 'The ID of the itinerary.'
-        example: 01a06c85-f2ba-713e-8952-deab62b1c219
+        example: architecto
         required: true
         schema:
           type: string
@@ -1488,12 +1597,12 @@ paths:
                 departure_date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-09-25T20:00:43'
+                  example: '2026-10-25T16:43:58'
                   nullable: true
                 return_date:
                   type: string
                   description: 'Must be a valid date. Must be a date after or equal to <code>departure_date</code>.'
-                  example: '2052-10-18'
+                  example: '2052-11-17'
                   nullable: true
                 hotel_makkah_id:
                   type: string
@@ -1508,7 +1617,7 @@ paths:
                 status:
                   type: string
                   description: ''
-                  example: active
+                  example: cancelled
                   enum:
                     - draft
                     - active
@@ -1586,12 +1695,12 @@ paths:
                 departure_date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-09-25T20:00:43'
+                  example: '2026-10-25T16:43:58'
                   nullable: true
                 return_date:
                   type: string
                   description: 'Must be a valid date. Must be a date after or equal to <code>departure_date</code>.'
-                  example: '2052-10-18'
+                  example: '2052-11-17'
                   nullable: true
                 hotel_makkah_id:
                   type: string
@@ -1636,7 +1745,7 @@ paths:
         in: path
         name: kloter_id
         description: 'The ID of the kloter.'
-        example: 01a06167-ae4f-7187-9066-4dae12bc3d97
+        example: 01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5
         required: true
         schema:
           type: string
@@ -1684,7 +1793,7 @@ paths:
                 activity_date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-09-25T20:00:43'
+                  example: '2026-10-25T16:43:59'
                 activity_time:
                   type: string
                   description: ''
@@ -1727,7 +1836,7 @@ paths:
                 is_published:
                   type: boolean
                   description: ''
-                  example: true
+                  example: false
                   nullable: true
               required:
                 - activity_date
@@ -1737,7 +1846,7 @@ paths:
         in: path
         name: kloter_id
         description: 'The ID of the kloter.'
-        example: 01a06167-ae4f-7187-9066-4dae12bc3d97
+        example: 01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5
         required: true
         schema:
           type: string
@@ -1755,7 +1864,7 @@ paths:
         in: path
         name: kloter_id
         description: 'The ID of the kloter.'
-        example: 01a06167-ae4f-7187-9066-4dae12bc3d97
+        example: 01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5
         required: true
         schema:
           type: string
@@ -1782,7 +1891,7 @@ paths:
                 activity_date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-09-25T20:00:43'
+                  example: '2026-10-25T16:43:59'
                 activity_time:
                   type: string
                   description: ''
@@ -1840,7 +1949,7 @@ paths:
         in: path
         name: kloter_id
         description: 'The ID of the kloter.'
-        example: 01a06167-ae4f-7187-9066-4dae12bc3d97
+        example: 01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5
         required: true
         schema:
           type: string
@@ -1848,7 +1957,7 @@ paths:
         in: path
         name: schedule_id
         description: 'The ID of the schedule.'
-        example: 01a06c86-0387-71ab-a457-6b509ce35330
+        example: architecto
         required: true
         schema:
           type: string
@@ -1878,7 +1987,7 @@ paths:
         in: path
         name: kloter_id
         description: 'The ID of the kloter.'
-        example: 01a06167-ae4f-7187-9066-4dae12bc3d97
+        example: 01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5
         required: true
         schema:
           type: string
@@ -1901,7 +2010,7 @@ paths:
                 room_type:
                   type: string
                   description: ''
-                  example: single
+                  example: quad
                   enum:
                     - quad
                     - triple
@@ -1919,7 +2028,7 @@ paths:
         in: path
         name: kloter_id
         description: 'The ID of the kloter.'
-        example: 01a06167-ae4f-7187-9066-4dae12bc3d97
+        example: 01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5
         required: true
         schema:
           type: string
@@ -1956,7 +2065,7 @@ paths:
                 room_type:
                   type: string
                   description: ''
-                  example: quint
+                  example: triple
                   enum:
                     - quad
                     - triple
@@ -1971,7 +2080,7 @@ paths:
                 gender:
                   type: string
                   description: ''
-                  example: L
+                  example: P
                   enum:
                     - L
                     - P
@@ -2033,7 +2142,7 @@ paths:
                 room_type:
                   type: string
                   description: ''
-                  example: quad
+                  example: double
                   enum:
                     - quad
                     - triple
@@ -2047,7 +2156,7 @@ paths:
                 gender:
                   type: string
                   description: ''
-                  example: P
+                  example: L
                   enum:
                     - L
                     - P
@@ -2069,7 +2178,7 @@ paths:
         in: path
         name: room_id
         description: 'The ID of the room.'
-        example: 01a0668d-b791-7099-a102-c1b24bd2cdfd
+        example: 01a12ba2-b7ef-7371-a60a-bb0374644250
         required: true
         schema:
           type: string
@@ -2119,7 +2228,7 @@ paths:
         in: path
         name: room_id
         description: 'The ID of the room.'
-        example: 01a0668d-b791-7099-a102-c1b24bd2cdfd
+        example: 01a12ba2-b7ef-7371-a60a-bb0374644250
         required: true
         schema:
           type: string
@@ -2175,7 +2284,7 @@ paths:
         in: path
         name: room_id
         description: 'The ID of the room.'
-        example: 01a0668d-b791-7099-a102-c1b24bd2cdfd
+        example: 01a12ba2-b7ef-7371-a60a-bb0374644250
         required: true
         schema:
           type: string
@@ -2183,7 +2292,7 @@ paths:
         in: path
         name: roomMember_id
         description: 'The ID of the roomMember.'
-        example: 01a06698-bf7d-721f-8f09-ceee991e202e
+        example: 01a15819-3b57-7184-b9f2-a6edd516406f
         required: true
         schema:
           type: string
@@ -2253,7 +2362,7 @@ paths:
                 birth_date:
                   type: string
                   description: 'Must be a valid date. Must be a date before <code>today</code>.'
-                  example: '2022-10-20'
+                  example: '2022-11-19'
                 gender:
                   type: string
                   description: ''
@@ -2264,11 +2373,11 @@ paths:
                 registration_date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-09-25T20:00:43'
+                  example: '2026-10-25T16:43:59'
                 departure_date:
                   type: string
                   description: 'Must be a valid date. Must be a date after or equal to <code>registration_date</code>.'
-                  example: '2052-10-18'
+                  example: '2052-11-17'
                   nullable: true
                 package_id:
                   type: string
@@ -2300,7 +2409,7 @@ paths:
                 status:
                   type: string
                   description: ''
-                  example: cancelled
+                  example: unpaid
                   enum:
                     - unpaid
                     - dp
@@ -2322,7 +2431,7 @@ paths:
                     payment_type:
                       type: string
                       description: ''
-                      example: full_payment
+                      example: down_payment
                       enum:
                         - down_payment
                         - full_payment
@@ -2341,7 +2450,7 @@ paths:
                     payment_date:
                       type: string
                       description: 'Must be a valid date.'
-                      example: '2026-09-25T20:00:43'
+                      example: '2026-10-25T16:43:59'
                       nullable: true
                   nullable: true
                 equipments:
@@ -2368,7 +2477,7 @@ paths:
                       is_received:
                         type: boolean
                         description: 'This field is required when <code>equipments</code> is present.'
-                        example: false
+                        example: true
               required:
                 - full_name
                 - nik
@@ -2441,22 +2550,22 @@ paths:
                 birth_date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-09-25T20:00:43'
+                  example: '2026-10-25T16:43:59'
                 gender:
                   type: string
                   description: ''
-                  example: L
+                  example: P
                   enum:
                     - L
                     - P
                 registration_date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-09-25T20:00:43'
+                  example: '2026-10-25T16:43:59'
                 departure_date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-09-25T20:00:43'
+                  example: '2026-10-25T16:43:59'
                   nullable: true
                 package_id:
                   type: string
@@ -2482,7 +2591,7 @@ paths:
                 status:
                   type: string
                   description: ''
-                  example: fully_paid
+                  example: dp_paid
                   enum:
                     - unpaid
                     - dp_paid
@@ -2512,7 +2621,7 @@ paths:
                       is_received:
                         type: boolean
                         description: 'This field is required when <code>equipments</code> is present.'
-                        example: false
+                        example: true
                       size:
                         type: string
                         description: 'Must not be greater than 50 characters.'
@@ -2538,7 +2647,7 @@ paths:
                     payment_date:
                       type: string
                       description: 'Must be a valid date.'
-                      example: '2026-09-25T20:00:43'
+                      example: '2026-10-25T16:43:59'
                     notes:
                       type: string
                       description: ''
@@ -2558,7 +2667,7 @@ paths:
         in: path
         name: registration_id
         description: 'The ID of the registration.'
-        example: 01a0d1be-3c39-718a-894c-3fb9017e5bc4
+        example: 01a11769-6b51-7258-bdf7-4a6dce352ab3
         required: true
         schema:
           type: string
@@ -2576,7 +2685,7 @@ paths:
         in: path
         name: registration_id
         description: 'The ID of the registration.'
-        example: 01a0d1be-3c39-718a-894c-3fb9017e5bc4
+        example: 01a11769-6b51-7258-bdf7-4a6dce352ab3
         required: true
         schema:
           type: string
@@ -2651,7 +2760,7 @@ paths:
                 payment_method:
                   type: string
                   description: ''
-                  example: mandiri_transfer
+                  example: bca_transfer
                   enum:
                     - bca_transfer
                     - mandiri_transfer
@@ -2661,7 +2770,7 @@ paths:
                 payment_date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-09-25T20:00:43'
+                  example: '2026-10-25T16:43:59'
                 notes:
                   type: string
                   description: 'Must not be greater than 255 characters.'
@@ -2677,7 +2786,7 @@ paths:
         in: path
         name: registration_id
         description: 'The ID of the registration.'
-        example: 01a0d1be-3c39-718a-894c-3fb9017e5bc4
+        example: 01a11769-6b51-7258-bdf7-4a6dce352ab3
         required: true
         schema:
           type: string
@@ -2719,7 +2828,7 @@ paths:
                 payment_method:
                   type: string
                   description: ''
-                  example: mandiri_transfer
+                  example: bca_transfer
                   enum:
                     - bca_transfer
                     - mandiri_transfer
@@ -2729,7 +2838,7 @@ paths:
                 payment_date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-09-25T20:00:43'
+                  example: '2026-10-25T16:43:59'
                 notes:
                   type: string
                   description: 'Must not be greater than 255 characters.'
@@ -2740,7 +2849,7 @@ paths:
         in: path
         name: payment_id
         description: 'The ID of the payment.'
-        example: 01a01dcc-5c50-7289-ab5f-0bbf2bfb2e36
+        example: 01a117ca-f8fd-702a-9f81-9405f8a12750
         required: true
         schema:
           type: string
@@ -2787,7 +2896,7 @@ paths:
                 category:
                   type: string
                   description: ''
-                  example: perlengkapan
+                  example: akomodasi_tiket
                   enum:
                     - akomodasi_tiket
                     - perlengkapan
@@ -2800,7 +2909,7 @@ paths:
                 payment_method:
                   type: string
                   description: ''
-                  example: bsi_transfer
+                  example: bca_transfer
                   enum:
                     - bca_transfer
                     - mandiri_transfer
@@ -2810,7 +2919,7 @@ paths:
                 expense_date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-09-25T20:00:43'
+                  example: '2026-10-25T16:43:59'
                 reference_number:
                   type: string
                   description: 'Must not be greater than 50 characters.'
@@ -2870,7 +2979,7 @@ paths:
                 category:
                   type: string
                   description: ''
-                  example: operasional_bus
+                  example: akomodasi_tiket
                   enum:
                     - akomodasi_tiket
                     - perlengkapan
@@ -2883,7 +2992,7 @@ paths:
                 payment_method:
                   type: string
                   description: ''
-                  example: bca_transfer
+                  example: edc_qris
                   enum:
                     - bca_transfer
                     - mandiri_transfer
@@ -2893,7 +3002,7 @@ paths:
                 expense_date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-09-25T20:00:43'
+                  example: '2026-10-25T16:43:59'
                 reference_number:
                   type: string
                   description: 'Must not be greater than 50 characters.'
@@ -2917,7 +3026,7 @@ paths:
         in: path
         name: expense_id
         description: 'The ID of the expense.'
-        example: 01a03c1d-d876-7340-911d-b8bd3b43254d
+        example: architecto
         required: true
         schema:
           type: string
@@ -2998,7 +3107,7 @@ paths:
                 payment_method:
                   type: string
                   description: ''
-                  example: cash
+                  example: mandiri_transfer
                   enum:
                     - bca_transfer
                     - mandiri_transfer
@@ -3008,7 +3117,7 @@ paths:
                 income_date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-09-25T20:00:43'
+                  example: '2026-10-25T16:43:59'
                 reference_number:
                   type: string
                   description: 'Must not be greater than 50 characters.'
@@ -3081,7 +3190,7 @@ paths:
                 payment_method:
                   type: string
                   description: ''
-                  example: mandiri_transfer
+                  example: cash
                   enum:
                     - bca_transfer
                     - mandiri_transfer
@@ -3091,7 +3200,7 @@ paths:
                 income_date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-09-25T20:00:44'
+                  example: '2026-10-25T16:43:59'
                 reference_number:
                   type: string
                   description: 'Must not be greater than 50 characters.'
@@ -3115,7 +3224,7 @@ paths:
         in: path
         name: otherIncome_id
         description: 'The ID of the otherIncome.'
-        example: 01a09bcd-8b0b-7184-8293-4e13ef61c19e
+        example: architecto
         required: true
         schema:
           type: string
@@ -3170,7 +3279,7 @@ paths:
                 birth_date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-09-25T20:00:44'
+                  example: '2026-10-25T16:43:59'
                   nullable: true
                 gender:
                   type: string
@@ -3228,12 +3337,12 @@ paths:
                 departure_date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-09-25T20:00:44'
+                  example: '2026-10-25T16:43:59'
                   nullable: true
                 return_date:
                   type: string
                   description: 'Must be a valid date. Must be a date after or equal to <code>departure_date</code>.'
-                  example: '2052-10-18'
+                  example: '2052-11-17'
                   nullable: true
                 tour_leader:
                   type: string
@@ -3308,7 +3417,7 @@ paths:
                 birth_date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-09-25T20:00:44'
+                  example: '2026-10-25T16:43:59'
                   nullable: true
                 gender:
                   type: string
@@ -3366,12 +3475,12 @@ paths:
                 departure_date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-09-25T20:00:44'
+                  example: '2026-10-25T16:43:59'
                   nullable: true
                 return_date:
                   type: string
                   description: 'Must be a valid date. Must be a date after or equal to <code>departure_date</code>.'
-                  example: '2052-10-18'
+                  example: '2052-11-17'
                   nullable: true
                 tour_leader:
                   type: string
@@ -3386,7 +3495,7 @@ paths:
                 status:
                   type: string
                   description: ''
-                  example: archived
+                  example: active
                   enum:
                     - active
                     - archived
@@ -3403,7 +3512,7 @@ paths:
         in: path
         name: jamaah_id
         description: 'The ID of the jamaah.'
-        example: 01a00fd9-404c-73f8-ac03-7d250410e565
+        example: 01a11776-98cd-72c9-b3a5-9af5b2d0d81d
         required: true
         schema:
           type: string
@@ -3474,7 +3583,7 @@ paths:
                 status:
                   type: string
                   description: ''
-                  example: resting
+                  example: active
                   enum:
                     - active
                     - resting
@@ -3551,7 +3660,7 @@ paths:
                 status:
                   type: string
                   description: ''
-                  example: standby
+                  example: resting
                   enum:
                     - active
                     - resting
@@ -3570,7 +3679,7 @@ paths:
         in: path
         name: id
         description: 'The ID of the tour leader.'
-        example: 01a0ae56-d4e2-7245-ac96-c1b5a4bddc03
+        example: 01a14ece-3b01-7346-aa5d-9106edcabd08
         required: true
         schema:
           type: string
@@ -3596,7 +3705,7 @@ paths:
         in: path
         name: tour_leader_id
         description: 'The ID of the tour leader.'
-        example: 01a0ae56-d4e2-7245-ac96-c1b5a4bddc03
+        example: 01a14ece-3b01-7346-aa5d-9106edcabd08
         required: true
         schema:
           type: string
@@ -3604,7 +3713,7 @@ paths:
         in: path
         name: kloter_id
         description: 'The ID of the kloter.'
-        example: 01a06167-ae4f-7187-9066-4dae12bc3d97
+        example: 01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5
         required: true
         schema:
           type: string
@@ -3785,7 +3894,7 @@ paths:
         in: path
         name: kloter_id
         description: 'The ID of the kloter.'
-        example: 01a06167-ae4f-7187-9066-4dae12bc3d97
+        example: 01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5
         required: true
         schema:
           type: string
@@ -3974,7 +4083,7 @@ paths:
         in: path
         name: stock_id
         description: 'The ID of the stock.'
-        example: 01a090b6-6761-72f5-8884-b0b5e6ce19a9
+        example: 01a090bb-d323-709c-8a33-cd373bba0e09
         required: true
         schema:
           type: string
@@ -4004,7 +4113,46 @@ paths:
         in: path
         name: stock_id
         description: 'The ID of the stock.'
-        example: 01a090b6-6761-72f5-8884-b0b5e6ce19a9
+        example: 01a090bb-d323-709c-8a33-cd373bba0e09
+        required: true
+        schema:
+          type: string
+  /api/notifications:
+    get:
+      summary: "GET /api/notifications\nTampilkan list notifikasi user yang login"
+      operationId: gETapinotificationsTampilkanListNotifikasiUserYangLogin
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.'
+      tags:
+        - Endpoints
+  '/api/notifications/{id}/read':
+    patch:
+      summary: "PATCH /api/notifications/{id}/read\nMark notifikasi sebagai sudah dibaca"
+      operationId: pATCHapinotificationsidreadMarkNotifikasiSebagaiSudahDibaca
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - Endpoints
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the notification.'
+        example: architecto
         required: true
         schema:
           type: string

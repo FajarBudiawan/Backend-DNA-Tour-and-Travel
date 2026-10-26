@@ -8,7 +8,12 @@ class StoreScheduleRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
+        $token = $this->user()?->currentAccessToken();
+        if (!$token) {
+            return false;
+        }
+
+        return $token->can('admin') || $token->can('tour_leader');
     }
 
     public function rules(): array
@@ -17,6 +22,7 @@ class StoreScheduleRequest extends FormRequest
             'day_number' => ['nullable', 'integer', 'min:1'],
             'date' => ['required', 'date_format:Y-m-d'],
             'time' => ['required', 'date_format:H:i'],
+            'end_time' => ['nullable', 'date_format:H:i'],
             'title' => ['required', 'string', 'max:255'],
             'category' => ['nullable', 'string', 'max:50'],
             'location' => ['nullable', 'string', 'max:255'],

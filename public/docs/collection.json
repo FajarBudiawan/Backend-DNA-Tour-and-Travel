@@ -10,17 +10,17 @@
     ],
     "info": {
         "name": "DNA Tour & Travel API Documentation",
-        "_postman_id": "c278e118-af12-4575-a7f9-cd6f2163b3a6",
+        "_postman_id": "9c2d3cb3-029f-4c7a-93d4-94d447215f3a",
         "description": "Dokumentasi resmi API Backend DNA Tour & Travel Umrah Management System.",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
     "item": [
         {
             "name": "Perjalanan \/ Schedule",
-            "description": "\nAPI untuk mengelola data jadwal perjalanan.",
+            "description": "\nAPI untuk mengelola data jadwal perjalanan (Timeline) dan pengingat (Reminder).\nDigunakan oleh Web Admin, Mobile Tour Leader, Mobile Jamaah, dan Mobile Keluarga.",
             "item": [
                 {
-                    "name": "Mengambil daftar perjalanan",
+                    "name": "Mengambil daftar perjalanan (Timeline)",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -65,7 +65,66 @@
                             }
                         ],
                         "body": null,
-                        "description": "Mendukung search dan filter berdasarkan query parameter."
+                        "description": "Akses: Admin, Tour Leader, Jamaah, Family.\nMengembalikan daftar jadwal yang diurutkan secara kronologis dengan status pelaksanaan\ndan batas waktu selesai (efektif \/ diinferensikan)."
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Mengambil detail perjalanan",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/schedules\/:schedule_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/schedules\/:schedule_id",
+                            "variable": [
+                                {
+                                    "id": "schedule_id",
+                                    "key": "schedule_id",
+                                    "value": 10,
+                                    "description": "The ID of the schedule."
+                                },
+                                {
+                                    "id": "schedule",
+                                    "key": "schedule",
+                                    "value": 1,
+                                    "description": "ID Schedule."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Akses: Admin, Tour Leader, Jamaah, Family."
                     },
                     "response": [
                         {
@@ -111,70 +170,11 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"day_number\":1,\"date\":\"2026-09-10\",\"time\":\"08:00\",\"title\":\"Ziarah Kota Madinah\",\"category\":\"Ziarah\",\"location\":\"Masjid Nabawi\",\"keterangan\":\"Berkumpul di lobby hotel tepat waktu\",\"pic\":\"Ustadz Ahmad\",\"status_override\":\"upcoming\"}"
+                            "raw": "{\"day_number\":1,\"date\":\"2026-09-10\",\"time\":\"08:00\",\"end_time\":\"10:00\",\"title\":\"Ziarah Kota Madinah\",\"category\":\"Ziarah\",\"location\":\"Masjid Nabawi\",\"keterangan\":\"Berkumpul di lobby hotel tepat waktu\",\"pic\":\"Ustadz Ahmad\",\"status_override\":\"upcoming\"}"
                         },
-                        "description": ""
+                        "description": "Akses: Admin, Tour Leader."
                     },
                     "response": []
-                },
-                {
-                    "name": "Mengambil detail perjalanan",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/schedules\/:schedule_id",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/schedules\/:schedule_id",
-                            "variable": [
-                                {
-                                    "id": "schedule_id",
-                                    "key": "schedule_id",
-                                    "value": 4,
-                                    "description": "The ID of the schedule."
-                                },
-                                {
-                                    "id": "schedule",
-                                    "key": "schedule",
-                                    "value": 1,
-                                    "description": "ID Schedule."
-                                }
-                            ]
-                        },
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": ""
-                    },
-                    "response": [
-                        {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
-                            "code": 401,
-                            "body": "{\"message\":\"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.\"}",
-                            "name": ""
-                        }
-                    ]
                 },
                 {
                     "name": "Memperbarui data perjalanan",
@@ -188,7 +188,7 @@
                                 {
                                     "id": "schedule_id",
                                     "key": "schedule_id",
-                                    "value": 4,
+                                    "value": 10,
                                     "description": "The ID of the schedule."
                                 },
                                 {
@@ -212,14 +212,14 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"day_number\":1,\"date\":\"2026-09-10\",\"time\":\"09:00\",\"title\":\"Ziarah Kota Madinah (Updated)\",\"category\":\"Ziarah\",\"location\":\"Masjid Nabawi\",\"keterangan\":\"Berkumpul di lobby hotel\",\"pic\":\"Ustadz Ahmad\",\"status_override\":\"in_progress\"}"
+                            "raw": "{\"day_number\":1,\"date\":\"2026-09-10\",\"time\":\"09:00\",\"end_time\":\"11:00\",\"title\":\"Ziarah Kota Madinah (Updated)\",\"category\":\"Ziarah\",\"location\":\"Masjid Nabawi\",\"keterangan\":\"Berkumpul di lobby hotel\",\"pic\":\"Ustadz Ahmad\",\"status_override\":\"in_progress\",\"status_mode\":\"manual\"}"
                         },
-                        "description": ""
+                        "description": "Akses: Admin."
                     },
                     "response": []
                 },
                 {
-                    "name": "Memperbarui status override perjalanan",
+                    "name": "Memperbarui status pelaksanaan perjalanan",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -230,7 +230,7 @@
                                 {
                                     "id": "schedule_id",
                                     "key": "schedule_id",
-                                    "value": 4,
+                                    "value": 10,
                                     "description": "The ID of the schedule."
                                 },
                                 {
@@ -254,9 +254,48 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"status_override\":\"in_progress\"}"
+                            "raw": "{\"status_override\":\"in_progress\",\"mode\":\"manual\"}"
                         },
-                        "description": ""
+                        "description": "Akses: Admin, Tour Leader.\nMengubah status pelaksanaan secara manual atau mengembalikannya ke mode otomatis."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Menyiarkan jadwal perjalanan (Broadcast Reminder)",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/schedules\/:schedule_id\/broadcast",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/schedules\/:schedule_id\/broadcast",
+                            "variable": [
+                                {
+                                    "id": "schedule_id",
+                                    "key": "schedule_id",
+                                    "value": 10,
+                                    "description": "The ID of the schedule."
+                                },
+                                {
+                                    "id": "schedule",
+                                    "key": "schedule",
+                                    "value": 1,
+                                    "description": "ID Schedule."
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Akses: Tour Leader, Admin.\nMencatat aksi siaran dan mengirim pengingat ke penerima yang berhak (Admin, Tour Leader, Jamaah aktif, dan Keluarga aktif)."
                     },
                     "response": []
                 },
@@ -272,7 +311,7 @@
                                 {
                                     "id": "schedule_id",
                                     "key": "schedule_id",
-                                    "value": 4,
+                                    "value": 10,
                                     "description": "The ID of the schedule."
                                 },
                                 {
@@ -295,7 +334,7 @@
                             }
                         ],
                         "body": null,
-                        "description": ""
+                        "description": "Akses: Admin."
                     },
                     "response": []
                 }
@@ -351,34 +390,6 @@
                     ]
                 },
                 {
-                    "name": "Membuat laporan SOS baru",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/sos-incidents",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/sos-incidents"
-                        },
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\"jamaah_id\":\"9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d\",\"type\":\"Darurat Medis\",\"description\":\"Jamaah mengalami pusing dan sesak napas.\",\"location_name\":\"Pelataran Tawaf Gate 1\",\"latitude\":21.4225,\"longitude\":39.8262}"
-                        },
-                        "description": "Membuat laporan kejadian darurat (SOS Incident) baru.\n\n**Aturan Autentikasi & Authorization:**\n* **Jamaah (`jamaah`):** Dapat membuat SOS untuk dirinya sendiri. Field `jamaah_id` **tidak perlu dikirim** oleh client karena diisi otomatis dari token Jamaah.\n* **Admin (`admin`):** Dapat membuat SOS atas nama Jamaah dan **wajib menentukan** `jamaah_id` di request body. Jika `jamaah_id` kosong\/tidak disertakan, mengembalikan response error `422 Unprocessable Entity`.\n* **Tour Leader (`tour_leader`):** **Tidak diperbolehkan** membuat SOS dan menghasilkan response error `403 Forbidden` (`Tour Leader tidak dapat membuat SOS.`).\n\n**Aturan Penentuan Field Otomatis oleh Backend:**\n* `kloter_id`: Diambil otomatis dari `jamaah.kloter_id`.\n* `status`: Bernilai awal `'triggered'`.\n* `triggered_at`: Diisi otomatis dengan timestamp `now()`.\n* Record awal pada `sos_status_histories` dibuat otomatis (`old_status: null`, `new_status: 'triggered'`)."
-                    },
-                    "response": []
-                },
-                {
                     "name": "Menampilkan detail satu SOS Incident",
                     "request": {
                         "url": {
@@ -390,7 +401,7 @@
                                 {
                                     "id": "sosIncident_id",
                                     "key": "sosIncident_id",
-                                    "value": "01a0d96c-1e72-7144-83eb-2a1d35530e00",
+                                    "value": "01a0f63e-6353-708e-90fa-f17bc1c59faf",
                                     "description": "The ID of the sosIncident."
                                 },
                                 {
@@ -438,48 +449,6 @@
                     ]
                 },
                 {
-                    "name": "Mengubah status SOS Incident",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/sos-incidents\/:sosIncident_id\/status",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/sos-incidents\/:sosIncident_id\/status",
-                            "variable": [
-                                {
-                                    "id": "sosIncident_id",
-                                    "key": "sosIncident_id",
-                                    "value": "01a0d96c-1e72-7144-83eb-2a1d35530e00",
-                                    "description": "The ID of the sosIncident."
-                                },
-                                {
-                                    "id": "sosIncident",
-                                    "key": "sosIncident",
-                                    "value": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
-                                    "description": "UUID laporan SOS Incident."
-                                }
-                            ]
-                        },
-                        "method": "PATCH",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\"status\":\"acknowledged\"}"
-                        },
-                        "description": "Memperbarui status penanganan laporan SOS Incident dan mencatat riwayat perubahannya ke `sos_status_histories`.\n\n**Aturan Hak Akses:**\n* **Jamaah (`jamaah`):** **Tidak dapat** mengubah status SOS. Menghasilkan response `403 Forbidden` (`Jamaah tidak dapat mengubah status SOS.`).\n* **Admin (`admin`):** Dapat mengubah status SOS mana saja jika memiliki akses. Aktor pencatat pada `sos_status_histories` disimpan di kolom `changed_by`.\n* **Tour Leader (`tour_leader`):** Dapat mengubah status SOS jika memiliki akses terhadap incident (kloter assignment). Aktor pencatat pada `sos_status_histories` disimpan di kolom `tour_leader_id`.\n\n**Nilai Status yang Diperbolehkan:**\n* `triggered`: Laporan SOS baru terpicu.\n* `acknowledged`: Laporan telah diterima\/dikonfirmasi oleh Petugas\/TL.\n* `in_action`: Petugas\/TL sedang dalam penanganan di lapangan.\n* `resolved`: Kejadian darurat telah selesai ditangani.\n* `false_alarm`: Laporan palsu \/ tidak sengaja tertekan."
-                    },
-                    "response": []
-                },
-                {
                     "name": "Menampilkan daftar response pada SOS Incident",
                     "request": {
                         "url": {
@@ -491,7 +460,7 @@
                                 {
                                     "id": "sosIncident_id",
                                     "key": "sosIncident_id",
-                                    "value": "01a0d96c-1e72-7144-83eb-2a1d35530e00",
+                                    "value": "01a0f63e-6353-708e-90fa-f17bc1c59faf",
                                     "description": "The ID of the sosIncident."
                                 },
                                 {
@@ -539,6 +508,76 @@
                     ]
                 },
                 {
+                    "name": "Membuat laporan SOS baru",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/sos-incidents",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/sos-incidents"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"jamaah_id\":\"9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d\",\"type\":\"Darurat Medis\",\"description\":\"Jamaah mengalami pusing dan sesak napas.\",\"location_name\":\"Pelataran Tawaf Gate 1\",\"latitude\":21.4225,\"longitude\":39.8262}"
+                        },
+                        "description": "Membuat laporan kejadian darurat (SOS Incident) baru.\n\n**Aturan Autentikasi & Authorization:**\n* **Jamaah (`jamaah`):** Dapat membuat SOS untuk dirinya sendiri. Field `jamaah_id` **tidak perlu dikirim** oleh client karena diisi otomatis dari token Jamaah.\n* **Admin (`admin`):** Dapat membuat SOS atas nama Jamaah dan **wajib menentukan** `jamaah_id` di request body. Jika `jamaah_id` kosong\/tidak disertakan, mengembalikan response error `422 Unprocessable Entity`.\n* **Tour Leader (`tour_leader`):** **Tidak diperbolehkan** membuat SOS dan menghasilkan response error `403 Forbidden` (`Tour Leader tidak dapat membuat SOS.`).\n\n**Aturan Penentuan Field Otomatis oleh Backend:**\n* `kloter_id`: Diambil otomatis dari `jamaah.kloter_id`.\n* `status`: Bernilai awal `'triggered'`.\n* `triggered_at`: Diisi otomatis dengan timestamp `now()`.\n* Record awal pada `sos_status_histories` dibuat otomatis (`old_status: null`, `new_status: 'triggered'`)."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Mengubah status SOS Incident",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/sos-incidents\/:sosIncident_id\/status",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/sos-incidents\/:sosIncident_id\/status",
+                            "variable": [
+                                {
+                                    "id": "sosIncident_id",
+                                    "key": "sosIncident_id",
+                                    "value": "01a0f63e-6353-708e-90fa-f17bc1c59faf",
+                                    "description": "The ID of the sosIncident."
+                                },
+                                {
+                                    "id": "sosIncident",
+                                    "key": "sosIncident",
+                                    "value": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+                                    "description": "UUID laporan SOS Incident."
+                                }
+                            ]
+                        },
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"status\":\"acknowledged\",\"reason\":\"b\"}"
+                        },
+                        "description": "Memperbarui status penanganan laporan SOS Incident dan mencatat riwayat perubahannya ke `sos_status_histories`.\n\n**Aturan Hak Akses:**\n* **Jamaah (`jamaah`):** **Tidak dapat** mengubah status SOS. Menghasilkan response `403 Forbidden` (`Jamaah tidak dapat mengubah status SOS.`).\n* **Admin (`admin`):** Dapat mengubah status SOS mana saja jika memiliki akses. Aktor pencatat pada `sos_status_histories` disimpan di kolom `changed_by`.\n* **Tour Leader (`tour_leader`):** Dapat mengubah status SOS jika memiliki akses terhadap incident (kloter assignment). Aktor pencatat pada `sos_status_histories` disimpan di kolom `tour_leader_id`.\n\n**Nilai Status yang Diperbolehkan:**\n* `triggered`: Laporan SOS baru terpicu.\n* `acknowledged`: Laporan telah diterima\/dikonfirmasi oleh Petugas\/TL.\n* `in_action`: Petugas\/TL sedang dalam penanganan di lapangan.\n* `resolved`: Kejadian darurat telah selesai ditangani.\n* `false_alarm`: Laporan palsu \/ tidak sengaja tertekan."
+                    },
+                    "response": []
+                },
+                {
                     "name": "Menambahkan response \/ keterangan baru pada SOS Incident",
                     "request": {
                         "url": {
@@ -550,7 +589,7 @@
                                 {
                                     "id": "sosIncident_id",
                                     "key": "sosIncident_id",
-                                    "value": "01a0d96c-1e72-7144-83eb-2a1d35530e00",
+                                    "value": "01a0f63e-6353-708e-90fa-f17bc1c59faf",
                                     "description": "The ID of the sosIncident."
                                 },
                                 {
@@ -577,6 +616,68 @@
                             "raw": "{\"message\":\"Tim medis sudah tiba di lokasi dan penanganan sedang berjalan.\"}"
                         },
                         "description": "Menambahkan tanggapan, pesan, atau catatan penanganan baru pada laporan SOS Incident.\n\n**Aturan Penentuan Aktor Otomatis:**\n* Aktor penanggap ditentukan otomatis berdasarkan token autentikasi yang sedang aktif (`jamaah_id`, `tour_leader_id`, atau `internal_user_id`).\n* Client **tidak boleh** dan **tidak perlu** mengirimkan actor ID di request body."
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Device Token FCM",
+            "description": "\nAPI untuk mendaftarkan dan menonaktifkan FCM device token perangkat mobile.\nToken digunakan sebagai tujuan pengiriman push notification Firebase Cloud Messaging.\n\nEndpoint ini digunakan oleh Jamaah, Family (login sebagai Jamaah), InternalUser (admin), dan TourLeader.",
+            "item": [
+                {
+                    "name": "Daftarkan atau perbarui FCM device token",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/device-tokens",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/device-tokens"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"fcm_token\":\"fTHHz7u8TQyI6...\",\"platform\":\"android\",\"device_id\":\"a1b2c3d4e5f6\"}"
+                        },
+                        "description": "Mendaftarkan FCM token perangkat ke akun yang sedang login.\nJika token yang sama sudah pernah terdaftar (atas akun siapa pun), kepemilikannya\nakan dipindahkan secara aman ke akun yang sedang aktif saat ini (pola Upsert).\nHal ini mencegah kebocoran notifikasi ketika perangkat berganti akun (misalnya logout \u2192 login akun berbeda).\n\nField `tokenable_type`, `tokenable_id`, dan `is_active` **tidak dapat dikirim oleh client**\ndan selalu diisi secara otomatis oleh server."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Nonaktifkan FCM device token perangkat ini",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/device-tokens",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/device-tokens"
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"fcm_token\":\"fTHHz7u8TQyI6...\"}"
+                        },
+                        "description": "Menonaktifkan satu token FCM yang ditentukan dalam request.\nHanya token milik akun yang sedang login yang dapat dinonaktifkan.\nToken milik akun lain tidak dapat dinonaktifkan melalui endpoint ini.\n\nEndpoint ini **tidak** menghapus seluruh token milik akun.\nEndpoint ini dirancang untuk dipanggil saat pengguna logout **dari satu perangkat tertentu**,\nsedangkan sesi\/token Sanctum logout ditangani oleh endpoint `\/logout` masing-masing auth controller."
                     },
                     "response": []
                 }
@@ -1136,7 +1237,7 @@
                                 {
                                     "id": "package_id",
                                     "key": "package_id",
-                                    "value": "019fff58-a57b-7024-9105-8669a2b8faeb",
+                                    "value": "01a0eafc-9574-739f-b57a-9ba96d3a738d",
                                     "description": "The ID of the package."
                                 }
                             ]
@@ -1189,7 +1290,7 @@
                                 {
                                     "id": "package_id",
                                     "key": "package_id",
-                                    "value": "019fff58-a57b-7024-9105-8669a2b8faeb",
+                                    "value": "01a0eafc-9574-739f-b57a-9ba96d3a738d",
                                     "description": "The ID of the package."
                                 }
                             ]
@@ -1225,7 +1326,7 @@
                                 {
                                     "id": "package_id",
                                     "key": "package_id",
-                                    "value": "019fff58-a57b-7024-9105-8669a2b8faeb",
+                                    "value": "01a0eafc-9574-739f-b57a-9ba96d3a738d",
                                     "description": "The ID of the package."
                                 }
                             ]
@@ -1258,7 +1359,7 @@
                                 {
                                     "id": "package_id",
                                     "key": "package_id",
-                                    "value": "019fff58-a57b-7024-9105-8669a2b8faeb",
+                                    "value": "01a0eafc-9574-739f-b57a-9ba96d3a738d",
                                     "description": "The ID of the package."
                                 }
                             ]
@@ -1311,7 +1412,7 @@
                                 {
                                     "id": "package_id",
                                     "key": "package_id",
-                                    "value": "019fff58-a57b-7024-9105-8669a2b8faeb",
+                                    "value": "01a0eafc-9574-739f-b57a-9ba96d3a738d",
                                     "description": "The ID of the package."
                                 }
                             ]
@@ -1347,13 +1448,13 @@
                                 {
                                     "id": "package_id",
                                     "key": "package_id",
-                                    "value": "019fff58-a57b-7024-9105-8669a2b8faeb",
+                                    "value": "01a0eafc-9574-739f-b57a-9ba96d3a738d",
                                     "description": "The ID of the package."
                                 },
                                 {
                                     "id": "itinerary_id",
                                     "key": "itinerary_id",
-                                    "value": "01a06c85-f2ba-713e-8952-deab62b1c219",
+                                    "value": "architecto",
                                     "description": "The ID of the itinerary."
                                 }
                             ]
@@ -1389,13 +1490,13 @@
                                 {
                                     "id": "package_id",
                                     "key": "package_id",
-                                    "value": "019fff58-a57b-7024-9105-8669a2b8faeb",
+                                    "value": "01a0eafc-9574-739f-b57a-9ba96d3a738d",
                                     "description": "The ID of the package."
                                 },
                                 {
                                     "id": "itinerary_id",
                                     "key": "itinerary_id",
-                                    "value": "01a06c85-f2ba-713e-8952-deab62b1c219",
+                                    "value": "architecto",
                                     "description": "The ID of the itinerary."
                                 }
                             ]
@@ -1483,7 +1584,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"b\",\"package_id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"code\":\"z\",\"flight_code\":\"m\",\"departure_date\":\"2026-09-25T20:00:43\",\"return_date\":\"2052-10-18\",\"hotel_makkah_id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"hotel_madinah_id\":\"c90237e9-ced5-3af6-88ea-84aeaa148878\",\"status\":\"active\",\"tour_leader\":\"i\",\"mutawif_local\":\"y\"}"
+                            "raw": "{\"name\":\"b\",\"package_id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"code\":\"z\",\"flight_code\":\"m\",\"departure_date\":\"2026-10-25T16:43:58\",\"return_date\":\"2052-11-17\",\"hotel_makkah_id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"hotel_madinah_id\":\"c90237e9-ced5-3af6-88ea-84aeaa148878\",\"status\":\"cancelled\",\"tour_leader\":\"i\",\"mutawif_local\":\"y\"}"
                         },
                         "description": "package_id, departure_date, return_date sekarang NULLABLE (keputusan klien)."
                     },
@@ -1501,7 +1602,7 @@
                                 {
                                     "id": "kloter_id",
                                     "key": "kloter_id",
-                                    "value": "01a06167-ae4f-7187-9066-4dae12bc3d97",
+                                    "value": "01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5",
                                     "description": "The ID of the kloter."
                                 }
                             ]
@@ -1554,7 +1655,7 @@
                                 {
                                     "id": "kloter_id",
                                     "key": "kloter_id",
-                                    "value": "01a06167-ae4f-7187-9066-4dae12bc3d97",
+                                    "value": "01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5",
                                     "description": "The ID of the kloter."
                                 }
                             ]
@@ -1572,7 +1673,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"b\",\"package_id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"code\":\"z\",\"flight_code\":\"m\",\"departure_date\":\"2026-09-25T20:00:43\",\"return_date\":\"2052-10-18\",\"hotel_makkah_id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"hotel_madinah_id\":\"c90237e9-ced5-3af6-88ea-84aeaa148878\",\"status\":\"draft\",\"tour_leader\":\"i\",\"mutawif_local\":\"y\"}"
+                            "raw": "{\"name\":\"b\",\"package_id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"code\":\"z\",\"flight_code\":\"m\",\"departure_date\":\"2026-10-25T16:43:58\",\"return_date\":\"2052-11-17\",\"hotel_makkah_id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"hotel_madinah_id\":\"c90237e9-ced5-3af6-88ea-84aeaa148878\",\"status\":\"draft\",\"tour_leader\":\"i\",\"mutawif_local\":\"y\"}"
                         },
                         "description": ""
                     },
@@ -1590,7 +1691,7 @@
                                 {
                                     "id": "kloter_id",
                                     "key": "kloter_id",
-                                    "value": "01a06167-ae4f-7187-9066-4dae12bc3d97",
+                                    "value": "01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5",
                                     "description": "The ID of the kloter."
                                 }
                             ]
@@ -1623,7 +1724,7 @@
                                 {
                                     "id": "kloter_id",
                                     "key": "kloter_id",
-                                    "value": "01a06167-ae4f-7187-9066-4dae12bc3d97",
+                                    "value": "01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5",
                                     "description": "The ID of the kloter."
                                 }
                             ]
@@ -1676,7 +1777,7 @@
                                 {
                                     "id": "kloter_id",
                                     "key": "kloter_id",
-                                    "value": "01a06167-ae4f-7187-9066-4dae12bc3d97",
+                                    "value": "01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5",
                                     "description": "The ID of the kloter."
                                 }
                             ]
@@ -1694,7 +1795,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"day_number\":16,\"activity_date\":\"2026-09-25T20:00:43\",\"activity_time\":\"architecto\",\"hijri_date_ref\":\"n\",\"title\":\"g\",\"location\":\"z\",\"category\":\"m\",\"pic\":\"i\",\"status\":\"y\",\"description\":\"Eius et animi quos velit et.\",\"is_published\":true}"
+                            "raw": "{\"day_number\":16,\"activity_date\":\"2026-10-25T16:43:59\",\"activity_time\":\"architecto\",\"hijri_date_ref\":\"n\",\"title\":\"g\",\"location\":\"z\",\"category\":\"m\",\"pic\":\"i\",\"status\":\"y\",\"description\":\"Eius et animi quos velit et.\",\"is_published\":false}"
                         },
                         "description": ""
                     },
@@ -1712,7 +1813,7 @@
                                 {
                                     "id": "kloter_id",
                                     "key": "kloter_id",
-                                    "value": "01a06167-ae4f-7187-9066-4dae12bc3d97",
+                                    "value": "01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5",
                                     "description": "The ID of the kloter."
                                 }
                             ]
@@ -1745,13 +1846,13 @@
                                 {
                                     "id": "kloter_id",
                                     "key": "kloter_id",
-                                    "value": "01a06167-ae4f-7187-9066-4dae12bc3d97",
+                                    "value": "01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5",
                                     "description": "The ID of the kloter."
                                 },
                                 {
                                     "id": "schedule_id",
                                     "key": "schedule_id",
-                                    "value": "01a06c86-0387-71ab-a457-6b509ce35330",
+                                    "value": "architecto",
                                     "description": "The ID of the schedule."
                                 }
                             ]
@@ -1769,7 +1870,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"day_number\":16,\"activity_date\":\"2026-09-25T20:00:43\",\"activity_time\":\"architecto\",\"hijri_date_ref\":\"n\",\"title\":\"g\",\"location\":\"z\",\"category\":\"m\",\"pic\":\"i\",\"status\":\"y\",\"description\":\"Eius et animi quos velit et.\",\"is_published\":false}"
+                            "raw": "{\"day_number\":16,\"activity_date\":\"2026-10-25T16:43:59\",\"activity_time\":\"architecto\",\"hijri_date_ref\":\"n\",\"title\":\"g\",\"location\":\"z\",\"category\":\"m\",\"pic\":\"i\",\"status\":\"y\",\"description\":\"Eius et animi quos velit et.\",\"is_published\":false}"
                         },
                         "description": "Note: Manual update automatically sets is_customized = true."
                     },
@@ -1787,13 +1888,13 @@
                                 {
                                     "id": "kloter_id",
                                     "key": "kloter_id",
-                                    "value": "01a06167-ae4f-7187-9066-4dae12bc3d97",
+                                    "value": "01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5",
                                     "description": "The ID of the kloter."
                                 },
                                 {
                                     "id": "schedule_id",
                                     "key": "schedule_id",
-                                    "value": "01a06c86-0387-71ab-a457-6b509ce35330",
+                                    "value": "architecto",
                                     "description": "The ID of the schedule."
                                 }
                             ]
@@ -1826,7 +1927,7 @@
                                 {
                                     "id": "kloter_id",
                                     "key": "kloter_id",
-                                    "value": "01a06167-ae4f-7187-9066-4dae12bc3d97",
+                                    "value": "01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5",
                                     "description": "The ID of the kloter."
                                 }
                             ]
@@ -1879,7 +1980,7 @@
                                 {
                                     "id": "kloter_id",
                                     "key": "kloter_id",
-                                    "value": "01a06167-ae4f-7187-9066-4dae12bc3d97",
+                                    "value": "01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5",
                                     "description": "The ID of the kloter."
                                 }
                             ]
@@ -1897,7 +1998,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"room_type\":\"single\",\"hotel_id\":\"6ff8f7f6-1eb3-3525-be4a-3932c805afed\"}"
+                            "raw": "{\"room_type\":\"quad\",\"hotel_id\":\"6ff8f7f6-1eb3-3525-be4a-3932c805afed\"}"
                         },
                         "description": "\/\/ DEPRECATED sementara: endpoint ini bergantung pada registration_id dari tabel registrations."
                     },
@@ -1925,7 +2026,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"kloter_id\":\"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",\"hotel_id\":\"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9\",\"room_number\":\"m\",\"room_type\":\"quint\",\"capacity\":35,\"gender\":\"L\",\"notes\":\"y\"}"
+                            "raw": "{\"kloter_id\":\"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",\"hotel_id\":\"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9\",\"room_number\":\"m\",\"room_type\":\"triple\",\"capacity\":35,\"gender\":\"P\",\"notes\":\"y\"}"
                         },
                         "description": ""
                     },
@@ -1943,7 +2044,7 @@
                                 {
                                     "id": "room_id",
                                     "key": "room_id",
-                                    "value": "01a0668d-b791-7099-a102-c1b24bd2cdfd",
+                                    "value": "01a12ba2-b7ef-7371-a60a-bb0374644250",
                                     "description": "The ID of the room."
                                 }
                             ]
@@ -1996,7 +2097,7 @@
                                 {
                                     "id": "room_id",
                                     "key": "room_id",
-                                    "value": "01a0668d-b791-7099-a102-c1b24bd2cdfd",
+                                    "value": "01a12ba2-b7ef-7371-a60a-bb0374644250",
                                     "description": "The ID of the room."
                                 }
                             ]
@@ -2014,7 +2115,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"hotel_id\":\"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",\"room_number\":\"g\",\"room_type\":\"quad\",\"capacity\":66,\"gender\":\"P\",\"notes\":\"m\"}"
+                            "raw": "{\"hotel_id\":\"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",\"room_number\":\"g\",\"room_type\":\"double\",\"capacity\":66,\"gender\":\"L\",\"notes\":\"m\"}"
                         },
                         "description": ""
                     },
@@ -2032,7 +2133,7 @@
                                 {
                                     "id": "room_id",
                                     "key": "room_id",
-                                    "value": "01a0668d-b791-7099-a102-c1b24bd2cdfd",
+                                    "value": "01a12ba2-b7ef-7371-a60a-bb0374644250",
                                     "description": "The ID of the room."
                                 }
                             ]
@@ -2065,7 +2166,7 @@
                                 {
                                     "id": "room_id",
                                     "key": "room_id",
-                                    "value": "01a0668d-b791-7099-a102-c1b24bd2cdfd",
+                                    "value": "01a12ba2-b7ef-7371-a60a-bb0374644250",
                                     "description": "The ID of the room."
                                 }
                             ]
@@ -2101,13 +2202,13 @@
                                 {
                                     "id": "room_id",
                                     "key": "room_id",
-                                    "value": "01a0668d-b791-7099-a102-c1b24bd2cdfd",
+                                    "value": "01a12ba2-b7ef-7371-a60a-bb0374644250",
                                     "description": "The ID of the room."
                                 },
                                 {
                                     "id": "roomMember_id",
                                     "key": "roomMember_id",
-                                    "value": "01a06698-bf7d-721f-8f09-ceee991e202e",
+                                    "value": "01a15819-3b57-7184-b9f2-a6edd516406f",
                                     "description": "The ID of the roomMember."
                                 }
                             ]
@@ -2143,13 +2244,13 @@
                                 {
                                     "id": "room_id",
                                     "key": "room_id",
-                                    "value": "01a0668d-b791-7099-a102-c1b24bd2cdfd",
+                                    "value": "01a12ba2-b7ef-7371-a60a-bb0374644250",
                                     "description": "The ID of the room."
                                 },
                                 {
                                     "id": "roomMember_id",
                                     "key": "roomMember_id",
-                                    "value": "01a06698-bf7d-721f-8f09-ceee991e202e",
+                                    "value": "01a15819-3b57-7184-b9f2-a6edd516406f",
                                     "description": "The ID of the roomMember."
                                 }
                             ]
@@ -2237,7 +2338,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"registration_number\":\"b\",\"pilgrim_id\":\"n\",\"full_name\":\"g\",\"passport_number\":\"z\",\"nik\":\"miyvdljnikhwaykc\",\"phone\":\"myuwpwlvqwrsitcp\",\"birth_date\":\"2022-10-20\",\"gender\":\"L\",\"registration_date\":\"2026-09-25T20:00:43\",\"departure_date\":\"2052-10-18\",\"package_id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"kloter_id\":\"c90237e9-ced5-3af6-88ea-84aeaa148878\",\"meningitis_vaccine_status\":\"sudah_vaksin\",\"photo_status\":\"sudah_menyerahkan\",\"total_package_cost\":8,\"status\":\"cancelled\",\"initial_payment\":{\"amount\":4326.41688,\"payment_type\":\"full_payment\",\"payment_method\":\"bsi_transfer\",\"payment_date\":\"2026-09-25T20:00:43\"},\"equipments\":[{\"equipment_name\":\"m\",\"stock_id\":\"a1a0a47d-e8c3-3cf0-8e6e-c1ff9dca5d1f\",\"size\":\"vdljnikhwaykcmyu\",\"is_received\":false}]}"
+                            "raw": "{\"registration_number\":\"b\",\"pilgrim_id\":\"n\",\"full_name\":\"g\",\"passport_number\":\"z\",\"nik\":\"miyvdljnikhwaykc\",\"phone\":\"myuwpwlvqwrsitcp\",\"birth_date\":\"2022-11-19\",\"gender\":\"L\",\"registration_date\":\"2026-10-25T16:43:59\",\"departure_date\":\"2052-11-17\",\"package_id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"kloter_id\":\"c90237e9-ced5-3af6-88ea-84aeaa148878\",\"meningitis_vaccine_status\":\"sudah_vaksin\",\"photo_status\":\"sudah_menyerahkan\",\"total_package_cost\":8,\"status\":\"unpaid\",\"initial_payment\":{\"amount\":4326.41688,\"payment_type\":\"down_payment\",\"payment_method\":\"bsi_transfer\",\"payment_date\":\"2026-10-25T16:43:59\"},\"equipments\":[{\"equipment_name\":\"m\",\"stock_id\":\"a1a0a47d-e8c3-3cf0-8e6e-c1ff9dca5d1f\",\"size\":\"vdljnikhwaykcmyu\",\"is_received\":true}]}"
                         },
                         "description": ""
                     },
@@ -2255,7 +2356,7 @@
                                 {
                                     "id": "registration_id",
                                     "key": "registration_id",
-                                    "value": "01a0d1be-3c39-718a-894c-3fb9017e5bc4",
+                                    "value": "01a11769-6b51-7258-bdf7-4a6dce352ab3",
                                     "description": "The ID of the registration."
                                 }
                             ]
@@ -2308,7 +2409,7 @@
                                 {
                                     "id": "registration_id",
                                     "key": "registration_id",
-                                    "value": "01a0d1be-3c39-718a-894c-3fb9017e5bc4",
+                                    "value": "01a11769-6b51-7258-bdf7-4a6dce352ab3",
                                     "description": "The ID of the registration."
                                 }
                             ]
@@ -2326,7 +2427,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"pilgrim_id\":\"b\",\"full_name\":\"n\",\"passport_number\":\"g\",\"nik\":\"z\",\"phone\":\"m\",\"birth_date\":\"2026-09-25T20:00:43\",\"gender\":\"L\",\"registration_date\":\"2026-09-25T20:00:43\",\"departure_date\":\"2026-09-25T20:00:43\",\"meningitis_vaccine_status\":\"i\",\"photo_status\":\"y\",\"total_package_cost\":60,\"status\":\"fully_paid\",\"initial_payment\":{\"amount\":42,\"payment_type\":\"l\",\"payment_method\":\"j\",\"payment_date\":\"2026-09-25T20:00:43\",\"notes\":\"architecto\"},\"equipments\":[{\"id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"equipment_name\":\"z\",\"stock_id\":\"977e5426-8d13-3824-86aa-b092f8ae52c5\",\"is_received\":false,\"size\":\"y\"}]}"
+                            "raw": "{\"pilgrim_id\":\"b\",\"full_name\":\"n\",\"passport_number\":\"g\",\"nik\":\"z\",\"phone\":\"m\",\"birth_date\":\"2026-10-25T16:43:59\",\"gender\":\"P\",\"registration_date\":\"2026-10-25T16:43:59\",\"departure_date\":\"2026-10-25T16:43:59\",\"meningitis_vaccine_status\":\"i\",\"photo_status\":\"y\",\"total_package_cost\":60,\"status\":\"dp_paid\",\"initial_payment\":{\"amount\":42,\"payment_type\":\"l\",\"payment_method\":\"j\",\"payment_date\":\"2026-10-25T16:43:59\",\"notes\":\"architecto\"},\"equipments\":[{\"id\":\"a4855dc5-0acb-33c3-b921-f4291f719ca0\",\"equipment_name\":\"z\",\"stock_id\":\"977e5426-8d13-3824-86aa-b092f8ae52c5\",\"is_received\":true,\"size\":\"y\"}]}"
                         },
                         "description": ""
                     },
@@ -2344,7 +2445,7 @@
                                 {
                                     "id": "registration_id",
                                     "key": "registration_id",
-                                    "value": "01a0d1be-3c39-718a-894c-3fb9017e5bc4",
+                                    "value": "01a11769-6b51-7258-bdf7-4a6dce352ab3",
                                     "description": "The ID of the registration."
                                 }
                             ]
@@ -2377,7 +2478,7 @@
                                 {
                                     "id": "registration_id",
                                     "key": "registration_id",
-                                    "value": "01a0d1be-3c39-718a-894c-3fb9017e5bc4",
+                                    "value": "01a11769-6b51-7258-bdf7-4a6dce352ab3",
                                     "description": "The ID of the registration."
                                 }
                             ]
@@ -2455,7 +2556,7 @@
                                 {
                                     "id": "registration_id",
                                     "key": "registration_id",
-                                    "value": "01a0d1be-3c39-718a-894c-3fb9017e5bc4",
+                                    "value": "01a11769-6b51-7258-bdf7-4a6dce352ab3",
                                     "description": "The ID of the registration."
                                 }
                             ]
@@ -2508,7 +2609,7 @@
                                 {
                                     "id": "registration_id",
                                     "key": "registration_id",
-                                    "value": "01a0d1be-3c39-718a-894c-3fb9017e5bc4",
+                                    "value": "01a11769-6b51-7258-bdf7-4a6dce352ab3",
                                     "description": "The ID of the registration."
                                 }
                             ]
@@ -2526,7 +2627,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"amount\":4326.41688,\"payment_type\":\"down_payment\",\"payment_method\":\"mandiri_transfer\",\"payment_date\":\"2026-09-25T20:00:43\",\"notes\":\"m\"}"
+                            "raw": "{\"amount\":4326.41688,\"payment_type\":\"down_payment\",\"payment_method\":\"bca_transfer\",\"payment_date\":\"2026-10-25T16:43:59\",\"notes\":\"m\"}"
                         },
                         "description": ""
                     },
@@ -2544,7 +2645,7 @@
                                 {
                                     "id": "payment_id",
                                     "key": "payment_id",
-                                    "value": "01a01dcc-5c50-7289-ab5f-0bbf2bfb2e36",
+                                    "value": "01a117ca-f8fd-702a-9f81-9405f8a12750",
                                     "description": "The ID of the payment."
                                 }
                             ]
@@ -2577,7 +2678,7 @@
                                 {
                                     "id": "payment_id",
                                     "key": "payment_id",
-                                    "value": "01a01dcc-5c50-7289-ab5f-0bbf2bfb2e36",
+                                    "value": "01a117ca-f8fd-702a-9f81-9405f8a12750",
                                     "description": "The ID of the payment."
                                 }
                             ]
@@ -2595,7 +2696,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"amount\":4326.41688,\"payment_type\":\"full_payment\",\"payment_method\":\"mandiri_transfer\",\"payment_date\":\"2026-09-25T20:00:43\",\"notes\":\"m\"}"
+                            "raw": "{\"amount\":4326.41688,\"payment_type\":\"full_payment\",\"payment_method\":\"bca_transfer\",\"payment_date\":\"2026-10-25T16:43:59\",\"notes\":\"m\"}"
                         },
                         "description": ""
                     },
@@ -2668,7 +2769,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"vendor\":\"b\",\"category\":\"perlengkapan\",\"amount\":4326.41688,\"payment_method\":\"bsi_transfer\",\"expense_date\":\"2026-09-25T20:00:43\",\"reference_number\":\"m\",\"notes\":\"i\"}"
+                            "raw": "{\"vendor\":\"b\",\"category\":\"akomodasi_tiket\",\"amount\":4326.41688,\"payment_method\":\"bca_transfer\",\"expense_date\":\"2026-10-25T16:43:59\",\"reference_number\":\"m\",\"notes\":\"i\"}"
                         },
                         "description": ""
                     },
@@ -2686,7 +2787,7 @@
                                 {
                                     "id": "expense_id",
                                     "key": "expense_id",
-                                    "value": "01a03c1d-d876-7340-911d-b8bd3b43254d",
+                                    "value": "architecto",
                                     "description": "The ID of the expense."
                                 }
                             ]
@@ -2739,7 +2840,7 @@
                                 {
                                     "id": "expense_id",
                                     "key": "expense_id",
-                                    "value": "01a03c1d-d876-7340-911d-b8bd3b43254d",
+                                    "value": "architecto",
                                     "description": "The ID of the expense."
                                 }
                             ]
@@ -2757,7 +2858,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"vendor\":\"b\",\"category\":\"operasional_bus\",\"amount\":4326.41688,\"payment_method\":\"bca_transfer\",\"expense_date\":\"2026-09-25T20:00:43\",\"reference_number\":\"m\",\"notes\":\"i\"}"
+                            "raw": "{\"vendor\":\"b\",\"category\":\"akomodasi_tiket\",\"amount\":4326.41688,\"payment_method\":\"edc_qris\",\"expense_date\":\"2026-10-25T16:43:59\",\"reference_number\":\"m\",\"notes\":\"i\"}"
                         },
                         "description": ""
                     },
@@ -2775,7 +2876,7 @@
                                 {
                                     "id": "expense_id",
                                     "key": "expense_id",
-                                    "value": "01a03c1d-d876-7340-911d-b8bd3b43254d",
+                                    "value": "architecto",
                                     "description": "The ID of the expense."
                                 }
                             ]
@@ -2908,7 +3009,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"source\":\"b\",\"category\":\"administration\",\"amount\":4326.41688,\"payment_method\":\"cash\",\"income_date\":\"2026-09-25T20:00:43\",\"reference_number\":\"m\",\"notes\":\"i\"}"
+                            "raw": "{\"source\":\"b\",\"category\":\"administration\",\"amount\":4326.41688,\"payment_method\":\"mandiri_transfer\",\"income_date\":\"2026-10-25T16:43:59\",\"reference_number\":\"m\",\"notes\":\"i\"}"
                         },
                         "description": ""
                     },
@@ -2926,7 +3027,7 @@
                                 {
                                     "id": "otherIncome_id",
                                     "key": "otherIncome_id",
-                                    "value": "01a09bcd-8b0b-7184-8293-4e13ef61c19e",
+                                    "value": "architecto",
                                     "description": "The ID of the otherIncome."
                                 }
                             ]
@@ -2979,7 +3080,7 @@
                                 {
                                     "id": "otherIncome_id",
                                     "key": "otherIncome_id",
-                                    "value": "01a09bcd-8b0b-7184-8293-4e13ef61c19e",
+                                    "value": "architecto",
                                     "description": "The ID of the otherIncome."
                                 }
                             ]
@@ -2997,7 +3098,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"source\":\"b\",\"category\":\"commission\",\"amount\":4326.41688,\"payment_method\":\"mandiri_transfer\",\"income_date\":\"2026-09-25T20:00:44\",\"reference_number\":\"m\",\"notes\":\"i\"}"
+                            "raw": "{\"source\":\"b\",\"category\":\"commission\",\"amount\":4326.41688,\"payment_method\":\"cash\",\"income_date\":\"2026-10-25T16:43:59\",\"reference_number\":\"m\",\"notes\":\"i\"}"
                         },
                         "description": ""
                     },
@@ -3015,7 +3116,7 @@
                                 {
                                     "id": "otherIncome_id",
                                     "key": "otherIncome_id",
-                                    "value": "01a09bcd-8b0b-7184-8293-4e13ef61c19e",
+                                    "value": "architecto",
                                     "description": "The ID of the otherIncome."
                                 }
                             ]
@@ -3103,7 +3204,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"login_id\":\"bngzmi\",\"nik\":\"yvdljnikhwaykcmy\",\"full_name\":\"u\",\"birth_date\":\"2026-09-25T20:00:44\",\"gender\":\"P\",\"phone\":\"wpwlvqwrsitcpscq\",\"emergency_contact\":\"l\",\"passport_number\":\"d\",\"visa_number\":\"z\",\"nationality\":\"s\",\"package_id\":\"59183559-65ff-3076-b8ca-d2d03d26a42a\",\"kloter_id\":\"1937113a-b0a2-3b03-925a-3163292463db\",\"hotel_makkah\":\"u\",\"hotel_madinah\":\"j\",\"departure_date\":\"2026-09-25T20:00:44\",\"return_date\":\"2052-10-18\",\"tour_leader\":\"n\",\"mutawif_local\":\"g\",\"status\":\"active\"}"
+                            "raw": "{\"login_id\":\"bngzmi\",\"nik\":\"yvdljnikhwaykcmy\",\"full_name\":\"u\",\"birth_date\":\"2026-10-25T16:43:59\",\"gender\":\"P\",\"phone\":\"wpwlvqwrsitcpscq\",\"emergency_contact\":\"l\",\"passport_number\":\"d\",\"visa_number\":\"z\",\"nationality\":\"s\",\"package_id\":\"59183559-65ff-3076-b8ca-d2d03d26a42a\",\"kloter_id\":\"1937113a-b0a2-3b03-925a-3163292463db\",\"hotel_makkah\":\"u\",\"hotel_madinah\":\"j\",\"departure_date\":\"2026-10-25T16:43:59\",\"return_date\":\"2052-11-17\",\"tour_leader\":\"n\",\"mutawif_local\":\"g\",\"status\":\"active\"}"
                         },
                         "description": "Revisi [2026-09-02]: Logic auto-generate \"JAMAAH001\" dihapus.\nlogin_id kini wajib diisi manual oleh admin (max 10 karakter, unique)."
                     },
@@ -3121,7 +3222,7 @@
                                 {
                                     "id": "jamaah_id",
                                     "key": "jamaah_id",
-                                    "value": "01a00fd9-404c-73f8-ac03-7d250410e565",
+                                    "value": "01a11776-98cd-72c9-b3a5-9af5b2d0d81d",
                                     "description": "The ID of the jamaah."
                                 }
                             ]
@@ -3174,7 +3275,7 @@
                                 {
                                     "id": "jamaah_id",
                                     "key": "jamaah_id",
-                                    "value": "01a00fd9-404c-73f8-ac03-7d250410e565",
+                                    "value": "01a11776-98cd-72c9-b3a5-9af5b2d0d81d",
                                     "description": "The ID of the jamaah."
                                 }
                             ]
@@ -3192,7 +3293,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"login_id\":\"bngzmi\",\"nik\":\"yvdljnikhwaykcmy\",\"full_name\":\"u\",\"birth_date\":\"2026-09-25T20:00:44\",\"gender\":\"P\",\"phone\":\"wpwlvqwrsitcpscq\",\"emergency_contact\":\"l\",\"passport_number\":\"d\",\"visa_number\":\"z\",\"nationality\":\"s\",\"package_id\":\"59183559-65ff-3076-b8ca-d2d03d26a42a\",\"kloter_id\":\"1937113a-b0a2-3b03-925a-3163292463db\",\"hotel_makkah\":\"u\",\"hotel_madinah\":\"j\",\"departure_date\":\"2026-09-25T20:00:44\",\"return_date\":\"2052-10-18\",\"tour_leader\":\"n\",\"mutawif_local\":\"g\",\"status\":\"archived\"}"
+                            "raw": "{\"login_id\":\"bngzmi\",\"nik\":\"yvdljnikhwaykcmy\",\"full_name\":\"u\",\"birth_date\":\"2026-10-25T16:43:59\",\"gender\":\"P\",\"phone\":\"wpwlvqwrsitcpscq\",\"emergency_contact\":\"l\",\"passport_number\":\"d\",\"visa_number\":\"z\",\"nationality\":\"s\",\"package_id\":\"59183559-65ff-3076-b8ca-d2d03d26a42a\",\"kloter_id\":\"1937113a-b0a2-3b03-925a-3163292463db\",\"hotel_makkah\":\"u\",\"hotel_madinah\":\"j\",\"departure_date\":\"2026-10-25T16:43:59\",\"return_date\":\"2052-11-17\",\"tour_leader\":\"n\",\"mutawif_local\":\"g\",\"status\":\"active\"}"
                         },
                         "description": "Semua field baru bisa di-update melalui validated() dari UpdateJamaahRequest."
                     },
@@ -3210,7 +3311,7 @@
                                 {
                                     "id": "jamaah_id",
                                     "key": "jamaah_id",
-                                    "value": "01a00fd9-404c-73f8-ac03-7d250410e565",
+                                    "value": "01a11776-98cd-72c9-b3a5-9af5b2d0d81d",
                                     "description": "The ID of the jamaah."
                                 }
                             ]
@@ -3298,7 +3399,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"login_id\":\"bngzmiyvdljnikhw\",\"full_name\":\"a\",\"certification_number\":\"y\",\"phone\":\"kcmyuwpwlvqwrsit\",\"experience\":\"architecto\",\"performance\":\"architecto\",\"status\":\"resting\"}"
+                            "raw": "{\"login_id\":\"bngzmiyvdljnikhw\",\"full_name\":\"a\",\"certification_number\":\"y\",\"phone\":\"kcmyuwpwlvqwrsit\",\"experience\":\"architecto\",\"performance\":\"architecto\",\"status\":\"active\"}"
                         },
                         "description": ""
                     },
@@ -3316,7 +3417,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "01a0ae56-d4e2-7245-ac96-c1b5a4bddc03",
+                                    "value": "01a14ece-3b01-7346-aa5d-9106edcabd08",
                                     "description": "The ID of the tour leader."
                                 }
                             ]
@@ -3369,7 +3470,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "01a0ae56-d4e2-7245-ac96-c1b5a4bddc03",
+                                    "value": "01a14ece-3b01-7346-aa5d-9106edcabd08",
                                     "description": "The ID of the tour leader."
                                 }
                             ]
@@ -3387,7 +3488,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"login_id\":\"bngzmiyvdljnikhw\",\"full_name\":\"a\",\"certification_number\":\"y\",\"phone\":\"kcmyuwpwlvqwrsit\",\"experience\":\"architecto\",\"performance\":\"architecto\",\"status\":\"standby\"}"
+                            "raw": "{\"login_id\":\"bngzmiyvdljnikhw\",\"full_name\":\"a\",\"certification_number\":\"y\",\"phone\":\"kcmyuwpwlvqwrsit\",\"experience\":\"architecto\",\"performance\":\"architecto\",\"status\":\"resting\"}"
                         },
                         "description": ""
                     },
@@ -3405,7 +3506,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "01a0ae56-d4e2-7245-ac96-c1b5a4bddc03",
+                                    "value": "01a14ece-3b01-7346-aa5d-9106edcabd08",
                                     "description": "The ID of the tour leader."
                                 }
                             ]
@@ -3438,13 +3539,13 @@
                                 {
                                     "id": "tour_leader_id",
                                     "key": "tour_leader_id",
-                                    "value": "01a0ae56-d4e2-7245-ac96-c1b5a4bddc03",
+                                    "value": "01a14ece-3b01-7346-aa5d-9106edcabd08",
                                     "description": "The ID of the tour leader."
                                 },
                                 {
                                     "id": "kloter_id",
                                     "key": "kloter_id",
-                                    "value": "01a06167-ae4f-7187-9066-4dae12bc3d97",
+                                    "value": "01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5",
                                     "description": "The ID of the kloter."
                                 }
                             ]
@@ -3477,13 +3578,13 @@
                                 {
                                     "id": "tour_leader_id",
                                     "key": "tour_leader_id",
-                                    "value": "01a0ae56-d4e2-7245-ac96-c1b5a4bddc03",
+                                    "value": "01a14ece-3b01-7346-aa5d-9106edcabd08",
                                     "description": "The ID of the tour leader."
                                 },
                                 {
                                     "id": "kloter_id",
                                     "key": "kloter_id",
-                                    "value": "01a06167-ae4f-7187-9066-4dae12bc3d97",
+                                    "value": "01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5",
                                     "description": "The ID of the kloter."
                                 }
                             ]
@@ -3717,7 +3818,7 @@
                                 {
                                     "id": "kloter_id",
                                     "key": "kloter_id",
-                                    "value": "01a06167-ae4f-7187-9066-4dae12bc3d97",
+                                    "value": "01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5",
                                     "description": "The ID of the kloter."
                                 }
                             ]
@@ -3756,7 +3857,7 @@
                                 {
                                     "id": "kloter_id",
                                     "key": "kloter_id",
-                                    "value": "01a06167-ae4f-7187-9066-4dae12bc3d97",
+                                    "value": "01a0ec5f-79b3-71bd-94e5-205ea4bf5dd5",
                                     "description": "The ID of the kloter."
                                 }
                             ]
@@ -3862,7 +3963,7 @@
                                 {
                                     "id": "stock_id",
                                     "key": "stock_id",
-                                    "value": "01a090b6-6761-72f5-8884-b0b5e6ce19a9",
+                                    "value": "01a090bb-d323-709c-8a33-cd373bba0e09",
                                     "description": "The ID of the stock."
                                 }
                             ]
@@ -3915,7 +4016,7 @@
                                 {
                                     "id": "stock_id",
                                     "key": "stock_id",
-                                    "value": "01a090b6-6761-72f5-8884-b0b5e6ce19a9",
+                                    "value": "01a090bb-d323-709c-8a33-cd373bba0e09",
                                     "description": "The ID of the stock."
                                 }
                             ]
@@ -3951,7 +4052,7 @@
                                 {
                                     "id": "stock_id",
                                     "key": "stock_id",
-                                    "value": "01a090b6-6761-72f5-8884-b0b5e6ce19a9",
+                                    "value": "01a090bb-d323-709c-8a33-cd373bba0e09",
                                     "description": "The ID of the stock."
                                 }
                             ]
@@ -3984,7 +4085,7 @@
                                 {
                                     "id": "stock_id",
                                     "key": "stock_id",
-                                    "value": "01a090b6-6761-72f5-8884-b0b5e6ce19a9",
+                                    "value": "01a090bb-d323-709c-8a33-cd373bba0e09",
                                     "description": "The ID of the stock."
                                 }
                             ]
@@ -4024,6 +4125,84 @@
                             "name": ""
                         }
                     ]
+                },
+                {
+                    "name": "GET \/api\/notifications\nTampilkan list notifikasi user yang login",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/notifications",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/notifications"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated. Token autentikasi (Bearer token) tidak disertakan atau telah kadaluarsa.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "PATCH \/api\/notifications\/{id}\/read\nMark notifikasi sebagai sudah dibaca",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/notifications\/:id\/read",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/notifications\/:id\/read",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "architecto",
+                                    "description": "The ID of the notification."
+                                }
+                            ]
+                        },
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": []
                 }
             ]
         },
