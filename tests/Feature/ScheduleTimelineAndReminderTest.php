@@ -95,10 +95,16 @@ class ScheduleTimelineAndReminderTest extends TestCase
             $table->uuid('id')->primary();
             $table->uuid('notification_id');
             $table->uuid('device_token_id');
-            $table->string('status');
-            $table->text('error_message')->nullable();
+            $table->string('status')->default('pending');
+            $table->unsignedSmallInteger('attempts')->default(0);
             $table->timestamp('sent_at')->nullable();
+            $table->text('last_error')->nullable();
             $table->timestamps();
+
+            $table->unique(
+                ['notification_id', 'device_token_id'],
+                'test_deliveries_unique'
+            );
         });
 
         Schema::create('schedules', function (Blueprint $table) {
@@ -179,8 +185,8 @@ class ScheduleTimelineAndReminderTest extends TestCase
 
         $service = app(ScheduleTimelineService::class);
 
-        // Test at 21:00:00
-        $testTimeAt2100 = Carbon::parse("{$date} 21:00:00");
+        // Test at 21:00:00 WIB — schedule times are stored as WIB, so test time must also be WIB
+        $testTimeAt2100 = Carbon::parse("{$date} 21:00:00", 'Asia/Jakarta');
         $resolvedAt2100 = $service->resolveTimeline(Schedule::all(), $testTimeAt2100);
 
         $res1 = $resolvedAt2100->firstWhere('schedule.id', $s1->id);
@@ -197,13 +203,13 @@ class ScheduleTimelineAndReminderTest extends TestCase
 
         $this->assertEquals('upcoming', $res3['status'], 'S3 should be upcoming at 21:00');
 
-        // Test at 20:30:00: S1 is in_progress
-        $testTimeAt2030 = Carbon::parse("{$date} 20:30:00");
+        // Test at 20:30:00 WIB: S1 is in_progress
+        $testTimeAt2030 = Carbon::parse("{$date} 20:30:00", 'Asia/Jakarta');
         $resolvedAt2030 = $service->resolveTimeline(Schedule::all(), $testTimeAt2030);
         $this->assertEquals('in_progress', $resolvedAt2030->firstWhere('schedule.id', $s1->id)['status']);
 
-        // Test at 19:30:00: S1 is upcoming
-        $testTimeAt1930 = Carbon::parse("{$date} 19:30:00");
+        // Test at 19:30:00 WIB: S1 is upcoming
+        $testTimeAt1930 = Carbon::parse("{$date} 19:30:00", 'Asia/Jakarta');
         $resolvedAt1930 = $service->resolveTimeline(Schedule::all(), $testTimeAt1930);
         $this->assertEquals('upcoming', $resolvedAt1930->firstWhere('schedule.id', $s1->id)['status']);
     }
@@ -220,8 +226,8 @@ class ScheduleTimelineAndReminderTest extends TestCase
 
         $service = app(ScheduleTimelineService::class);
 
-        // At 12:00 (after start)
-        $resolved = $service->resolveTimeline(Schedule::all(), Carbon::parse("{$date} 12:00:00"));
+        // At 12:00 WIB (after start) — use WIB timezone to match service parsing
+        $resolved = $service->resolveTimeline(Schedule::all(), Carbon::parse("{$date} 12:00:00", 'Asia/Jakarta'));
         $res = $resolved->first();
 
         $this->assertNull($res['inferred_end_time']);
@@ -241,8 +247,8 @@ class ScheduleTimelineAndReminderTest extends TestCase
 
         $service = app(ScheduleTimelineService::class);
 
-        // Initially no next schedule
-        $resolved1 = $service->resolveTimeline(Schedule::all(), Carbon::parse("{$date} 11:30:00"));
+        // Initially no next schedule — use WIB timezone to match service parsing
+        $resolved1 = $service->resolveTimeline(Schedule::all(), Carbon::parse("{$date} 11:30:00", 'Asia/Jakarta'));
         $this->assertEquals('in_progress', $resolved1->first()['status']);
         $this->assertNull($resolved1->first()['effective_end_time']);
 
@@ -254,14 +260,14 @@ class ScheduleTimelineAndReminderTest extends TestCase
             'title' => 'Activity 2',
         ]);
 
-        // At 11:30, S1 should now be completed because inferred end time is 11:00
-        $resolved2 = $service->resolveTimeline(Schedule::all(), Carbon::parse("{$date} 11:30:00"));
+        // At 11:30 WIB, S1 should now be completed because inferred end time is 11:00
+        $resolved2 = $service->resolveTimeline(Schedule::all(), Carbon::parse("{$date} 11:30:00", 'Asia/Jakarta'));
         $this->assertEquals('completed', $resolved2->firstWhere('schedule.id', $s1->id)['status']);
         $this->assertEquals('11:00', $resolved2->firstWhere('schedule.id', $s1->id)['effective_end_time']);
 
         // Delete S2 -> S1 reverts back to having no next schedule
         $s2->delete();
-        $resolved3 = $service->resolveTimeline(Schedule::all(), Carbon::parse("{$date} 11:30:00"));
+        $resolved3 = $service->resolveTimeline(Schedule::all(), Carbon::parse("{$date} 11:30:00", 'Asia/Jakarta'));
         $this->assertEquals('in_progress', $resolved3->firstWhere('schedule.id', $s1->id)['status']);
         $this->assertNull($resolved3->firstWhere('schedule.id', $s1->id)['effective_end_time']);
     }
@@ -280,8 +286,8 @@ class ScheduleTimelineAndReminderTest extends TestCase
 
         $service = app(ScheduleTimelineService::class);
 
-        // Even at 19:00 (before start), manual status 'completed' must be honored
-        $resolved = $service->resolveTimeline(Schedule::all(), Carbon::parse("{$date} 19:00:00"));
+        // Even at 19:00 WIB (before start), manual status 'completed' must be honored
+        $resolved = $service->resolveTimeline(Schedule::all(), Carbon::parse("{$date} 19:00:00", 'Asia/Jakarta'));
         $this->assertEquals('completed', $resolved->first()['status']);
     }
 
@@ -455,6 +461,268 @@ class ScheduleTimelineAndReminderTest extends TestCase
         $this->assertFalse($recipients->contains('recipient_id', (string) $inactiveJamaah->id));
     }
 
+    // ==========================================
+    // 4. TL-INT-02 — AUTOMATIC STATUS TRANSITIONS
+    // ==========================================
+
+    /**
+     * TL-INT-02A — Belum mencapai waktu mulai: status tetap upcoming.
+     *
+     * Carbon::setTestNow() in WIB to simulate "before start time".
+     * Schedule times are stored as WIB; the service parses them as Asia/Jakarta.
+     */
+    public function test_tlint02a_before_start_time_status_is_upcoming(): void
+    {
+        // Schedule at 10:00 WIB on a fixed date
+        $date = '2026-11-01';
+        $schedule = Schedule::create([
+            'date'        => $date,
+            'time'        => '10:00',
+            'end_time'    => '11:00',
+            'title'       => 'TL-INT-02A',
+            'status_mode' => 'auto',
+        ]);
+
+        $service = app(ScheduleTimelineService::class);
+
+        // Simulate current time = 09:59 WIB (1 minute before start)
+        $beforeStart = Carbon::parse("{$date} 09:59:00", 'Asia/Jakarta');
+        $resolved = $service->resolveTimeline(Schedule::all(), $beforeStart);
+        $item = $resolved->first(fn($i) => $i['schedule']->id === $schedule->id);
+
+        $this->assertEquals('upcoming', $item['status'], 'TL-INT-02A: 1 minute before start must be upcoming');
+    }
+
+    /**
+     * TL-INT-02B — Waktu mulai telah tercapai: status berubah menjadi in_progress.
+     */
+    public function test_tlint02b_at_start_time_status_becomes_in_progress(): void
+    {
+        $date = '2026-11-01';
+        $schedule = Schedule::create([
+            'date'        => $date,
+            'time'        => '10:00',
+            'end_time'    => '11:00',
+            'title'       => 'TL-INT-02B',
+            'status_mode' => 'auto',
+        ]);
+
+        $service = app(ScheduleTimelineService::class);
+
+        // Exactly at start time (WIB)
+        $atStart = Carbon::parse("{$date} 10:00:00", 'Asia/Jakarta');
+        $resolved = $service->resolveTimeline(Schedule::all(), $atStart);
+        $item = $resolved->first(fn($i) => $i['schedule']->id === $schedule->id);
+        $this->assertEquals('in_progress', $item['status'], 'TL-INT-02B: exactly at start time must be in_progress');
+
+        // One minute after start (WIB)
+        $afterStart = Carbon::parse("{$date} 10:01:00", 'Asia/Jakarta');
+        $resolved2 = $service->resolveTimeline(Schedule::all(), $afterStart);
+        $item2 = $resolved2->first(fn($i) => $i['schedule']->id === $schedule->id);
+        $this->assertEquals('in_progress', $item2['status'], 'TL-INT-02B: 1 minute after start must be in_progress');
+    }
+
+    /**
+     * TL-INT-02C — Waktu selesai telah tercapai: status berubah menjadi completed.
+     */
+    public function test_tlint02c_at_end_time_status_becomes_completed(): void
+    {
+        $date = '2026-11-01';
+        $schedule = Schedule::create([
+            'date'        => $date,
+            'time'        => '10:00',
+            'end_time'    => '11:00',
+            'title'       => 'TL-INT-02C',
+            'status_mode' => 'auto',
+        ]);
+
+        $service = app(ScheduleTimelineService::class);
+
+        // Exactly at end time (WIB)
+        $atEnd = Carbon::parse("{$date} 11:00:00", 'Asia/Jakarta');
+        $resolved = $service->resolveTimeline(Schedule::all(), $atEnd);
+        $item = $resolved->first(fn($i) => $i['schedule']->id === $schedule->id);
+        $this->assertEquals('completed', $item['status'], 'TL-INT-02C: exactly at end time must be completed');
+
+        // After end time (WIB)
+        $afterEnd = Carbon::parse("{$date} 11:30:00", 'Asia/Jakarta');
+        $resolved2 = $service->resolveTimeline(Schedule::all(), $afterEnd);
+        $item2 = $resolved2->first(fn($i) => $i['schedule']->id === $schedule->id);
+        $this->assertEquals('completed', $item2['status'], 'TL-INT-02C: after end time must be completed');
+    }
+
+    /**
+     * TL-INT-02D — Mode manual: scheduler tidak menimpa status manual.
+     */
+    public function test_tlint02d_manual_mode_not_overridden_by_auto_calculation(): void
+    {
+        $date = '2026-11-01';
+        $schedule = Schedule::create([
+            'date'            => $date,
+            'time'            => '10:00',
+            'end_time'        => '11:00',
+            'title'           => 'TL-INT-02D Manual',
+            'status_mode'     => 'manual',
+            'status_override' => 'upcoming',
+        ]);
+
+        $service = app(ScheduleTimelineService::class);
+
+        // Even if current time is well past end time, manual override is preserved
+        $wellAfterEnd = Carbon::parse("{$date} 15:00:00", 'Asia/Jakarta');
+        $resolved = $service->resolveTimeline(Schedule::all(), $wellAfterEnd);
+        $item = $resolved->first(fn($i) => $i['schedule']->id === $schedule->id);
+        $this->assertEquals('upcoming', $item['status'], 'TL-INT-02D: manual status_override must be preserved');
+
+        // Also verify with in_progress override
+        $schedule->update(['status_override' => 'in_progress']);
+        $resolved2 = $service->resolveTimeline(Schedule::all()->fresh(), $wellAfterEnd);
+        $item2 = $resolved2->first(fn($i) => $i['schedule']->id === $schedule->id);
+        $this->assertEquals('in_progress', $item2['status'], 'TL-INT-02D: in_progress manual override must be preserved');
+    }
+
+    /**
+     * TL-INT-02E — Inferred end time dari jadwal berikutnya.
+     */
+    public function test_tlint02e_inferred_end_time_from_next_schedule(): void
+    {
+        $date = '2026-11-01';
+        // S1: no end_time — inferred from S2's start
+        $s1 = Schedule::create([
+            'date'     => $date,
+            'time'     => '08:00',
+            'end_time' => null,
+            'title'    => 'TL-INT-02E S1',
+        ]);
+        // S2: starts at 09:00 — this is the inferred end for S1
+        $s2 = Schedule::create([
+            'date'     => $date,
+            'time'     => '09:00',
+            'end_time' => '10:00',
+            'title'    => 'TL-INT-02E S2',
+        ]);
+
+        $service = app(ScheduleTimelineService::class);
+
+        // At 08:30 WIB: S1 in_progress, inferred_end = 09:00
+        $midS1 = Carbon::parse("{$date} 08:30:00", 'Asia/Jakarta');
+        $resolved = $service->resolveTimeline(Schedule::all(), $midS1);
+
+        $r1 = $resolved->first(fn($i) => $i['schedule']->id === $s1->id);
+        $this->assertEquals('09:00', $r1['inferred_end_time'], 'TL-INT-02E: inferred_end_time must be next schedule start time');
+        $this->assertEquals('09:00', $r1['effective_end_time'], 'TL-INT-02E: effective_end_time must equal inferred end');
+        $this->assertEquals('in_progress', $r1['status'], 'TL-INT-02E: S1 must be in_progress at 08:30');
+
+        // At 09:00 WIB: S1 completed (inferred end reached)
+        $atInferredEnd = Carbon::parse("{$date} 09:00:00", 'Asia/Jakarta');
+        $resolved2 = $service->resolveTimeline(Schedule::all(), $atInferredEnd);
+        $r1b = $resolved2->first(fn($i) => $i['schedule']->id === $s1->id);
+        $this->assertEquals('completed', $r1b['status'], 'TL-INT-02E: S1 must be completed when inferred end is reached');
+    }
+
+    /**
+     * TL-INT-02F — Jadwal terakhir tanpa end_time: tetap in_progress setelah mulai.
+     * Desain: tidak menginvent end time jika tidak ada jadwal berikutnya.
+     */
+    public function test_tlint02f_last_schedule_without_end_time_remains_in_progress(): void
+    {
+        $date = '2026-11-01';
+        $schedule = Schedule::create([
+            'date'     => $date,
+            'time'     => '20:00',
+            'end_time' => null,
+            'title'    => 'TL-INT-02F Last',
+        ]);
+
+        $service = app(ScheduleTimelineService::class);
+
+        $afterStart = Carbon::parse("{$date} 22:00:00", 'Asia/Jakarta');
+        $resolved = $service->resolveTimeline(Schedule::all(), $afterStart);
+        $item = $resolved->first(fn($i) => $i['schedule']->id === $schedule->id);
+
+        $this->assertNull($item['inferred_end_time'], 'TL-INT-02F: last schedule with no end_time must not invent inferred_end_time');
+        $this->assertNull($item['effective_end_time'], 'TL-INT-02F: effective_end_time must be null');
+        $this->assertEquals('in_progress', $item['status'], 'TL-INT-02F: last schedule after start, no end = in_progress');
+    }
+
+    /**
+     * TL-INT-02G — Batas tanggal dan timezone WIB.
+     * Memastikan jam WIB tidak digeser 7 jam ke UTC saat perbandingan status.
+     */
+    public function test_tlint02g_timezone_wib_boundary_no_7hour_shift(): void
+    {
+        // Critical scenario: schedule at 22:55 WIB.
+        // Bug before fix: Carbon::parse('... 22:55') treated as UTC → start appears 7 hours later.
+        $date = '2026-11-15';
+        $schedule = Schedule::create([
+            'date'        => $date,
+            'time'        => '22:55',
+            'end_time'    => '23:30',
+            'title'       => 'TL-INT-02G WIB Boundary',
+            'status_mode' => 'auto',
+        ]);
+
+        $service = app(ScheduleTimelineService::class);
+
+        // 22:54 WIB → still upcoming (1 minute before)
+        $justBefore = Carbon::parse("{$date} 22:54:00", 'Asia/Jakarta');
+        $resolved = $service->resolveTimeline(Schedule::all(), $justBefore);
+        $item = $resolved->first(fn($i) => $i['schedule']->id === $schedule->id);
+        $this->assertEquals('upcoming', $item['status'], 'TL-INT-02G: 1 min before 22:55 WIB must be upcoming');
+
+        // 22:55 WIB → in_progress (start reached in WIB, not UTC+7 offset)
+        $atStart = Carbon::parse("{$date} 22:55:00", 'Asia/Jakarta');
+        $resolved2 = $service->resolveTimeline(Schedule::all(), $atStart);
+        $item2 = $resolved2->first(fn($i) => $i['schedule']->id === $schedule->id);
+        $this->assertEquals('in_progress', $item2['status'], 'TL-INT-02G: at 22:55 WIB must be in_progress (not upcoming due to UTC shift bug)');
+
+        // Midnight crossing test: schedule at 23:00 → end at 00:30 next day
+        $date2 = '2026-11-20';
+        $sMidnight = Schedule::create([
+            'date'        => $date2,
+            'time'        => '23:00',
+            'end_time'    => '00:30', // crosses midnight
+            'title'       => 'TL-INT-02G Midnight Cross',
+            'status_mode' => 'auto',
+        ]);
+
+        // At 23:30 WIB same day → in_progress (not completed, end is next day 00:30)
+        $midNight = Carbon::parse("{$date2} 23:30:00", 'Asia/Jakarta');
+        $resolved3 = $service->resolveTimeline(Schedule::all(), $midNight);
+        $itemM = $resolved3->first(fn($i) => $i['schedule']->id === $sMidnight->id);
+        $this->assertEquals('in_progress', $itemM['status'], 'TL-INT-02G: midnight crossing — at 23:30 WIB before 00:30 end must be in_progress');
+
+        // At 00:31 WIB next day → completed
+        $nextDay = Carbon::parse($date2, 'Asia/Jakarta')->addDay()->setTime(0, 31, 0);
+        $resolved4 = $service->resolveTimeline(Schedule::all(), $nextDay);
+        $itemM2 = $resolved4->first(fn($i) => $i['schedule']->id === $sMidnight->id);
+        $this->assertEquals('completed', $itemM2['status'], 'TL-INT-02G: midnight crossing — at 00:31 WIB next day must be completed');
+    }
+
+    /**
+     * TL-INT-02H — Idempotensi: menjalankan resolveTimeline berkali-kali tidak mengubah hasil.
+     */
+    public function test_tlint02h_idempotent_status_resolution(): void
+    {
+        $date = '2026-11-01';
+        Schedule::create(['date' => $date, 'time' => '08:00', 'end_time' => '09:00', 'title' => 'TL-INT-02H S1']);
+        Schedule::create(['date' => $date, 'time' => '09:00', 'end_time' => '10:00', 'title' => 'TL-INT-02H S2']);
+        Schedule::create(['date' => $date, 'time' => '10:00', 'end_time' => null,    'title' => 'TL-INT-02H S3 (last)']);
+
+        $service = app(ScheduleTimelineService::class);
+        $fixedNow = Carbon::parse("{$date} 09:30:00", 'Asia/Jakarta');
+
+        $run1 = $service->resolveTimeline(Schedule::all(), $fixedNow)->map(fn($i) => $i['status'])->values()->toArray();
+        $run2 = $service->resolveTimeline(Schedule::all(), $fixedNow)->map(fn($i) => $i['status'])->values()->toArray();
+        $run3 = $service->resolveTimeline(Schedule::all(), $fixedNow)->map(fn($i) => $i['status'])->values()->toArray();
+
+        $this->assertEquals($run1, $run2, 'TL-INT-02H: second run must produce same result');
+        $this->assertEquals($run2, $run3, 'TL-INT-02H: third run must produce same result');
+
+        // Verify expected statuses at 09:30: S1=completed, S2=in_progress, S3=upcoming
+        $this->assertEquals(['completed', 'in_progress', 'upcoming'], $run1, 'TL-INT-02H: expected statuses at 09:30 WIB');
+    }
+
     public function test_broadcast_records_audit_and_deduplicates_notifications(): void
     {
         $admin = InternalUser::create(['id' => (string) Str::uuid(), 'full_name' => 'Admin Boss', 'status' => 'active']);
@@ -482,5 +750,255 @@ class ScheduleTimelineAndReminderTest extends TestCase
         $notifCountAfterSecond = Notification::where('type', 'schedule_reminder')->count();
 
         $this->assertEquals($notifCountAfterFirst, $notifCountAfterSecond, 'Repeated broadcast within 1 hour should not duplicate notification records');
+    }
+
+    // ==========================================
+    // 5. TL-INT-03 — SCHEDULE REMINDER PUSH DELIVERY TESTS
+    // ==========================================
+
+    public function test_tlint03_job_processes_tokens_and_records_delivery_successfully(): void
+    {
+        $schedule = Schedule::create([
+            'date' => '2026-10-30',
+            'time' => '10:00',
+            'title' => 'Kajian Akbar',
+        ]);
+
+        $jamaah = Jamaah::create(['id' => (string) Str::uuid(), 'full_name' => 'Jamaah Sukses']);
+        $token = \App\Models\DeviceToken::create([
+            'id' => (string) Str::uuid(),
+            'tokenable_type' => Jamaah::class,
+            'tokenable_id' => $jamaah->id,
+            'fcm_token' => 'valid_fcm_token_123',
+            'platform' => 'android',
+            'is_active' => true,
+        ]);
+
+        $notification = Notification::create([
+            'id' => (string) Str::uuid(),
+            'recipient_type' => Jamaah::class,
+            'recipient_id' => $jamaah->id,
+            'type' => 'schedule_reminder',
+            'title' => 'Pengingat Jadwal: Kajian Akbar',
+            'message' => 'Detail kajian',
+            'delivery_status' => 'pending',
+        ]);
+
+        $fcmMock = \Mockery::mock(\App\Services\FcmService::class);
+        $fcmMock->shouldReceive('send')
+            ->once()
+            ->with('valid_fcm_token_123', \Mockery::on(function ($payload) use ($notification, $schedule) {
+                return $payload['title'] === $notification->title
+                    && $payload['data']['schedule_id'] === (string) $schedule->id
+                    && $payload['data']['notification_id'] === $notification->id;
+            }))
+            ->andReturn(['name' => 'projects/test/messages/msg_123']);
+
+        $job = new \App\Jobs\ProcessScheduleReminderJob($schedule, [$notification->id]);
+        $job->handle($fcmMock);
+
+        $notification->refresh();
+        $this->assertEquals('sent', $notification->delivery_status);
+        $this->assertNotNull($notification->sent_at);
+
+        $delivery = \App\Models\NotificationDeviceDelivery::where('notification_id', $notification->id)->first();
+        $this->assertNotNull($delivery);
+        $this->assertEquals('sent', $delivery->status);
+        $this->assertEquals(1, $delivery->attempts);
+        $this->assertNull($delivery->last_error);
+
+        $token->refresh();
+        $this->assertTrue($token->is_active);
+        $this->assertNotNull($token->last_used_at);
+    }
+
+    public function test_tlint03_job_deactivates_invalid_token_and_marks_delivery_failed_permanently(): void
+    {
+        $schedule = Schedule::create([
+            'date' => '2026-10-30',
+            'time' => '10:00',
+            'title' => 'Kajian Akbar',
+        ]);
+
+        $jamaah = Jamaah::create(['id' => (string) Str::uuid(), 'full_name' => 'Jamaah Token Mati']);
+        $token = \App\Models\DeviceToken::create([
+            'id' => (string) Str::uuid(),
+            'tokenable_type' => Jamaah::class,
+            'tokenable_id' => $jamaah->id,
+            'fcm_token' => 'invalid_fcm_token_999',
+            'platform' => 'android',
+            'is_active' => true,
+        ]);
+
+        $notification = Notification::create([
+            'id' => (string) Str::uuid(),
+            'recipient_type' => Jamaah::class,
+            'recipient_id' => $jamaah->id,
+            'type' => 'schedule_reminder',
+            'title' => 'Pengingat Jadwal: Kajian Akbar',
+            'message' => 'Detail kajian',
+            'delivery_status' => 'pending',
+        ]);
+
+        $fcmMock = \Mockery::mock(\App\Services\FcmService::class);
+        $fcmMock->shouldReceive('send')
+            ->once()
+            ->with('invalid_fcm_token_999', \Mockery::any())
+            ->andThrow(new \App\Exceptions\InvalidFcmTokenException('Token invalid'));
+
+        $job = new \App\Jobs\ProcessScheduleReminderJob($schedule, [$notification->id]);
+        // Should not throw retry exception for permanent token failure
+        $job->handle($fcmMock);
+
+        $notification->refresh();
+        $this->assertEquals('failed', $notification->delivery_status);
+
+        $token->refresh();
+        $this->assertFalse($token->is_active, 'Invalid token must be deactivated');
+
+        $delivery = \App\Models\NotificationDeviceDelivery::where('notification_id', $notification->id)->first();
+        $this->assertNotNull($delivery);
+        $this->assertEquals('failed', $delivery->status);
+        $this->assertEquals('Token invalid', $delivery->last_error);
+    }
+
+    public function test_tlint03_job_retries_transient_failure_and_is_idempotent(): void
+    {
+        $schedule = Schedule::create([
+            'date' => '2026-10-30',
+            'time' => '10:00',
+            'title' => 'Kajian Akbar',
+        ]);
+
+        $jamaah = Jamaah::create(['id' => (string) Str::uuid(), 'full_name' => 'Jamaah Transient']);
+        $token = \App\Models\DeviceToken::create([
+            'id' => (string) Str::uuid(),
+            'tokenable_type' => Jamaah::class,
+            'tokenable_id' => $jamaah->id,
+            'fcm_token' => 'transient_token_456',
+            'platform' => 'android',
+            'is_active' => true,
+        ]);
+
+        $notification = Notification::create([
+            'id' => (string) Str::uuid(),
+            'recipient_type' => Jamaah::class,
+            'recipient_id' => $jamaah->id,
+            'type' => 'schedule_reminder',
+            'title' => 'Pengingat Jadwal',
+            'message' => 'Detail kajian',
+            'delivery_status' => 'pending',
+        ]);
+
+        $fcmMock1 = \Mockery::mock(\App\Services\FcmService::class);
+        $fcmMock1->shouldReceive('send')
+            ->once()
+            ->with('transient_token_456', \Mockery::any())
+            ->andThrow(new \RuntimeException('FCM request failed with HTTP status 503'));
+
+        $job = new \App\Jobs\ProcessScheduleReminderJob($schedule, [$notification->id]);
+
+        // Attempt 1: Transient failure throws retry exception
+        try {
+            $job->handle($fcmMock1);
+            $this->fail('Expected RuntimeException for retry');
+        } catch (\RuntimeException $e) {
+            $this->assertStringContainsString('need retry', $e->getMessage());
+        }
+
+        $notification->refresh();
+        $this->assertEquals('pending', $notification->delivery_status);
+        $token->refresh();
+        $this->assertTrue($token->is_active, 'Transient failure must NOT deactivate token');
+
+        $delivery = \App\Models\NotificationDeviceDelivery::where('notification_id', $notification->id)->first();
+        $this->assertEquals(1, $delivery->attempts);
+        $this->assertEquals('failed', $delivery->status);
+        $this->assertStringContainsString('503', $delivery->last_error);
+
+        // Attempt 2: Next retry succeeds (Idempotent without unique constraint violation)
+        $fcmMock2 = \Mockery::mock(\App\Services\FcmService::class);
+        $fcmMock2->shouldReceive('send')
+            ->once()
+            ->with('transient_token_456', \Mockery::any())
+            ->andReturn(['name' => 'msg_retry_success']);
+
+        $job->handle($fcmMock2);
+
+        $notification->refresh();
+        $this->assertEquals('sent', $notification->delivery_status);
+
+        $deliveries = \App\Models\NotificationDeviceDelivery::where('notification_id', $notification->id)->get();
+        $this->assertCount(1, $deliveries, 'Idempotent delivery record — must not duplicate on retry');
+        $this->assertEquals(2, $deliveries->first()->attempts);
+        $this->assertEquals('sent', $deliveries->first()->status);
+    }
+
+    public function test_tlint03_failure_of_one_token_does_not_halt_delivery_to_other_recipients(): void
+    {
+        $schedule = Schedule::create([
+            'date' => '2026-10-30',
+            'time' => '10:00',
+            'title' => 'Kajian Akbar',
+        ]);
+
+        $jamaah1 = Jamaah::create(['id' => (string) Str::uuid(), 'full_name' => 'User Token Rusak']);
+        $token1 = \App\Models\DeviceToken::create([
+            'id' => (string) Str::uuid(),
+            'tokenable_type' => Jamaah::class,
+            'tokenable_id' => $jamaah1->id,
+            'fcm_token' => 'bad_token_001',
+            'platform' => 'android',
+            'is_active' => true,
+        ]);
+        $notif1 = Notification::create([
+            'id' => (string) Str::uuid(),
+            'recipient_type' => Jamaah::class,
+            'recipient_id' => $jamaah1->id,
+            'type' => 'schedule_reminder',
+            'title' => 'Pengingat Jadwal',
+            'message' => 'Detail',
+            'delivery_status' => 'pending',
+        ]);
+
+        $jamaah2 = Jamaah::create(['id' => (string) Str::uuid(), 'full_name' => 'User Token Bagus']);
+        $token2 = \App\Models\DeviceToken::create([
+            'id' => (string) Str::uuid(),
+            'tokenable_type' => Jamaah::class,
+            'tokenable_id' => $jamaah2->id,
+            'fcm_token' => 'good_token_002',
+            'platform' => 'android',
+            'is_active' => true,
+        ]);
+        $notif2 = Notification::create([
+            'id' => (string) Str::uuid(),
+            'recipient_type' => Jamaah::class,
+            'recipient_id' => $jamaah2->id,
+            'type' => 'schedule_reminder',
+            'title' => 'Pengingat Jadwal',
+            'message' => 'Detail',
+            'delivery_status' => 'pending',
+        ]);
+
+        $fcmMock = \Mockery::mock(\App\Services\FcmService::class);
+        $fcmMock->shouldReceive('send')
+            ->with('bad_token_001', \Mockery::any())
+            ->andThrow(new \App\Exceptions\InvalidFcmTokenException('Bad token'));
+        $fcmMock->shouldReceive('send')
+            ->with('good_token_002', \Mockery::any())
+            ->andReturn(['name' => 'msg_ok']);
+
+        $job = new \App\Jobs\ProcessScheduleReminderJob($schedule, [$notif1->id, $notif2->id]);
+        $job->handle($fcmMock);
+
+        $notif1->refresh();
+        $notif2->refresh();
+        $this->assertEquals('failed', $notif1->delivery_status);
+        $this->assertEquals('sent', $notif2->delivery_status, 'Good token must succeed despite bad token on previous recipient');
+
+        $token1->refresh();
+        $token2->refresh();
+        $this->assertFalse($token1->is_active);
+        $this->assertTrue($token2->is_active);
     }
 }

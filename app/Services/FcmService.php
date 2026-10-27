@@ -72,13 +72,26 @@ class FcmService
             $details = $error['details'] ?? [];
 
             foreach ($details as $detail) {
+                $errorCode = $detail['errorCode'] ?? null;
                 if (
-                    ($detail['errorCode'] ?? null) === 'UNREGISTERED'
+                    $errorCode === 'UNREGISTERED'
+                    || $errorCode === 'INVALID_ARGUMENT'
                 ) {
                     throw new InvalidFcmTokenException(
-                        'Firebase registration token is unregistered.'
+                        'Firebase registration token is invalid or unregistered.'
                     );
                 }
+            }
+
+            $status = $error['status'] ?? null;
+            $message = $error['message'] ?? '';
+            if (
+                $status === 'INVALID_ARGUMENT'
+                && (str_contains(strtolower($message), 'registration token') || str_contains(strtolower($message), 'token'))
+            ) {
+                throw new InvalidFcmTokenException(
+                    'Firebase registration token is invalid or malformed.'
+                );
             }
 
             throw new RuntimeException(
