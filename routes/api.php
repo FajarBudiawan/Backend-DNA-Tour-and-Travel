@@ -25,6 +25,7 @@ use App\Http\Controllers\Api\SosIncidentController;
 use App\Http\Controllers\Api\SosResponseController;
 use App\Http\Controllers\Api\NotificationController;  // ← TAMBAH INI
 use App\Http\Controllers\Api\DeviceTokenController;
+use App\Http\Controllers\Api\BroadcastController;
 
 
 // ====================
@@ -497,4 +498,18 @@ Route::middleware(['auth:sanctum', 'throttle:30,1'])->group(function () {
     Route::patch('/schedules/{schedule}/status', [ScheduleController::class, 'updateStatus']);
     Route::post('/schedules/{schedule}/broadcast', [ScheduleController::class, 'broadcast']);
     Route::delete('/schedules/{schedule}', [ScheduleController::class, 'destroy']);
+});
+
+// ====================
+// BROADCAST INFORMASI
+// ====================
+
+Route::middleware(['auth:sanctum', 'throttle:60,1'])->group(function () {
+    Route::get('/broadcasts', [BroadcastController::class, 'index']);
+    Route::get('/broadcasts/{id}', [BroadcastController::class, 'show']);
+});
+
+Route::middleware(['auth:sanctum', 'throttle:15,1'])->group(function () {
+    Route::post('/broadcasts', [BroadcastController::class, 'store']);
+    Route::patch('/broadcasts/{id}', [BroadcastController::class, 'update']);
 });
