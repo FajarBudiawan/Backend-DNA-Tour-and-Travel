@@ -16,6 +16,7 @@ class Notification extends Model
     // Fillable columns (bisa di-mass assign)
     protected $fillable = [
         'sos_incident_id',
+        'broadcast_id',
         'recipient_type',
         'recipient_id',
         'type',
@@ -24,7 +25,6 @@ class Notification extends Model
         'read_at',
         'sent_at',
         'delivery_status',
-        'read_at',
     ];
     
     // Cast columns ke tipe yang tepat
@@ -46,6 +46,12 @@ class Notification extends Model
     public function sosIncident()
     {
         return $this->belongsTo(SosIncident::class);
+    }
+
+    // RELATIONSHIP: Belong to Broadcast
+    public function broadcast()
+    {
+        return $this->belongsTo(Broadcast::class, 'broadcast_id');
     }
     
     // SCOPE: Get unread notifications

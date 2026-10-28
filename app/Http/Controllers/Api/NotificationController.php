@@ -21,7 +21,7 @@ class NotificationController extends Controller
         $query = Notification::query();
 
         // Filter berdasarkan role
-        if ($token->can('jamaah')) {
+        if ($token->can('jamaah') || $token->can('family')) {
             $query->where('recipient_type', \App\Models\Jamaah::class)
                   ->where('recipient_id', $user->id);
         } elseif ($token->can('admin')) {
@@ -60,7 +60,7 @@ class NotificationController extends Controller
 
         // Tentukan user model class
         $userModel = null;
-        if ($token->can('jamaah')) {
+        if ($token->can('jamaah') || $token->can('family')) {
             $userModel = \App\Models\Jamaah::class;
         } elseif ($token->can('admin')) {
             $userModel = \App\Models\InternalUser::class;

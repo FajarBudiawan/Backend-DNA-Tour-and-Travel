@@ -38,6 +38,7 @@ class NotificationApiTest extends TestCase
             $table->string('full_name')->nullable();
             $table->string('status')->default('active');
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('personal_access_tokens', function (Blueprint $table) {
@@ -158,6 +159,36 @@ class NotificationApiTest extends TestCase
         // TL1 can mark as read
         Sanctum::actingAs($tl1, ['tour_leader']);
         $this->patchJson("/api/notifications/{$notif->id}/read")->assertStatus(200);
+        $this->assertNotNull($notif->fresh()->read_at);
+    }
+
+    public function test_family_role_can_retrieve_and_mark_notifications_for_connected_jamaah(): void
+    {
+        $jamaah = new Jamaah();
+        $jamaah->id = (string) Str::uuid();
+        $jamaah->full_name = 'Jamaah H. Ahmad';
+        $jamaah->save();
+
+        $notif = Notification::create([
+            'id' => (string) Str::uuid(),
+            'recipient_type' => Jamaah::class,
+            'recipient_id' => $jamaah->id,
+            'type' => 'broadcast',
+            'title' => 'Pengumuman Penting',
+            'message' => 'Pesan untuk jamaah dan keluarga',
+        ]);
+
+        // Login as family of this jamaah
+        Sanctum::actingAs($jamaah, ['family']);
+
+        $res = $this->getJson('/api/notifications');
+        $res->assertOk();
+        $res->assertJsonPath('data.total', 1);
+        $res->assertJsonPath('data.data.0.id', $notif->id);
+
+        // Family can mark as read
+        $patchRes = $this->patchJson("/api/notifications/{$notif->id}/read");
+        $patchRes->assertOk();
         $this->assertNotNull($notif->fresh()->read_at);
     }
 }
