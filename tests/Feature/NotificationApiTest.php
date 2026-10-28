@@ -38,6 +38,7 @@ class NotificationApiTest extends TestCase
             $table->string('full_name')->nullable();
             $table->string('status')->default('active');
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('personal_access_tokens', function (Blueprint $table) {

@@ -62,6 +62,7 @@ class BroadcastFeatureTest extends TestCase
             $table->string('full_name')->nullable();
             $table->string('status')->default('active');
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('family_relations', function (Blueprint $table) {

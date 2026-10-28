@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Registration extends Model
 {
-    use HasUuids;
+    use HasUuids, SoftDeletes;
 
     protected $table = 'registrations';
 
@@ -36,6 +37,7 @@ class Registration extends Model
         'registration_date' => 'date',
         'departure_date' => 'date',
         'total_package_cost' => 'decimal:2',
+        'deleted_at' => 'datetime',
     ];
 
     protected $appends = [
@@ -64,7 +66,7 @@ class Registration extends Model
      * Hitung dan perbarui status keuangan pendaftaran secara otomatis.
      *
      * Catatan revisi [2026-09-02]: Guard 'converted' sengaja DIPERTAHANKAN untuk
-     * kompatibilitas backward \u2014 data pendaftaran lama yang memiliki status 'converted'
+     * kompatibilitas backward — data pendaftaran lama yang memiliki status 'converted'
      * di database tidak boleh di-overwrite oleh kalkulasi keuangan otomatis.
      * Alur convert-to-jamaah sudah tidak aktif, tapi enum 'converted' tetap di DB.
      */
