@@ -9,3 +9,6 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 ScheduleFacade::command('schedules:sync-status')->everyMinute();
+
+// Pembersihan otomatis data Riwayat Hapus (Soft Delete) yang telah melewati batas masa retensi 30 hari kalender
+ScheduleFacade::command('trash:purge-expired')->daily();

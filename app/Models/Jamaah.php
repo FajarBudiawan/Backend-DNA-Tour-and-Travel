@@ -6,11 +6,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Sanctum\HasApiTokens;
 
 class Jamaah extends Authenticatable
 {
-    use HasApiTokens, HasUuids;
+    use HasApiTokens, HasUuids, SoftDeletes;
 
     protected $table = 'jamaah';
 
@@ -56,6 +57,7 @@ class Jamaah extends Authenticatable
         'departure_date' => 'date',
         'return_date'    => 'date',
         'archived_at'    => 'datetime',
+        'deleted_at'     => 'datetime',
     ];
 
     /*

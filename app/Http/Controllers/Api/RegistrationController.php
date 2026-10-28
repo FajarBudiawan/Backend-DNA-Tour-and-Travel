@@ -694,7 +694,7 @@ class RegistrationController extends Controller
                         }
 
                         // =============================================
-                        // 3. EQUIPMENT LAMA → UPDATE
+                        // 3. EQUIPMENT LAMA â†’ UPDATE
                         // =============================================
 
                         if ($equipment) {
@@ -735,7 +735,7 @@ class RegistrationController extends Controller
                         }
 
                         // =============================================
-                        // 4. EQUIPMENT BENAR-BENAR BARU → CREATE
+                        // 4. EQUIPMENT BENAR-BENAR BARU â†’ CREATE
                         // =============================================
 
                         $isReceived =
@@ -988,31 +988,9 @@ class RegistrationController extends Controller
     ): JsonResponse {
         DB::transaction(
             function () use ($registration) {
-
-                // Ambil semua equipment.
-                $equipments =
-                    $registration
-                        ->equipments()
-                        ->get();
-
-                // Hapus melalui service agar
-                // stok yang sudah diterima dikembalikan.
-                foreach (
-                    $equipments as $equipment
-                ) {
-                    $this
-                        ->registrationEquipmentService
-                        ->deleteEquipment(
-                            $equipment
-                        );
-                }
-
-                // Hapus payment.
-                $registration
-                    ->payments()
-                    ->delete();
-
-                // Hapus registration.
+                // Soft delete registration secara aman (idempoten).
+                // Data pembayaran (registration_payments) dan transaksi keuangan TETAP DIPERTAHANKAN
+                // untuk menjaga konsistensi audit keuangan dan laporan arus kas.
                 $registration->delete();
             }
         );

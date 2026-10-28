@@ -23,8 +23,9 @@ use App\Http\Controllers\Api\OtherIncomeController;
 use App\Http\Controllers\Api\TourLeaderAuthController;
 use App\Http\Controllers\Api\SosIncidentController;
 use App\Http\Controllers\Api\SosResponseController;
-use App\Http\Controllers\Api\NotificationController;  // ← TAMBAH INI
+use App\Http\Controllers\Api\NotificationController;  // â† TAMBAH INI
 use App\Http\Controllers\Api\DeviceTokenController;
+use App\Http\Controllers\Api\TrashController;
 
 
 // ====================
@@ -434,8 +435,13 @@ Route::middleware(['auth:sanctum', 'abilities:admin'])->group(function () {
         '/stocks/{stock}/transactions',
         [StockController::class, 'transactions']
     );
-});
+    // ====================
+    // RIWAYAT HAPUS / TRASH (RETENSI 30 HARI)
+    // ====================
 
+    Route::get('/trash', [TrashController::class, 'index']);
+    Route::post('/trash/{type}/{id}/restore', [TrashController::class, 'restore']);
+});
 
 // ====================
 // EMERGENCY / SOS
@@ -498,3 +504,4 @@ Route::middleware(['auth:sanctum', 'throttle:30,1'])->group(function () {
     Route::post('/schedules/{schedule}/broadcast', [ScheduleController::class, 'broadcast']);
     Route::delete('/schedules/{schedule}', [ScheduleController::class, 'destroy']);
 });
+
