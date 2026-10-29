@@ -29,14 +29,18 @@ class BroadcastController extends Controller
         $user = $request->user();
         $token = $user?->currentAccessToken();
 
-        if (!$token || (!$token->can('admin') && !$token->can('tour_leader'))) {
+        if (!$token) {
             return response()->json(['message' => 'Unauthorized.'], 403);
         }
 
         $query = Broadcast::with(['recipientKloters:id,code,name']);
 
-        // Jika Tour Leader: hanya tampilkan broadcast miliknya atau yang menargetkan kloternya
-        if ($token->can('tour_leader')) {
+        // Admin: akses semua riwayat broadcast
+        if ($token->can('admin')) {
+            // No extra filter
+        }
+        // Tour Leader: hanya tampilkan broadcast miliknya atau yang menargetkan kloternya
+        elseif ($token->can('tour_leader')) {
             $assignedKloterIds = $user->kloters()->pluck('kloters.id')->all();
 
             $query->where(function ($q) use ($user, $assignedKloterIds) {
@@ -47,6 +51,27 @@ class BroadcastController extends Controller
                     $sub->whereIn('kloters.id', $assignedKloterIds);
                 });
             });
+        }
+        // Jamaah atau Family: hanya broadcast yang secara sah menargetkan Jamaah (melalui notifikasi yang diterima)
+        elseif ($token->can('jamaah') || $token->can('family')) {
+            if ($token->can('family')) {
+                $hasActiveRelation = \App\Models\FamilyRelation::where('jamaah_id', $user->id)
+                    ->where('status', 'active')
+                    ->exists();
+
+                if (!$hasActiveRelation) {
+                    return response()->json(['message' => 'Forbidden. Relasi keluarga tidak aktif atau tidak ditemukan.'], 403);
+                }
+            }
+
+            $authorizedBroadcastIds = \App\Models\Notification::where('recipient_type', \App\Models\Jamaah::class)
+                ->where('recipient_id', $user->id)
+                ->whereNotNull('broadcast_id')
+                ->pluck('broadcast_id');
+
+            $query->whereIn('id', $authorizedBroadcastIds);
+        } else {
+            return response()->json(['message' => 'Unauthorized.'], 403);
         }
 
         $query->latest('sent_at');

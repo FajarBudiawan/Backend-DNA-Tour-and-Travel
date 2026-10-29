@@ -44,16 +44,6 @@ class BroadcastService
                     'recipient_id' => (string) $jamaah->id,
                     'name' => $jamaah->full_name ?? 'Jamaah',
                 ]);
-
-                // Jika flag sendToFamily aktif, tambahkan keluarga yang terafiliasi
-                if ($sendToFamily) {
-                    $hasActiveFamily = FamilyRelation::where('jamaah_id', $jamaah->id)
-                        ->where('status', 'active')
-                        ->exists();
-
-                    // Di sistem DNA Tour, login family menggunakan login_id jamaah dan token bertipe Jamaah::class
-                    // Deduplikasi otomatis menjaga hanya 1 notifikasi per jamaah_id
-                }
             }
 
             // Tambahkan juga Tour Leader yang bertugas di kloter-kloter aktif tersebut

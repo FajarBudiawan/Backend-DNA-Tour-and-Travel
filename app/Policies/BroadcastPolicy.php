@@ -81,6 +81,26 @@ class BroadcastPolicy
             return !empty(array_intersect($assignedKloterIds, $broadcastKloterIds));
         }
 
+        // Jamaah atau Family: verifikasi bahwa Jamaah (atau Jamaah yang terhubung dengan Family) adalah penerima resmi broadcast
+        if ($token->can('jamaah') || $token->can('family')) {
+            // Pada role family, jika token diterbitkan via FamilyAuthController, $user adalah instance Jamaah.
+            // Jika role family, pastikan relasi keluarga jamaah tersebut aktif di family_relations
+            if ($token->can('family')) {
+                $hasActiveRelation = \App\Models\FamilyRelation::where('jamaah_id', $user->id)
+                    ->where('status', 'active')
+                    ->exists();
+
+                if (!$hasActiveRelation) {
+                    return false;
+                }
+            }
+
+            return \App\Models\Notification::where('broadcast_id', $broadcast->id)
+                ->where('recipient_type', \App\Models\Jamaah::class)
+                ->where('recipient_id', $user->id)
+                ->exists();
+        }
+
         return false;
     }
 
